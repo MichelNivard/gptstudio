@@ -8,9 +8,9 @@ avAddin <- function() {
   print(selection)
 
   edit <- create_edit(
-    model = "text-davinci-edit-001",
+    model = "text-davinci-003",
     input = selection$value,
-    instruction = "rewrite in the active voice",
+    instruction = "rewrite text in the active voice",
     temperature = 1,
     top_p = 1,
     openai_api_key = Sys.getenv("OPENAI_API_KEY"),
