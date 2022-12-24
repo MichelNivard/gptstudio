@@ -4,7 +4,7 @@
 #'
 #' @export
 sandgAddin <- function() {
-   selection <- rstudioapi::getActiveDocumentContext()
+   selection <- selectionGet()
 
 
    edit <- create_edit(
