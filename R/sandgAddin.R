@@ -17,7 +17,7 @@ sandgAddin <- function() {
      openai_organization = NULL
    )
 
-   rstudioapi::insertText("edit")
+   rstudioapi::insertText(edit)
 
 
 }
