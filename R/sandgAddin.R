@@ -5,7 +5,7 @@
 #' @export
 sandgAddin <- function() {
    selection <- selectionGet()
-
+   print(selection)
 
    edit <- create_edit(
      model = "text-davinci-edit-001",
