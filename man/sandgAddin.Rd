@@ -5,7 +5,7 @@
 
 }
 \description{
-Rstudio Addin to check spellign ang grammer using openai's GPT family of laguage models.
+Rstudio Addin to check spelling and grammer using openai's GPT family of language models.
 }
 \examples{
 
