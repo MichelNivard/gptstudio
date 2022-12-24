@@ -6,15 +6,15 @@
 wpAddin <- function() {
   selection <- selectionGet()
 
-  create_completion(
+  product <- create_completion(
     model = "text-davinci-003",
     prompt = selection$value,
-    max_tokens = 200,
+    max_tokens = 1000,
     temperature = 0.1,
     top_p = 1,
   )
 
-  rstudioapi::insertText(edit$choices[1,1])
+  rstudioapi::insertText(product$choices[1,1])
 
 
 }
