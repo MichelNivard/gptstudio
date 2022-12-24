@@ -1,6 +1,6 @@
 \name{sandgAddin}
 \alias{sandgAddin}
-\title{GPT powered spelling and grammar Addin}
+\title{GPT powered writing, spelling and grammar Addin}
 \usage{
 
 }
