@@ -3,7 +3,7 @@ Description: Uses openai's GPT to improve spelling and grammar of selected text
 Binding: sandgAddin
 Interactive: false
 
-Name: change to activ voice
+Name: change text to active voice
 Description: Uses openai's GPT to change selected text into active voice
 Binding: avAddin
 Interactive: false

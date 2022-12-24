@@ -8,7 +8,7 @@ avAddin <- function() {
   print(selection)
 
   edit <- create_edit(
-    model = "text-davinci-003",
+    model = "text-davinci-edit-001",
     input = selection$value,
     instruction = "rewrite text in the active voice",
     temperature = 1,

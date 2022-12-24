@@ -8,7 +8,7 @@ sandgAddin <- function() {
    print(selection)
 
    edit <- create_edit(
-     model = "text-davinci-003",
+     model = "text-davinci-edit-001",
      input = selection$value,
      instruction = "Improve spelling and grammar",
      temperature = 1,
