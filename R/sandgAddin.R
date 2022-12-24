@@ -9,7 +9,7 @@ sandgAddin <- function() {
 
    edit <- create_edit(
      model = "text-davinci-edit-001",
-     input = as.string(selection$value),
+     input = selection$value,
      instruction = "Improve spellign and grammar",
      temperature = 1,
      top_p = 1,
