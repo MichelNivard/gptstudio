@@ -5,13 +5,12 @@
 #' @export
 sandgAddin <- function() {
    selection <- selectionGet()
-   print(selection)
 
    edit <- create_edit(
      model = "text-davinci-edit-001",
      input = selection$value,
-     instruction = "Improve spelling and grammar",
-     temperature = 1,
+     instruction = "Improve spelling and grammar of this text",
+     temperature = .1,
      top_p = 1,
      openai_api_key = Sys.getenv("OPENAI_API_KEY"),
      openai_organization = NULL
