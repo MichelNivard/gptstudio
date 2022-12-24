@@ -1,0 +1,4 @@
+Name: Spelling and Grammar
+Description: Uses openai's GPT to improve spellingn and grammar of selected text
+Binding: sandgAddin
+Interactive: false
