@@ -1,6 +1,6 @@
-#' Insert \%in\%.
+#' spelling and grammar Addin
 #'
-#' Call this function as an addin to ask GPT to improve spelling and grammar of selected text
+#' Call this function as a Rstudio addin to ask GPT to improve spelling and grammar of selected text
 #'
 #' @export
 sandgAddin <- function() {

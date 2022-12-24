@@ -1,14 +1,13 @@
 Package: GPTstudio
 Type: Package
-Title: What the Package Does (Title Case)
+Title: GPTstudio adds functionality based on openai's GPT family of models directly into Rstudio
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Michel Nivard
+Maintainer: The package maintainer <m.g.nivard@vu.nl.
+Description: GPTstudio adds functionality based on openai's GPT family of models directly into Rstudio
     Imports:
     rstudioapi
     openai
-License: What license is it under?
+License: IDK
 Encoding: UTF-8
 LazyData: true
