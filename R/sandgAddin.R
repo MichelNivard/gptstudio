@@ -6,10 +6,10 @@
 sandgAddin <- function() {
    selection <- rstudioapi::getActiveDocumentContext()
 
-   print(selection$contents)
+
    edit <- create_edit(
      model = "text-davinci-edit-001",
-     input = selection$contents,
+     input = selection$selection,
      instruction = "Improve spellign and grammar",
      temperature = 1,
      top_p = 1,
