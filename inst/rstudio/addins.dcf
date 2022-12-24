@@ -8,7 +8,7 @@ Description: Uses openai's GPT to change selected text into active voice
 Binding: avAddin
 Interactive: false
 
-Name: Simplify text
-Description: Uses openai's GPT to simplify text and avoid idioms
+Name: Write from promot
+Description: Uses openai's GPT-3.5 to generate text from a prompt
 Binding: simpAddin
 Interactive: false
