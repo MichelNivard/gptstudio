@@ -16,8 +16,8 @@ sandgAddin <- function() {
      openai_api_key = Sys.getenv("OPENAI_API_KEY"),
      openai_organization = NULL
    )
-
-   rstudioapi::insertText(edit)
+    print(edit)
+   rstudioapi::insertText("edit")
 
 
 }
