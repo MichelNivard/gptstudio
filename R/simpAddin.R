@@ -3,7 +3,7 @@
 #' Call this function as a Rstudio addin to ask GPT to simplify complex language
 #'
 #' @export
-avAddin <- function() {
+simpAddin <- function() {
   selection <- selectionGet()
 
   edit <- create_edit(
