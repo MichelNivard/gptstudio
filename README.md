@@ -32,5 +32,5 @@ OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Note: If you are using GitHub/Gitlab, do not forget to add .Renviron to .gitignore!
 
-Finally, you can always provide the key manually to the functions of the package.
+
 
