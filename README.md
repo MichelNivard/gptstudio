@@ -8,7 +8,7 @@ GPT addins for Rstudio, **read the privacy note at the bottom, this is alpha sof
 
 2. generate an API key to use openai from Rstudio: https://beta.openai.com/account/api-keys
 
-3. set the API key uyp in Rstudio in one of two ways:
+3. set the API key up in Rstudio in one of two ways:
 
 By default, functions of openai will look for OPENAI_API_KEY environment variable. If you want to set a global environment variable, you can use the following command (where xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx should be replaced with your actual key):
 
