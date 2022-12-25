@@ -8,7 +8,7 @@ gptAddin <- function() {
   # Our ui will be a simple gadget page
   ui <- miniPage(
 
-    gadgetTitleBar("GPTstudio Freeform Editor",left = miniTitleBarButton("buttom", "Run GPT", primary = TRUE), right = miniTitleBarCancelButton()),
+    gadgetTitleBar("GPTstudio Freeform Editor",left = miniTitleBarButton("button", "Run GPT", primary = TRUE), right = miniTitleBarCancelButton()),
     miniContentPanel(
       textAreaInput(inputId="question", label="Editing Instruction for GPT:", value="",rows = 3,width = "100%"),
     ),
