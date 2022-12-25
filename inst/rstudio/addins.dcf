@@ -18,7 +18,7 @@ Description: Uses openai's GPT-3.5 to generate comments for your code
 Binding: comAddin
 Interactive: false
 
-Name: Comment your code
+Name: Freeform GPT editor
 Description: Uses openai's GPT-3.5 perform a user specified edit to the selected text or code
 Binding: gptAddin
 Interactive: true
