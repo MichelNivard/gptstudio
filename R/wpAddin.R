@@ -1,6 +1,6 @@
-#' write from prompt Addin
+#' write/code from prompt Addin
 #'
-#' Call this function as a Rstudio addin to ask GPT to write text from a descriptive prompt
+#' Call this function as a Rstudio addin to ask GPT to write text or code from a descriptive prompt
 #'
 #' @export
 wpAddin <- function() {

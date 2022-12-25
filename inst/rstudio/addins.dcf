@@ -8,8 +8,8 @@ Description: Uses openai's GPT to change selected text into active voice
 Binding: avAddin
 Interactive: false
 
-Name: Write from prompt
-Description: Uses openai's GPT-3.5 to generate text from a prompt
+Name: Write/Code from prompt
+Description: Uses openai's GPT-3.5 to generate text or code from a prompt
 Binding: wpAddin
 Interactive: false
 
