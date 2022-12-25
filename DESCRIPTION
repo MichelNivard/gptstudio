@@ -8,6 +8,8 @@ Description: GPTstudio adds functionality based on openai's GPT family of models
     Imports:
     rstudioapi
     openai
+    shiny
+    miniUI
 License: IDK
 Encoding: UTF-8
 LazyData: true
