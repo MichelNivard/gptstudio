@@ -78,6 +78,12 @@ Code from prompt:
 
 ![add comments to code](./media/comments.gif)
 
+### Apply any edit YOU desire or can dream up:
+
+**Addins > GPTSTUDIO > Freeform GPT editor:** Apply any edit YOU desire or can dream up to a selection of code or text.
+
+![freeform](./media/hugo.gif)
+
 
 **Privacy note:** these functions work by taking the text or code you have highlighted/selected with the cursor and send these to openai as part of a prompt, they fall under their privacy notice/rules/exceptions you agreed to with openai when making an account. I do not know how secure thesse are when send to openai, I also don't know what openai does with them. The code is designed to ONLY share the highlighted/selected text and no other elements of your R environment (i.e. data) unless you have highlighted it when running the addin. This may limit usability for now, but I dont want people to eccidentally send sensitive data to openai over the internet. 
 
