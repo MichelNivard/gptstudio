@@ -13,3 +13,7 @@ Description: Uses openai's GPT-3.5 to generate text or code from a prompt
 Binding: wpAddin
 Interactive: false
 
+Name: Comment your code
+Description: Uses openai's GPT-3.5 to generate comments for your code
+Binding: comAddin
+Interactive: false
