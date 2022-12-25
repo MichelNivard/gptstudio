@@ -65,7 +65,7 @@ install_github("MichelNivard/GPTstudio")
 
 Text from prompt:
 
-![prompt_text](./media/prompt_text.gif)
+![prompt_text](./media/promt_text.gif)
 
 Code from prompt:
 
