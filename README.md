@@ -43,7 +43,7 @@ require(devtools)
 install_github("MichelNivard/GPTstudio")
 ```
 
-### useage:
+## useage:
 
  Some examples of use.
  
@@ -53,7 +53,7 @@ install_github("MichelNivard/GPTstudio")
 
 ![spelling](./media/spelling.gif)
 
-#### Active voice:
+### Active voice:
 
 **Addins > GPTSTUDIO > Change text to active voice:** Takes the selected text sends it to openai's best model and instructs it to return the text in  the active voice. 
 
@@ -72,7 +72,7 @@ Code from prompt:
 ![prompt_code](./media/prompt_code.gif)
 
 
-#### Comment your code: 
+### Comment your code: 
 
 **Addins > GPTSTUDIO > Comment your code:** Takes the selected text sends it to openai's as a prompt for a code specific model to work with, asks for a versino with a comment added explainign the code line by line. 
 
