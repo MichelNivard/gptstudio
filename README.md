@@ -1,8 +1,8 @@
 # GPTstudio
 
-GPT addins for Rstudio
+GPT addins for Rstudio, **read the privacy note at the bottom, this is alpha software there is no warranty for anything.**
 
-## Installation
+### Prerequisite
 
 1. make and openai.com account (free one will do for now)
 
@@ -44,7 +44,8 @@ install_github("MichelNivard/GPTstudio")
 ```
 
 ### useage:
- Some axample s of use.
+
+ Some examples of use.
  
 ### Spelling ang grammar check
 
