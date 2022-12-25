@@ -76,7 +76,7 @@ Code from prompt:
 
 **Addins > GPTSTUDIO > Comment your code:** Takes the selected text sends it to openai's as a prompt for a code specific model to work with, asks for a versino with a comment added explainign the code line by line. 
 
-
+![add comments to code](./media/comments.gif)
 
 
 **Privacy note:** these functions work by taking the text or code you have highlighted/selected with the cursor and send these to openai as part of a prompt, they fall under their privacy notice/rules/exceptions you agreed to with openai when making an account. I do not know how secure thesse are when send to openai, I also don't know what openai does with them. The code is designed to ONLY share the highlighted/selected text and no other elements of your R environment (i.e. data) unless you have highlighted it when running the addin. This may limit usability for now, but I dont want people to eccidentally send sensitive data to openai over the internet. 
