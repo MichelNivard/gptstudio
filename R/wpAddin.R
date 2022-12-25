@@ -9,6 +9,7 @@ wpAddin <- function() {
   product <- create_completion(
     model = "text-davinci-003",
     prompt = selection$value,
+    max_tokens = 500,
     temperature = 0.1,
     top_p = 1,
   )
