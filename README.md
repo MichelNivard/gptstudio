@@ -53,6 +53,8 @@ DO NOT HIGHLIGHT, AND THEREFORE UPLOAD, DATA/CODE/TEXT THAT SHOULD REMAIN PRIVAT
 
 **Addins > GPTSTUDIO > Spelling and Grammar:** Takes the selected text sends it to openai's best model and instructs it to return a spelling and grammar checked version. 
 
+![spelling](./media/spelling.gif)
+
 #### Active voice:
 
 **Addins > GPTSTUDIO > Change text to active voice:** Takes the selected text sends it to openai's best model and instructs it to return the text in  the active voice. 
