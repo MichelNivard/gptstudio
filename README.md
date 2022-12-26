@@ -7,9 +7,17 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![CRAN
 status](https://www.r-pkg.org/badges/version/GPTstudio)](https://CRAN.R-project.org/package=GPTstudio)
 [![R-CMD-check](https://github.com/JamesHWade/GPTstudio/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/JamesHWade/GPTstudio/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/JamesHWade/GPTstudio/branch/main/graph/badge.svg)](https://app.codecov.io/gh/JamesHWade/GPTstudio?branch=main)
 <!-- badges: end -->
 
-The goal of GPTstudio is to …
+The goal of gptstudio is for R programmers to easily incorporate use of
+large language models (LLMs) into their project workflows. These models
+appear to be a step change in our use of text for knowledge work, but
+you should carefully consider ethical implications of using these
+models. Ethics of LLMs (also called [Foundation
+Models](https://arxiv.org/abs/2108.07258)) is an area of very active
+discussion.
 
 ## Installation
 
@@ -33,49 +41,54 @@ library(gptstudio)
 GPT addins for Rstudio, **read the privacy note at the bottom, this is
 alpha software there is no warranty for anything.**
 
-### Prerequisite
+### Before you can use the API
 
-1.  make and openai.com account (free one will do for now)
+1.  Make an OpenAI account. As of now, the free one will do.
 
-2.  generate an API key to use openai from Rstudio:
-    <https://beta.openai.com/account/api-keys>
+2.  [Create an OpenAI API key](https://beta.openai.com/account/api-keys)
+    to use `{openai}` package within Rstudio
 
-3.  set the API key up in Rstudio in one of two ways:
+3.  Set the API key up in Rstudio in one of two ways:
 
-By default, functions of openai will look for OPENAI_API_KEY environment
-variable. If you want to set a global environment variable, you can use
-the following command (where
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx should be replaced
-with your actual key):
+- By default, functions of `{openai}` will look for `OPENAI_API_KEY`
+  environment variable. If you want to set a global environment
+  variable, you can use the following command, where `"<APIKEY>"` should
+  be replaced with your actual key:
 
-    Sys.setenv(
-        OPENAI_API_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    )
+``` r
+Sys.setenv(OPENAI_API_KEY = "<OPENAI_API_KEY>")
+```
+
+- Alternatively, you can set the key in your .Renviron file.
 
 Otherwise, you can add the key to the .Renviron file of the project. The
 following commands will open .Renviron for editing:
 
-    if (!require(usethis))
-        install.packages("usethis")
+``` r
+require(usethis)
+edit_r_environ(scope = "project")
+```
 
-    usethis::edit_r_environ(scope = "project")
-    You can add the following line to the file (again, replace xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx with your actual key):
+You can add the following line to the file (again, replace
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx with your actual
+key):
 
+``` bash
+OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
 
-    OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-Thios now set the API key every time you start up this particular
+This now set the API key every time you start up this particular
 project. Note: If you are using GitHub/Gitlab, do not forget to add
 .Renviron to .gitignore!
 
-## install the addins from this package:
+## Install the addins from this package:
 
-simply install:
+``` r
+require(devtools)
+install_github("MichelNivard/GPTstudio")
+```
 
-    require(devtools)
-    install_github("MichelNivard/GPTstudio")
-
-## useage:
+## Usage
 
 Some examples of use.
 
@@ -87,7 +100,7 @@ and grammar checked version.
 
 ![spelling](./media/spelling.gif)
 
-### Active voice:
+### Active voice
 
 **Addins \> GPTSTUDIO \> Change text to active voice:** Takes the
 selected text sends it to openai’s best model and instructs it to return
@@ -118,7 +131,7 @@ line.
 
 ![add comments to code](./media/comments.gif)
 
-### Apply any edit YOU desire or can dream up:
+### Provide your own instructions
 
 **Addins \> GPTSTUDIO \> Freeform GPT editor:** Apply any edit YOU
 desire or can dream up to a selection of code or text.
