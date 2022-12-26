@@ -6,38 +6,46 @@
 gptAddin <- function() {
 
   # Our ui will be a simple gadget page
-  ui <- miniPage(
+  ui <- miniUI::miniPage(
 
-    gadgetTitleBar("GPTstudio Freeform Editor",left = miniTitleBarButton("button", "Run GPT", primary = TRUE), right = miniTitleBarCancelButton()),
-    miniContentPanel(
-      textAreaInput(inputId="question", label="Editing Instruction for GPT:", value="",rows = 3,width = "100%"),
+    miniUI::gadgetTitleBar(
+      "GPTstudio Freeform Editor",
+      left = miniUI::miniTitleBarButton("button", "Run GPT", primary = TRUE),
+      right = miniUI::miniTitleBarCancelButton()),
+    miniUI::miniContentPanel(
+      shiny::textAreaInput(
+        inputId="question",
+        label="Editing Instruction for GPT:",
+        value="",
+        rows = 3,
+        width = "100%"),
     ),
-    miniContentPanel(
-      verbatimTextOutput(outputId = "response",placeholder = F)
+    miniUI::miniContentPanel(
+      shiny::verbatimTextOutput(outputId = "response",placeholder = F)
     )
 
   )
 
   server <- function(input, output, session) {
-    observeEvent(input$button,{
-    selection <- selectionGet()
+    shiny::observeEvent(input$button,{
+    selection <- rstudioapi::selectionGet()
 
-   interim <- create_edit(
+   interim <- openai::create_edit(
      model = "text-davinci-edit-001",
      input = selection$value,
      instruction = input$question,
      temperature = 0.05
    )
 
-   output$response <- renderText(interim$choices[1,1])
+   output$response <- shiny::renderText(interim$choices[1,1])
 
    })
   }
 
 
   # We'll use a pane viewer
-  viewer <- paneViewer(100)
-  runGadget(ui, server, viewer = viewer)
+  viewer <- shiny::paneViewer(100)
+  shiny::runGadget(ui, server, viewer = viewer)
 
 }
 

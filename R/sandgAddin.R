@@ -4,9 +4,9 @@
 #'
 #' @export
 sandgAddin <- function() {
-   selection <- selectionGet()
+   selection <- rstudioapi::selectionGet()
 
-   edit <- create_edit(
+   edit <- openai::create_edit(
      model = "text-davinci-edit-001",
      input = selection$value,
      instruction = "Improve spelling and grammar of this text",
