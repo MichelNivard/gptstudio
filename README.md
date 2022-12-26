@@ -117,7 +117,7 @@ line.
 **Addins \> GPTSTUDIO \> Freeform GPT editor:** Apply any edit what YOU
 desire or can dream up to a selection of code or text.
 
-![freeform](./media/hugo.gif)
+![freeform](./media/hugo2.gif)
 
 **Privacy note:** these functions work by taking the text or code you
 have highlighted/selected with the cursor and send these to OpenAI as
