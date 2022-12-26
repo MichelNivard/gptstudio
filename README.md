@@ -12,7 +12,7 @@ coverage](https://codecov.io/gh/JamesHWade/GPTstudio/branch/main/graph/badge.svg
 <!-- badges: end -->
 
 The goal of gptstudio is for R programmers to easily incorporate use of
-large language models (LLMs) into their project workflows. These models
+large language models (LLMs), specifically for now GPT variants developed by OpenAI, into their project workflows. These models
 appear to be a step change in our use of text for knowledge work, but
 you should carefully consider ethical implications of using these
 models. Ethics of LLMs (also called [Foundation
