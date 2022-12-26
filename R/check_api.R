@@ -8,7 +8,9 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' check_api_connection()
+#' }
 check_api_connection <- function(api_key = Sys.getenv("OPENAI_API_KEY")) {
   check_api_key(api_key)
   request <-
@@ -37,7 +39,9 @@ check_api_connection <- function(api_key = Sys.getenv("OPENAI_API_KEY")) {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' check_api_key()
+#' }
 #'
 check_api_key <- function(api_key = Sys.getenv("OPENAI_API_KEY")) {
   regex <- "^[a-zA-Z0-9-]{30,60}$"
