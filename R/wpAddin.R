@@ -16,5 +16,4 @@ wpAddin <- function() {
 
   rstudioapi::insertText(product$choices[1,1])
 
-
 }
