@@ -37,7 +37,7 @@ no warranty for anything.**
   be replaced with your actual key:
 
 ``` r
-Sys.setenv(OPENAI_API_KEY = "<OPENAI_API_KEY>")
+Sys.setenv(OPENAI_API_KEY = "<APIKEY>")
 ```
 
 - Alternatively, you can set the key in your .Renviron file.
@@ -51,11 +51,11 @@ edit_r_environ(scope = "project")
 ```
 
 You can add the following line to the file (again, replace
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx with your actual
+`"<APIKEY>"` with your actual
 key):
 
 ``` bash
-OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+OPENAI_API_KEY="<APIKEY>"
 ```
 
 This now set the API key every time you start up this particular
