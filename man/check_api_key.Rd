@@ -15,7 +15,3 @@ Nothing is returned. If the API key is in the correct format, a success message 
 \description{
 This function checks whether the API key provided as an argument is in the correct format.
 }
-\examples{
-check_api_key()
-
-}

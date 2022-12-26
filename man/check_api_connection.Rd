@@ -15,6 +15,3 @@ Nothing is returned. If the API key is valid, a success message is printed. If t
 \description{
 This function checks whether the API key provided in the `OPENAI_API_KEY` environment variable is valid.
 }
-\examples{
-check_api_connection()
-}

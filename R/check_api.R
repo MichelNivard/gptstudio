@@ -6,11 +6,6 @@
 #'
 #' @return Nothing is returned. If the API key is valid, a success message is printed. If the API key is invalid, an error message is printed and the function aborts.
 #' @export
-#'
-#' @examples
-#' \dontrun{
-#' check_api_connection()
-#' }
 check_api_connection <- function(api_key = Sys.getenv("OPENAI_API_KEY")) {
   check_api_key(api_key)
   request <-
@@ -37,11 +32,6 @@ check_api_connection <- function(api_key = Sys.getenv("OPENAI_API_KEY")) {
 #' @param api_key An API key. Defaults to the value of the `OPENAI_API_KEY` environment variable.
 #' @return Nothing is returned. If the API key is in the correct format, a success message is printed. If the API key is not in the correct format, an error message is printed and the function aborts.
 #' @export
-#'
-#' @examples
-#' \dontrun{
-#' check_api_key()
-#' }
 #'
 check_api_key <- function(api_key = Sys.getenv("OPENAI_API_KEY")) {
   regex <- "^[a-zA-Z0-9-]{30,60}$"

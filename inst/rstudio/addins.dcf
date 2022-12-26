@@ -22,3 +22,8 @@ Name: Freeform GPT editor
 Description: Uses openai's GPT-3.5 perform a user specified edit to the selected text or code
 Binding: gptAddin
 Interactive: true
+
+Name: Add Roxygen to function
+Description: Add a roxygen skeleton to document your functions
+Binding: roxygenAddin
+Interactive: false
