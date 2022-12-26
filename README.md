@@ -12,7 +12,7 @@ coverage](https://codecov.io/gh/JamesHWade/GPTstudio/branch/main/graph/badge.svg
 <!-- badges: end -->
 
 The goal of gptstudio is for R programmers to easily incorporate use of
-large language models (LLMs) into their project workflows. These models
+large language models (LLMs), specifically for now GPT variants developed by OpenAI, into their project workflows. These models
 appear to be a step change in our use of text for knowledge work, but
 you should carefully consider ethical implications of using these
 models. Ethics of LLMs (also called [Foundation
@@ -37,7 +37,7 @@ no warranty for anything.**
   be replaced with your actual key:
 
 ``` r
-Sys.setenv(OPENAI_API_KEY = "<OPENAI_API_KEY>")
+Sys.setenv(OPENAI_API_KEY = "<APIKEY>")
 ```
 
 - Alternatively, you can set the key in your .Renviron file.
@@ -51,11 +51,11 @@ edit_r_environ(scope = "project")
 ```
 
 You can add the following line to the file (again, replace
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx with your actual
+`"<APIKEY>"` with your actual
 key):
 
 ``` bash
-OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+OPENAI_API_KEY="<APIKEY>"
 ```
 
 This now set the API key every time you start up this particular
@@ -89,7 +89,7 @@ the text in the active voice.
 
 ![active_voice](./media/active_voice.gif)
 
-#### Write/code from prompt
+### Write/code from prompt
 
 **Addins \> GPTSTUDIO \> Write/Code from prompt:** Takes the selected
 text and sends it to OpenAI as a prompt for the model to work with. This
