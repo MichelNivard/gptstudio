@@ -73,6 +73,7 @@ install_github("MichelNivard/GPTstudio")
 
 Some examples of use.
 
+
 ### Spelling ang grammar check
 
 **Addins \> GPTSTUDIO \> Spelling and Grammar:** Takes the selected text
@@ -80,6 +81,14 @@ sends it to OpenAI’s best model and instructs it to return a spelling
 and grammar checked version.
 
 ![spelling](./media/spelling.gif)
+
+### Freeform GPT editor
+
+**Addins \> GPTSTUDIO \> Freeform GPT editor:** Apply any edit what YOU
+desire or can dream up to a selection of code or text.
+
+![freeform](./media/hugo2.gif)
+
 
 ### Active voice
 
@@ -112,12 +121,7 @@ line.
 
 ![add comments to code](./media/comments.gif)
 
-### Provide your own instructions
 
-**Addins \> GPTSTUDIO \> Freeform GPT editor:** Apply any edit what YOU
-desire or can dream up to a selection of code or text.
-
-![freeform](./media/hugo2.gif)
 
 **Privacy note:** these functions work by taking the text or code you
 have highlighted/selected with the cursor and send these to OpenAI as
