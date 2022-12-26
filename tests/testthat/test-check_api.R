@@ -12,6 +12,7 @@ test_that("API connection checking works", {
 })
 
 test_that("API connection can return true", {
+  skip_on_ci()
   skip_if_offline()
   expect_message(check_api_connection())
 })
