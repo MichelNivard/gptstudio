@@ -4,9 +4,9 @@
 #'
 #' @export
 wpAddin <- function() {
-  selection <- selectionGet()
+  selection <- rstudioapi::selectionGet()
 
-  product <- create_completion(
+  product <- openai::create_completion(
     model = "text-davinci-003",
     prompt = selection$value,
     max_tokens = 500,

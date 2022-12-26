@@ -4,9 +4,9 @@
 #'
 #' @export
 comAddin <- function() {
-  selection <- selectionGet()
+  selection <- rstudioapi::selectionGet()
 
-  edit <- create_edit(
+  edit <- openai::create_edit(
     model = "code-davinci-edit-001",
     input = selection$value,
     instruction = "add comments to each line of code, explaining what the code does",

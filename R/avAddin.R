@@ -4,9 +4,9 @@
 #'
 #' @export
 avAddin <- function() {
-  selection <- selectionGet()
+  selection <- rstudioapi::selectionGet()
 
-  edit <- create_edit(
+  edit <- openai::create_edit(
     model = "text-davinci-edit-001",
     input = selection$value,
     instruction = "rewrite text in the active voice",
