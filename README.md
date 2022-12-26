@@ -89,7 +89,7 @@ the text in the active voice.
 
 ![active_voice](./media/active_voice.gif)
 
-#### Write/code from prompt
+### Write/code from prompt
 
 **Addins \> GPTSTUDIO \> Write/Code from prompt:** Takes the selected
 text and sends it to OpenAI as a prompt for the model to work with. This
