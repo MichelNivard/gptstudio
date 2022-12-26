@@ -6,9 +6,9 @@ test_that("API key validation works", {
 })
 
 test_that("API connection checking works", {
-  skip_if_offline()
   sample_key <- uuid::UUIDgenerate()
   expect_error(check_api_connection(sample_key))
+  expect_error(check_api_connection(""))
 })
 
 test_that("API connection can return true", {

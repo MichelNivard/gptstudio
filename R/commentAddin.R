@@ -4,6 +4,7 @@
 #'
 #' @export
 comAddin <- function() {
+  check_api_connection()
   selection <- rstudioapi::selectionGet()
 
   edit <- openai::create_edit(
