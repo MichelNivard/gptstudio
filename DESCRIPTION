@@ -9,10 +9,15 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 
+    cli,
     miniUI,
     openai,
     rstudioapi,
     shiny
 RoxygenNote: 7.2.3
 Suggests: 
-    covr
+    covr,
+    httr,
+    testthat (>= 3.0.0),
+    uuid
+Config/testthat/edition: 3
