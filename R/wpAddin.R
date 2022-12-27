@@ -4,17 +4,10 @@
 #'
 #' @export
 wpAddin <- function() {
-  check_api_connection()
-  selection <- rstudioapi::selectionGet()
-
-  product <- openai::create_completion(
+  gpt_create(
     model = "text-davinci-003",
-    prompt = selection$value,
     max_tokens = 500,
     temperature = 0.1,
-    top_p = 1,
+    top_p = 1
   )
-
-  rstudioapi::insertText(product$choices[1,1])
-
 }

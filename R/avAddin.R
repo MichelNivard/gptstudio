@@ -4,20 +4,10 @@
 #'
 #' @export
 avAddin <- function() {
-  check_api_connection()
-  selection <- rstudioapi::selectionGet()
-
-  edit <- openai::create_edit(
+  gpt_edit(
     model = "text-davinci-edit-001",
-    input = selection$value,
     instruction = "rewrite text in the active voice",
     temperature = 0.1,
-    top_p = 1,
-    openai_api_key = Sys.getenv("OPENAI_API_KEY"),
-    openai_organization = NULL
+    top_p = 1
   )
-
-  rstudioapi::insertText(edit$choices[1,1])
-
-
 }

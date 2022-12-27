@@ -4,20 +4,10 @@
 #'
 #' @export
 comAddin <- function() {
-  check_api_connection()
-  selection <- rstudioapi::selectionGet()
-
-  edit <- openai::create_edit(
+  gpt_edit(
     model = "code-davinci-edit-001",
-    input = selection$value,
     instruction = "add comments to each line of code, explaining what the code does",
     temperature = 0.1,
     top_p = 1,
-    openai_api_key = Sys.getenv("OPENAI_API_KEY"),
-    openai_organization = NULL
   )
-
-  rstudioapi::insertText(edit$choices[1,1])
-
-
 }

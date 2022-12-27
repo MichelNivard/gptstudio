@@ -7,5 +7,5 @@
 gptAddin()
 }
 \description{
-Call this function as a Rstudio addin to open a GPT shiny app where the user can choose the model, the temperature ("creativity") and their own custom editing instruction.
+Call this function as a Rstudio addin to open a GPT shiny app.
 }

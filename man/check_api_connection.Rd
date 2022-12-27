@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_api.R
 \name{check_api_connection}
 \alias{check_api_connection}
-\title{Check API setup}
+\title{Check connection to OpenAI's API works}
 \usage{
 check_api_connection(api_key = Sys.getenv("OPENAI_API_KEY"))
 }
@@ -10,7 +10,7 @@ check_api_connection(api_key = Sys.getenv("OPENAI_API_KEY"))
 \item{api_key}{An API key. Defaults to the value of the `OPENAI_API_KEY` environment variable.}
 }
 \value{
-Nothing is returned. If the API key is valid, a success message is printed. If the API key is invalid, an error message is printed and the function aborts.
+Nothing is returned. If the API key is valid, a success message is printed. If the API key is invalid, an error message is printed and the function is aborted.
 }
 \description{
 This function checks whether the API key provided in the `OPENAI_API_KEY` environment variable is valid.

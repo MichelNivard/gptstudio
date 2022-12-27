@@ -19,5 +19,6 @@ Suggests:
     covr,
     httr,
     testthat (>= 3.0.0),
-    uuid
+    uuid,
+    withr
 Config/testthat/edition: 3
