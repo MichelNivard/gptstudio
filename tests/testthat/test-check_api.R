@@ -5,13 +5,21 @@ test_that("API checking fails with random API key", {
   expect_error(check_api(sample_key))
 })
 
-test_that("API checking works with check_api()", {
-  skip_if_offline()
-  skip_on_ci()
+test_that("API checking works on CI", {
+  mockr::local_mock(simple_api_check = function(api_check) 200)
+  expect_no_warning(check_api())
+  expect_no_warning(check_api())
+  withr::local_envvar("OPENAI_API_KEY" = sample_key)
   expect_message(check_api())
+})
+
+test_that("API checking works with check_api(), assumes OPENAI_API_KEY is set", {
+  skip_if_offline()
+  skip_if(is.null(Sys.getenv("OPENAI_API_KEY")))
+  expect_message(check_api())
+  # make sure skipping check works if first check works
   expect_message(check_api())
   withr::local_envvar("OPENAI_API_KEY" = sample_key)
-  print(Sys.getenv("OPENAI_API_KEY"))
   expect_error(check_api())
 })
 test_that("API key validation works", {

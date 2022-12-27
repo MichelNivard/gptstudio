@@ -8,11 +8,8 @@
 #' @export
 check_api_connection <- function(api_key = Sys.getenv("OPENAI_API_KEY")) {
   check_api_key(api_key)
-  request <-
-    httr::GET("https://api.openai.com/v1/models",
-              httr::add_headers(Authorization = paste0("Bearer ", api_key)))
-
-  if (httr::status_code(request) == 200) {
+  status_code <- simple_api_check(api_key)
+  if (status_code == 200) {
     # If the status code is 200, the key is valid
     cli::cli_alert_success("API key is valid and a simple API call worked.")
     cli::cli_alert_info("The API is checked once per session.")
@@ -72,7 +69,13 @@ check_api <- function(api_key = Sys.getenv("OPENAI_API_KEY")){
   } else if (key == Sys.getenv("OPENAI_API_KEY")) {
     cli::cli_alert_success("API already validated in this session.")
   } else {
-    cli::cli_alert_info("API key has changed. Checking API connection again.")
+    cli::cli_alert_warning("API key has changed. Checking API connection again.")
     check_api_connection(api_key)
   }
+}
+
+simple_api_check <- function(api_key){
+  httr::GET("https://api.openai.com/v1/models",
+            httr::add_headers(Authorization = paste0("Bearer ", api_key))) |>
+    httr::status_code()
 }

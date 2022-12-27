@@ -20,6 +20,7 @@ RoxygenNote: 7.2.3
 Suggests: 
     covr,
     httr,
+    mockr,
     testthat (>= 3.0.0),
     uuid,
     withr
