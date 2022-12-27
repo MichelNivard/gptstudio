@@ -7,9 +7,10 @@ test_that("API checking fails with random API key", {
 
 test_that("API checking works on CI", {
   mockr::local_mock(simple_api_check = function(api_check) 200)
-  expect_no_warning(check_api())
-  expect_no_warning(check_api())
   withr::local_envvar("OPENAI_API_KEY" = sample_key)
+  expect_no_warning(check_api())
+  expect_no_warning(check_api())
+  withr::local_envvar("OPENAI_API_KEY" = uuid::UUIDgenerate())
   expect_message(check_api())
 })
 
