@@ -15,7 +15,7 @@ test_that("API checking works on CI", {
 
 test_that("API checking works with check_api(), assumes OPENAI_API_KEY is set", {
   skip_if_offline()
-  skip_if(is.null(Sys.getenv("OPENAI_API_KEY")))
+  skip_on_ci()
   expect_message(check_api())
   # make sure skipping check works if first check works
   expect_message(check_api())
