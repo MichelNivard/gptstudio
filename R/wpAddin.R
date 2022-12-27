@@ -4,6 +4,7 @@
 #'
 #' @export
 wpAddin <- function() {
+  check_api_connection()
   selection <- rstudioapi::selectionGet()
 
   product <- openai::create_completion(
