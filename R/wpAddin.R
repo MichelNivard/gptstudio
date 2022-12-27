@@ -6,6 +6,7 @@
 wpAddin <- function() {
   gpt_create(
     model = "text-davinci-003",
+    max_tokens = 500,
     temperature = 0.1,
     top_p = 1
   )
