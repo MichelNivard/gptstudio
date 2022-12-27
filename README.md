@@ -19,6 +19,9 @@ models. Ethics of LLMs (also called [Foundation
 Models](https://arxiv.org/abs/2108.07258)) is an area of very active
 discussion.
 
+
+This package relies on the excellent [openai](https://github.com/irudnyts/openai) r package.
+
 **read the privacy note at the bottom, this is alpha software there is
 no warranty for anything.**
 
