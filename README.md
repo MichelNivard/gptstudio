@@ -85,7 +85,7 @@ and grammar checked version.
 ### Freeform GPT editor
 
 **Addins \> GPTSTUDIO \> Freeform GPT editor:** Apply any edit what YOU
-desire or can dream up to a selection of code or text.
+desire or can dream up to a selection of code or text. Here it's shown translating a famous French poem by Victor Hugo.
 
 ![freeform](./media/hugo2.gif)
 
