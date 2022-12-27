@@ -8,10 +8,8 @@ Description: OpenAI offers a number of large language models (LLMs) accessible v
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Depends:
 Imports: 
     cli,
-    miniUI,
     openai,
     rstudioapi (>= 0.12),
     shiny
@@ -19,7 +17,9 @@ RoxygenNote: 7.2.3
 Suggests: 
     covr,
     httr,
+    miniUI,
     mockr,
+    shinytest2,
     testthat (>= 3.0.0),
     uuid,
     withr

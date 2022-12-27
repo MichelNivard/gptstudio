@@ -5,3 +5,4 @@ media/
 ^README\.Rmd$
 ^\.github$
 ^codecov\.yml$
+_\.new\.png$
