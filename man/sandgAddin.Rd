@@ -7,5 +7,5 @@
 sandgAddin()
 }
 \description{
-Call this function as a Rstudio addin to ask GPT to improve spelling and grammar of selected text
+Call this function as a Rstudio addin to ask GPT to improve spelling and grammar of selected text.
 }

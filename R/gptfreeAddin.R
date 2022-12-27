@@ -4,7 +4,7 @@
 #'
 #' @export
 gptAddin <- function() {
-  check_api_connection()
+  check_api()
   # Our ui will be a simple gadget page
   ui <- miniUI::miniPage(
 
