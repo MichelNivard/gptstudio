@@ -8,6 +8,8 @@ Description: OpenAI offers a number of large language models (LLMs) accessible v
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Depends:
+    rstudioapi (>= 0.12)
 Imports: 
     cli,
     miniUI,
