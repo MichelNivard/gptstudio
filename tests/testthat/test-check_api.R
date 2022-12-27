@@ -7,6 +7,7 @@ test_that("API checking fails with random API key", {
 
 test_that("API checking works with check_api()", {
   skip_if_offline()
+  skip_on_ci()
   expect_message(check_api())
   expect_message(check_api())
   withr::local_envvar("OPENAI_API_KEY" = sample_key)
@@ -26,6 +27,7 @@ test_that("API connection checking works", {
 
 test_that("API connection can return true", {
   skip_if_offline()
+  skip_on_ci()
   expect_message(check_api_connection())
 })
 
