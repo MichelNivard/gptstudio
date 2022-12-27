@@ -10,3 +10,5 @@
 
   invisible()
 }
+
+globalVariables(".rs.invokeShinyPaneViewer")
