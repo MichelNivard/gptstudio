@@ -69,7 +69,7 @@ project. Note: If you are using GitHub/Gitlab, do not forget to add
 
 ``` r
 require(devtools)
-install_github("MichelNivard/GPTstudio")
+install_github("MichelNivard/gptstudio")
 ```
 
 ## Usage
