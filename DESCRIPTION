@@ -9,12 +9,11 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends:
-    rstudioapi (>= 0.12)
 Imports: 
     cli,
     miniUI,
     openai,
-    rstudioapi,
+    rstudioapi (>= 0.12),
     shiny
 RoxygenNote: 7.2.3
 Suggests: 
