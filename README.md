@@ -12,6 +12,7 @@ status](https://www.r-pkg.org/badges/version/GPTstudio)](https://CRAN.R-project.
 [![R-CMD-check](https://github.com/JamesHWade/GPTstudio/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/JamesHWade/GPTstudio/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/JamesHWade/GPTstudio/branch/main/graph/badge.svg)](https://app.codecov.io/gh/JamesHWade/GPTstudio?branch=main)
+[![R-CMD-check](https://github.com/MichelNivard/gptstudio/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MichelNivard/gptstudio/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of gptstudio is for R programmers to easily incorporate use of

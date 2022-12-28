@@ -6,3 +6,6 @@ media/
 ^\.github$
 ^codecov\.yml$
 _\.new\.png$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

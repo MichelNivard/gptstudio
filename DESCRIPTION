@@ -24,3 +24,6 @@ Suggests:
     uuid,
     withr
 Config/testthat/edition: 3
+URL: https://github.com/MichelNivard/gptstudio,
+    https://michelnivard.github.io/gptstudio/
+BugReports: https://github.com/MichelNivard/gptstudio/issues
