@@ -15,6 +15,7 @@ test_that("gpt_edit can replace and append text", {
                openai_organization) {
         list(choices = data.frame(text = "here are edits openai returns"))}
   )
+  mockr::local_mock(check_api = function() TRUE)
   replace_text <-
     gpt_edit(model = "code-davinci-edit-001",
              instruction = "instructions",
@@ -43,6 +44,7 @@ test_that("gpt_create can replace & append text", {
                top_p, openai_api_key, openai_organization) {
         list(choices = data.frame(text = "here are completions openai returns"))}
   )
+  mockr::local_mock(check_api = function() TRUE)
   replace_text <-
     gpt_create(model = "code-davinci-edit-001",
                temperature = 0.1,
