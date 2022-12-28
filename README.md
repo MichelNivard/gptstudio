@@ -1,5 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# gptstudio <img src="man/figures/logo.png" align="right" height="98" />
+
 <!-- badges: start -->
 
 [![Lifecycle:
@@ -12,15 +15,12 @@ coverage](https://codecov.io/gh/JamesHWade/GPTstudio/branch/main/graph/badge.svg
 <!-- badges: end -->
 
 The goal of gptstudio is for R programmers to easily incorporate use of
-large language models (LLMs), specifically for now GPT variants developed by OpenAI, into their project workflows. These models
+large language models (LLMs) into their project workflows. These models
 appear to be a step change in our use of text for knowledge work, but
 you should carefully consider ethical implications of using these
 models. Ethics of LLMs (also called [Foundation
 Models](https://arxiv.org/abs/2108.07258)) is an area of very active
 discussion.
-
-
-This package relies on the excellent [openai](https://github.com/irudnyts/openai) r package.
 
 **read the privacy note at the bottom, this is alpha software there is
 no warranty for anything.**
@@ -40,7 +40,7 @@ no warranty for anything.**
   be replaced with your actual key:
 
 ``` r
-Sys.setenv(OPENAI_API_KEY = "<APIKEY>")
+Sys.setenv(OPENAI_API_KEY = "<OPENAI_API_KEY>")
 ```
 
 - Alternatively, you can set the key in your .Renviron file.
@@ -54,11 +54,11 @@ edit_r_environ(scope = "project")
 ```
 
 You can add the following line to the file (again, replace
-`"<APIKEY>"` with your actual
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx with your actual
 key):
 
 ``` bash
-OPENAI_API_KEY="<APIKEY>"
+OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
 This now set the API key every time you start up this particular
@@ -69,13 +69,12 @@ project. Note: If you are using GitHub/Gitlab, do not forget to add
 
 ``` r
 require(devtools)
-install_github("MichelNivard/gptstudio")
+install_github("MichelNivard/GPTstudio")
 ```
 
 ## Usage
 
 Some examples of use.
-
 
 ### Spelling ang grammar check
 
@@ -85,23 +84,15 @@ and grammar checked version.
 
 ![spelling](./media/spelling.gif)
 
-### Freeform GPT editor
-
-**Addins \> GPTSTUDIO \> Freeform GPT editor:** Apply any edit what YOU
-desire or can dream up to a selection of code or text. Here it's shown translating a famous French poem by Victor Hugo.
-
-![freeform](./media/hugo2.gif)
-
-
 ### Active voice
 
 **Addins \> GPTSTUDIO \> Change text to active voice:** Takes the
-selected text sends it to OpenAI’s best model and instructs it to return
-the text in the active voice.
+selected text, sends it to OpenAI’s best model and instructs it to
+return the text in the active voice.
 
 ![active_voice](./media/active_voice.gif)
 
-### Write/code from prompt
+#### Write/code from prompt
 
 **Addins \> GPTSTUDIO \> Write/Code from prompt:** Takes the selected
 text and sends it to OpenAI as a prompt for the model to work with. This
@@ -124,7 +115,12 @@ line.
 
 ![add comments to code](./media/comments.gif)
 
+### Provide your own instructions
 
+**Addins \> GPTSTUDIO \> Freeform GPT editor:** Apply any edit what YOU
+desire or can dream up to a selection of code or text.
+
+![freeform](./media/hugo.gif)
 
 **Privacy note:** these functions work by taking the text or code you
 have highlighted/selected with the cursor and send these to OpenAI as
@@ -138,4 +134,4 @@ now, but I do not want people to accidentally share sensitive data with
 OpenAI.
 
 DO NOT HIGHLIGHT, AND THEREFORE UPLOAD, DATA/CODE/TEXT THAT SHOULD
-REMAIN PRIVATE.
+REMAIN PRIVATE
