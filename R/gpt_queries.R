@@ -20,10 +20,10 @@ gpt_edit <- function(model,
                       openai_organization = NULL,
                       append_text = FALSE) {
   check_api()
-  selection <- rstudioapi::selectionGet()
+  selection <- get_selection()
   cli::cli_progress_step("Asking GPT for help...")
 
-  edit <- openai::create_edit(
+  edit <- openai_create_edit(
     model = model,
     input = selection$value,
     instruction = instruction,
@@ -42,9 +42,23 @@ gpt_edit <- function(model,
     improved_text <- edit$choices$text
     cli::cli_progress_step("Inserting text from GPT...")
   }
-  rstudioapi::insertText(improved_text)
+  insert_text(improved_text)
 }
 
+# Wrapper around create_edit to help with testthat
+# @export
+openai_create_edit <- function(model, input, instruction, temperature,
+                               top_p, openai_api_key, openai_organization){
+  openai::create_edit(
+    model = model,
+    input = input,
+    instruction = instruction,
+    temperature = temperature,
+    top_p = top_p,
+    openai_api_key = openai_api_key,
+    openai_organization = openai_organization
+  )
+}
 
 #' Use GPT to improve text
 #'
@@ -68,10 +82,11 @@ gpt_create <- function(model,
                      openai_organization = NULL,
                      append_text = TRUE) {
   check_api()
-  selection <- rstudioapi::selectionGet()
+  selection <- get_selection()
+  cat('here\n')
   cli::cli_progress_step("Asking GPT for help...")
 
-  edit <- openai::create_completion(
+  edit <- openai_create_completion(
     model = model,
     prompt = selection$value,
     temperature = temperature,
@@ -90,5 +105,30 @@ gpt_create <- function(model,
     improved_text <- edit$choices$text
     cli::cli_progress_step("Inserting text from GPT...")
   }
+  insert_text(improved_text)
+}
+
+
+# Wrapper around create_completion to help with testthat
+# @export
+openai_create_completion <- function(model, prompt, temperature, max_tokens,
+                               top_p, openai_api_key, openai_organization){
+  openai::create_completion(
+    model = model,
+    prompt = prompt,
+    temperature = temperature,
+    top_p = top_p,
+    openai_api_key = openai_api_key,
+    openai_organization = openai_organization
+  )
+}
+
+# Wrapper around selectionGet to help with testthat
+get_selection <- function(){
+  rstudioapi::selectionGet()
+}
+
+# Wrapper around selectionGet to help with testthat
+insert_text <- function(improved_text){
   rstudioapi::insertText(improved_text)
 }
