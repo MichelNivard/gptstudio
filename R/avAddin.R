@@ -7,7 +7,6 @@ avAddin <- function() {
   gpt_edit(
     model = "text-davinci-edit-001",
     instruction = "rewrite text in the active voice",
-    temperature = 0.1,
-    top_p = 1
+    temperature = 0.1
   )
 }

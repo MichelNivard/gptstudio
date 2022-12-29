@@ -8,7 +8,6 @@ gpt_create(
   model,
   temperature,
   max_tokens,
-  top_p,
   openai_api_key = Sys.getenv("OPENAI_API_KEY"),
   openai_organization = NULL,
   append_text = TRUE
@@ -20,8 +19,6 @@ gpt_create(
 \item{temperature}{A parameter for controlling the randomness of the GPT model's output.}
 
 \item{max_tokens}{Maximum number of tokens to return (related to length of response), defaults to 500}
-
-\item{top_p}{A parameter for controlling the probability of the GPT model's output.}
 
 \item{openai_api_key}{An API key for the OpenAI API.}
 
