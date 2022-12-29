@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# gptstudio <img src="man/figures/logo.png" align="right" height="98" />
+# gptstudio <img src="man/figures/logo.png" align="right" height="98"/>
 
 <!-- badges: start -->
 
@@ -12,6 +12,7 @@ status](https://www.r-pkg.org/badges/version/GPTstudio)](https://CRAN.R-project.
 [![Codecov test
 coverage](https://codecov.io/gh/JamesHWade/GPTstudio/branch/main/graph/badge.svg)](https://app.codecov.io/gh/JamesHWade/GPTstudio?branch=main)
 [![R-CMD-check](https://github.com/MichelNivard/gptstudio/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MichelNivard/gptstudio/actions/workflows/R-CMD-check.yaml)
+
 <!-- badges: end -->
 
 The goal of gptstudio is for R programmers to easily incorporate use of
@@ -22,8 +23,28 @@ models. Ethics of LLMs (also called [Foundation
 Models](https://arxiv.org/abs/2108.07258)) is an area of very active
 discussion.
 
-**read the privacy note at the bottom, this is alpha software there is
-no warranty for anything.**
+## Install the addins from this package:
+
+``` r
+require(devtools)
+install_github("MichelNivard/GPTstudio")
+```
+
+## Privacy Notice
+
+These functions work by taking the text or code you have
+highlighted/selected with the cursor and send these to OpenAI as part of
+a prompt, they fall under their privacy notice/rules/exceptions you
+agreed to with OpenAI when making an account. I do not know how secure
+these are when sent to OpenAI, I also don’t know what OpenAI does with
+them. The code is designed to ONLY share the highlighted/selected text
+and no other elements of your R environment (i.e. data) unless you have
+highlighted it when running the addin. This may limit usability for now,
+but I do not want people to accidentally share sensitive data with
+OpenAI.
+
+**DO NOT HIGHLIGHT, AND THEREFORE UPLOAD, DATA/CODE/TEXT THAT SHOULD
+REMAIN PRIVATE**
 
 ## Prerequisites
 
@@ -64,13 +85,6 @@ OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 This now set the API key every time you start up this particular
 project. Note: If you are using GitHub/Gitlab, do not forget to add
 .Renviron to .gitignore!
-
-## Install the addins from this package:
-
-``` r
-require(devtools)
-install_github("MichelNivard/GPTstudio")
-```
 
 ## Usage
 
@@ -121,17 +135,3 @@ line.
 desire or can dream up to a selection of code or text.
 
 ![freeform](./media/hugo.gif)
-
-**Privacy note:** these functions work by taking the text or code you
-have highlighted/selected with the cursor and send these to OpenAI as
-part of a prompt, they fall under their privacy notice/rules/exceptions
-you agreed to with OpenAI when making an account. I do not know how
-secure these are when sent to OpenAI, I also don’t know what OpenAI does
-with them. The code is designed to ONLY share the highlighted/selected
-text and no other elements of your R environment (i.e. data) unless you
-have highlighted it when running the addin. This may limit usability for
-now, but I do not want people to accidentally share sensitive data with
-OpenAI.
-
-DO NOT HIGHLIGHT, AND THEREFORE UPLOAD, DATA/CODE/TEXT THAT SHOULD
-REMAIN PRIVATE
