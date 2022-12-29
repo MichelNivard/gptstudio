@@ -98,7 +98,7 @@
 <li>By default, functions of <a href="https://github.com/irudnyts/openai" class="external-link">openai</a> will look for <code>OPENAI_API_KEY</code> environment variable. If you want to set a global environment variable, you can use the following command, where <code>"&lt;APIKEY&gt;"</code> should be replaced with your actual key:</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>OPENAI_API_KEY <span class="op">=</span> <span class="st">"&lt;OPENAI_API_KEY&gt;"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>OPENAI_API_KEY <span class="op">=</span> <span class="st">"&lt;APIKEY&gt;"</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>Alternatively, you can set the key in your .Renviron file.</li>
 </ul>
@@ -106,8 +106,8 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://usethis.r-lib.org" class="external-link">usethis</a></span><span class="op">)</span></span>
 <span><span class="fu">edit_r_environ</span><span class="op">(</span>scope <span class="op">=</span> <span class="st">"project"</span><span class="op">)</span></span></code></pre></div>
-<p>You can add the following line to the file (again, replace xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx with your actual key):</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">OPENAI_API_KEY</span><span class="op">=</span>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span></code></pre></div>
+<p>You can add the following line to the file (again, replace <code>"&lt;APIKEY&gt;"</code> with your actual key):</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">OPENAI_API_KEY</span><span class="op">=</span> <span class="st">"&lt;APIKEY&gt;"</span><span class="er">)</span></span></code></pre></div>
 <p>This now set the API key every time you start up this particular project. Note: If you are using GitHub/Gitlab, do not forget to add .Renviron to .gitignore!</p>
 </div>
 <div class="section level2">
@@ -119,7 +119,7 @@
 </h3>
 <p><strong>Addins &gt; GPTSTUDIO &gt; Spelling and Grammar:</strong> Takes the selected text sends it to OpenAI’s best model and instructs it to return a spelling and grammar checked version.</p>
 <div class="figure">
-<img src="./media/spelling.gif" alt=""><p class="caption">spelling</p>
+<img src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/spelling.gif" alt=""><p class="caption">spelling</p>
 </div>
 </div>
 <div class="section level3">
@@ -127,7 +127,7 @@
 </h3>
 <p><strong>Addins &gt; GPTSTUDIO &gt; Change text to active voice:</strong> Takes the selected text, sends it to OpenAI’s best model and instructs it to return the text in the active voice.</p>
 <div class="figure">
-<img src="./media/active_voice.gif" alt=""><p class="caption">active_voice</p>
+<img src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/active_voice.gif" alt=""><p class="caption">active_voice</p>
 </div>
 <div class="section level4">
 <h4 id="writecode-from-prompt">Write/code from prompt<a class="anchor" aria-label="anchor" href="#writecode-from-prompt"></a>
@@ -135,11 +135,11 @@
 <p><strong>Addins &gt; GPTSTUDIO &gt; Write/Code from prompt:</strong> Takes the selected text and sends it to OpenAI as a prompt for the model to work with. This is most like the ChatGPT experience.</p>
 <p>Text from prompt:</p>
 <div class="figure">
-<img src="./media/promt_text.gif" alt=""><p class="caption">prompt_text</p>
+<img src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/prompt_text.gif" alt=""><p class="caption">prompt_text</p>
 </div>
 <p>Code from prompt:</p>
 <div class="figure">
-<img src="./media/prompt_code.gif" alt=""><p class="caption">prompt_code</p>
+<img src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/prompt_code.gif" alt=""><p class="caption">prompt_code</p>
 </div>
 </div>
 </div>
@@ -148,7 +148,7 @@
 </h3>
 <p><strong>Addins &gt; GPTSTUDIO &gt; Comment your code:</strong> Takes the selected text sends it to OpenAI as a prompt for a code specific model to work with, asks for a version with a comment added explaining the code line by line.</p>
 <div class="figure">
-<img src="./media/comments.gif" alt=""><p class="caption">add comments to code</p>
+<img src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/comments.gif" alt=""><p class="caption">add comments to code</p>
 </div>
 </div>
 <div class="section level3">
@@ -156,7 +156,7 @@
 </h3>
 <p><strong>Addins &gt; GPTSTUDIO &gt; Freeform GPT editor:</strong> Apply any edit what YOU desire or can dream up to a selection of code or text.</p>
 <div class="figure">
-<img src="./media/hugo.gif" alt=""><p class="caption">freeform</p>
+<img src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/hugo2.gif" alt=""><p class="caption">freeform</p>
 </div>
 </div>
 </div>
