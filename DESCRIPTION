@@ -9,7 +9,7 @@ Authors@R:
            email = "m.g.nivard@vu.nl"),
     person(given = "James",
            family = "Wade",
-           role = "au", 
+           role = "aut", 
            email = "github@jameshwade.com",
            comment = c(ORCID = "0000-0002-9740-1905")))
 Maintainer: Michel Nivard <m.g.nivard@vu.nl>
