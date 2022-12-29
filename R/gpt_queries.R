@@ -5,7 +5,6 @@
 #' @param model The name of the GPT model to use.
 #' @param instruction Instruction given to the model on how to improve the text.
 #' @param temperature A parameter for controlling the randomness of the GPT model's output.
-#' @param top_p A parameter for controlling the probability of the GPT model's output.
 #' @param openai_api_key An API key for the OpenAI API.
 #' @param openai_organization An optional organization ID for the OpenAI API.
 #' @param append_text Add text to selection rather than replace, defaults to FALSE
@@ -15,7 +14,6 @@
 gpt_edit <- function(model,
                       instruction,
                       temperature,
-                      top_p,
                       openai_api_key = Sys.getenv("OPENAI_API_KEY"),
                       openai_organization = NULL,
                       append_text = FALSE) {
@@ -28,7 +26,6 @@ gpt_edit <- function(model,
     input = selection$value,
     instruction = instruction,
     temperature = temperature,
-    top_p = top_p,
     openai_api_key = openai_api_key,
     openai_organization = openai_organization
   )
@@ -48,13 +45,12 @@ gpt_edit <- function(model,
 # Wrapper around create_edit to help with testthat
 # @export
 openai_create_edit <- function(model, input, instruction, temperature,
-                               top_p, openai_api_key, openai_organization){
+                               openai_api_key, openai_organization){
   openai::create_edit(
     model = model,
     input = input,
     instruction = instruction,
     temperature = temperature,
-    top_p = top_p,
     openai_api_key = openai_api_key,
     openai_organization = openai_organization
   )
@@ -67,7 +63,6 @@ openai_create_edit <- function(model, input, instruction, temperature,
 #' @param model The name of the GPT model to use.
 #' @param temperature A parameter for controlling the randomness of the GPT model's output.
 #' @param max_tokens Maximum number of tokens to return (related to length of response), defaults to 500
-#' @param top_p A parameter for controlling the probability of the GPT model's output.
 #' @param openai_api_key An API key for the OpenAI API.
 #' @param openai_organization An optional organization ID for the OpenAI API.
 #' @param append_text Add text to selection rather than replace, defaults to TRUE
@@ -77,7 +72,6 @@ openai_create_edit <- function(model, input, instruction, temperature,
 gpt_create <- function(model,
                      temperature,
                      max_tokens,
-                     top_p,
                      openai_api_key = Sys.getenv("OPENAI_API_KEY"),
                      openai_organization = NULL,
                      append_text = TRUE) {
@@ -91,7 +85,6 @@ gpt_create <- function(model,
     prompt = selection$value,
     temperature = temperature,
     max_tokens = max_tokens,
-    top_p = top_p,
     openai_api_key = openai_api_key,
     openai_organization = openai_organization
   )
@@ -112,12 +105,11 @@ gpt_create <- function(model,
 # Wrapper around create_completion to help with testthat
 # @export
 openai_create_completion <- function(model, prompt, temperature, max_tokens,
-                               top_p, openai_api_key, openai_organization){
+                               openai_api_key, openai_organization){
   openai::create_completion(
     model = model,
     prompt = prompt,
     temperature = temperature,
-    top_p = top_p,
     openai_api_key = openai_api_key,
     openai_organization = openai_organization
   )

@@ -8,7 +8,6 @@ gpt_edit(
   model,
   instruction,
   temperature,
-  top_p,
   openai_api_key = Sys.getenv("OPENAI_API_KEY"),
   openai_organization = NULL,
   append_text = FALSE
@@ -20,8 +19,6 @@ gpt_edit(
 \item{instruction}{Instruction given to the model on how to improve the text.}
 
 \item{temperature}{A parameter for controlling the randomness of the GPT model's output.}
-
-\item{top_p}{A parameter for controlling the probability of the GPT model's output.}
 
 \item{openai_api_key}{An API key for the OpenAI API.}
 
