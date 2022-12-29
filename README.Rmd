@@ -78,13 +78,13 @@ Some examples of use.
 
 **Addins \> GPTSTUDIO \> Spelling and Grammar:** Takes the selected text sends it to OpenAI's best model and instructs it to return a spelling and grammar checked version.
 
-![spelling](./media/spelling.gif)
+![spelling](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/spelling.gif)
 
 ### Active voice
 
 **Addins \> GPTSTUDIO \> Change text to active voice:** Takes the selected text, sends it to OpenAI's best model and instructs it to return the text in the active voice.
 
-![active_voice](./media/active_voice.gif)
+![active_voice](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/active_voice.gif)
 
 #### Write/code from prompt
 
@@ -92,20 +92,20 @@ Some examples of use.
 
 Text from prompt:
 
-![prompt_text](./media/promt_text.gif)
+![prompt_text](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/prompt_text.gif)
 
 Code from prompt:
 
-![prompt_code](./media/prompt_code.gif)
+![prompt_code](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/prompt_code.gif)
 
 ### Comment your code:
 
 **Addins \> GPTSTUDIO \> Comment your code:** Takes the selected text sends it to OpenAI as a prompt for a code specific model to work with, asks for a version with a comment added explaining the code line by line.
 
-![add comments to code](./media/comments.gif)
+![add comments to code](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/comment.gif)
 
 ### Provide your own instructions
 
 **Addins \> GPTSTUDIO \> Freeform GPT editor:** Apply any edit what YOU desire or can dream up to a selection of code or text.
 
-![freeform](./media/hugo.gif)
+![freeform](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/hugo2.gif)
