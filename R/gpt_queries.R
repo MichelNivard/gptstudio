@@ -109,6 +109,7 @@ openai_create_completion <- function(model, prompt, temperature, max_tokens,
   openai::create_completion(
     model = model,
     prompt = prompt,
+    max_tokens = max_tokens,
     temperature = temperature,
     openai_api_key = openai_api_key,
     openai_organization = openai_organization
