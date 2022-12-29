@@ -23,11 +23,14 @@ models. Ethics of LLMs (also called [Foundation
 Models](https://arxiv.org/abs/2108.07258)) is an area of very active
 discussion.
 
+For further addins, tailored for R developers, also see the sister
+package: [gpttools](https://jameshwade.github.io/gpttools/)
+
 ## Install the addins from this package:
 
 ``` r
 require(devtools)
-install_github("MichelNivard/GPTstudio")
+install_github("MichelNivard/gptstudio")
 ```
 
 ## Privacy Notice
