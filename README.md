@@ -61,7 +61,7 @@ REMAIN PRIVATE**
   be replaced with your actual key:
 
 ``` r
-Sys.setenv(OPENAI_API_KEY = "<OPENAI_API_KEY>")
+Sys.setenv(OPENAI_API_KEY = "<APIKEY>")
 ```
 
 - Alternatively, you can set the key in your .Renviron file.
@@ -74,12 +74,11 @@ require(usethis)
 edit_r_environ(scope = "project")
 ```
 
-You can add the following line to the file (again, replace
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx with your actual
-key):
+You can add the following line to the file (again, replace `"<APIKEY>"`
+with your actual key):
 
 ``` bash
-OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+OPENAI_API_KEY= "<APIKEY>")
 ```
 
 This now set the API key every time you start up this particular
@@ -96,7 +95,7 @@ Some examples of use.
 sends it to OpenAI’s best model and instructs it to return a spelling
 and grammar checked version.
 
-![spelling](./media/spelling.gif)
+![spelling](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/spelling.gif)
 
 ### Active voice
 
@@ -104,7 +103,7 @@ and grammar checked version.
 selected text, sends it to OpenAI’s best model and instructs it to
 return the text in the active voice.
 
-![active_voice](./media/active_voice.gif)
+![active_voice](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/active_voice.gif)
 
 #### Write/code from prompt
 
@@ -114,11 +113,11 @@ is most like the ChatGPT experience.
 
 Text from prompt:
 
-![prompt_text](./media/promt_text.gif)
+![prompt_text](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/prompt_text.gif)
 
 Code from prompt:
 
-![prompt_code](./media/prompt_code.gif)
+![prompt_code](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/prompt_code.gif)
 
 ### Comment your code:
 
@@ -127,11 +126,12 @@ sends it to OpenAI as a prompt for a code specific model to work with,
 asks for a version with a comment added explaining the code line by
 line.
 
-![add comments to code](./media/comments.gif)
+![add comments to
+code](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/comments.gif)
 
 ### Provide your own instructions
 
 **Addins \> GPTSTUDIO \> Freeform GPT editor:** Apply any edit what YOU
 desire or can dream up to a selection of code or text.
 
-![freeform](./media/hugo.gif)
+![freeform](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/hugo2.gif)

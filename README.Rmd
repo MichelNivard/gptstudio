@@ -102,7 +102,7 @@ Code from prompt:
 
 **Addins \> GPTSTUDIO \> Comment your code:** Takes the selected text sends it to OpenAI as a prompt for a code specific model to work with, asks for a version with a comment added explaining the code line by line.
 
-![add comments to code](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/comment.gif)
+![add comments to code](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/comments.gif)
 
 ### Provide your own instructions
 
