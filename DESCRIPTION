@@ -20,6 +20,7 @@ LazyData: true
 Imports: 
     assertthat,
     cli,
+    miniUI,
     openai,
     purrr,
     rlang,
@@ -30,7 +31,6 @@ RoxygenNote: 7.2.3
 Suggests: 
     covr,
     httr,
-    miniUI,
     mockr,
     shinytest2,
     testthat (>= 3.0.0),
