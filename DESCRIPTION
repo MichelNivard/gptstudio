@@ -20,6 +20,7 @@ LazyData: true
 Imports: 
     assertthat,
     cli,
+    glue,
     miniUI,
     openai,
     purrr,

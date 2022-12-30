@@ -28,22 +28,22 @@ run_specify_model <- function() {
             shiny::fillRow(
               shiny::selectInput(
                 inputId = "dataframes",
-                label   = "What data do you want to model?",
+                label   = "Select data",
                 choices = available_data,
-                width   = "90%"),
+                width   = "95%"),
               shiny::selectInput(
                 inputId = "outcome",
-                label   = "What outcome do you want to model?",
+                label   = "Select outcome",
                 choices = NULL,
-                width   = "90%")),
-            shiny::helpText("Only dataframes in the global environment are shown."),
+                width   = "95%")),
+            shiny::helpText("Only dataframes in global environment are shown."),
             shiny::selectInput(
               inputId = "sum_method",
               label = "What method should be used to summarize data?",
               choices = c("skimr", "skimr_lite", "column_types", "summary"),
               width = "90%"
             ),
-            shiny::helpText("Different summary methods may produce different models."),
+            shiny::helpText("Summary methods may produce different models."),
             shiny::fillRow(
               shiny::sliderInput(
                 inputId = "temperature",
@@ -61,7 +61,11 @@ run_specify_model <- function() {
                 value = 100,
                 width="90%"
               )),
-            shiny::helpText("Temperature is a parameter for controlling the randomness of the GPT model's output. Tokens refers to the cost of a model query. One token refers to about 4 letters. If your reponse is cutoff, you can increase the number of tokens (at increase cost!)."),
+            shiny::helpText(
+              "Temperature is a parameter for controlling the randomness of the
+              GPT model's output. Tokens refers to the cost of a model query.
+              One token refers to about 4 letters. If your reponse is cutoff,
+              you can increase the number of tokens (at increase cost!)."),
             shiny::textAreaInput(inputId = "instructions",
                                  label = "Model Instructions",
                                  width = "90%"),
@@ -106,7 +110,9 @@ run_specify_model <- function() {
       prep_data_prompt(
         current_dataframe(),
         method = input$sum_method,
-        prompt = input$instructions
+        prompt = glue::glue("Dataset name: {input$dataframes}\n
+                            Outcome variable to model: {input$outcome} \n
+                            {input$instructions}")
       )) |>
       shiny::bindEvent(input$update_prompt)
 
@@ -120,13 +126,15 @@ run_specify_model <- function() {
       cli::cli_alert_info("Querying GPT")
       interim <- openai_create_completion(
         model = "text-davinci-003",
-        prompt = input$prompt,
+        prompt = prepped_prompt(),
         temperature = input$temperature,
         max_tokens = input$max_tokens,
         openai_api_key = Sys.getenv("OPENAI_API_KEY"),
         openai_organization = NULL
       )
       cli::cli_alert_info("Query complete. Providing output text.")
+
+      print(interim$choices)
 
       output$response <- shiny::renderText(interim$choices[1,1])
     }) |>
