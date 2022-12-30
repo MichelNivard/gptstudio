@@ -18,10 +18,14 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 
+    assertthat,
     cli,
     openai,
+    purrr,
+    rlang,
     rstudioapi (>= 0.12),
-    shiny
+    shiny,
+    skimr
 RoxygenNote: 7.2.3
 Suggests: 
     covr,
