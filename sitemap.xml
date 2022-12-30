@@ -28,6 +28,9 @@
     <loc>/reference/check_api_key.html</loc>
   </url>
   <url>
+    <loc>/reference/collect_dataframes.html</loc>
+  </url>
+  <url>
     <loc>/reference/comAddin.html</loc>
   </url>
   <url>
@@ -43,7 +46,16 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
+    <loc>/reference/prep_data_prompt.html</loc>
+  </url>
+  <url>
     <loc>/reference/sandgAddin.html</loc>
+  </url>
+  <url>
+    <loc>/reference/specify_model_addin.html</loc>
+  </url>
+  <url>
+    <loc>/reference/summarize_data.html</loc>
   </url>
   <url>
     <loc>/reference/wpAddin.html</loc>
