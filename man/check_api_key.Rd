@@ -4,7 +4,7 @@
 \alias{check_api_key}
 \title{Check API key}
 \usage{
-check_api_key(api_key = Sys.getenv("OPENAI_API_KEY"))
+check_api_key(api_key)
 }
 \arguments{
 \item{api_key}{An API key. Defaults to the value of the `OPENAI_API_KEY`

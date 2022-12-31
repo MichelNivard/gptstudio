@@ -51,8 +51,9 @@ gpt_edit <- function(model,
 openai_create_edit <- function(model, input, instruction, temperature,
                                openai_api_key = Sys.getenv("OPENAI_API_KEY"),
                                openai_organization = NULL) {
-  if ("openai" %in% utils::installed.packages()) {
-    openai::create_edit(
+  if (rlang::is_installed("openai")) {
+    create_edit <- rlang::env_get(rlang::ns_env("openai"), "create_edit")
+    create_edit(
       model = model,
       input = input,
       instruction = instruction,
@@ -125,14 +126,15 @@ gpt_create <- function(model,
 
 # Wrapper around create_completion to help with testthat
 # @export
-openai_create_completion <- function(
-    model, prompt, temperature,
-    max_tokens = getOption("gptstudio.max_tokens"),
-    openai_api_key = Sys.getenv("OPENAI_API_KEY"),
-    openai_organization = NULL,
-    suffix = NULL) {
-  if ("openai" %in% utils::installed.packages()) {
-    openai::create_completion(
+openai_create_completion <- function(model, prompt, temperature, max_tokens,
+                                     openai_api_key, openai_organization,
+                                     suffix = NULL) {
+  if (rlang::is_installed("openai")) {
+    create_completion <- rlang::env_get(
+      rlang::ns_env("openai"),
+      "create_completion"
+    )
+    create_completion(
       model = model,
       prompt = prompt,
       temperature = temperature,

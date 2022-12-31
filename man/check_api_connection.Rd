@@ -4,7 +4,7 @@
 \alias{check_api_connection}
 \title{Check connection to OpenAI's API works}
 \usage{
-check_api_connection(api_key = Sys.getenv("OPENAI_API_KEY"))
+check_api_connection(api_key)
 }
 \arguments{
 \item{api_key}{An API key. Defaults to the value of the `OPENAI_API_KEY`
