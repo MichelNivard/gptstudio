@@ -7,11 +7,15 @@
 check_api_connection(api_key = Sys.getenv("OPENAI_API_KEY"))
 }
 \arguments{
-\item{api_key}{An API key. Defaults to the value of the `OPENAI_API_KEY` environment variable.}
+\item{api_key}{An API key. Defaults to the value of the `OPENAI_API_KEY`
+environment variable.}
 }
 \value{
-Nothing is returned. If the API key is valid, a success message is printed. If the API key is invalid, an error message is printed and the function is aborted.
+Nothing is returned. If the API key is valid, a success message is
+printed. If the API key is invalid, an error message is printed and the
+function is aborted.
 }
 \description{
-This function checks whether the API key provided in the `OPENAI_API_KEY` environment variable is valid.
+This function checks whether the API key provided in the `OPENAI_API_KEY`
+environment variable is valid.
 }

@@ -2,10 +2,13 @@
 % Please edit documentation in R/app_freeform_editor.R
 \name{run_gpt_freeform}
 \alias{run_gpt_freeform}
-\title{Run a Shiny App to use the freefrom GPT editor}
+\title{Shiny app that supports GPT freeform addin}
 \usage{
 run_gpt_freeform()
 }
+\value{
+Nothing is returned, a shiny app is run
+}
 \description{
-Run a Shiny App to use the freefrom GPT editor
+Shiny app that supports GPT freeform addin
 }

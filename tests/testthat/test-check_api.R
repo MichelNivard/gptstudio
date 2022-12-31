@@ -39,4 +39,3 @@ test_that("API connection can return true", {
   skip_on_ci()
   expect_message(check_api_connection())
 })
-
