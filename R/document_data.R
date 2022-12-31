@@ -9,7 +9,12 @@ collect_dataframes <- function() {
   objects <- names(rlang::global_env())
   purrr::map_chr(
     .x = objects,
-    .f = ~ if (is.data.frame(get(.x))) { .x } else { NA }) |>
+    .f = ~ if (is.data.frame(get(.x))) {
+      .x
+    } else {
+      NA
+    }
+  ) %>%
     stats::na.omit()
 }
 
@@ -27,9 +32,13 @@ skim_lite <- function(data) {
 }
 
 collect_column_types <- function(data) {
-  purrr::map_dfr(names(data),
-                 ~data.frame(column = .x,
-                             type = class(data[[.x]])))
+  purrr::map_dfr(
+    names(data),
+    ~ data.frame(
+      column = .x,
+      type = class(data[[.x]])
+    )
+  )
 }
 
 #' Summarize data
@@ -47,10 +56,10 @@ summarize_data <- function(data, method = c("skimr", "skimr_lite", "column_types
   rlang::arg_match(method)
 
   switch(method[1],
-         "skimr"   = skimr::skim_without_charts(data),
-         "skimr_lite" = skim_lite(data),
-         "column_types" = collect_column_types(data),
-         "summary" = summary(data)
+    "skimr" = skimr::skim_without_charts(data),
+    "skimr_lite" = skim_lite(data),
+    "column_types" = collect_column_types(data),
+    "summary" = summary(data)
   )
 }
 
@@ -66,9 +75,11 @@ summarize_data <- function(data, method = c("skimr", "skimr_lite", "column_types
 #' @return A string
 #' @export
 #' @examples
-#' prep_data_prompt(data = mtcars,
-#'                  method = "skimr",
-#'                  prompt = "This is a test prompt.")
+#' prep_data_prompt(
+#'   data = mtcars,
+#'   method = "skimr",
+#'   prompt = "This is a test prompt."
+#' )
 prep_data_prompt <- function(data, method, prompt) {
   assertthat::assert_that(is.data.frame(data))
   assertthat::assert_that(assertthat::is.string(prompt))
@@ -76,5 +87,4 @@ prep_data_prompt <- function(data, method, prompt) {
   summarized_data <- summarize_data(data = data, method = method)
 
   paste(testthat::capture_output(print(summarized_data)), prompt, sep = "\n")
-
 }

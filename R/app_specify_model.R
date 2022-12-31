@@ -16,26 +16,28 @@ run_specify_model <- function() {
   available_data <- collect_dataframes()
 
   ui <- miniUI::miniPage(
-
     miniUI::gadgetTitleBar("Specify a model with gptstudio"),
     miniUI::miniContentPanel(
       shiny::fillCol(
-        flex = c(1,1),
+        flex = c(1, 1),
         shiny::fillRow(
-          flex = c(1,1),
+          flex = c(1, 1),
           shiny::fillCol(
-            flex = c(1,1,1,1,2,2,2,1),
+            flex = c(1, 1, 1, 1, 2, 2, 2, 1),
             shiny::fillRow(
               shiny::selectInput(
                 inputId = "dataframes",
                 label   = "Select data",
                 choices = available_data,
-                width   = "95%"),
+                width   = "95%"
+              ),
               shiny::selectInput(
                 inputId = "outcome",
                 label   = "Select outcome",
                 choices = NULL,
-                width   = "95%")),
+                width   = "95%"
+              )
+            ),
             shiny::helpText("Only dataframes in global environment are shown."),
             shiny::selectInput(
               inputId = "sum_method",
@@ -51,7 +53,7 @@ run_specify_model <- function() {
                 min = 0,
                 max = 1,
                 value = .7,
-                width="90%"
+                width = "90%"
               ),
               shiny::sliderInput(
                 inputId = "max_tokens",
@@ -59,35 +61,47 @@ run_specify_model <- function() {
                 min = 12,
                 max = 1000,
                 value = 100,
-                width="90%"
-              )),
+                width = "90%"
+              )
+            ),
             shiny::helpText(
               "Temperature is a parameter for controlling the randomness of the
               GPT model's output. Tokens refers to the cost of a model query.
               One token refers to about 4 letters. If your reponse is cutoff,
-              you can increase the number of tokens (at increase cost!)."),
-            shiny::textAreaInput(inputId = "instructions",
-                                 label = "Model Instructions",
-                                 width = "90%"),
+              you can increase the number of tokens (at increase cost!)."
+            ),
+            shiny::textAreaInput(
+              inputId = "instructions",
+              label = "Model Instructions",
+              width = "90%"
+            ),
             shiny::fillRow(
-              shiny::actionButton(inputId = "update_prompt",
-                                  label = "Update Prompt",
-                                  icon = shiny::icon("rotate-right"),
-                                  width = "90%"),
-              shiny::actionButton(inputId = "query_gpt",
-                                  label = "Specify Model",
-                                  icon = shiny::icon("wand-magic-sparkles"),
-                                  width = "90%")
+              shiny::actionButton(
+                inputId = "update_prompt",
+                label = "Update Prompt",
+                icon = shiny::icon("rotate-right"),
+                width = "90%"
+              ),
+              shiny::actionButton(
+                inputId = "query_gpt",
+                label = "Specify Model",
+                icon = shiny::icon("wand-magic-sparkles"),
+                width = "90%"
+              )
             )
           ),
           shiny::column(
             width = 12,
             shiny::h3("Model Response"),
-            shiny::verbatimTextOutput(outputId = "response",
-                                      placeholder = TRUE),
+            shiny::verbatimTextOutput(
+              outputId = "response",
+              placeholder = TRUE
+            ),
             shiny::h3("Full Prompt"),
-            shiny::verbatimTextOutput(outputId    = "prompt",
-                                      placeholder = TRUE)
+            shiny::verbatimTextOutput(
+              outputId = "prompt",
+              placeholder = TRUE
+            )
           )
         )
       )
@@ -101,9 +115,11 @@ run_specify_model <- function() {
     })
 
     shiny::observe(
-      shiny::updateSelectInput(session = session,
-                               inputId = "outcome",
-                               choices = names(current_dataframe()))
+      shiny::updateSelectInput(
+        session = session,
+        inputId = "outcome",
+        choices = names(current_dataframe())
+      )
     )
 
     prepped_prompt <- shiny::reactive(
@@ -113,13 +129,14 @@ run_specify_model <- function() {
         prompt = glue::glue("Dataset name: {input$dataframes}\n
                             Outcome variable to model: {input$outcome} \n
                             Write R code to: {input$instructions}")
-      )) |>
+      )
+    ) %>%
       shiny::bindEvent(input$update_prompt)
 
     shiny::observe({
       cli::cli_alert_info("Updating prompt")
       output$prompt <- shiny::renderText(prepped_prompt())
-    }) |>
+    }) %>%
       shiny::bindEvent(input$update_prompt)
 
     shiny::observe({
@@ -128,16 +145,12 @@ run_specify_model <- function() {
         model = "text-davinci-003",
         prompt = prepped_prompt(),
         temperature = input$temperature,
-        max_tokens = input$max_tokens,
-        openai_api_key = Sys.getenv("OPENAI_API_KEY"),
-        openai_organization = NULL
+        max_tokens = input$max_tokens
       )
       cli::cli_alert_info("Query complete. Providing output text.")
 
-      print(interim$choices)
-
-      output$response <- shiny::renderText(interim$choices[1,1])
-    }) |>
+      output$response <- shiny::renderText(interim$choices[1, 1])
+    }) %>%
       shiny::bindEvent(input$query_gpt)
 
     shiny::observeEvent(input$cancel, shiny::stopApp())

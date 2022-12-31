@@ -20,7 +20,9 @@ A string
 Prepares data prompt by summarizing data and printing it
 }
 \examples{
-prep_data_prompt(data = mtcars,
-                 method = "skimr",
-                 prompt = "This is a test prompt.")
+prep_data_prompt(
+  data = mtcars,
+  method = "skimr",
+  prompt = "This is a test prompt."
+)
 }

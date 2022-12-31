@@ -20,7 +20,7 @@ Interactive: false
 
 Name: Freeform GPT editor
 Description: Uses OpenAI's GPT-3.5 perform a user specified edit to the selected text or code
-Binding: gptAddin
+Binding: gpt_addin
 Interactive: true
 
 Name: Specify model editor
