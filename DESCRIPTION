@@ -28,13 +28,13 @@ Imports:
     rlang,
     rstudioapi (>= 0.12),
     shiny,
-    skimr
+    skimr,
+    usethis
 RoxygenNote: 7.2.3
 Suggests: 
     covr,
     httr,
     mockr,
-    openai,
     testthat (>= 3.0.0),
     uuid,
     withr
