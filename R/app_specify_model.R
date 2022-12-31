@@ -5,7 +5,7 @@
 #' @export
 specify_model_addin <- function() {
   check_api()
-  withr::local_options(shiny.launch.browser = .rs.invokeShinyPaneViewer)
+  options(shiny.launch.browser = .rs.invokeShinyPaneViewer)
   run_specify_model()
 }
 

@@ -5,7 +5,7 @@
 #' @export
 gptAddin <- function() {
   check_api()
-  withr::local_options(shiny.launch.browser = .rs.invokeShinyPaneViewer)
+  options(shiny.launch.browser = .rs.invokeShinyPaneViewer)
   run_gpt_freeform()
 }
 
