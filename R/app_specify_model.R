@@ -112,7 +112,7 @@ run_specify_model <- function() {
         method = input$sum_method,
         prompt = glue::glue("Dataset name: {input$dataframes}\n
                             Outcome variable to model: {input$outcome} \n
-                            {input$instructions}")
+                            Write R code to: {input$instructions}")
       )) |>
       shiny::bindEvent(input$update_prompt)
 
