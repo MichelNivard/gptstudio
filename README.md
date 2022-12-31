@@ -35,7 +35,7 @@ install_github("MichelNivard/gptstudio")
 
 ## Privacy Notice
 
-“These functions work by taking the text or code you have
+These functions work by taking the text or code you have
 highlighted/selected with the cursor, or your prompt if you use one of
 the built-in apps, and send these to OpenAI as part of a prompt; they
 fall under their privacy notice/rules/exceptions you agreed to with
@@ -47,7 +47,7 @@ explicitly by contacting them. The code is designed to ONLY share the
 highlighted/selected text, or a prompt you build with the help of one of
 our apps and no other elements of your R environment. Make sure you are
 aware of what you send to OpenAI and do not accidentally share sensitive
-data with OpenAI.”
+data with OpenAI.
 
 **DO NOT HIGHLIGHT, OR INCLUDE IN A PROMPT, AND THEREFORE UPLOAD,
 DATA/CODE/TEXT THAT SHOULD REMAIN PRIVATE**
