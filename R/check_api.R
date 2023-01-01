@@ -97,6 +97,12 @@ check_api <- function(api_key = Sys.getenv("OPENAI_API_KEY")) {
   }
 }
 
+#' Send a simple API request
+#'
+#' @param api_key An API key for OpenAI's API.
+#'
+#' @return The status code of the API request.
+#'
 simple_api_check <- function(api_key) {
   response <- httr::GET(
     "https://api.openai.com/v1/models",
@@ -105,6 +111,11 @@ simple_api_check <- function(api_key) {
   httr::status_code(response)
 }
 
+#' Set API Key to Environment Variable
+#'
+#' This function sets the `OPENAI_API_KEY` environment variable to the
+#' OPENAI_API_KEY if it is valid.
+#'
 set_openai_api_key <- function() {
   new_api_key <- readline("Copy and paste your API key here: ")
   if (check_api(new_api_key)) {
@@ -123,6 +134,12 @@ set_openai_api_key <- function() {
   }
 }
 
+#' Ask to set API key
+#'
+#' This function asks the user if they would like to set the API key.
+#'
+#' @param try_again A boolean indicating whether the user has already tried to
+#' set the API key.
 ask_to_set_api <- function(try_again = FALSE) {
   set_api <- usethis::ui_yeah(
     "Do you want to set the OPENAI_API_KEY for this session?"
