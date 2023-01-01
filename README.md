@@ -95,6 +95,15 @@ project. Note: If you are using GitHub/Gitlab, do not forget to add
 
 Some examples of use.
 
+### Chat with GPT in Quarto
+
+1.  **Addins \> GPTSTUDIO \> Start GPT Chat**
+2.  Type your question.
+3.  \*\*Addins \> GPTSTUDIO \> GPT Chat
+
+![gpt
+chat](https://user-images.githubusercontent.com/6314313/210177908-7cf0f991-54f2-4f96-8bcd-3077bc8bbb25.mov)
+
 ### Spelling ang grammar check
 
 **Addins \> GPTSTUDIO \> Spelling and Grammar:** Takes the selected text
