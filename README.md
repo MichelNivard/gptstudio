@@ -101,8 +101,8 @@ Some examples of use.
 2.  Type your question.
 3.  \*\*Addins \> GPTSTUDIO \> GPT Chat
 
-![gpt
-chat](https://user-images.githubusercontent.com/6314313/210177908-7cf0f991-54f2-4f96-8bcd-3077bc8bbb25.mov)
+<video src="https://user-images.githubusercontent.com/6314313/210177908-7cf0f991-54f2-4f96-8bcd-3077bc8bbb25.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/210177908-7cf0f991-54f2-4f96-8bcd-3077bc8bbb25.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 width-fit" style="max-height:640px;">
+</video>
 
 ### Spelling ang grammar check
 
