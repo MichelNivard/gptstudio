@@ -242,9 +242,9 @@ warn_about_openai_pkg <- function() {
                  current release of the openai package but it is not installed.
                  Please install it with: `install.packages(\"openai\")`"
     rlang::warn(message,
-                .frequency = "regularly",
-                .frequency_id = "openai_pkg",
-                use_cli_format = TRUE
+      .frequency = "regularly",
+      .frequency_id = "openai_pkg",
+      use_cli_format = TRUE
     )
   }
 }

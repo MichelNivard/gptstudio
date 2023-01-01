@@ -7,5 +7,6 @@
 wpAddin()
 }
 \description{
-Call this function as a Rstudio addin to ask GPT to write text or code from a descriptive prompt
+Call this function as a Rstudio addin to ask GPT to write text or code from
+a descriptive prompt
 }

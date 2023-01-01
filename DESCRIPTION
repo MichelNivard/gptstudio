@@ -20,15 +20,18 @@ LazyData: true
 Imports: 
     assertthat,
     cli,
+    fs,
     glue,
     jsonlite,
     magrittr,
     miniUI,
     purrr,
+    readr,
     rlang,
     rstudioapi (>= 0.12),
     shiny,
     skimr,
+    stringr,
     usethis
 RoxygenNote: 7.2.3
 Suggests: 
@@ -36,6 +39,7 @@ Suggests:
     httr,
     mockr,
     testthat (>= 3.0.0),
+    quarto,
     uuid,
     withr
 Config/testthat/edition: 3

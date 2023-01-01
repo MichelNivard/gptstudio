@@ -7,5 +7,6 @@
 avAddin()
 }
 \description{
-Call this function as a Rstudio addin to ask GPT to change selected text into the active voice
+Call this function as a Rstudio addin to ask GPT to change selected text
+into the active voice
 }
