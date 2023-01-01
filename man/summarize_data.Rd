@@ -12,8 +12,9 @@ summarize_data(
 \arguments{
 \item{data}{A data frame}
 
-\item{method}{A character vector specifying the method to use for summarizing the data.
-Must be one of "skimr", "skimr_lite", "column_types", or "summary". Default is "skimr".}
+\item{method}{A character vector specifying the method to use for
+summarizing the data. Must be one of "skimr", "skimr_lite", "column_types",
+or "summary". Default is "skimr".}
 }
 \value{
 Summarized data according to specified method

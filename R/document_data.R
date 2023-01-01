@@ -46,11 +46,18 @@ collect_column_types <- function(data) {
 #' Summarize a data frame using one of three methods.
 #'
 #' @param data A data frame
-#' @param method A character vector specifying the method to use for summarizing the data.
-#'   Must be one of "skimr", "skimr_lite", "column_types", or "summary". Default is "skimr".
+#' @param method A character vector specifying the method to use for
+#' summarizing the data. Must be one of "skimr", "skimr_lite", "column_types",
+#' or "summary". Default is "skimr".
 #'
 #' @return Summarized data according to specified method
-summarize_data <- function(data, method = c("skimr", "skimr_lite", "column_types", "summary")) {
+summarize_data <- function(data,
+                           method = c(
+                             "skimr",
+                             "skimr_lite",
+                             "column_types",
+                             "summary"
+                           )) {
   assertthat::assert_that(is.data.frame(data))
 
   rlang::arg_match(method)

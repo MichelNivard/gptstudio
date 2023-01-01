@@ -12,7 +12,7 @@ test_that("Spelling and grammer editing works", {
 test_that("Commenting code works", {
   mockr::local_mock(
     gpt_edit = function(model = "code-davinci-edit-001",
-                        instruction = "add comments to each line of code, explaining what the code does",
+                        instruction = "some instructions",
                         temperature = 0.1) {
       list("text" = "new text")
     }

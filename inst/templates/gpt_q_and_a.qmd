@@ -1,0 +1,10 @@
+---
+title: "GPT Q&A"
+editor: visual
+---
+## Question & Answering with OpenAI's GPT Models
+
+Question: 
+
+Answer: 
+
