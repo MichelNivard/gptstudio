@@ -4,11 +4,7 @@
 \alias{check_api}
 \title{Check API setup}
 \usage{
-check_api(api_key = Sys.getenv("OPENAI_API_KEY"))
-}
-\arguments{
-\item{api_key}{An API key. Defaults to the value of the `OPENAI_API_KEY`
-environment variable.}
+check_api()
 }
 \value{
 Nothing is returned. If the API key is valid, a success message is
