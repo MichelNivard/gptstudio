@@ -16,9 +16,6 @@
     <loc>/index.html</loc>
   </url>
   <url>
-    <loc>/reference/ask_to_set_api.html</loc>
-  </url>
-  <url>
     <loc>/reference/avAddin.html</loc>
   </url>
   <url>
@@ -35,12 +32,6 @@
   </url>
   <url>
     <loc>/reference/comAddin.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_completion2.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_edit2.html</loc>
   </url>
   <url>
     <loc>/reference/create_gpt_chat.html</loc>
@@ -64,6 +55,12 @@
     <loc>/reference/openai_chat.html</loc>
   </url>
   <url>
+    <loc>/reference/openai_create_completion.html</loc>
+  </url>
+  <url>
+    <loc>/reference/openai_create_edit.html</loc>
+  </url>
+  <url>
     <loc>/reference/pipe.html</loc>
   </url>
   <url>
@@ -79,19 +76,10 @@
     <loc>/reference/sandgAddin.html</loc>
   </url>
   <url>
-    <loc>/reference/set_openai_api_key.html</loc>
-  </url>
-  <url>
-    <loc>/reference/simple_api_check.html</loc>
-  </url>
-  <url>
     <loc>/reference/specify_model_addin.html</loc>
   </url>
   <url>
     <loc>/reference/summarize_data.html</loc>
-  </url>
-  <url>
-    <loc>/reference/warn_about_openai_pkg.html</loc>
   </url>
   <url>
     <loc>/reference/wpAddin.html</loc>
