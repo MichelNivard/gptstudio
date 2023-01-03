@@ -7,8 +7,7 @@
 check_api_key(api_key)
 }
 \arguments{
-\item{api_key}{An API key. Defaults to the value of the `OPENAI_API_KEY`
-environment variable.}
+\item{api_key}{An API key.}
 }
 \value{
 Nothing is returned. If the API key is in the correct format, a

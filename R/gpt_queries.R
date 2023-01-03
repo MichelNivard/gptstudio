@@ -23,7 +23,7 @@ gpt_edit <- function(model,
                      append_text = FALSE) {
   check_api()
   selection <- get_selection()
-  cli::cli_progress_step("Asking GPT for help...")
+  cli_progress_step("Asking GPT for help...")
 
   edit <- openai_create_edit(
     model = model,
@@ -34,44 +34,16 @@ gpt_edit <- function(model,
     openai_organization = openai_organization
   )
 
-  cli::cli_progress_step("Inserting text from GPT...")
+  cli_progress_step("Inserting text from GPT...")
 
   if (append_text) {
     improved_text <- c(selection$value, edit$choices$text)
-    cli::cli_progress_step("Appending text from GPT...")
+    cli_progress_step("Appending text from GPT...")
   } else {
     improved_text <- edit$choices$text
-    cli::cli_progress_step("Inserting text from GPT...")
+    cli_progress_step("Inserting text from GPT...")
   }
   insert_text(improved_text)
-}
-
-# Wrapper around create_edit to help with testthat
-# @export
-openai_create_edit <- function(model, input, instruction, temperature,
-                               openai_api_key = Sys.getenv("OPENAI_API_KEY"),
-                               openai_organization = NULL) {
-  if (rlang::is_installed("openai")) {
-    create_edit <- rlang::env_get(rlang::ns_env("openai"), "create_edit")
-    create_edit(
-      model = model,
-      input = input,
-      instruction = instruction,
-      temperature = temperature,
-      openai_api_key = openai_api_key,
-      openai_organization = openai_organization
-    )
-  } else {
-    warn_about_openai_pkg()
-    create_edit2(
-      model = model,
-      input = input,
-      instruction = instruction,
-      temperature = temperature,
-      openai_api_key = openai_api_key,
-      openai_organization = openai_organization
-    )
-  }
 }
 
 #' Use GPT to improve text
@@ -99,8 +71,7 @@ gpt_create <- function(model,
                        append_text = TRUE) {
   check_api()
   selection <- get_selection()
-  cat("here\n")
-  cli::cli_progress_step("Asking GPT for help...")
+
 
   edit <- openai_create_completion(
     model = model,
@@ -111,51 +82,18 @@ gpt_create <- function(model,
     openai_organization = openai_organization
   )
 
-  cli::cli_progress_step("Inserting text from GPT...")
+  cli_progress_step("Inserting text from GPT...")
 
   if (append_text) {
     improved_text <- c(selection$value, edit$choices$text)
-    cli::cli_progress_step("Appending text from GPT...")
+    cli_progress_step("Appending text from GPT...")
   } else {
     improved_text <- edit$choices$text
-    cli::cli_progress_step("Inserting text from GPT...")
+    cli_progress_step("Inserting text from GPT...")
   }
   insert_text(improved_text)
 }
 
-
-# Wrapper around create_completion to help with testthat
-# @export
-openai_create_completion <- function(model, prompt, temperature, max_tokens,
-                                     openai_api_key, openai_organization,
-                                     suffix = NULL) {
-  if (rlang::is_installed("openai")) {
-    create_completion <- rlang::env_get(
-      rlang::ns_env("openai"),
-      "create_completion"
-    )
-    create_completion(
-      model = model,
-      prompt = prompt,
-      temperature = temperature,
-      max_tokens = max_tokens,
-      openai_api_key = openai_api_key,
-      openai_organization = openai_organization,
-      suffix = NULL
-    )
-  } else {
-    warn_about_openai_pkg()
-    create_completion2(
-      model = model,
-      prompt = prompt,
-      temperature = temperature,
-      max_tokens = max_tokens,
-      openai_api_key = openai_api_key,
-      openai_organization = openai_organization,
-      suffix = NULL
-    )
-  }
-}
 
 #' Use GPT to improve text
 #'
@@ -185,7 +123,7 @@ gpt_insert <- function(model,
                        append_text = FALSE) {
   check_api()
   selection <- get_selection()
-  cli::cli_progress_step("Asking GPT for help...")
+  cli_progress_step("Asking GPT for help...")
 
   prompt <- paste(prompt, selection$value)
 
@@ -198,7 +136,7 @@ gpt_insert <- function(model,
     openai_organization = openai_organization
   )
 
-  cli::cli_progress_step("Inserting text from GPT...")
+  cli_progress_step("Inserting text from GPT...")
 
   if (append_text) {
     improved_text <- c(selection$value, edit$choices$text)
@@ -206,7 +144,7 @@ gpt_insert <- function(model,
     improved_text <- c(edit$choices$text, selection$value)
   }
 
-  cli::cli_format(improved_text)
+  cli_format(improved_text)
 
   insert_text(improved_text)
 }
@@ -219,32 +157,4 @@ get_selection <- function() {
 # Wrapper around selectionGet to help with testthat
 insert_text <- function(improved_text) {
   rstudioapi::insertText(improved_text)
-}
-
-#' Warn about openai package
-#'
-#' Warn the user if the openai package is not installed and their R version is
-#' compatible with the current release of the package.
-#'
-#' @return NULL
-#'
-#' @export
-
-#' @examples
-#' \dontrun{
-#' warn_about_openai_pkg()
-#' }
-warn_about_openai_pkg <- function() {
-  rlang::inform("Package `openai` not detected in installed packages.")
-  current_r_version <- as.character(utils::packageVersion("base"))
-  if (utils::compareVersion(current_r_version, "4.2.0") >= 0) {
-    message <- "Your R version {current_r_version} is compatible with the
-                 current release of the openai package but it is not installed.
-                 Please install it with: `install.packages(\"openai\")`"
-    rlang::warn(message,
-      .frequency = "regularly",
-      .frequency_id = "openai_pkg",
-      use_cli_format = TRUE
-    )
-  }
 }
