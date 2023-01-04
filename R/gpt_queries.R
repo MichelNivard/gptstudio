@@ -151,10 +151,12 @@ gpt_insert <- function(model,
 
 # Wrapper around selectionGet to help with testthat
 get_selection <- function() {
+  rstudioapi::verifyAvailable()
   rstudioapi::selectionGet()
 }
 
 # Wrapper around selectionGet to help with testthat
 insert_text <- function(improved_text) {
+  rstudioapi::verifyAvailable()
   rstudioapi::insertText(improved_text)
 }
