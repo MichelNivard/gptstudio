@@ -9,7 +9,7 @@
 create_gpt_chat <- function(path = "gpt_q_and_a.qmd") {
   rlang::check_installed("quarto")
   if (is.null(quarto::quarto_path())) {
-    cli::cli_abort(c(
+    abort(c(
       "x" = "Quarto is not installed.",
       "i" = "Visit {.url https://quarto.org/docs/get-started/} to install."
     ))
@@ -20,8 +20,10 @@ create_gpt_chat <- function(path = "gpt_q_and_a.qmd") {
 
   if (confirm_create) {
     if (fs::file_exists(path)) {
-      cli::cli_alert_warning("File already exists at {path}.")
-      cli::cli_alert_info("Opening that file instead.")
+      warn(c(
+        "x" = "File already exists at {path}.",
+        "i" = "Opening that file instead."
+      ))
     } else {
       qna_file <- system.file("templates/gpt_q_and_a.qmd",
         package = "gptstudio"
@@ -41,39 +43,40 @@ create_gpt_chat <- function(path = "gpt_q_and_a.qmd") {
 openai_chat <- function() {
   active_doc <- rstudioapi::getSourceEditorContext()
   if (fs::path_ext(active_doc$path) != "qmd") {
-    cli::cli_inform("Path: {active_doc$path}")
-    cli::cli_abort("Quarto Q&A document is not selected. Please try again.")
+    abort(c(
+      "i" = "Path: {active_doc$path}",
+      "x" = "Quarto Q&A document is not selected. Please try again."
+    ))
   }
   content <- readr::read_lines(active_doc$path)
   first_question <- which(stringr::str_starts(content, "Q"))[1]
-  if (rlang::is_empty(first_question)) {
-    cli::cli_abort("First question not found.")
+  if (is_empty(first_question)) {
+    abort("First question not found.")
   } else {
     trimmed_content <- content[first_question:length(content)]
   }
 
   if (!rlang::is_empty(trimmed_content)) {
-    cli::cli_alert_info("Querying GPT for an answer...")
+    inform("Querying GPT for an answer...")
     response <-
       openai_create_completion(
         model = "text-davinci-003",
         prompt = stringr::str_c(trimmed_content, collapse = "\n"),
         max_tokens = 500,
         temperature = 0.5,
-        openai_api_key = Sys.getenv("OPENAI_API_KEY"),
-        openai_organization = NULL
+        openai_api_key = Sys.getenv("OPENAI_API_KEY")
       )
     answer <- response$choice$text
   } else {
-    cli::cli_abort("Question no found in the document. Please try again.")
+    abort("Question no found in the document. Please try again.")
   }
 
-  if (!rlang::is_empty(answer)) {
-    cli::cli_inform("Answer: {answer}")
+  if (!is_empty(answer)) {
+    inform("Answer: {answer}")
     improved_text <- stringr::str_c(answer, "\n\nQuestion: ", collapse = "")
     id <- active_doc$id
     rstudioapi::insertText(improved_text, id = id)
   } else {
-    cli::cli_abort("No answer returned or API query failed. Please try again.")
+    abort("No answer returned or API query failed. Please try again.")
   }
 }

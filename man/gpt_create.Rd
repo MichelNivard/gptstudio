@@ -9,7 +9,6 @@ gpt_create(
   temperature,
   max_tokens = getOption("gptstudio.max_tokens"),
   openai_api_key = Sys.getenv("OPENAI_API_KEY"),
-  openai_organization = NULL,
   append_text = TRUE
 )
 }
@@ -23,8 +22,6 @@ model's output.}
 response), defaults to 500}
 
 \item{openai_api_key}{An API key for the OpenAI API.}
-
-\item{openai_organization}{An optional organization ID for the OpenAI API.}
 
 \item{append_text}{Add text to selection rather than replace, default to TRUE}
 }
