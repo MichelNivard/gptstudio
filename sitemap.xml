@@ -37,6 +37,9 @@
     <loc>/reference/create_gpt_chat.html</loc>
   </url>
   <url>
+    <loc>/reference/get_selection.html</loc>
+  </url>
+  <url>
     <loc>/reference/gpt_addin.html</loc>
   </url>
   <url>
@@ -50,6 +53,9 @@
   </url>
   <url>
     <loc>/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/insert_text.html</loc>
   </url>
   <url>
     <loc>/reference/openai_chat.html</loc>
