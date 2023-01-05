@@ -11,8 +11,7 @@ sample_key <- uuid::UUIDgenerate()
 test_that("gpt_edit can replace and append text", {
   mockr::local_mock(
     openai_create_edit =
-      function(model, input, instruction, temperature, openai_api_key,
-               openai_organization) {
+      function(model, input, instruction, temperature, openai_api_key) {
         list(choices = data.frame(text = "here are edits openai returns"))
       }
   )
@@ -46,7 +45,7 @@ test_that("gpt_create can replace & append text", {
   mockr::local_mock(
     openai_create_completion =
       function(model, prompt, temperature, max_tokens,
-               openai_api_key, openai_organization) {
+               openai_api_key) {
         list(choices = data.frame(text = "here are completions openai returns"))
       }
   )

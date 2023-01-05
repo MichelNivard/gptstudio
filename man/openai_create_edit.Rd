@@ -2,60 +2,48 @@
 % Please edit documentation in R/openai_api_calls.R
 \name{openai_create_edit}
 \alias{openai_create_edit}
-\title{Create edit}
+\title{Create and edit text using OpenAI's API}
 \usage{
 openai_create_edit(
   model,
   input = "\\"",
   instruction,
-  temperature = 1,
-  top_p = 1,
-  openai_api_key = Sys.getenv("OPENAI_API_KEY"),
-  openai_organization = NULL
+  temperature = NULL,
+  top_p = NULL,
+  openai_api_key = Sys.getenv("OPENAI_API_KEY")
 )
 }
 \arguments{
-\item{model}{required; a length one character vector.}
+\item{model}{The model to use for generating text}
 
-\item{input}{required; defaults to `'"'`; a length one character vector.}
+\item{input}{The input text to edit}
 
-\item{instruction}{required; a length one character vector.}
+\item{instruction}{The instruction for editing the text}
 
-\item{temperature}{required; defaults to `1`; a length one numeric vector
-with the value between `0` and `2`.}
+\item{temperature}{The temperature to use for generating text (between 0 and
+1). If `NULL`, the default temperature will be used. It is recommended NOT
+to specify temperature and top_p at a time.}
 
-\item{top_p}{required; defaults to `1`; a length one numeric vector with the
-value between `0` and `1`.}
+\item{top_p}{The top-p value to use for generating text (between 0 and 1). If
+`NULL`, the default top-p value will be used. It is recommended NOT to
+specify temperature and top_p at a time.}
 
-\item{openai_api_key}{required; defaults to `Sys.getenv("OPENAI_API_KEY")`
-(i.e., the value is retrieved from the `.Renviron` file); a length one
-character vector. Specifies OpenAI API key.}
-
-\item{openai_organization}{optional; defaults to `NULL`; a length one
-character vector. Specifies OpenAI organization.}
+\item{openai_api_key}{The API key for accessing OpenAI's API. By default, the
+function will try to use the `OPENAI_API_KEY` environment variable.}
 }
 \value{
-Returns a list, elements of which contain edited version of prompt
-  and supplementary information.
+A list with the edited text and other information returned by the
+  API.
 }
 \description{
-#' This code is altered from [openai](https://github.com/irudnyts/openai).
-Credit goes to irudnyts for contributions to this function.
-}
-\details{
-Creates an edit based on the provided input, instruction, and parameters. See
-[this page](https://beta.openai.com/docs/api-reference/edits/create) for
-details.
-
-For arguments description please refer to the official
-[docs](https://beta.openai.com/docs/api-reference/edits/create).
+Create and edit text using OpenAI's API
 }
 \examples{
 \dontrun{
-create_edit(
-  model = "text-davinci-edit-001",
-  input = "What day of the wek is it?",
-  instruction = "Fix the spelling mistakes"
+openai_create_edit(
+  model = "text-davinci-002",
+  input = "Hello world!",
+  instruction = "Capitalize the first letter of each sentence."
 )
 }
 }
