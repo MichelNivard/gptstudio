@@ -8,6 +8,6 @@ sandgAddin <- function() {
   gpt_edit(
     model = "text-davinci-edit-001",
     instruction = "Improve spelling and grammar of this text",
-    temperature = .05
+    temperature = 0.1
   )
 }

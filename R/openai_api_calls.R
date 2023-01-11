@@ -38,7 +38,7 @@ openai_create_edit <- function(model,
   )
 
   if (is.number(temperature) && is.number(top_p)) {
-    warn("It is recommended NOT to specify temperature and top_p at a time.")
+    cli_warn("Specify either temperature or top_p, not both.")
   }
 
   body <- list(
@@ -96,6 +96,10 @@ openai_create_completion <-
       value_between(top_p, 0, 1) || is.null(top_p)
     )
 
+    if (is.number(temperature) && is.number(top_p)) {
+      cli_warn("Specify either temperature or top_p, not both.")
+    }
+
     body <- list(
       model = model,
       prompt = prompt,
@@ -129,13 +133,13 @@ query_openai_api <- function(body, openai_api_key, task) {
     jsonlite::fromJSON(flatten = TRUE)
 
   if (httr::http_error(response)) {
-    abort(c(
+    cli_alert_warning(c(
       "x" = glue("OpenAI API request failed [{httr::status_code(response)}]."),
       "i" = glue("Error message: {parsed$error$message}")
     ))
   }
 
-  cli_text("Status code: {httr::status_code(response)}")
+  cli_inform("Status code: {httr::status_code(response)}")
 
   parsed
 }
@@ -146,8 +150,4 @@ value_between <- function(x, lower, upper) {
 
 both_specified <- function(x, y) {
   x != 1 && y != 1
-}
-
-length_between <- function(x, lower, upper) {
-  length(x) >= lower && length(x) <= upper
 }
