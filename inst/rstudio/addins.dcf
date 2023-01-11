@@ -29,11 +29,6 @@ Binding: specify_model_addin
 Interactive: true
 
 Name: GPT Chat
-Description: Uses OpenAI's GPT-3.5 for Q & A
-Binding: openai_chat
-Interactive: true
-
-Name: Start GPT Chat
 Description: Create file to start GPT Q & A session
 Binding: create_gpt_chat
 Interactive: true

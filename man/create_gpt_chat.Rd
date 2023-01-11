@@ -4,10 +4,7 @@
 \alias{create_gpt_chat}
 \title{Create a GPT Q&A File}
 \usage{
-create_gpt_chat(path = "gpt_q_and_a.qmd")
-}
-\arguments{
-\item{path}{The path of the file to be created. Defaults to "gpt_q_and_a.qmd"}
+create_gpt_chat()
 }
 \description{
 This function creates a GPT Q&A file for use with OpenAI's GPT models.

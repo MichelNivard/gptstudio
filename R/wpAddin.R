@@ -7,7 +7,7 @@
 wpAddin <- function() {
   gpt_create(
     model = "text-davinci-003",
-    max_tokens = 500,
+    max_tokens = getOption("gptstudio.max_tokens"),
     temperature = 0.1
   )
 }
