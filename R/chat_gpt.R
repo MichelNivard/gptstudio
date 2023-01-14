@@ -5,7 +5,7 @@
 #' @export
 #'
 create_gpt_chat <- function() {
-  current_doc <- rstudioapi::documentPath()
+  current_doc <- enc2utf8(rstudioapi::documentPath())
   if (is_true(getOption("gptstudio.chat_file") == current_doc)) {
     openai_chat()
   } else {
@@ -24,13 +24,13 @@ setup_gpt_chat <- function(path = "gpt_q_and_a.qmd") {
       "i" = "Visit {.url https://quarto.org/docs/get-started/} to install."
     ))
   }
-  current_file <- rstudioapi::documentPath()
+  current_file <- enc2utf8(rstudioapi::documentPath())
   if (tolower(tools::file_ext(current_file) %in% c("qmd", "rmd"))) {
     use_current_file <-
       usethis::ui_yeah("Would you like to use {current_file} for your chat?")
     if (use_current_file) {
       options(
-        gptstudio.chat_file = rstudioapi::documentPath()
+        gptstudio.chat_file = enc2utf8(rstudioapi::documentPath())
       )
     }
   } else {
@@ -79,7 +79,7 @@ openai_chat <- function(model = "text-davinci-003",
     ))
   }
   content <- readr::read_lines(active_doc$path)
-  first_question <- which(stringr::str_starts(content, "Q"))[1]
+  first_question <- which(stringr::str_starts(content, "Question"))[1]
   if (is_empty(first_question)) {
     cli_abort("First question not found.")
   } else {
