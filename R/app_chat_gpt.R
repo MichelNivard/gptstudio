@@ -1,8 +1,14 @@
+#' Run Chat GPT
+#' Run the Chat GPT Shiny App
+#' @param None
+#' @export
+#'
 chat_gpt_addin <- function() {
   check_api()
   withr::local_options(shiny.launch.browser = .rs.invokeShinyPaneViewer)
-  run_gpt_freeform()
+  run_chat_gpt()
 }
+
 
 run_chat_gpt <- function() {
   js <- '
@@ -16,13 +22,14 @@ run_chat_gpt <- function() {
 
   ui <- miniUI::miniPage(
     miniUI::gadgetTitleBar(
-      title = "🤖 Chat GPT from gptstudio 🤖",
+      title = "Chat GPT from gptstudio",
       left  = miniUI::miniTitleBarButton("cancel", "Close", primary = FALSE),
       right = NULL
     ),
     shiny::tags$script(shiny::HTML(js)),
     shiny::tags$head(
-      shiny::tags$style("#all_chats_box{overflow-y: scroll; max-height: 100px;}")
+      shiny::tags$style("#all_chats_box{overflow-y: scroll;
+                                        max-height: 100px;}")
     ),
     miniUI::miniContentPanel(
       shiny::uiOutput("current_prompt"),
@@ -35,7 +42,8 @@ run_chat_gpt <- function() {
         shinyWidgets::dropdownButton(
           shiny::h4("Model Input Settings"),
           shiny::selectInput("model", "OpenAI Model",
-                             choices = c("text-davinci-003", "code-davinci-002"),
+                             choices = c("text-davinci-003",
+                                         "code-davinci-002"),
                              width = "90%"),
           shiny::sliderInput("temperature", "Temperature",
                              min = 0, max = 1, value = 0.5,
