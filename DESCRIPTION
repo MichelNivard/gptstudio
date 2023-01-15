@@ -30,6 +30,7 @@ Imports:
     rlang,
     rstudioapi (>= 0.12),
     shiny,
+    shinyWidgets,
     skimr,
     stringr,
     usethis
