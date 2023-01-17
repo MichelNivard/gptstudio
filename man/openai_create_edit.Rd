@@ -21,19 +21,19 @@ openai_create_edit(
 \item{instruction}{The instruction for editing the text}
 
 \item{temperature}{The temperature to use for generating text (between 0 and
-1). If `NULL`, the default temperature will be used. It is recommended NOT
+1). If \code{NULL}, the default temperature will be used. It is recommended NOT
 to specify temperature and top_p at a time.}
 
 \item{top_p}{The top-p value to use for generating text (between 0 and 1). If
-`NULL`, the default top-p value will be used. It is recommended NOT to
+\code{NULL}, the default top-p value will be used. It is recommended NOT to
 specify temperature and top_p at a time.}
 
 \item{openai_api_key}{The API key for accessing OpenAI's API. By default, the
-function will try to use the `OPENAI_API_KEY` environment variable.}
+function will try to use the \code{OPENAI_API_KEY} environment variable.}
 }
 \value{
 A list with the edited text and other information returned by the
-  API.
+API.
 }
 \description{
 Create and edit text using OpenAI's API

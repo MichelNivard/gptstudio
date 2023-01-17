@@ -31,5 +31,5 @@ RStudio session.
 }
 \description{
 This function uses the GPT model from OpenAI to improve the spelling and
- grammar of the selected text in the current RStudio session.
+grammar of the selected text in the current RStudio session.
 }

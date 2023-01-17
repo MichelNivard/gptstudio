@@ -7,7 +7,7 @@
 get_selection()
 }
 \value{
-Text selection via `rstudioapi::selectionGet`
+Text selection via \code{rstudioapi::selectionGet}
 }
 \description{
 Wrapper around selectionGet to help with testthat

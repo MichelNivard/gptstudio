@@ -40,7 +40,7 @@ run_chat_gpt <- function() {
         "model", "OpenAI Model",
         choices = c("text-davinci-003", "code-davinci-002"),
         width = "90%"),
-      fluidRow(
+      shiny::fluidRow(
       shiny::numericInput("temperature", "Temperature",
                          min = 0, max = 1, value = 0.5, step = 0.1,
                          width = "50%"),
