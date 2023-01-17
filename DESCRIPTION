@@ -19,6 +19,7 @@ Encoding: UTF-8
 LazyData: true
 Imports: 
     assertthat,
+    bslib,
     cli,
     fs,
     glue,
@@ -30,7 +31,6 @@ Imports:
     rlang,
     rstudioapi (>= 0.12),
     shiny,
-    shinyWidgets,
     skimr,
     stringr,
     usethis

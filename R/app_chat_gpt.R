@@ -18,51 +18,52 @@ run_chat_gpt <- function() {
   }
 });
 '
-  # $("#chat_input").val("");
+  chat_card <- bslib::card(
+    height = "225px",
+    bslib::card_header("Write Prompt", class = "bg-primary"),
+    bslib::card_body(
+      shiny::textAreaInput(
+        inputId = "chat_input", label = NULL,
+        value = "", resize = "vertical",
+        rows = 3, width = "100%"
+      ),
+      shiny::actionButton(width = "100%",
+        inputId = "chat", label =  "Chat",
+        icon = shiny::icon("robot"), class = "btn-primary")
+    )
+  )
+
+  model_settings_card <- bslib::card(
+    bslib::card_header("Model Input Settings", class = "bg-secondary"),
+    bslib::card_body(
+      shiny::selectInput(
+        "model", "OpenAI Model",
+        choices = c("text-davinci-003", "code-davinci-002"),
+        width = "90%"),
+      fluidRow(
+      shiny::numericInput("temperature", "Temperature",
+                         min = 0, max = 1, value = 0.5, step = 0.1,
+                         width = "50%"),
+      shiny::numericInput("max_tokens", "Max Tokens",
+                         min = 16, max = 10000, value = 200, step = 1,
+                         width = "50%")
+      ),
+      class = "bg-light",
+    )
+  )
 
   ui <- shiny::fluidPage(
     theme = bslib::bs_theme(version = 5),
     title = "Chat GPT from gptstudio",
     shiny::tags$script(shiny::HTML(js)),
-    shiny::tags$head(
-      shiny::tags$style("#all_chats_box{overflow-y: scroll;
-                                        max-height: 200px;}")
-    ),
-    shiny::uiOutput("all_chats_box"),
-    bslib::card(
-      height = 175,
-      bslib::card_header("Write Prompt"),
-      bslib::card_body_fill(
-        shiny::textAreaInput(
-          inputId = "chat_input", label = NULL, value = "", resize = "vertical",
-          rows = 1, width = "100%"
-        ),
-        shiny::column(
-          width = 12, align = "right",
-          shiny::actionButton(
-            inputId = "chat", label =  "Chat",
-            icon = shiny::icon("robot"), class = "btn-primary")
-        )
-      )
-    ),
-    shiny::column(
-      width = 12, align = "right",
-      shinyWidgets::dropdownButton(
-        shiny::h4("Model Input Settings"),
-        shiny::selectInput("model", "OpenAI Model",
-                           choices = c("text-davinci-003", "code-davinci-002"),
-                           width = "90%"),
-        shiny::sliderInput("temperature", "Temperature",
-                           min = 0, max = 1, value = 0.5,
-                           width = "90%"),
-        shiny::sliderInput("max_tokens", "Max Tokens",
-                           min = 16, max = 1000, value = 200,
-                           width = "90%"),
-        circle = FALSE,
-        status = "info",
-        icon = shiny::icon("gear"), width = "400px",
-        tooltip = shinyWidgets::tooltipOptions(title = "Model Input Settings")
-      )
+    bslib::layout_column_wrap(
+      width = 1/2,
+      height = 600,
+      bslib::layout_column_wrap(
+        width = 1,
+        heights_equal = "row",
+        chat_card, model_settings_card),
+      shiny::uiOutput("all_chats_box")
     )
   )
 
@@ -73,7 +74,7 @@ run_chat_gpt <- function() {
     shiny::observe({
       cli_inform(c("i" = "Querying OpenAI's API..."))
       new_prompt <- input$chat_input
-      prompt <- glue(r$all_chats, new_prompt)
+      prompt <- glue(r$all_chats, new_prompt, .sep = " ")
       cli_rule("Prompt")
       cat_print(prompt)
       interim <- openai_create_completion(
@@ -93,27 +94,16 @@ run_chat_gpt <- function() {
         make_chat_history(r$all_chats_formatted, input$chat_input, new_response)
       output$all_chats_box  <- shiny::renderUI(
         bslib::card(
-          height = 400,
-          bslib::card_header(
-            "Chat History"
-          ),
+          bslib::card_header("Chat History", class = "bg-"),
           bslib::card_body(
             fill = TRUE,
             r$all_chats_formatted
           )
         )
       )
-      updateTextAreaInput(session, "chat_input", value = "")
+      shiny::updateTextAreaInput(session, "chat_input", value = "")
     }) %>%
       shiny::bindEvent(input$chat)
-
-    # output$all_chats_box    <-
-    #   shiny::renderUI(
-    #     list(
-    #       make_chat_history(NULL, "asdfasdfa", "asdfasdfasdghawro"),
-    #       make_chat_history(NULL, "dgfeaghwagoadfj", "hgtefwaoighaohdg")
-    #     )
-    #   )
 
     shiny::observeEvent(input$cancel, shiny::stopApp())
   }
@@ -126,9 +116,9 @@ run_chat_gpt <- function() {
 make_chat_history <- function(history, new_prompt, new_response) {
   new_response <-
     list(shiny::strong("Question"),
-         shiny::p(new_prompt),
+         shiny::markdown(new_prompt),
          shiny::strong("Response"),
-         shiny::p(new_response))
+         shiny::markdown(new_response))
   if (is_null(history)) {
     new_response
   } else {
