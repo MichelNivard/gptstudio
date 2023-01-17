@@ -2,6 +2,7 @@
 
 export("%>%")
 export(avAddin)
+export(chat_gpt_addin)
 export(check_api)
 export(check_api_connection)
 export(check_api_key)
@@ -31,4 +32,5 @@ importFrom(assertthat,is.flag)
 importFrom(assertthat,is.number)
 importFrom(assertthat,is.string)
 importFrom(glue,glue)
+importFrom(lifecycle,deprecated)
 importFrom(magrittr,"%>%")

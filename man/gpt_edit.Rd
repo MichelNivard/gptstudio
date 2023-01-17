@@ -27,7 +27,7 @@ FALSE}
 }
 \value{
 Nothing is returned. The improved text is inserted into the current
- RStudio session.
+RStudio session.
 }
 \description{
 This function uses the GPT model from OpenAI to improve the spelling and

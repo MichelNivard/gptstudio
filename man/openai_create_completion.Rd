@@ -19,25 +19,25 @@ openai_create_completion(
 
 \item{prompt}{The prompt for generating completions}
 
-\item{suffix}{The suffix for generating completions. If `NULL`, no suffix
+\item{suffix}{The suffix for generating completions. If \code{NULL}, no suffix
 will be used.}
 
 \item{max_tokens}{The maximum number of tokens to generate.}
 
 \item{temperature}{The temperature to use for generating text (between 0 and
-1). If `NULL`, the default temperature will be used. It is recommended NOT
+1). If \code{NULL}, the default temperature will be used. It is recommended NOT
 to specify temperature and top_p at a time.}
 
 \item{top_p}{The top-p value to use for generating text (between 0 and 1). If
-`NULL`, the default top-p value will be used. It is recommended NOT to
+\code{NULL}, the default top-p value will be used. It is recommended NOT to
 specify temperature and top_p at a time.}
 
 \item{openai_api_key}{The API key for accessing OpenAI's API. By default, the
-function will try to use the `OPENAI_API_KEY` environment variable.}
+function will try to use the \code{OPENAI_API_KEY} environment variable.}
 }
 \value{
 A list with the generated completions and other information returned
-  by the API.
+by the API.
 }
 \description{
 Generate text completions using OpenAI's API

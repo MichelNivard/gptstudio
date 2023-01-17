@@ -15,6 +15,6 @@ printed. If the API key is invalid, an error message is printed and the
 function is aborted.
 }
 \description{
-This function checks whether the API key provided in the `OPENAI_API_KEY`
+This function checks whether the API key provided in the \code{OPENAI_API_KEY}
 environment variable is valid.
 }
