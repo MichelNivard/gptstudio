@@ -30,5 +30,5 @@ Interactive: true
 
 Name: GPT Chat
 Description: Start a chat session
-Binding: run_gpt_chat
+Binding: chat_gpt_addin
 Interactive: true

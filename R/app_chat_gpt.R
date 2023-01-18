@@ -19,7 +19,7 @@ run_chat_gpt <- function() {
 });
 '
   chat_card <- bslib::card(
-    height = "225px",
+    height = "220px",
     bslib::card_header("Write Prompt", class = "bg-primary"),
     bslib::card_body(
       shiny::textAreaInput(
@@ -34,6 +34,7 @@ run_chat_gpt <- function() {
   )
 
   model_settings_card <- bslib::card(
+    height = "250px",
     bslib::card_header("Model Input Settings", class = "bg-secondary"),
     bslib::card_body(
       shiny::selectInput(
@@ -58,7 +59,6 @@ run_chat_gpt <- function() {
     shiny::tags$script(shiny::HTML(js)),
     bslib::layout_column_wrap(
       width = 1/2,
-      height = 600,
       bslib::layout_column_wrap(
         width = 1,
         heights_equal = "row",
@@ -94,7 +94,7 @@ run_chat_gpt <- function() {
         make_chat_history(r$all_chats_formatted, input$chat_input, new_response)
       output$all_chats_box  <- shiny::renderUI(
         bslib::card(
-          bslib::card_header("Chat History", class = "bg-"),
+          bslib::card_header("Chat History", class = "bg-primary"),
           bslib::card_body(
             fill = TRUE,
             r$all_chats_formatted
