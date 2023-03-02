@@ -68,6 +68,9 @@ openai_create_edit <- function(model,
 #'   specify temperature and top_p at a time.
 #' @param openai_api_key The API key for accessing OpenAI's API. By default, the
 #'   function will try to use the `OPENAI_API_KEY` environment variable.
+#' @param task The task that specifies the API url to use, defaults to
+#' "completions" and "chat/completions" is required for ChatGPT model.
+#'
 #' @return A list with the generated completions and other information returned
 #'   by the API.
 #' @examples
@@ -79,13 +82,14 @@ openai_create_edit <- function(model,
 #' }
 #' @export
 openai_create_completion <-
-  function(model,
+  function(model = "text_davinci-003",
            prompt = "<|endoftext|>",
            suffix = NULL,
            max_tokens = 16,
            temperature = NULL,
            top_p = NULL,
-           openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
+           openai_api_key = Sys.getenv("OPENAI_API_KEY"),
+           task = "completions") {
     assert_that(
       is.string(model),
       is.string(prompt),
@@ -108,11 +112,57 @@ openai_create_completion <-
       temperature = temperature
     )
 
-    query_openai_api(body, openai_api_key, task = "completions")
+    query_openai_api(body, openai_api_key, task = task)
+  }
+
+#' Generate text completions using OpenAI's API for Chat
+#'
+#' @param model The model to use for generating text
+#' @param prompt The prompt for generating completions
+#' @param openai_api_key The API key for accessing OpenAI's API. By default, the
+#'   function will try to use the `OPENAI_API_KEY` environment variable.
+#' @param task The task that specifies the API url to use, defaults to
+#' "completions" and "chat/completions" is required for ChatGPT model.
+#'
+#' @return A list with the generated completions and other information returned
+#'   by the API.
+#' @examples
+#' \dontrun{
+#' openai_create_completion(
+#'   model = "text-davinci-002",
+#'   prompt = "Hello world!"
+#' )
+#' }
+#' @export
+openai_create_chat_completion <-
+  function(prompt = "<|endoftext|>",
+           model = "gpt-3.5-turbo",
+           openai_api_key = Sys.getenv("OPENAI_API_KEY"),
+           task = "chat/completions") {
+    assert_that(
+      is.string(model),
+      is.string(openai_api_key)
+    )
+
+    if (is.string(prompt)) {
+      prompt <- list(
+        list(
+          role    = "user",
+          content = prompt
+        )
+      )
+    }
+
+    body <- list(
+      model = model,
+      messages = prompt
+    )
+
+    query_openai_api(body, openai_api_key, task = task)
   }
 
 query_openai_api <- function(body, openai_api_key, task) {
-  arg_match(task, c("completions", "edits"))
+  arg_match(task, c("completions", "chat/completions", "edits", "embeddings"))
 
   base_url <- glue("https://api.openai.com/v1/{task}")
 
@@ -121,12 +171,13 @@ query_openai_api <- function(body, openai_api_key, task) {
     "Content-Type" = "application/json"
   )
 
-  response <- httr::POST(
-    url = base_url,
-    httr::add_headers(headers),
-    body = body,
-    encode = "json"
-  )
+  response <-
+    httr::RETRY("POST",
+                url = base_url,
+                httr::add_headers(headers), body = body,
+                encode = "json",
+                quiet = TRUE
+    )
 
   parsed <- response %>%
     httr::content(as = "text", encoding = "UTF-8") %>%
@@ -138,9 +189,6 @@ query_openai_api <- function(body, openai_api_key, task) {
       "i" = glue("Error message: {parsed$error$message}")
     ))
   }
-
-  cli_inform("Status code: {httr::status_code(response)}")
-
   parsed
 }
 

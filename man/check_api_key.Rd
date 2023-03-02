@@ -4,10 +4,12 @@
 \alias{check_api_key}
 \title{Check API key}
 \usage{
-check_api_key(api_key)
+check_api_key(api_key, update_api = TRUE)
 }
 \arguments{
 \item{api_key}{An API key.}
+
+\item{update_api}{Whether to attempt to update api if invalid}
 }
 \value{
 Nothing is returned. If the API key is in the correct format, a

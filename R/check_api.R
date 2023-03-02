@@ -4,13 +4,14 @@
 #' environment variable is valid.
 #'
 #' @param api_key An API key.
+#' @param update_api Whether to attempt to update api if invalid
 #'
 #' @return Nothing is returned. If the API key is valid, a success message is
 #' printed. If the API key is invalid, an error message is printed and the
 #' function is aborted.
 #' @export
-check_api_connection <- function(api_key) {
-  if (!check_api_key(api_key)) {
+check_api_connection <- function(api_key, update_api = TRUE) {
+  if (!check_api_key(api_key, update_api)) {
     invisible()
   } else {
     status_code <- simple_api_check(api_key)
@@ -31,7 +32,7 @@ check_api_connection <- function(api_key) {
       # If the status code is not 200, the key is invalid
       cli_alert_danger("API key found but call was unsuccessful.")
       cli_alert_info("Attempted to use API key: {obscure_key(api_key)}")
-      if (interactive()) {
+      if (interactive() && update_api) {
         ask_to_set_api()
       } else {
         invisible(FALSE)
@@ -46,12 +47,14 @@ check_api_connection <- function(api_key) {
 #' correct format.
 #'
 #' @param api_key An API key.
+#' @param update_api Whether to attempt to update api if invalid
+#'
 #' @return Nothing is returned. If the API key is in the correct format, a
 #' success message is printed. If the API key is not in the correct format,
 #' an error message is printed and the function aborts.
 #' @export
 #'
-check_api_key <- function(api_key) {
+check_api_key <- function(api_key, update_api = TRUE) {
   if (api_key == "") {
     cli_alert_warning("OPENAI_API_KEY is not set.")
     ask_to_set_api()
@@ -67,9 +70,11 @@ check_api_key <- function(api_key) {
         "Attempted to validate key: {obscure_key(api_key)}"
       )
       cli_alert_info(
-        "Generate a key at {.url https://beta.openai.com/account/api-keys}"
+        "Generate a key at {.url https://platform.openai.com/account/api-keys}"
       )
-      ask_to_set_api()
+      if (update_api) {
+        ask_to_set_api()
+      }
     }
   }
 }
@@ -89,7 +94,7 @@ check_api <- function() {
   valid_api <- getOption("gptstudio.valid_api")
   saved_key <- getOption("gptstudio.openai_key")
   if (!valid_api) {
-    inform("Checking API key using OPENAI_API_KEY environment variable...")
+    cli_inform("Checking API key using OPENAI_API_KEY environment variable...")
     check_api_connection(api_key)
   } else if (saved_key == Sys.getenv("OPENAI_API_KEY")) {
     cli_alert_success("API already validated in this session.")
@@ -138,7 +143,7 @@ ask_to_set_api <- function(try_again = FALSE) {
     if (set_api) {
       set_openai_api_key()
     } else {
-      warn("Not setting OPENAI_API_KEY environment variable.")
+      cli_warn("Not setting OPENAI_API_KEY environment variable.")
       invisible(FALSE)
     }
   } else {

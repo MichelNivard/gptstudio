@@ -19,109 +19,108 @@ run_chat_gpt <- function() {
 });
 '
   chat_card <- bslib::card(
-    height = "220px",
+    height = "550px",
     bslib::card_header("Write Prompt", class = "bg-primary"),
     bslib::card_body(
+      fill = TRUE,
       shiny::textAreaInput(
         inputId = "chat_input", label = NULL,
         value = "", resize = "vertical",
         rows = 3, width = "100%"
       ),
       shiny::actionButton(width = "100%",
-        inputId = "chat", label =  "Chat",
-        icon = shiny::icon("robot"), class = "btn-primary")
-    )
-  )
-
-  model_settings_card <- bslib::card(
-    height = "250px",
-    bslib::card_header("Model Input Settings", class = "bg-secondary"),
-    bslib::card_body(
-      shiny::selectInput(
-        "model", "OpenAI Model",
-        choices = c("text-davinci-003", "code-davinci-002"),
-        width = "90%"),
+                          inputId = "chat", label =  "Chat",
+                          icon = shiny::icon("robot"), class = "btn-primary"),
+      shiny::br(), shiny::br(),
       shiny::fluidRow(
-      shiny::numericInput("temperature", "Temperature",
-                         min = 0, max = 1, value = 0.5, step = 0.1,
-                         width = "50%"),
-      shiny::numericInput("max_tokens", "Max Tokens",
-                         min = 16, max = 10000, value = 200, step = 1,
-                         width = "50%")
-      ),
-      class = "bg-light",
+        shiny::selectInput(
+          "style", "Programming Style",
+          choices = c("tidyverse", "base", "no preference"),
+          width = "50%"),
+        shiny::selectInput(
+          "skill", "Programming Proficiency",
+          choices = c("beginner", "intermediate", "advanced", "genius"),
+          width = "50%")
+      )
     )
   )
 
   ui <- shiny::fluidPage(
-    theme = bslib::bs_theme(version = 5),
-    title = "Chat GPT from gptstudio",
+    theme = bslib::bs_theme(bootswatch = "morph", version = 5),
+    title = "ChatGPT from gptstudio",
     shiny::tags$script(shiny::HTML(js)),
+    shiny::br(),
     bslib::layout_column_wrap(
       width = 1/2,
-      bslib::layout_column_wrap(
-        width = 1,
-        heights_equal = "row",
-        chat_card, model_settings_card),
-      shiny::uiOutput("all_chats_box")
+      fill = FALSE,
+      chat_card, shiny::uiOutput("all_chats_box")
     )
   )
 
   server <- function(input, output, session) {
     r <- shiny::reactiveValues()
-    r$all_chats <- ""
     r$all_chats_formatted <- NULL
+    r$all_chats <- NULL
+
     shiny::observe({
       cli_inform(c("i" = "Querying OpenAI's API..."))
-      new_prompt <- input$chat_input
-      prompt <- glue(r$all_chats, new_prompt, .sep = " ")
       cli_rule("Prompt")
-      cat_print(prompt)
-      interim <- openai_create_completion(
-        model = input$model,
-        prompt = prompt,
-        temperature = input$temperature,
-        max_tokens = input$max_tokens
-      )
-      cli_inform(c("i" = "Response received."))
-
-      new_response <- interim$choices[1, 1]
-      cli_rule("Response")
-      cat_print(new_response)
-      r$all_chats <- glue(r$all_chats, new_prompt, new_response)
+      cat_print(input$chat_input)
+      cli_rule("All chats")
       cat_print(r$all_chats)
-      r$all_chats_formatted <-
-        make_chat_history(r$all_chats_formatted, input$chat_input, new_response)
-      output$all_chats_box  <- shiny::renderUI(
-        bslib::card(
-          bslib::card_header("Chat History", class = "bg-primary"),
-          bslib::card_body(
-            fill = TRUE,
-            r$all_chats_formatted
+
+      response <- openai_create_chat_completion()
+
+      interim <- gpt_chat(query = input$chat_input,
+                          history = r$all_chats,
+                          style = input$style,
+                          skill = input$skill)
+      cli_inform(c("i" = "Response received."))
+      new_response <- interim[[2]]$choices
+      cli_rule("Response")
+      cli_inform(interim[[2]]$choices$message.content)
+      r$all_chats <-
+        c(
+          interim[[1]],
+          list(
+            list(
+              role    = new_response$message.role,
+              content = new_response$message.content
+            )
           )
         )
-      )
+      r$all_chats_formatted <- make_chat_history(r$all_chats)
       shiny::updateTextAreaInput(session, "chat_input", value = "")
-    }) %>%
+    }) |>
       shiny::bindEvent(input$chat)
 
-    shiny::observeEvent(input$cancel, shiny::stopApp())
+    output$all_chats_box <- shiny::renderUI({
+      shiny::req(length(r$all_chats) > 0)
+      bslib::card(
+        bslib::card_header("Chat History", class = "bg-primary"),
+        bslib::card_body(
+          fill = TRUE,
+          r$all_chats_formatted
+        )
+      )
+    })
+    shiny::observe(shiny::stopApp()) |> shiny::bindEvent(input$cancel)
   }
 
   shiny::shinyApp(ui, server)
 
 }
 
+make_chat_history <- function(history) {
+  cli_inform("Making history...")
+  history <-
+    purrr::map(history, \(x) if (x$role == "system") NULL else x) |>
+    purrr::compact()
 
-make_chat_history <- function(history, new_prompt, new_response) {
-  new_response <-
-    list(shiny::strong("Question"),
-         shiny::markdown(new_prompt),
-         shiny::strong("Response"),
-         shiny::markdown(new_response))
-  if (is_null(history)) {
-    new_response
-  } else {
-    c(history, new_response)
-  }
+  purrr::map(history, \(x) {
+    list(
+      shiny::strong(toupper(x$role)),
+      shiny::markdown(x$content)
+    )
+  })
 }

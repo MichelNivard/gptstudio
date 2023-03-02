@@ -5,3 +5,12 @@
 # {shinytest2}: Ignore new debug snapshots for `$expect_values()`
 *_.new.png
 docs
+*~
+*.bak
+*.log
+*.swp
+*.bak
+DS.Store
+*.icloud
+.Rprofile
+.Renviron
