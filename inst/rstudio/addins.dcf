@@ -28,7 +28,7 @@ Description: Uses OpenAI's GPT-3.5 specify a model in R with user input
 Binding: specify_model_addin
 Interactive: true
 
-Name: GPT Chat
+Name: ChatGPT
 Description: Start a chat session
 Binding: chat_gpt_addin
 Interactive: true

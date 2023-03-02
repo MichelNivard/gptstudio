@@ -27,7 +27,7 @@
     Message <cliMessage>
       x API key not found or is not formatted correctly.
       i Attempted to validate key: <hidden> (too short to obscure)
-      i Generate a key at <https://beta.openai.com/account/api-keys>
+      i Generate a key at <https://platform.openai.com/account/api-keys>
 
 # API checking works on CI
 
@@ -114,7 +114,7 @@
     Message <cliMessage>
       x API key not found or is not formatted correctly.
       i Attempted to validate key: <hidden> (too short to obscure)
-      i Generate a key at <https://beta.openai.com/account/api-keys>
+      i Generate a key at <https://platform.openai.com/account/api-keys>
 
 ---
 
