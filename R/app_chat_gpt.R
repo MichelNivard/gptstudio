@@ -91,7 +91,7 @@ run_chat_gpt <- function() {
         )
       r$all_chats_formatted <- make_chat_history(r$all_chats)
       shiny::updateTextAreaInput(session, "chat_input", value = "")
-    }) |>
+    }) %>%
       shiny::bindEvent(input$chat)
 
     output$all_chats_box <- shiny::renderUI({
@@ -104,7 +104,7 @@ run_chat_gpt <- function() {
         )
       )
     })
-    shiny::observe(shiny::stopApp()) |> shiny::bindEvent(input$cancel)
+    shiny::observe(shiny::stopApp()) %>% shiny::bindEvent(input$cancel)
   }
 
   shiny::shinyApp(ui, server)
@@ -114,7 +114,7 @@ run_chat_gpt <- function() {
 make_chat_history <- function(history) {
   cli_inform("Making history...")
   history <-
-    purrr::map(history, \(x) if (x$role == "system") NULL else x) |>
+    purrr::map(history, \(x) if (x$role == "system") NULL else x) %>%
     purrr::compact()
 
   purrr::map(history, \(x) {
