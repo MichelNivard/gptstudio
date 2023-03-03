@@ -114,13 +114,13 @@ run_chat_gpt <- function() {
 make_chat_history <- function(history) {
   cli_inform("Making history...")
   history <-
-    purrr::map(history, \(x) if (x$role == "system") NULL else x) %>%
+    purrr::map(history, ~{if (.x$role == "system") NULL else .x}) %>%
     purrr::compact()
 
-  purrr::map(history, \(x) {
+  purrr::map(history, ~{
     list(
-      shiny::strong(toupper(x$role)),
-      shiny::markdown(x$content)
+      shiny::strong(toupper(.x$role)),
+      shiny::markdown(.x$content)
     )
   })
 }

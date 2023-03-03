@@ -247,7 +247,7 @@ gpt_chat <- function(query, history, style = "tidyverse", skill = "beginner") {
     )
 
   history <-
-    purrr::map(history, \(x) if (x$role == "system") NULL else x) %>%
+    purrr::map(history, ~{if (.x$role == "system") NULL else .x}) %>%
     purrr::compact()
 
   prompt <- c(history, instructions)
