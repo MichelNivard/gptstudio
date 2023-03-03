@@ -33,6 +33,7 @@ check_api_connection <- function(api_key, update_api = TRUE) {
       cli_alert_danger("API key found but call was unsuccessful.")
       cli_alert_info("Attempted to use API key: {obscure_key(api_key)}")
       if (interactive() && update_api) {
+        cli_inform("Satus code: {status_code}")
         ask_to_set_api()
       } else {
         invisible(FALSE)
@@ -115,10 +116,10 @@ simple_api_check <- function(api_key) {
 
 set_openai_api_key <- function() {
   new_api_key <- readline("Copy and paste your API key here: ")
+  Sys.setenv(OPENAI_API_KEY = new_api_key)
   if (check_api()) {
     cli_alert_success("API key is valid.")
     cli_alert_info("Setting OPENAI_API_KEY environment variable.")
-    Sys.setenv(OPENAI_API_KEY = new_api_key)
     cli_alert_info("You can set this variable in your .Renviron file.")
     invisible(TRUE)
   } else {
@@ -135,7 +136,7 @@ set_openai_api_key <- function() {
   }
 }
 
-ask_to_set_api <- function(try_again = FALSE) {
+ask_to_set_api <- function() {
   if (interactive()) {
     set_api <- usethis::ui_yeah(
       "Do you want to set the OPENAI_API_KEY for this session?"
