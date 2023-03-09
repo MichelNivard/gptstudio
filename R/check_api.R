@@ -24,7 +24,7 @@ check_api_connection <- function(api_key, update_api = TRUE) {
                     increase or decrease the number of tokens with the
                     `gptstudio.max_tokens` option. Here is an example to lower
                     the max tokens to 100 tokens per query:")
-      cli_code("options(\"gptstudio.max_tokens\") = 100")
+      cli_code("options(\"gptstudio.max_tokens\" = 100)")
       options("gptstudio.valid_api" = TRUE)
       options("gptstudio.openai_key" = api_key)
       invisible(TRUE)
