@@ -1,7 +1,7 @@
 Package: gptstudio
 Type: Package
 Title: gptstudio adds functionality based on OpenAI's GPT family of models directly into Rstudio
-Version: 0.1.3
+Version: 0.0.4
 Authors@R:
   c(person(given = "Michel",
            family = "Nivard",
