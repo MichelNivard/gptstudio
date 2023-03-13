@@ -25,10 +25,19 @@
     <loc>/index.html</loc>
   </url>
   <url>
-    <loc>/reference/avAddin.html</loc>
+    <loc>/reference/addin_active_voice.html</loc>
   </url>
   <url>
-    <loc>/reference/chat_gpt_addin.html</loc>
+    <loc>/reference/addin_chatgpt_in_source.html</loc>
+  </url>
+  <url>
+    <loc>/reference/addin_comment_code.html</loc>
+  </url>
+  <url>
+    <loc>/reference/addin_spelling_grammar.html</loc>
+  </url>
+  <url>
+    <loc>/reference/chatgpt_addin.html</loc>
   </url>
   <url>
     <loc>/reference/check_api.html</loc>
@@ -43,19 +52,16 @@
     <loc>/reference/collect_dataframes.html</loc>
   </url>
   <url>
-    <loc>/reference/comAddin.html</loc>
-  </url>
-  <url>
     <loc>/reference/create_gpt_chat.html</loc>
   </url>
   <url>
     <loc>/reference/get_selection.html</loc>
   </url>
   <url>
-    <loc>/reference/gpt_addin.html</loc>
+    <loc>/reference/gpt_chat.html</loc>
   </url>
   <url>
-    <loc>/reference/gpt_chat.html</loc>
+    <loc>/reference/gpt_chat_in_source.html</loc>
   </url>
   <url>
     <loc>/reference/gpt_create.html</loc>
@@ -94,24 +100,9 @@
     <loc>/reference/prep_data_prompt.html</loc>
   </url>
   <url>
-    <loc>/reference/run_gpt_freeform.html</loc>
-  </url>
-  <url>
-    <loc>/reference/run_specify_model.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sandgAddin.html</loc>
-  </url>
-  <url>
     <loc>/reference/setup_gpt_chat.html</loc>
   </url>
   <url>
-    <loc>/reference/specify_model_addin.html</loc>
-  </url>
-  <url>
     <loc>/reference/summarize_data.html</loc>
-  </url>
-  <url>
-    <loc>/reference/wpAddin.html</loc>
   </url>
 </urlset>
