@@ -1,32 +1,17 @@
 Name: Spelling and Grammar
 Description: Uses OpenAI's GPT to improve spelling and grammar of selected text
-Binding: sandgAddin
+Binding: addin_spelling_grammar
 Interactive: false
 
 Name: Change text to active voice
 Description: Uses OpenAI's GPT to change selected text into active voice
-Binding: avAddin
-Interactive: false
-
-Name: Write/Code from prompt
-Description: Uses OpenAI's GPT-3.5 to generate text or code from a prompt
-Binding: wpAddin
+Binding: addin_active_voice
 Interactive: false
 
 Name: Comment your code
 Description: Uses OpenAI's GPT-3.5 to generate comments for your code
-Binding: comAddin
+Binding: addin_comment_code
 Interactive: false
-
-Name: Freeform GPT editor
-Description: Uses OpenAI's GPT-3.5 perform a user specified edit to the selected text or code
-Binding: gpt_addin
-Interactive: true
-
-Name: Specify model editor
-Description: Uses OpenAI's GPT-3.5 specify a model in R with user input
-Binding: specify_model_addin
-Interactive: true
 
 Name: ChatGPT
 Description: Start a chat session

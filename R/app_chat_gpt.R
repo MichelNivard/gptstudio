@@ -1,6 +1,5 @@
 #' Run Chat GPT
 #' Run the Chat GPT Shiny App
-#' @param None
 #' @export
 #'
 chat_gpt_addin <- function() {

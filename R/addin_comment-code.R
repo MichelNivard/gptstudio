@@ -3,10 +3,10 @@
 #' Call this function as a Rstudio addin to ask GPT to add comments to your code
 #'
 #' @export
-comAddin <- function() {
+addin_comment_code <- function() {
   gpt_edit(
     model = "code-davinci-edit-001",
-    instruction = "add comments to each line of code, explaining what the code does",
+    instruction = "add comments to each line of code to explain the code",
     temperature = 0.1
   )
 }
