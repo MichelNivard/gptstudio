@@ -15,5 +15,10 @@ Interactive: false
 
 Name: ChatGPT
 Description: Start a chat session
-Binding: chat_gpt_addin
+Binding: chatgpt_addin
 Interactive: true
+
+Name: ChatGPT in Source
+Description: Use ChatGPT in source instead of in a shiny app
+Binding: addin_chatgpt_in_source
+Interactive: false

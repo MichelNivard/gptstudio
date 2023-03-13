@@ -2,7 +2,7 @@
 #' Run the Chat GPT Shiny App
 #' @export
 #'
-chat_gpt_addin <- function() {
+chatgpt_addin <- function() {
   check_api()
   withr::local_options(shiny.launch.browser = .rs.invokeShinyPaneViewer)
   run_chat_gpt()

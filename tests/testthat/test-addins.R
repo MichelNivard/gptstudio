@@ -30,3 +30,5 @@ test_that("Active voice works", {
   )
   expect_type(addin_active_voice(), "list")
 })
+
+# Tell me a story

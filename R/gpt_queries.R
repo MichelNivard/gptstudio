@@ -139,7 +139,6 @@ gpt_insert <- function(model,
   }
 
   cli_format(improved_text)
-
   insert_text(improved_text)
 }
 
@@ -163,10 +162,10 @@ insert_text <- function(improved_text) {
   rstudioapi::insertText(improved_text)
 }
 
-#' Query an Index
+#' ChatGPT in RStudio
 #'
-#' This function queries an index with a given question or prompt and returns a
-#' set of suggested answers.
+#' This function uses the ChatGPT API tailored to a user-provided style and
+#' skill level.
 #'
 #' @param query A character string representing the question or prompt to query
 #'   the index with.
@@ -181,7 +180,10 @@ insert_text <- function(improved_text) {
 #'
 #' @export
 #'
-gpt_chat <- function(query, history, style = "tidyverse", skill = "beginner") {
+gpt_chat <- function(query,
+                     history = NULL,
+                     style   = getOption("gptstudio.code_style"),
+                     skill   = getOption("gptstudio.skill")) {
   arg_match(style, c("tidyverse", "base", "no preference"))
   arg_match(skill, c("beginner", "intermediate", "advanced", "genius"))
 
@@ -194,7 +196,7 @@ gpt_chat <- function(query, history, style = "tidyverse", skill = "beginner") {
             role = "system",
             content =
               glue(
-                "You are a helpful chat bot that answere questions for an R
+                "You are a helpful chat bot that answers questions for an R
                 programmer working in the RStudio IDE. They consider themselves
                 to be a {skill} R programmer. Provide answers with their skill
                 level in mind. They prefer to use a tidyverse style
@@ -214,7 +216,7 @@ gpt_chat <- function(query, history, style = "tidyverse", skill = "beginner") {
             role = "system",
             content =
               glue(
-                "You are a helpful chat bot that answere questions for an R
+                "You are a helpful chat bot that answers questions for an R
                 programmer working in the RStudio IDE. They consider themselves
                 to be a {skill} R programmer. Provide answers with their skill
                 level in mind. They prefer to use a base R style of
@@ -233,7 +235,7 @@ gpt_chat <- function(query, history, style = "tidyverse", skill = "beginner") {
             role = "system",
             content =
               glue(
-                "You are a helpful chat bot that answere questions for an R
+                "You are a helpful chat bot that answers questions for an R
                 programmer working in the RStudio IDE. TThey consider themselves
                 to be a {skill} R programmer. Provide answers with their skill
                 level in mind."
@@ -249,10 +251,105 @@ gpt_chat <- function(query, history, style = "tidyverse", skill = "beginner") {
   history <-
     purrr::map(history, ~{if (.x$role == "system") NULL else .x}) %>%
     purrr::compact()
-
   prompt <- c(history, instructions)
-
   answer <- openai_create_chat_completion(prompt)
+  list(prompt, answer)
+}
 
+
+#' ChatGPT in Source
+#'
+#' Provides the same functionality as `gpt_chat()` with minor modifications to
+#' give more useful output in a source (i.e., *.R) file.
+#'
+#' @param query A character string representing the question or prompt to query
+#'   the index with.
+#' @param history A list of the previous chat responses
+#' @param style A character string indicating the preferred coding style, the
+#' default is "tidyverse".
+#' @param skill The self-described skill level of the programmer,
+#' default is "beginner"
+#'
+#' @return A list containing the instructions for answering the question, the
+#'   context in which the question was asked, and the suggested answer.
+#'
+#' @export
+#'
+gpt_chat_in_source <- function(query,
+                     history = NULL,
+                     style   = getOption("gptstudio.code_style"),
+                     skill   = getOption("gptstudio.skill")) {
+  arg_match(style, c("tidyverse", "base", "no preference"))
+  arg_match(skill, c("beginner", "intermediate", "advanced", "genius"))
+
+  instructions <-
+    switch(
+      style,
+      "tidyverse" =
+        list(
+          list(
+            role = "system",
+            content =
+              glue(
+                "You are a helpful chat bot that answers questions for an R
+                programmer working in the RStudio IDE. They consider themselves
+                to be a {skill} R programmer. Provide answers with their skill
+                level in mind. They prefer to use a tidyverse style
+                of coding. When possible, answer code quesetions using
+                tidyverse, r-lib, and tidymodels family of packages. R for Data
+                Science is also a good resource to pull from. For any text that
+                is not R code, write it as a code comment."
+              )
+          ),
+          list(
+            role = "user",
+            content = glue("{query}")
+          )
+        ),
+      "base" =
+        list(
+          list(
+            role = "system",
+            content =
+              glue(
+                "You are a helpful chat bot that answers questions for an R
+                programmer working in the RStudio IDE. They consider themselves
+                to be a {skill} R programmer. Provide answers with their skill
+                level in mind. They prefer to use a base R style of
+                coding. When possible, answer code quesetions using base R
+                rather than the tidyverse. For any text that is not R code,
+                write it as a code comment."
+              )
+          ),
+          list(
+            role = "user",
+            content = glue("{query}")
+          )
+        ),
+      "no preference" =
+        list(
+          list(
+            role = "system",
+            content =
+              glue(
+                "You are a helpful chat bot that answers questions for an R
+                programmer working in the RStudio IDE. TThey consider themselves
+                to be a {skill} R programmer. Provide answers with their skill
+                level in mind. For any text that is not R code, write it as a
+                code comment."
+              )
+          ),
+          list(
+            role = "user",
+            content = glue("{query}")
+          )
+        )
+    )
+
+  history <-
+    purrr::map(history, ~{if (.x$role == "system") NULL else .x}) %>%
+    purrr::compact()
+  prompt <- c(history, instructions)
+  answer <- openai_create_chat_completion(prompt)
   list(prompt, answer)
 }
