@@ -21,18 +21,15 @@ Imports:
     assertthat,
     bslib,
     cli,
-    fs,
     glue,
     jsonlite,
     lifecycle,
     magrittr,
     purrr,
-    readr,
     rlang,
     rstudioapi (>= 0.12),
     shiny,
     skimr,
-    stringr,
     usethis,
     withr
 RoxygenNote: 7.2.3
@@ -41,7 +38,6 @@ Suggests:
     httr,
     mockr,
     testthat (>= 3.0.0),
-    quarto,
     uuid,
     spelling
 Config/testthat/edition: 3

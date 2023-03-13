@@ -5,16 +5,12 @@
 \title{ChatGPT in Source}
 \usage{
 gpt_chat_in_source(
-  query,
   history = NULL,
   style = getOption("gptstudio.code_style"),
   skill = getOption("gptstudio.skill")
 )
 }
 \arguments{
-\item{query}{A character string representing the question or prompt to query
-the index with.}
-
 \item{history}{A list of the previous chat responses}
 
 \item{style}{A character string indicating the preferred coding style, the
