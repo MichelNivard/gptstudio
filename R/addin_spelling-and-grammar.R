@@ -4,7 +4,7 @@
 #' grammar of selected text.
 #'
 #' @export
-sandgAddin <- function() {
+addin_spelling_grammar <- function() {
   gpt_edit(
     model = "text-davinci-edit-001",
     instruction = "Improve spelling and grammar of this text",

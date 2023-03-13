@@ -6,7 +6,7 @@ test_that("Spelling and grammer editing works", {
       list("text" = "new text")
     }
   )
-  expect_type(sandgAddin(), "list")
+  expect_type(addin_spelling_grammar(), "list")
 })
 
 test_that("Commenting code works", {
@@ -17,18 +17,7 @@ test_that("Commenting code works", {
       list("text" = "new text")
     }
   )
-  expect_type(comAddin(), "list")
-})
-
-test_that("Writing code / text works", {
-  mockr::local_mock(
-    gpt_create = function(model = "text-davinci-003",
-                          max_tokens = 500,
-                          temperature = 0.1) {
-      list("text" = "new text")
-    }
-  )
-  expect_type(wpAddin(), "list")
+  expect_type(addin_comment_code(), "list")
 })
 
 test_that("Active voice works", {
@@ -39,5 +28,7 @@ test_that("Active voice works", {
       list("text" = "new text")
     }
   )
-  expect_type(avAddin(), "list")
+  expect_type(addin_active_voice(), "list")
 })
+
+# Tell me a story

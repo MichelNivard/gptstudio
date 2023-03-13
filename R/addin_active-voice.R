@@ -4,7 +4,7 @@
 #' into the active voice
 #'
 #' @export
-avAddin <- function() {
+addin_active_voice <- function() {
   gpt_edit(
     model = "text-davinci-edit-001",
     instruction = "rewrite text in the active voice",
