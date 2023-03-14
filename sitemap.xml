@@ -28,6 +28,9 @@
     <loc>/reference/addin_active_voice.html</loc>
   </url>
   <url>
+    <loc>/reference/addin_chatgpt.html</loc>
+  </url>
+  <url>
     <loc>/reference/addin_chatgpt_in_source.html</loc>
   </url>
   <url>
@@ -35,9 +38,6 @@
   </url>
   <url>
     <loc>/reference/addin_spelling_grammar.html</loc>
-  </url>
-  <url>
-    <loc>/reference/chatgpt_addin.html</loc>
   </url>
   <url>
     <loc>/reference/check_api.html</loc>
@@ -50,9 +50,6 @@
   </url>
   <url>
     <loc>/reference/collect_dataframes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_gpt_chat.html</loc>
   </url>
   <url>
     <loc>/reference/get_selection.html</loc>
@@ -82,9 +79,6 @@
     <loc>/reference/insert_text.html</loc>
   </url>
   <url>
-    <loc>/reference/openai_chat.html</loc>
-  </url>
-  <url>
     <loc>/reference/openai_create_chat_completion.html</loc>
   </url>
   <url>
@@ -98,9 +92,6 @@
   </url>
   <url>
     <loc>/reference/prep_data_prompt.html</loc>
-  </url>
-  <url>
-    <loc>/reference/setup_gpt_chat.html</loc>
   </url>
   <url>
     <loc>/reference/summarize_data.html</loc>
