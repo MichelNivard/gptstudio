@@ -25,9 +25,6 @@
     <loc>/index.html</loc>
   </url>
   <url>
-    <loc>/reference/addin_active_voice.html</loc>
-  </url>
-  <url>
     <loc>/reference/addin_chatgpt.html</loc>
   </url>
   <url>
@@ -49,9 +46,6 @@
     <loc>/reference/check_api_key.html</loc>
   </url>
   <url>
-    <loc>/reference/collect_dataframes.html</loc>
-  </url>
-  <url>
     <loc>/reference/get_selection.html</loc>
   </url>
   <url>
@@ -65,9 +59,6 @@
   </url>
   <url>
     <loc>/reference/gpt_edit.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gpt_insert.html</loc>
   </url>
   <url>
     <loc>/reference/gptstudio-package.html</loc>
@@ -89,11 +80,5 @@
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>/reference/prep_data_prompt.html</loc>
-  </url>
-  <url>
-    <loc>/reference/summarize_data.html</loc>
   </url>
 </urlset>
