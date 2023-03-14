@@ -3,11 +3,6 @@ Description: Uses OpenAI's GPT to improve spelling and grammar of selected text
 Binding: addin_spelling_grammar
 Interactive: false
 
-Name: Change text to active voice
-Description: Uses OpenAI's GPT to change selected text into active voice
-Binding: addin_active_voice
-Interactive: false
-
 Name: Comment your code
 Description: Uses OpenAI's GPT-3.5 to generate comments for your code
 Binding: addin_comment_code

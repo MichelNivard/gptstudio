@@ -173,10 +173,10 @@ query_openai_api <- function(body, openai_api_key, task) {
 
   response <-
     httr::RETRY("POST",
-                url = base_url,
-                httr::add_headers(headers), body = body,
-                encode = "json",
-                quiet = TRUE
+      url = base_url,
+      httr::add_headers(headers), body = body,
+      encode = "json",
+      quiet = TRUE
     )
 
   parsed <- response %>%

@@ -1,11 +1,10 @@
 #' @keywords internal
 "_PACKAGE"
 
-## usethis namespace: start
+## gptstudio namespace: start
 #' @import cli
 #' @import rlang
-#' @importFrom assertthat assert_that is.string is.number is.count is.flag
+#' @importFrom assertthat assert_that is.string is.number is.count
 #' @importFrom glue glue
-#' @importFrom lifecycle deprecated
-## usethis namespace: end
+## gptstudio namespace: end
 NULL

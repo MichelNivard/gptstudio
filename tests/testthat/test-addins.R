@@ -20,21 +20,14 @@ test_that("Commenting code works", {
   expect_type(addin_comment_code(), "list")
 })
 
-test_that("Active voice works", {
-  mockr::local_mock(
-    gpt_edit = function(model = "text-davinci-edit-001",
-                        instruction = "rewrite text in the active voice",
-                        temperature = 0.1) {
-      list("text" = "new text")
-    }
-  )
-  expect_type(addin_active_voice(), "list")
-})
-
 test_that("chatgpt_addin runs", {
   mockr::local_mock(
-    check_api = function() {TRUE},
-    run_chat_gpt = function() {TRUE}
+    check_api = function() {
+      TRUE
+    },
+    run_chat_gpt = function() {
+      TRUE
+    }
   )
   expect_type(addin_chatgpt(), "logical")
 })
