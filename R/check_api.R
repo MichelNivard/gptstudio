@@ -106,7 +106,7 @@ check_api <- function() {
   }
 }
 
-simple_api_check <- function(api_key) {
+simple_api_check <- function(api_key = Sys.getenv("OPENAI_API_KEY")) {
   response <- httr::GET(
     "https://api.openai.com/v1/models",
     httr::add_headers(Authorization = paste0("Bearer ", api_key))
