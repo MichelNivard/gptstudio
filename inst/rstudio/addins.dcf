@@ -15,7 +15,7 @@ Interactive: false
 
 Name: ChatGPT
 Description: Start a chat session
-Binding: chatgpt_addin
+Binding: addin_chatgpt
 Interactive: true
 
 Name: ChatGPT in Source

@@ -31,4 +31,19 @@ test_that("Active voice works", {
   expect_type(addin_active_voice(), "list")
 })
 
-# Tell me a story
+test_that("chatgpt_addin runs", {
+  mockr::local_mock(
+    check_api = function() {TRUE},
+    run_chat_gpt = function() {TRUE}
+  )
+  expect_type(addin_chatgpt(), "logical")
+})
+
+test_that("chatgpt_addin_in_source runs", {
+  mockr::local_mock(
+    gpt_chat_in_source = function(style = "tidyverse", skill = "beginner") {
+      list("text" = "here is some text")
+    }
+  )
+  expect_type(addin_chatgpt_in_source(), "list")
+})

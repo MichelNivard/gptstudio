@@ -262,8 +262,6 @@ gpt_chat <- function(query,
 #' Provides the same functionality as `gpt_chat()` with minor modifications to
 #' give more useful output in a source (i.e., *.R) file.
 #'
-#' @param query A character string representing the question or prompt to query
-#'   the index with.
 #' @param history A list of the previous chat responses
 #' @param style A character string indicating the preferred coding style, the
 #' default is "tidyverse".
@@ -275,10 +273,12 @@ gpt_chat <- function(query,
 #'
 #' @export
 #'
-gpt_chat_in_source <- function(query,
+gpt_chat_in_source <- function(
                      history = NULL,
                      style   = getOption("gptstudio.code_style"),
                      skill   = getOption("gptstudio.skill")) {
+  check_api()
+  query <- get_selection()
   arg_match(style, c("tidyverse", "base", "no preference"))
   arg_match(skill, c("beginner", "intermediate", "advanced", "genius"))
 
@@ -351,5 +351,7 @@ gpt_chat_in_source <- function(query,
     purrr::compact()
   prompt <- c(history, instructions)
   answer <- openai_create_chat_completion(prompt)
-  list(prompt, answer)
+  text_to_insert <- c(as.character(query), answer[[2]]$choices$message.content)
+  cli_inform(c("i" = "Inserting response from ChatGPT..."))
+  insert_text(text_to_insert)
 }

@@ -195,7 +195,3 @@ query_openai_api <- function(body, openai_api_key, task) {
 value_between <- function(x, lower, upper) {
   x >= lower && x <= upper
 }
-
-both_specified <- function(x, y) {
-  x != 1 && y != 1
-}
