@@ -19,23 +19,21 @@ Encoding: UTF-8
 LazyData: true
 Imports: 
     assertthat,
-    bslib,
+    bslib (>= 0.4.2),
     cli,
     glue,
+    httr,
     jsonlite,
-    lifecycle,
     magrittr,
     purrr,
     rlang,
     rstudioapi (>= 0.12),
     shiny,
-    skimr,
     usethis,
     withr
 RoxygenNote: 7.2.3
 Suggests: 
     covr,
-    httr,
     mockr,
     testthat (>= 3.0.0),
     uuid,

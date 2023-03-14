@@ -91,57 +91,6 @@ gpt_create <- function(model,
   insert_text(improved_text)
 }
 
-
-#' Use GPT to improve text
-#'
-#' This function uses the GPT model from OpenAI to improve the spelling and
-#' grammar of the selected text in the current RStudio session.
-#'
-#' @param model The name of the GPT model to use.
-#' @param prompt Instructions for the insertion
-#' @param temperature A parameter for controlling the randomness of the GPT
-#' model's output.
-#' @param max_tokens Maximum number of tokens to return (related to length of
-#' response), defaults to 500
-#' @param openai_api_key An API key for the OpenAI API.
-#' @param append_text Add text to selection rather than replace, defaults to
-#' FALSE
-#'
-#' @return Nothing is returned. The improved text is inserted into the current
-#' RStudio session.
-#' @export
-gpt_insert <- function(model,
-                       prompt,
-                       temperature = 0.1,
-                       max_tokens = getOption("gptstudio.max_tokens"),
-                       openai_api_key = Sys.getenv("OPENAI_API_KEY"),
-                       append_text = FALSE) {
-  check_api()
-  selection <- get_selection()
-  inform("Asking GPT for help...")
-
-  prompt <- paste(prompt, selection$value)
-
-  edit <- openai_create_completion(
-    model = model,
-    prompt = prompt,
-    temperature = temperature,
-    max_tokens = max_tokens,
-    openai_api_key = openai_api_key
-  )
-
-  inform("Inserting text from GPT...")
-
-  if (append_text) {
-    improved_text <- c(selection$value, edit$choices$text)
-  } else {
-    improved_text <- c(edit$choices$text, selection$value)
-  }
-
-  cli_format(improved_text)
-  insert_text(improved_text)
-}
-
 #' Wrapper around selectionGet to help with testthat
 #'
 #' @return Text selection via `rstudioapi::selectionGet`
@@ -182,14 +131,13 @@ insert_text <- function(improved_text) {
 #'
 gpt_chat <- function(query,
                      history = NULL,
-                     style   = getOption("gptstudio.code_style"),
-                     skill   = getOption("gptstudio.skill")) {
+                     style = getOption("gptstudio.code_style"),
+                     skill = getOption("gptstudio.skill")) {
   arg_match(style, c("tidyverse", "base", "no preference"))
   arg_match(skill, c("beginner", "intermediate", "advanced", "genius"))
 
   instructions <-
-    switch(
-      style,
+    switch(style,
       "tidyverse" =
         list(
           list(
@@ -249,7 +197,9 @@ gpt_chat <- function(query,
     )
 
   history <-
-    purrr::map(history, ~{if (.x$role == "system") NULL else .x}) %>%
+    purrr::map(history, ~ {
+      if (.x$role == "system") NULL else .x
+    }) %>%
     purrr::compact()
   prompt <- c(history, instructions)
   answer <- openai_create_chat_completion(prompt)
@@ -273,18 +223,16 @@ gpt_chat <- function(query,
 #'
 #' @export
 #'
-gpt_chat_in_source <- function(
-                     history = NULL,
-                     style   = getOption("gptstudio.code_style"),
-                     skill   = getOption("gptstudio.skill")) {
+gpt_chat_in_source <- function(history = NULL,
+                               style = getOption("gptstudio.code_style"),
+                               skill = getOption("gptstudio.skill")) {
   check_api()
   query <- get_selection()
   arg_match(style, c("tidyverse", "base", "no preference"))
   arg_match(skill, c("beginner", "intermediate", "advanced", "genius"))
 
   instructions <-
-    switch(
-      style,
+    switch(style,
       "tidyverse" =
         list(
           list(
@@ -347,7 +295,9 @@ gpt_chat_in_source <- function(
     )
 
   history <-
-    purrr::map(history, ~{if (.x$role == "system") NULL else .x}) %>%
+    purrr::map(history, ~ {
+      if (.x$role == "system") NULL else .x
+    }) %>%
     purrr::compact()
   prompt <- c(history, instructions)
   answer <- openai_create_chat_completion(prompt)
