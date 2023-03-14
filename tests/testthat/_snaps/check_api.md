@@ -67,6 +67,39 @@
       max tokens to 100 tokens per query:
       options("gptstudio.max_tokens" = 100)
 
+# API checking works, assumes OPENAI_API_KEY is set
+
+    Code
+      check_api()
+    Message <rlang_message>
+      Checking API key using OPENAI_API_KEY environment variable...
+    Message <cliMessage>
+      v API key found and matches the expected format.
+      v API key is valid and a simple API call worked.
+      i The API is validated once per session.
+      The default value for number of tokens per query is 500. This equates to
+      approximately $0.01 USD per query. You can increase or decrease the number of
+      tokens with the `gptstudio.max_tokens` option. Here is an example to lower the
+      max tokens to 100 tokens per query:
+      options("gptstudio.max_tokens" = 100)
+
+---
+
+    Code
+      check_api()
+    Message <cliMessage>
+      v API already validated in this session.
+
+---
+
+    Code
+      check_api()
+    Message <cliMessage>
+      ! API key has changed. Re-checking API connection.
+      v API key found and matches the expected format.
+      x API key found but call was unsuccessful.
+      i Attempted to use API key: 38a5****************************2d60
+
 # API key validation works
 
     Code
@@ -105,4 +138,18 @@
       check_api_connection("")
     Message <cliMessage>
       ! OPENAI_API_KEY is not set.
+
+# API connection can return true
+
+    Code
+      check_api_connection(Sys.getenv("OPENAI_API_KEY"))
+    Message <cliMessage>
+      v API key found and matches the expected format.
+      v API key is valid and a simple API call worked.
+      i The API is validated once per session.
+      The default value for number of tokens per query is 500. This equates to
+      approximately $0.01 USD per query. You can increase or decrease the number of
+      tokens with the `gptstudio.max_tokens` option. Here is an example to lower the
+      max tokens to 100 tokens per query:
+      options("gptstudio.max_tokens" = 100)
 

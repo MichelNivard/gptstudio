@@ -36,7 +36,7 @@ test_that("chatgpt_addin runs", {
     check_api = function() {TRUE},
     run_chat_gpt = function() {TRUE}
   )
-  expect_type(addin_chatgpt(), "list")
+  expect_type(addin_chatgpt(), "logical")
 })
 
 test_that("chatgpt_addin_in_source runs", {

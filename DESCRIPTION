@@ -39,7 +39,8 @@ Suggests:
     mockr,
     testthat (>= 3.0.0),
     uuid,
-    spelling
+    spelling,
+    shinytest2
 Config/testthat/edition: 3
 URL: https://github.com/MichelNivard/gptstudio,
     https://michelnivard.github.io/gptstudio/
