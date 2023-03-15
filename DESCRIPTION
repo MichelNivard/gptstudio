@@ -19,7 +19,6 @@ Encoding: UTF-8
 LazyData: true
 Imports: 
     assertthat,
-    bslib (>= 0.4.2),
     cli,
     glue,
     httr,
@@ -30,15 +29,16 @@ Imports:
     rstudioapi (>= 0.12),
     shiny,
     usethis,
-    withr
 RoxygenNote: 7.2.3
 Suggests: 
+    bslib (>= 0.4.2),
     covr,
     mockr,
     testthat (>= 3.0.0),
     uuid,
     spelling,
-    shinytest2
+    shinytest2,
+    withr
 Config/testthat/edition: 3
 URL: https://github.com/MichelNivard/gptstudio,
     https://michelnivard.github.io/gptstudio/

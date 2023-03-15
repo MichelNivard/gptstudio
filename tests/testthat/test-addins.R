@@ -24,12 +24,9 @@ test_that("chatgpt_addin runs", {
   mockr::local_mock(
     check_api = function() {
       TRUE
-    },
-    run_chat_gpt = function() {
-      TRUE
     }
   )
-  expect_type(addin_chatgpt(), "logical")
+  expect_type(addin_chatgpt(), "list")
 })
 
 test_that("chatgpt_addin_in_source runs", {
