@@ -69,3 +69,25 @@
       
       
 
+# OpenAI create chat completion fails with bad key
+
+    Code
+      openai_create_chat_completion(prompt = "What is your name?", openai_api_key = sample_key)
+    Message <cliMessage>
+      ! OpenAI API request failed [401].Error message: Incorrect API key provided: 4f9bb533************************cc24. You can find your API key at https://platform.openai.com/account/api-keys.
+    Output
+      $error
+      $error$message
+      [1] "Incorrect API key provided: 4f9bb533************************cc24. You can find your API key at https://platform.openai.com/account/api-keys."
+      
+      $error$type
+      [1] "invalid_request_error"
+      
+      $error$param
+      NULL
+      
+      $error$code
+      [1] "invalid_api_key"
+      
+      
+

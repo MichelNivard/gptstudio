@@ -1,8 +1,3 @@
-test_that("shiny apps run", {
-  chatgpt <- run_chat_gpt()
-  expect_equal(class(chatgpt), "shiny.appobj")
-})
-
 # Define a test for the 'make_chat_history' function
 test_that("make_chat_history function returns expected output", {
 

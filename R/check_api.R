@@ -115,7 +115,7 @@ simple_api_check <- function(api_key = Sys.getenv("OPENAI_API_KEY")) {
 }
 
 set_openai_api_key <- function() {
-  new_api_key <- readline("Copy and paste your API key here: ")
+  new_api_key <- readline_wrapper("Copy and paste your API key here: ")
   Sys.setenv(OPENAI_API_KEY = new_api_key)
   if (check_api()) {
     cli_alert_success("API key is valid.")
@@ -125,10 +125,10 @@ set_openai_api_key <- function() {
   } else {
     cli_alert_danger("API key is invalid.")
     cli_alert_info(
-      "Get key from {.url https://beta.openai.com/account/api-keys}"
+      "Get key from {.url https://platform.openai.com/account/api-keys}"
     )
     if (interactive()) {
-      try_again <- usethis::ui_yeah("Woud you like to try again?")
+      try_again <- ui_yeah_wrapper("Woud you like to try again?")
       ifelse(try_again, set_openai_api_key(), FALSE)
     } else {
       invisible(FALSE)
@@ -138,7 +138,7 @@ set_openai_api_key <- function() {
 
 ask_to_set_api <- function() {
   if (interactive()) {
-    set_api <- usethis::ui_yeah(
+    set_api <- ui_yeah_wrapper(
       "Do you want to set the OPENAI_API_KEY for this session?"
     )
     if (set_api) {
@@ -164,3 +164,6 @@ obscure_key <- function(api_key) {
     "<hidden> (too short to obscure)"
   }
 }
+
+ui_yeah_wrapper <- function(prompt) usethis::ui_yeah(prompt)
+readline_wrapper <- function(prompt) readline(prompt)
