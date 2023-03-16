@@ -5,11 +5,11 @@ Version: 0.0.4
 Authors@R:
   c(person(given = "Michel",
            family = "Nivard",
-           role = c("aut","cre"),
+           role = c("aut"),
            email = "m.g.nivard@vu.nl"),
     person(given = "James",
            family = "Wade",
-           role = "aut", 
+           role = c("aut", "cre"), 
            email = "github@jameshwade.com",
            comment = c(ORCID = "0000-0002-9740-1905")))
 Maintainer: Michel Nivard <m.g.nivard@vu.nl>
@@ -38,6 +38,7 @@ Suggests:
     uuid,
     spelling,
     shinytest2,
+    waiter,
     withr
 Config/testthat/edition: 3
 URL: https://github.com/MichelNivard/gptstudio,

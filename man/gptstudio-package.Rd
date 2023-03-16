@@ -20,11 +20,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Michel Nivard \email{m.g.nivard@vu.nl}
+\strong{Maintainer}: James Wade \email{github@jameshwade.com} (\href{https://orcid.org/0000-0002-9740-1905}{ORCID})
 
 Authors:
 \itemize{
-  \item James Wade \email{github@jameshwade.com} (\href{https://orcid.org/0000-0002-9740-1905}{ORCID})
+  \item Michel Nivard \email{m.g.nivard@vu.nl}
 }
 
 }

@@ -246,7 +246,8 @@ gpt_chat_in_source <- function(history = NULL,
                 of coding. When possible, answer code quesetions using
                 tidyverse, r-lib, and tidymodels family of packages. R for Data
                 Science is also a good resource to pull from. For any text that
-                is not R code, write it as a code comment."
+                is not R code, write it as a code comment. Do not use code
+                blocks or free text. Only use code and code comments."
               )
           ),
           list(
@@ -266,7 +267,8 @@ gpt_chat_in_source <- function(history = NULL,
                 level in mind. They prefer to use a base R style of
                 coding. When possible, answer code quesetions using base R
                 rather than the tidyverse. For any text that is not R code,
-                write it as a code comment."
+                write it as a code comment. Do not use code blocks or free
+                text. Only use code and code comments."
               )
           ),
           list(
@@ -281,10 +283,11 @@ gpt_chat_in_source <- function(history = NULL,
             content =
               glue(
                 "You are a helpful chat bot that answers questions for an R
-                programmer working in the RStudio IDE. TThey consider themselves
+                programmer working in the RStudio IDE. They consider themselves
                 to be a {skill} R programmer. Provide answers with their skill
                 level in mind. For any text that is not R code, write it as a
-                code comment."
+                code comment. Do not use code blocks or free text. Only use
+                code and code comments."
               )
           ),
           list(
@@ -301,7 +304,8 @@ gpt_chat_in_source <- function(history = NULL,
     purrr::compact()
   prompt <- c(history, instructions)
   answer <- openai_create_chat_completion(prompt)
-  text_to_insert <- c(as.character(query), answer[[2]]$choices$message.content)
+  text_to_insert <- c(as.character(query),
+                      as.character(answer$choices$message.content))
   cli_inform(c("i" = "Inserting response from ChatGPT..."))
   insert_text(text_to_insert)
 }

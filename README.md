@@ -32,54 +32,69 @@ require(devtools)
 install_github("MichelNivard/gptstudio")
 ```
 
-## Privacy Notice
+## Privacy Notice for gptstudio
 
-These functions work by taking the text or code you have
-highlighted/selected with the cursor, or your prompt if you use one of
-the built-in apps, and send these to OpenAI as part of a prompt; they
-fall under their privacy notice/rules/exceptions you agreed to with
-OpenAI when making an account. We can’t tell you or guarantee how secure
-these prompts are when sent to OpenAI. We don’t know what OpenAI does
-with your prompts, but OpenAI is clear that they use prompts and results
-to improve their model (see their terms of use) unless you opt-out
-explicitly by contacting them. The code is designed to ONLY share the
-highlighted/selected text, or a prompt you build with the help of one of
-our apps and no other elements of your R environment. Make sure you are
-aware of what you send to OpenAI and do not accidentally share sensitive
-data with OpenAI.
+This privacy notice is applicable to the R package that utilizes the
+GPT-3 and GPT-3.5 API provided by OpenAI. By using this package, you
+agree to adhere to the privacy terms and conditions set by OpenAI.
 
-**DO NOT HIGHLIGHT, OR INCLUDE IN A PROMPT, AND THEREFORE UPLOAD,
-DATA/CODE/TEXT THAT SHOULD REMAIN PRIVATE**
+### Data Sharing with OpenAI
+
+When using this R package, the text or code that you highlight/select
+with your cursor, or the prompt you enter within the built-in
+applications, will be sent to OpenAI as part of an API request. This
+data sharing is governed by the privacy notice, rules, and exceptions
+that you agreed to with OpenAI when creating an account.
+
+### Security and Data Usage by OpenAI
+
+We cannot guarantee the security of the data you send to OpenAI via the
+API, nor can we provide details on how OpenAI processes or uses your
+data. However, OpenAI has stated that they utilize prompts and results
+to enhance their AI models, as outlined in their terms of use. You can
+opt-out of this data usage by contacting OpenAI directly and making an
+explicit request.
+
+### Limiting Data Sharing
+
+The R package is designed to share only the text or code that you
+specifically highlight/select or include in a prompt through our
+built-in applications. No other elements of your R environment will be
+shared. It is your responsibility to ensure that you do not accidentally
+share sensitive data with OpenAI.
+
+**IMPORTANT: To maintain the privacy of your data, do not highlight,
+include in a prompt, or otherwise upload any sensitive data, code, or
+text that should remain confidential.**
 
 ## Prerequisites
 
-1.  Make an OpenAI account. As of now, the free one will do.
+1.  Make an OpenAI account.
 
-2.  [Create an OpenAI API key](https://beta.openai.com/account/api-keys)
-    to use `{openai}` package within Rstudio
+2.  [Create an OpenAI API
+    key](https://platform.openai.com/account/api-keys) to use with the
+    package.
 
 3.  Set the API key up in Rstudio in one of two ways:
 
-- By default, functions of `{openai}` will look for `OPENAI_API_KEY`
-  environment variable. If you want to set a global environment
-  variable, you can use the following command, where `"<APIKEY>"` should
-  be replaced with your actual key:
+- By default, API calls will look for `OPENAI_API_KEY` environment
+  variable. If you want to set a global environment variable, you can
+  use the following command, where `"<APIKEY>"` should be replaced with
+  your actual key:
 
 ``` r
 Sys.setenv(OPENAI_API_KEY = "<APIKEY>")
 ```
 
-- Alternatively, you can set the key in your .Renviron file.
-
-Otherwise, you can add the key to the .Renviron file of the project. The
-following commands will open .Renviron for editing:
+- Otherwise, you can add the key to the .Renviron file of the project.
+  The following commands will open .Renviron for editing:
 
 ``` r
 require(usethis)
 edit_r_environ(scope = "project")
 ```
 
-You can add the following line to the file (again, replace `"<APIKEY>"`
+You can add the following line to .Renviron (again, replace `"<APIKEY>"`
 with your actual key):
 
 ``` bash
@@ -94,13 +109,21 @@ project. Note: If you are using GitHub/Gitlab, do not forget to add
 
 Some examples of use.
 
-### Chat with GPT in Quarto
+### ChatGPT in RStudio
 
-1.  **Addins \> GPTSTUDIO \> Start GPT Chat**
+1.  **Addins \> GPTSTUDIO \> ChatGPT**
 2.  Type your question.
 3.  \*\*Addins \> GPTSTUDIO \> GPT Chat
 
-<video src="https://user-images.githubusercontent.com/6314313/210177908-7cf0f991-54f2-4f96-8bcd-3077bc8bbb25.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/210177908-7cf0f991-54f2-4f96-8bcd-3077bc8bbb25.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 width-fit" style="max-height:640px;">
+<video src="https://user-images.githubusercontent.com/6314313/225774512-bc0b0296-51c6-44a7-b665-e906610bed06.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 width-fit" style="max-height:640px;">
+</video>
+
+### Provide your own instructions in R, R Markdown, or Quarto files
+
+**Addins \> GPTSTUDIO \> ChatGPT in Source:** Apply any edit what YOU
+desire or can dream up to a selection of code or text.
+
+<video src="https://user-images.githubusercontent.com/6314313/225774578-72e4e966-a740-4afc-beca-1ac25abb504c.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 width-fit" style="max-height:640px;">
 </video>
 
 ### Spelling ang grammar check
@@ -111,28 +134,6 @@ and grammar checked version.
 
 ![spelling](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/spelling.gif)
 
-### Active voice
-
-**Addins \> GPTSTUDIO \> Change text to active voice:** Takes the
-selected text, sends it to OpenAI’s best model and instructs it to
-return the text in the active voice.
-
-![active_voice](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/active_voice.gif)
-
-#### Write/code from prompt
-
-**Addins \> GPTSTUDIO \> Write/Code from prompt:** Takes the selected
-text and sends it to OpenAI as a prompt for the model to work with. This
-is most like the ChatGPT experience.
-
-Text from prompt:
-
-![prompt_text](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/prompt_text.gif)
-
-Code from prompt:
-
-![prompt_code](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/prompt_code.gif)
-
 ### Comment your code:
 
 **Addins \> GPTSTUDIO \> Comment your code:** Takes the selected text
@@ -142,10 +143,3 @@ line.
 
 ![add comments to
 code](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/comments.gif)
-
-### Provide your own instructions
-
-**Addins \> GPTSTUDIO \> Freeform GPT editor:** Apply any edit what YOU
-desire or can dream up to a selection of code or text.
-
-![freeform](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/hugo2.gif)

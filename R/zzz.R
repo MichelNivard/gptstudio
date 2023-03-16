@@ -23,31 +23,15 @@ globalVariables(".rs.invokeShinyPaneViewer")
 }
 
 startup_message <- function() {
-  cli::cli_h1("Privacy Notice for gptstudio")
-  cli::cli_text(
-    "These functions work by taking the text or code you have highlighted or
-    selected with the cursor, or your prompt if you use one of the built-in
-    apps, and send these to OpenAI as part of a prompt. Prompts fall under the
-    privacy notice, rules, or exceptions you agreed to when making an OpenAI
-    account. We cannot tell you or guarantee how secure these prompts are when
-    sent to OpenAI. We do not know what OpenAI does with your prompts, but
-    OpenAI is clear that they use prompts and results to improve their model
-    unless you opt out explicitly by contacting them."
-  )
-  cli::cli_text()
-  cli::cli_text(
-    "The code is designed to ONLY share the highlighted or selected text, or a
-    prompt you build with the help of one of our apps and no other elements of
-    your R environment. Make sure you are aware of what you send to OpenAI and
-    do not accidentally share sensitive data with OpenAI.\n"
-  )
-  cli::cli_text()
-  cli::cli_text(
-    cli::col_red(
-      "{.strong DO NOT HIGHLIGHT AND THEREFORE UPLOAD DATA, CODE, OR TEXT THAT
-      SHOULD REMAIN PRIVATE}"
-    )
-  )
-  cli::cli_text()
-  cli::cli_text("See OpenAI's Terms of Use at {.url https://openai.com/terms}.")
+  cli_h1("Privacy Notice for gptstudio")
+  cli_text("This privacy notice is applicable to the R package that utilizes the GPT-3 and GPT-3.5 API provided by OpenAI. By using this package, you agree to adhere to the privacy terms and conditions set by OpenAI.")
+  cli_h2("Data Sharing with OpenAI")
+  cli_text("When using this R package, the text or code that you highlight/select with your cursor, or the prompt you enter within the built-in applications, will be sent to OpenAI as part of an API request. This data sharing is governed by the privacy notice, rules, and exceptions that you agreed to with OpenAI when creating an account.")
+  cli_h2("Security and Data Usage by OpenAI")
+  cli_text("We cannot guarantee the security of the data you send to OpenAI via the API, nor can we provide details on how OpenAI processes or uses your data. However, OpenAI has stated that they utilize prompts and results to enhance their AI models, as outlined in their terms of use. You can opt-out of this data usage by contacting OpenAI directly and making an explicit request.")
+  cli_h2("Limiting Data Sharing")
+  cli_text("The R package is designed to share only the text or code that you specifically highlight/select or include in a prompt through our built-in applications. No other elements of your R environment will be shared. It is your responsibility to ensure that you do not accidentally share sensitive data with OpenAI.")
+  cli_text("IMPORTANT: To maintain the privacy of your data, do not highlight, include in a prompt, or otherwise upload any sensitive data, code, or text that should remain confidential.")
+  cli_h2("OpenAI's Terms of Use")
+  cli_text("See OpenAI's Terms of Use at {.url https://openai.com/terms}.")
 }

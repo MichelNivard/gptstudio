@@ -25,19 +25,15 @@
       
       
       [[2]]
-      [[2]][[1]]
-      [[2]][[1]]$role
+      [[2]]$role
       [1] "system"
       
-      [[2]][[1]]$content
+      [[2]]$content
       [1] "Life's meaning is 42."
       
-      
-      [[2]][[2]]
-      [[2]][[2]]$choices
-      [[2]][[2]]$choices$message.content
+      [[2]]$choices
+      [[2]]$choices$message.content
       [1] "The meaning of life is 42."
-      
       
       
       
@@ -69,19 +65,15 @@
       
       
       [[2]]
-      [[2]][[1]]
-      [[2]][[1]]$role
+      [[2]]$role
       [1] "system"
       
-      [[2]][[1]]$content
+      [[2]]$content
       [1] "Life's meaning is 42."
       
-      
-      [[2]][[2]]
-      [[2]][[2]]$choices
-      [[2]][[2]]$choices$message.content
+      [[2]]$choices
+      [[2]]$choices$message.content
       [1] "The meaning of life is 42."
-      
       
       
       

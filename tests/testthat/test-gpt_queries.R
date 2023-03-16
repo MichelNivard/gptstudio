@@ -81,16 +81,12 @@ test_that("gpt_chat_in_source returns expected output", {
     insert_text = function(improved_text) improved_text,
     openai_create_chat_completion = function(prompt) {
       list(
-        list(
-          role = "system",
-          content = "The sum of 2 and 2 is 4."
-        ),
-        list(
-          choices =
-            list(
-              message.content = "The sum of 2 and 2 is 4."
-            )
-        )
+        role = "system",
+        content = "The sum of 2 and 2 is 4.",
+        choices =
+          list(
+            message.content = "The sum of 2 and 2 is 4."
+          )
       )
     }
   )
@@ -123,15 +119,10 @@ test_that("gpt_chat_in_source returns expected output", {
     insert_text = function(improved_text) improved_text,
     openai_create_chat_completion = function(prompt) {
       list(
-        list(
-          role = "system",
-          content = "The sum of 2 and 2 is 4."
-        ),
-        list(
-          choices =
-            list(
-              message.content = "The sum of 2 and 2 is 4."
-            )
+        role = "system",
+        content = "The sum of 2 and 2 is 4.",
+        choices = list(
+          message.content = "The sum of 2 and 2 is 4."
         )
       )
     }
@@ -163,15 +154,10 @@ test_that("gpt_chat_in_source returns expected output", {
     check_api = function() TRUE,
     openai_create_chat_completion = function(prompt) {
       list(
-        list(
-          role = "system",
-          content = "Life's meaning is 42."
-        ),
-        list(
-          choices =
-            list(
-              message.content = "The meaning of life is 42."
-            )
+        role = "system",
+        content = "Life's meaning is 42.",
+        choices = list(
+          message.content = "The meaning of life is 42."
         )
       )
     }
