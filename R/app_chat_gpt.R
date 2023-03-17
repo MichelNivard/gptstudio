@@ -1,7 +1,13 @@
 #' Run Chat GPT
 #' Run the Chat GPT Shiny App
+#'
 #' @export
 #'
+#' @return This function has no return value.
+#'
+#' @examples
+#' # Call the function as an RStudio addin
+#' \dontrun{addin_chatgpt()}
 addin_chatgpt <- function() {
   check_api()
   withr::local_options(shiny.launch.browser = ".rs.invokeShinyPaneViewer")

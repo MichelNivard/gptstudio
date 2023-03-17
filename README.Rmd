@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) 
-[![CRAN status](https://www.r-pkg.org/badges/version/gptstudio)](https://CRAN.R-project.org/package=GPTstudio) 
+[![CRAN status](https://www.r-pkg.org/badges/version/gptstudio)](https://CRAN.R-project.org/package=gptstudio) 
 [![Codecov test coverage](https://codecov.io/gh/MichelNivard/gptstudio/branch/main/graph/badge.svg)](https://app.codecov.io/gh/MichelNivard/gptstudio?branch=main) 
 [![R-CMD-check](https://github.com/MichelNivard/gptstudio/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MichelNivard/gptstudio/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
@@ -30,9 +30,14 @@ For further addins, tailored for R developers, also see the sister package: [gpt
 ## Install the addins from this package:
 
 ```{r}
-#| eval: false
-require(devtools)
-install_github("MichelNivard/gptstudio")
+install.packages("gptstudio")
+```
+
+To get a bug fix or to use a feature from the development version, you can install the development version of this package from GitHub.
+
+```{r}
+# install.packages("pak")
+pak::pak("MichelNivard/gptstudio")
 ```
 
 ## Privacy Notice for gptstudio
@@ -112,3 +117,7 @@ Some examples of use.
 **Addins \> GPTSTUDIO \> Comment your code:** Takes the selected text sends it to OpenAI as a prompt for a code specific model to work with, asks for a version with a comment added explaining the code line by line.
 
 ![add comments to code](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/comments.gif)
+
+## Code of Conduct
+
+Please note that the gptstudio project is released with a Contributor Code of Conduct. By contributing to this project, you agree to abide by its terms.

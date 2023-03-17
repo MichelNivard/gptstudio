@@ -20,3 +20,9 @@ an error message is printed and the function aborts.
 This function checks whether the API key provided as an argument is in the
 correct format.
 }
+\examples{
+# Call the function with an API key
+\dontrun{check_api_key("my_api_key")}
+# Call the function with an API key and avoid updating the API key
+\dontrun{check_api_key("my_api_key", update_api = FALSE)}
+}

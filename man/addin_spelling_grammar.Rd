@@ -2,11 +2,19 @@
 % Please edit documentation in R/addin_spelling-and-grammar.R
 \name{addin_spelling_grammar}
 \alias{addin_spelling_grammar}
-\title{spelling and grammar Addin}
+\title{Spelling and Grammar Addin}
 \usage{
 addin_spelling_grammar()
+}
+\value{
+This function has no return value.
 }
 \description{
 Call this function as a Rstudio addin to ask GPT to improve spelling and
 grammar of selected text.
+}
+\examples{
+# Select some text in Rstudio
+# Then call the function as an RStudio addin
+\dontrun{addin_spelling_grammar()}
 }

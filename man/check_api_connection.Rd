@@ -20,3 +20,9 @@ function is aborted.
 This function checks whether the API key provided in the \code{OPENAI_API_KEY}
 environment variable is valid.
 }
+\examples{
+# Call the function with an API key
+\dontrun{check_api_connection("my_api_key")}
+# Call the function with an API key and avoid updating the API key
+\dontrun{check_api_connection("my_api_key", update_api = FALSE)}
+}

@@ -16,3 +16,7 @@ This function checks whether the API key provided in the \code{OPENAI_API_KEY}
 environment variable is valid. This function will not re-check an API if it
 has already been validated in the current session.
 }
+\examples{
+# Call the function to check the API key
+\dontrun{check_api()}
+}

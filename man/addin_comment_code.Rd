@@ -2,10 +2,18 @@
 % Please edit documentation in R/addin_comment-code.R
 \name{addin_comment_code}
 \alias{addin_comment_code}
-\title{active voice Addin}
+\title{Comment Code Addin}
 \usage{
 addin_comment_code()
 }
+\value{
+This function has no return value.
+}
 \description{
 Call this function as a Rstudio addin to ask GPT to add comments to your code
+}
+\examples{
+# Open a R file in Rstudio
+# Then call the function as an RStudio addin
+\dontrun{addin_comment_code()}
 }
