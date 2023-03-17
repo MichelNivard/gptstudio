@@ -1,3 +1,8 @@
+rlang::check_installed("waiter")
+rlang::check_installed("bslib")
+library(gptstudio)
+library(waiter)
+
 chat_card <- bslib::card(
   height = "550px",
   bslib::card_header("Write Prompt", class = "bg-primary"),
@@ -34,9 +39,9 @@ chat_card <- bslib::card(
   )
 )
 
-rlang::check_installed("bslib")
 
 ui <- shiny::fluidPage(
+  useWaiter(),
   theme = bslib::bs_theme(bootswatch = "morph", version = 5),
   title = "ChatGPT from gptstudio",
   shiny::br(),
@@ -53,10 +58,10 @@ server <- function(input, output, session) {
   r$all_chats <- NULL
 
   shiny::observe({
-    cli_rule("Prompt")
-    cat_print(input$chat_input)
-    cli_rule("All chats")
-    cat_print(r$all_chats)
+    waiter::waiter_show(
+      html = shiny::tagList(spin_flower(), shiny::h3("Asking ChatGPT...")),
+      color = waiter::transparent(0.5)
+    )
     interim <- gpt_chat(
       query = input$chat_input,
       history = r$all_chats,
@@ -64,8 +69,6 @@ server <- function(input, output, session) {
       skill = input$skill
     )
     new_response <- interim[[2]]$choices
-    cli_rule("Response")
-    cli_inform(interim[[2]]$choices$message.content)
     r$all_chats <-
       c(
         interim[[1]],
@@ -77,6 +80,7 @@ server <- function(input, output, session) {
         )
       )
     r$all_chats_formatted <- make_chat_history(r$all_chats)
+    waiter::waiter_hide()
     shiny::updateTextAreaInput(session, "chat_input", value = "")
   }) %>%
     shiny::bindEvent(input$chat)

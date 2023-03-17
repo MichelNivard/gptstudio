@@ -10,6 +10,12 @@
 #' printed. If the API key is invalid, an error message is printed and the
 #' function is aborted.
 #' @export
+#'
+#' @examples
+#' # Call the function with an API key
+#' \dontrun{check_api_connection("my_api_key")}
+#' # Call the function with an API key and avoid updating the API key
+#' \dontrun{check_api_connection("my_api_key", update_api = FALSE)}
 check_api_connection <- function(api_key, update_api = TRUE) {
   if (!check_api_key(api_key, update_api)) {
     invisible()
@@ -55,6 +61,11 @@ check_api_connection <- function(api_key, update_api = TRUE) {
 #' an error message is printed and the function aborts.
 #' @export
 #'
+#' @examples
+#' # Call the function with an API key
+#' \dontrun{check_api_key("my_api_key")}
+#' # Call the function with an API key and avoid updating the API key
+#' \dontrun{check_api_key("my_api_key", update_api = FALSE)}
 check_api_key <- function(api_key, update_api = TRUE) {
   if (api_key == "") {
     cli_alert_warning("OPENAI_API_KEY is not set.")
@@ -90,6 +101,10 @@ check_api_key <- function(api_key, update_api = TRUE) {
 #' printed. If the API key is invalid, an error message is printed and the
 #' function aborts.
 #' @export
+#'
+#' @examples
+#' # Call the function to check the API key
+#' \dontrun{check_api()}
 check_api <- function() {
   api_key <- Sys.getenv("OPENAI_API_KEY")
   valid_api <- getOption("gptstudio.valid_api")

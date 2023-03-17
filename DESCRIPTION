@@ -1,18 +1,18 @@
 Package: gptstudio
 Type: Package
-Title: gptstudio adds functionality based on OpenAI's GPT family of models directly into Rstudio
-Version: 0.0.4
+Title: Add Functionality from OpenAI's Family of Models Directly into RStudio
+Version: 0.0.5
 Authors@R:
   c(person(given = "Michel",
            family = "Nivard",
-           role = c("aut","cre"),
+           role = c("aut", "cph"),
            email = "m.g.nivard@vu.nl"),
     person(given = "James",
            family = "Wade",
-           role = "aut", 
+           role = c("aut", "cre", "cph"), 
            email = "github@jameshwade.com",
            comment = c(ORCID = "0000-0002-9740-1905")))
-Maintainer: Michel Nivard <m.g.nivard@vu.nl>
+Maintainer: James Wade <github@jameshwade.com>
 Description: OpenAI offers a number of large language models (LLMs) accessible via API. This package lowers the barrier to using this API inside of RStudio IDE.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -38,6 +38,7 @@ Suggests:
     uuid,
     spelling,
     shinytest2,
+    waiter,
     withr
 Config/testthat/edition: 3
 URL: https://github.com/MichelNivard/gptstudio,

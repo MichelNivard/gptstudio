@@ -14,6 +14,16 @@
 #' @return Nothing is returned. The improved text is inserted into the current
 #'  RStudio session.
 #' @export
+#'
+#' @examples
+#' # Select some text in Rstudio
+#' # Then call the function as an RStudio addin
+#' \dontrun{
+#'   gpt_edit(model = "text-davinci-002",
+#'            instruction = "Improve spelling and grammar",
+#'            temperature = 0.5,
+#'            openai_api_key = "my_api_key")
+#' }
 gpt_edit <- function(model,
                      instruction,
                      temperature,
@@ -62,6 +72,15 @@ gpt_edit <- function(model,
 #' @return Nothing is returned. The improved text is inserted into the current
 #' RStudio session.
 #' @export
+#'
+#' @examples
+#' # Call the function as an RStudio addin
+#' \dontrun{
+#'   gpt_create(model = "text-davinci-002",
+#'              temperature = 0.5,
+#'              max_tokens = 100,
+#'              openai_api_key = "my_api_key")
+#' }
 gpt_create <- function(model,
                        temperature,
                        max_tokens = getOption("gptstudio.max_tokens"),
@@ -91,21 +110,11 @@ gpt_create <- function(model,
   insert_text(improved_text)
 }
 
-#' Wrapper around selectionGet to help with testthat
-#'
-#' @return Text selection via `rstudioapi::selectionGet`
-#'
-#' @export
 get_selection <- function() {
   rstudioapi::verifyAvailable()
   rstudioapi::selectionGet()
 }
 
-#' Wrapper around selectionGet to help with testthat
-#'
-#' @param improved_text Text from model queries to inert into script or document
-#'
-#' @export
 insert_text <- function(improved_text) {
   rstudioapi::verifyAvailable()
   rstudioapi::insertText(improved_text)
@@ -129,6 +138,29 @@ insert_text <- function(improved_text) {
 #'
 #' @export
 #'
+#' @examples
+#' \dontrun{
+#' # Example 1: Get help with a tidyverse question
+#' tidyverse_query <- "How can I filter rows of a data frame?"
+#' tidyverse_response <- gpt_chat(query = tidyverse_query,
+#'                                style = "tidyverse",
+#'                                skill = "beginner")
+#' print(tidyverse_response)
+#'
+#' # Example 2: Get help with a base R question
+#' base_r_query <- "How can I merge two data frames?"
+#' base_r_response <- gpt_chat(query = base_r_query,
+#'                             style = "base",
+#'                             skill = "intermediate")
+#' print(base_r_response)
+#'
+#' # Example 3: No style preference
+#' no_preference_query <- "What is the best way to handle missing values in R?"
+#' no_preference_response <- gpt_chat(query = no_preference_query,
+#'                                    style = "no preference",
+#'                                    skill = "advanced")
+#' print(no_preference_response)
+#' }
 gpt_chat <- function(query,
                      history = NULL,
                      style = getOption("gptstudio.code_style"),
@@ -223,6 +255,24 @@ gpt_chat <- function(query,
 #'
 #' @export
 #'
+#' @examples
+#' \dontrun{
+#' # Example 1: Get help with a tidyverse question in a source file
+#' # Select the following code comment in RStudio and run gpt_chat_in_source()
+#' # How can I filter rows of a data frame?
+#' tidyverse_response <- gpt_chat_in_source(style = "tidyverse", skill = "beginner")
+#'
+#' # Example 2: Get help with a base R question in a source file
+#' # Select the following code comment in RStudio and run gpt_chat_in_source()
+#' # How can I merge two data frames?
+#' base_r_response <- gpt_chat_in_source(style = "base", skill = "intermediate")
+#'
+#' # Example 3: No style preference in a source file
+#' # Select the following code comment in RStudio and run gpt_chat_in_source()
+#' # What is the best way to handle missing values in R?
+#' no_preference_response <- gpt_chat_in_source(style = "no preference", skill = "advanced")
+#' }
+#'
 gpt_chat_in_source <- function(history = NULL,
                                style = getOption("gptstudio.code_style"),
                                skill = getOption("gptstudio.skill")) {
@@ -246,7 +296,8 @@ gpt_chat_in_source <- function(history = NULL,
                 of coding. When possible, answer code quesetions using
                 tidyverse, r-lib, and tidymodels family of packages. R for Data
                 Science is also a good resource to pull from. For any text that
-                is not R code, write it as a code comment."
+                is not R code, write it as a code comment. Do not use code
+                blocks or free text. Only use code and code comments."
               )
           ),
           list(
@@ -266,7 +317,8 @@ gpt_chat_in_source <- function(history = NULL,
                 level in mind. They prefer to use a base R style of
                 coding. When possible, answer code quesetions using base R
                 rather than the tidyverse. For any text that is not R code,
-                write it as a code comment."
+                write it as a code comment. Do not use code blocks or free
+                text. Only use code and code comments."
               )
           ),
           list(
@@ -281,10 +333,11 @@ gpt_chat_in_source <- function(history = NULL,
             content =
               glue(
                 "You are a helpful chat bot that answers questions for an R
-                programmer working in the RStudio IDE. TThey consider themselves
+                programmer working in the RStudio IDE. They consider themselves
                 to be a {skill} R programmer. Provide answers with their skill
                 level in mind. For any text that is not R code, write it as a
-                code comment."
+                code comment. Do not use code blocks or free text. Only use
+                code and code comments."
               )
           ),
           list(
@@ -301,7 +354,8 @@ gpt_chat_in_source <- function(history = NULL,
     purrr::compact()
   prompt <- c(history, instructions)
   answer <- openai_create_chat_completion(prompt)
-  text_to_insert <- c(as.character(query), answer[[2]]$choices$message.content)
+  text_to_insert <- c(as.character(query),
+                      as.character(answer$choices$message.content))
   cli_inform(c("i" = "Inserting response from ChatGPT..."))
   insert_text(text_to_insert)
 }

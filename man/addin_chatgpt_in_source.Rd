@@ -6,7 +6,15 @@
 \usage{
 addin_chatgpt_in_source()
 }
+\value{
+This function has no return value.
+}
 \description{
 Call this function as a Rstudio addin to ask GPT to improve spelling and
 grammar of selected text.
+}
+\examples{
+# Select some text in a source file
+# Then call the function as an RStudio addin
+\dontrun{addin_chatgpt_in_source()}
 }

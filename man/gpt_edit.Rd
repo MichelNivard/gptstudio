@@ -33,3 +33,13 @@ RStudio session.
 This function uses the GPT model from OpenAI to improve the spelling and
 grammar of the selected text in the current RStudio session.
 }
+\examples{
+# Select some text in Rstudio
+# Then call the function as an RStudio addin
+\dontrun{
+  gpt_edit(model = "text-davinci-002",
+           instruction = "Improve spelling and grammar",
+           temperature = 0.5,
+           openai_api_key = "my_api_key")
+}
+}

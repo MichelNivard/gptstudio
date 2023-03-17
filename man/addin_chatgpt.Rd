@@ -7,7 +7,14 @@ Run the Chat GPT Shiny App}
 \usage{
 addin_chatgpt()
 }
+\value{
+This function has no return value.
+}
 \description{
 Run Chat GPT
 Run the Chat GPT Shiny App
+}
+\examples{
+# Call the function as an RStudio addin
+\dontrun{addin_chatgpt()}
 }

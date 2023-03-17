@@ -4,7 +4,7 @@
 \name{gptstudio-package}
 \alias{gptstudio}
 \alias{gptstudio-package}
-\title{gptstudio: gptstudio adds functionality based on OpenAI's GPT family of models directly into Rstudio}
+\title{gptstudio: Add Functionality from OpenAI's Family of Models Directly into RStudio}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
@@ -20,11 +20,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Michel Nivard \email{m.g.nivard@vu.nl}
+\strong{Maintainer}: James Wade \email{github@jameshwade.com} (\href{https://orcid.org/0000-0002-9740-1905}{ORCID}) [copyright holder]
 
 Authors:
 \itemize{
-  \item James Wade \email{github@jameshwade.com} (\href{https://orcid.org/0000-0002-9740-1905}{ORCID})
+  \item Michel Nivard \email{m.g.nivard@vu.nl} [copyright holder]
 }
 
 }
