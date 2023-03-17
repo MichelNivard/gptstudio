@@ -1,6 +1,6 @@
 Package: gptstudio
 Type: Package
-Title: Add Functionality from OpenAI's Family of Models Directly into RStudio
+Title: Add Functionality from Large Language Models Directly into RStudio
 Version: 0.0.5
 Authors@R:
   c(person(given = "Michel",
@@ -13,7 +13,7 @@ Authors@R:
            email = "github@jameshwade.com",
            comment = c(ORCID = "0000-0002-9740-1905")))
 Maintainer: James Wade <github@jameshwade.com>
-Description: OpenAI offers a number of large language models (LLMs) accessible via API. This package lowers the barrier to using this API inside of RStudio IDE.
+Description: OpenAI offers a number of large language models accessible via API. This package lowers the barrier to using this API inside of RStudio IDE.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

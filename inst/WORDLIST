@@ -3,7 +3,6 @@ Addins
 CMD
 ChatGPT
 Codecov
-Freeform
 GPT
 Gitlab
 LLMs
@@ -19,12 +18,7 @@ addin
 addins
 ang
 api
-freeform
 gitignore
 gpttools
 magrittr
-selectionGet
-skimr
-summarization
-testthat
 tidyverse
