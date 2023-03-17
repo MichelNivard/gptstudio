@@ -1,7 +1,7 @@
 Package: gptstudio
 Type: Package
 Title: Add Functionality from Large Language Models Directly into RStudio
-Version: 0.0.5
+Version: 0.1.0
 Authors@R:
   c(person(given = "Michel",
            family = "Nivard",
