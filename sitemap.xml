@@ -46,9 +46,6 @@
     <loc>/reference/check_api_key.html</loc>
   </url>
   <url>
-    <loc>/reference/get_selection.html</loc>
-  </url>
-  <url>
     <loc>/reference/gpt_chat.html</loc>
   </url>
   <url>
@@ -67,7 +64,7 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/insert_text.html</loc>
+    <loc>/reference/make_chat_history.html</loc>
   </url>
   <url>
     <loc>/reference/openai_create_chat_completion.html</loc>

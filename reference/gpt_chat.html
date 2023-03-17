@@ -12,7 +12,7 @@ skill level."><meta property="og:image" content="/logo.png"><!-- mathjax --><scr
     
     <a class="navbar-brand me-2" href="../index.html">gptstudio</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,6 +88,32 @@ default is "beginner"</p></dd>
 context in which the question was asked, and the suggested answer.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># Example 1: Get help with a tidyverse question</span></span></span>
+<span class="r-in"><span><span class="va">tidyverse_query</span> <span class="op">&lt;-</span> <span class="st">"How can I filter rows of a data frame?"</span></span></span>
+<span class="r-in"><span><span class="va">tidyverse_response</span> <span class="op">&lt;-</span> <span class="fu">gpt_chat</span><span class="op">(</span>query <span class="op">=</span> <span class="va">tidyverse_query</span>,</span></span>
+<span class="r-in"><span>                               style <span class="op">=</span> <span class="st">"tidyverse"</span>,</span></span>
+<span class="r-in"><span>                               skill <span class="op">=</span> <span class="st">"beginner"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">tidyverse_response</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 2: Get help with a base R question</span></span></span>
+<span class="r-in"><span><span class="va">base_r_query</span> <span class="op">&lt;-</span> <span class="st">"How can I merge two data frames?"</span></span></span>
+<span class="r-in"><span><span class="va">base_r_response</span> <span class="op">&lt;-</span> <span class="fu">gpt_chat</span><span class="op">(</span>query <span class="op">=</span> <span class="va">base_r_query</span>,</span></span>
+<span class="r-in"><span>                            style <span class="op">=</span> <span class="st">"base"</span>,</span></span>
+<span class="r-in"><span>                            skill <span class="op">=</span> <span class="st">"intermediate"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">base_r_response</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 3: No style preference</span></span></span>
+<span class="r-in"><span><span class="va">no_preference_query</span> <span class="op">&lt;-</span> <span class="st">"What is the best way to handle missing values in R?"</span></span></span>
+<span class="r-in"><span><span class="va">no_preference_response</span> <span class="op">&lt;-</span> <span class="fu">gpt_chat</span><span class="op">(</span>query <span class="op">=</span> <span class="va">no_preference_query</span>,</span></span>
+<span class="r-in"><span>                                   style <span class="op">=</span> <span class="st">"no preference"</span>,</span></span>
+<span class="r-in"><span>                                   skill <span class="op">=</span> <span class="st">"advanced"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">no_preference_response</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
