@@ -77,267 +77,11 @@
 <h2 id="install-the-addins-from-this-package">Install the addins from this package:<a class="anchor" aria-label="anchor" href="#install-the-addins-from-this-package"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"gptstudio"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Installing package into '/private/var/folders/f0/vt7wqnsn2_108drc_6r2ml040000gn/T/RtmpCACE1Y/temp_libpath6d4f67d20111'</span></span>
-<span><span class="co">#&gt; (as 'lib' is unspecified)</span></span>
-<span><span class="co">#&gt; Warning: package 'gptstudio' is not available for this version of R</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; A version of this package for your version of R might be available elsewhere,</span></span>
-<span><span class="co">#&gt; see the ideas at</span></span>
-<span><span class="co">#&gt; https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"gptstudio"</span><span class="op">)</span></span></code></pre></div>
 <p>To get a bug fix or to use a feature from the development version, you can install the development version of this package from GitHub.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="http://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"MichelNivard/gptstudio"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Loading metadata database</span></span>
-<span><span class="co">#&gt; ℹ Loading metadata database</span></span>
-<span><span class="co">#&gt; ✔ Loading metadata database ... done</span></span>
-<span><span class="co">#&gt; ✔ Loading metadata database ... done</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; → Will install 53 packages.</span></span>
-<span><span class="co">#&gt; → Will install 53 packages.</span></span>
-<span><span class="co">#&gt; → Will update 1 package.</span></span>
-<span><span class="co">#&gt; → Will update 1 package.</span></span>
-<span><span class="co">#&gt; → Will download 1 package with unknown size.</span></span>
-<span><span class="co">#&gt; → Will download 1 package with unknown size.</span></span>
-<span><span class="co">#&gt; + askpass             1.1     </span></span>
-<span><span class="co">#&gt; + assertthat          0.2.1   </span></span>
-<span><span class="co">#&gt; + base64enc           0.1-3   </span></span>
-<span><span class="co">#&gt; + bslib               0.4.2   </span></span>
-<span><span class="co">#&gt; + cachem              1.0.7   </span></span>
-<span><span class="co">#&gt; + cli                 3.6.0   </span></span>
-<span><span class="co">#&gt; + clipr               0.8.0   </span></span>
-<span><span class="co">#&gt; + commonmark          1.8.1   </span></span>
-<span><span class="co">#&gt; + crayon              1.5.2   </span></span>
-<span><span class="co">#&gt; + credentials         1.3.2   </span></span>
-<span><span class="co">#&gt; + curl                5.0.0   </span></span>
-<span><span class="co">#&gt; + desc                1.4.2   </span></span>
-<span><span class="co">#&gt; + digest              0.6.31  </span></span>
-<span><span class="co">#&gt; + ellipsis            0.3.2   </span></span>
-<span><span class="co">#&gt; + fastmap             1.1.1   </span></span>
-<span><span class="co">#&gt; + fontawesome         0.5.0   </span></span>
-<span><span class="co">#&gt; + fs                  1.6.1   </span></span>
-<span><span class="co">#&gt; + gert                1.9.2   </span></span>
-<span><span class="co">#&gt; + gh                  1.4.0   </span></span>
-<span><span class="co">#&gt; + gitcreds            0.1.2   </span></span>
-<span><span class="co">#&gt; + glue                1.6.2   </span></span>
-<span><span class="co">#&gt; + gptstudio   0.0.5 → 0.0.4   👷🏻‍♀️🔧 ⬇ (GitHub: 77e4050)</span></span>
-<span><span class="co">#&gt; + htmltools           0.5.4   </span></span>
-<span><span class="co">#&gt; + httpuv              1.6.9   </span></span>
-<span><span class="co">#&gt; + httr                1.4.5   </span></span>
-<span><span class="co">#&gt; + httr2               0.2.2   </span></span>
-<span><span class="co">#&gt; + ini                 0.3.1   </span></span>
-<span><span class="co">#&gt; + jquerylib           0.1.4   </span></span>
-<span><span class="co">#&gt; + jsonlite            1.8.4   </span></span>
-<span><span class="co">#&gt; + later               1.3.0   </span></span>
-<span><span class="co">#&gt; + lifecycle           1.0.3   </span></span>
-<span><span class="co">#&gt; + magrittr            2.0.3   </span></span>
-<span><span class="co">#&gt; + memoise             2.0.1   </span></span>
-<span><span class="co">#&gt; + mime                0.12    </span></span>
-<span><span class="co">#&gt; + openssl             2.0.6   </span></span>
-<span><span class="co">#&gt; + promises            1.2.0.1 </span></span>
-<span><span class="co">#&gt; + purrr               1.0.1   </span></span>
-<span><span class="co">#&gt; + R6                  2.5.1   </span></span>
-<span><span class="co">#&gt; + rappdirs            0.3.3   </span></span>
-<span><span class="co">#&gt; + Rcpp                1.0.10  </span></span>
-<span><span class="co">#&gt; + rlang               1.1.0   </span></span>
-<span><span class="co">#&gt; + rprojroot           2.0.3   </span></span>
-<span><span class="co">#&gt; + rstudioapi          0.14    </span></span>
-<span><span class="co">#&gt; + sass                0.4.5   </span></span>
-<span><span class="co">#&gt; + shiny               1.7.4   </span></span>
-<span><span class="co">#&gt; + sourcetools         0.1.7-1 </span></span>
-<span><span class="co">#&gt; + sys                 3.4.1   </span></span>
-<span><span class="co">#&gt; + usethis             2.1.6   </span></span>
-<span><span class="co">#&gt; + vctrs               0.5.2   </span></span>
-<span><span class="co">#&gt; + whisker             0.4.1   </span></span>
-<span><span class="co">#&gt; + withr               2.5.0   </span></span>
-<span><span class="co">#&gt; + xtable              1.8-4   </span></span>
-<span><span class="co">#&gt; + yaml                2.3.7   </span></span>
-<span><span class="co">#&gt; + zip                 2.2.2   </span></span>
-<span><span class="co">#&gt; + askpass             1.1     </span></span>
-<span><span class="co">#&gt; + assertthat          0.2.1   </span></span>
-<span><span class="co">#&gt; + base64enc           0.1-3   </span></span>
-<span><span class="co">#&gt; + bslib               0.4.2   </span></span>
-<span><span class="co">#&gt; + cachem              1.0.7   </span></span>
-<span><span class="co">#&gt; + cli                 3.6.0   </span></span>
-<span><span class="co">#&gt; + clipr               0.8.0   </span></span>
-<span><span class="co">#&gt; + commonmark          1.8.1   </span></span>
-<span><span class="co">#&gt; + crayon              1.5.2   </span></span>
-<span><span class="co">#&gt; + credentials         1.3.2   </span></span>
-<span><span class="co">#&gt; + curl                5.0.0   </span></span>
-<span><span class="co">#&gt; + desc                1.4.2   </span></span>
-<span><span class="co">#&gt; + digest              0.6.31  </span></span>
-<span><span class="co">#&gt; + ellipsis            0.3.2   </span></span>
-<span><span class="co">#&gt; + fastmap             1.1.1   </span></span>
-<span><span class="co">#&gt; + fontawesome         0.5.0   </span></span>
-<span><span class="co">#&gt; + fs                  1.6.1   </span></span>
-<span><span class="co">#&gt; + gert                1.9.2   </span></span>
-<span><span class="co">#&gt; + gh                  1.4.0   </span></span>
-<span><span class="co">#&gt; + gitcreds            0.1.2   </span></span>
-<span><span class="co">#&gt; + glue                1.6.2   </span></span>
-<span><span class="co">#&gt; + gptstudio   0.0.5 → 0.0.4   👷🏻‍♀️🔧 ⬇ (GitHub: 77e4050)</span></span>
-<span><span class="co">#&gt; + htmltools           0.5.4   </span></span>
-<span><span class="co">#&gt; + httpuv              1.6.9   </span></span>
-<span><span class="co">#&gt; + httr                1.4.5   </span></span>
-<span><span class="co">#&gt; + httr2               0.2.2   </span></span>
-<span><span class="co">#&gt; + ini                 0.3.1   </span></span>
-<span><span class="co">#&gt; + jquerylib           0.1.4   </span></span>
-<span><span class="co">#&gt; + jsonlite            1.8.4   </span></span>
-<span><span class="co">#&gt; + later               1.3.0   </span></span>
-<span><span class="co">#&gt; + lifecycle           1.0.3   </span></span>
-<span><span class="co">#&gt; + magrittr            2.0.3   </span></span>
-<span><span class="co">#&gt; + memoise             2.0.1   </span></span>
-<span><span class="co">#&gt; + mime                0.12    </span></span>
-<span><span class="co">#&gt; + openssl             2.0.6   </span></span>
-<span><span class="co">#&gt; + promises            1.2.0.1 </span></span>
-<span><span class="co">#&gt; + purrr               1.0.1   </span></span>
-<span><span class="co">#&gt; + R6                  2.5.1   </span></span>
-<span><span class="co">#&gt; + rappdirs            0.3.3   </span></span>
-<span><span class="co">#&gt; + Rcpp                1.0.10  </span></span>
-<span><span class="co">#&gt; + rlang               1.1.0   </span></span>
-<span><span class="co">#&gt; + rprojroot           2.0.3   </span></span>
-<span><span class="co">#&gt; + rstudioapi          0.14    </span></span>
-<span><span class="co">#&gt; + sass                0.4.5   </span></span>
-<span><span class="co">#&gt; + shiny               1.7.4   </span></span>
-<span><span class="co">#&gt; + sourcetools         0.1.7-1 </span></span>
-<span><span class="co">#&gt; + sys                 3.4.1   </span></span>
-<span><span class="co">#&gt; + usethis             2.1.6   </span></span>
-<span><span class="co">#&gt; + vctrs               0.5.2   </span></span>
-<span><span class="co">#&gt; + whisker             0.4.1   </span></span>
-<span><span class="co">#&gt; + withr               2.5.0   </span></span>
-<span><span class="co">#&gt; + xtable              1.8-4   </span></span>
-<span><span class="co">#&gt; + yaml                2.3.7   </span></span>
-<span><span class="co">#&gt; + zip                 2.2.2</span></span>
-<span><span class="co">#&gt; ℹ Getting 1 pkg with unknown size, 53 (41.00 MB) cached</span></span>
-<span><span class="co">#&gt; ℹ Getting 1 pkg with unknown size, 53 (41.00 MB) cached</span></span>
-<span><span class="co">#&gt; ✔ Cached copy of gptstudio 0.0.4 (source) is the latest build</span></span>
-<span><span class="co">#&gt; ✔ Cached copy of gptstudio 0.0.4 (source) is the latest build</span></span>
-<span><span class="co">#&gt; ✔ Got httr2 0.2.2 (aarch64-apple-darwin20) (376.14 kB)</span></span>
-<span><span class="co">#&gt; ✔ Got httr2 0.2.2 (aarch64-apple-darwin20) (376.14 kB)</span></span>
-<span><span class="co">#&gt; ✔ Got sass 0.4.5 (aarch64-apple-darwin20) (2.41 MB)</span></span>
-<span><span class="co">#&gt; ✔ Got sass 0.4.5 (aarch64-apple-darwin20) (2.41 MB)</span></span>
-<span><span class="co">#&gt; ✔ Got httpuv 1.6.9 (aarch64-apple-darwin20) (2.74 MB)</span></span>
-<span><span class="co">#&gt; ✔ Got httpuv 1.6.9 (aarch64-apple-darwin20) (2.74 MB)</span></span>
-<span><span class="co">#&gt; ✔ Installed R6 2.5.1  (74ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed R6 2.5.1  (74ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed askpass 1.1  (121ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed askpass 1.1  (121ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed assertthat 0.2.1  (138ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed assertthat 0.2.1  (138ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed base64enc 0.1-3  (152ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed base64enc 0.1-3  (152ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed cachem 1.0.7  (168ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed cachem 1.0.7  (168ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed cli 3.6.0  (186ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed cli 3.6.0  (186ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed clipr 0.8.0  (219ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed clipr 0.8.0  (219ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed commonmark 1.8.1  (231ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed commonmark 1.8.1  (231ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed crayon 1.5.2  (120ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed crayon 1.5.2  (120ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed Rcpp 1.0.10  (322ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed Rcpp 1.0.10  (322ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed credentials 1.3.2  (83ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed credentials 1.3.2  (83ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed bslib 0.4.2  (490ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed bslib 0.4.2  (490ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed curl 5.0.0  (222ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed curl 5.0.0  (222ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed desc 1.4.2  (182ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed desc 1.4.2  (182ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed digest 0.6.31  (42ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed digest 0.6.31  (42ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed ellipsis 0.3.2  (65ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed ellipsis 0.3.2  (65ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed fastmap 1.1.1  (45ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed fastmap 1.1.1  (45ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed fontawesome 0.5.0  (48ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed fontawesome 0.5.0  (48ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed fs 1.6.1  (49ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed fs 1.6.1  (49ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed gert 1.9.2  (49ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed gert 1.9.2  (49ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed gh 1.4.0  (70ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed gh 1.4.0  (70ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed gitcreds 0.1.2  (43ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed gitcreds 0.1.2  (43ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed glue 1.6.2  (43ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed glue 1.6.2  (43ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed htmltools 0.5.4  (45ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed htmltools 0.5.4  (45ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed httpuv 1.6.9  (82ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed httpuv 1.6.9  (82ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed httr2 0.2.2  (88ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed httr2 0.2.2  (88ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed httr 1.4.5  (51ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed httr 1.4.5  (51ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed ini 0.3.1  (39ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed ini 0.3.1  (39ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed jquerylib 0.1.4  (37ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed jquerylib 0.1.4  (37ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed jsonlite 1.8.4  (61ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed jsonlite 1.8.4  (61ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed later 1.3.0  (42ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed later 1.3.0  (42ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed lifecycle 1.0.3  (42ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed lifecycle 1.0.3  (42ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed magrittr 2.0.3  (44ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed magrittr 2.0.3  (44ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed memoise 2.0.1  (45ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed memoise 2.0.1  (45ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed mime 0.12  (61ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed mime 0.12  (61ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed openssl 2.0.6  (56ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed openssl 2.0.6  (56ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed promises 1.2.0.1  (61ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed promises 1.2.0.1  (61ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed purrr 1.0.1  (44ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed purrr 1.0.1  (44ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed rappdirs 0.3.3  (67ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed rappdirs 0.3.3  (67ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed rlang 1.1.0  (54ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed rlang 1.1.0  (54ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed rprojroot 2.0.3  (47ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed rprojroot 2.0.3  (47ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed rstudioapi 0.14  (44ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed rstudioapi 0.14  (44ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed sass 0.4.5  (63ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed sass 0.4.5  (63ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed sourcetools 0.1.7-1  (35ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed sourcetools 0.1.7-1  (35ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed shiny 1.7.4  (138ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed shiny 1.7.4  (138ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed sys 3.4.1  (55ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed sys 3.4.1  (55ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed usethis 2.1.6  (50ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed usethis 2.1.6  (50ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed vctrs 0.5.2  (74ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed vctrs 0.5.2  (74ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed whisker 0.4.1  (60ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed whisker 0.4.1  (60ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed withr 2.5.0  (42ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed withr 2.5.0  (42ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed xtable 1.8-4  (44ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed xtable 1.8-4  (44ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed yaml 2.3.7  (41ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed yaml 2.3.7  (41ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed zip 2.2.2  (58ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed zip 2.2.2  (58ms)</span></span>
-<span><span class="co">#&gt; ℹ Packaging gptstudio 0.0.4</span></span>
-<span><span class="co">#&gt; ℹ Packaging gptstudio 0.0.4</span></span>
-<span><span class="co">#&gt; ✔ Packaged gptstudio 0.0.4 (477ms)</span></span>
-<span><span class="co">#&gt; ✔ Packaged gptstudio 0.0.4 (477ms)</span></span>
-<span><span class="co">#&gt; ℹ Building gptstudio 0.0.4</span></span>
-<span><span class="co">#&gt; ℹ Building gptstudio 0.0.4</span></span>
-<span><span class="co">#&gt; ✔ Built gptstudio 0.0.4 (1.4s)</span></span>
-<span><span class="co">#&gt; ✔ Built gptstudio 0.0.4 (1.4s)</span></span>
-<span><span class="co">#&gt; ✔ Installed gptstudio 0.0.4 (github::MichelNivard/gptstudio@77e4050) (66ms)</span></span>
-<span><span class="co">#&gt; ✔ Installed gptstudio 0.0.4 (github::MichelNivard/gptstudio@77e4050) (66ms)</span></span>
-<span><span class="co">#&gt; ✔ 1 pkg + 53 deps: upd 1, added 53, dld 3 (5.52 MB) [10.3s]</span></span>
-<span><span class="co">#&gt; ✔ 1 pkg + 53 deps: upd 1, added 53, dld 3 (5.52 MB) [10.3s]</span></span></code></pre></div>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="http://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"MichelNivard/gptstudio"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="privacy-notice-for-gptstudio">Privacy Notice for gptstudio<a class="anchor" aria-label="anchor" href="#privacy-notice-for-gptstudio"></a>
@@ -366,22 +110,22 @@
 <ol style="list-style-type: decimal">
 <li><p>Make an OpenAI account.</p></li>
 <li><p><a href="https://platform.openai.com/account/api-keys" class="external-link">Create an OpenAI API key</a> to use with the package.</p></li>
-<li><p>Set the API key up in Rstudio in one of two ways:</p></li>
+<li><p>Set the API key up in Rstudio</p></li>
 </ol>
-<ul>
-<li>By default, API calls will look for <code>OPENAI_API_KEY</code> environment variable. If you want to set a global environment variable, you can use the following command, where <code>"&lt;APIKEY&gt;"</code> should be replaced with your actual key:</li>
-</ul>
+<div class="section level3">
+<h3 id="setting-openai-api-key">Setting OpenAI API Key<a class="anchor" aria-label="anchor" href="#setting-openai-api-key"></a>
+</h3>
+<p>By default, API calls will look for <code>OPENAI_API_KEY</code> environment variable. If you want to set a global environment variable, you can use the following command, where <code>"&lt;APIKEY&gt;"</code> should be replaced with your actual key:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>OPENAI_API_KEY <span class="op">=</span> <span class="st">"&lt;APIKEY&gt;"</span><span class="op">)</span></span></code></pre></div>
-<ul>
-<li>Otherwise, you can add the key to the .Renviron file of the project. The following commands will open .Renviron for editing:</li>
-</ul>
+<p>Otherwise, you can add the key to the .Renviron file of the project. The following commands will open .Renviron for editing:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://usethis.r-lib.org" class="external-link">usethis</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://usethis.r-lib.org/reference/edit.html" class="external-link">edit_r_environ</a></span><span class="op">(</span>scope <span class="op">=</span> <span class="st">"project"</span><span class="op">)</span></span></code></pre></div>
 <p>You can add the following line to .Renviron (again, replace <code>"&lt;APIKEY&gt;"</code> with your actual key):</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">OPENAI_API_KEY</span><span class="op">=</span> <span class="st">"&lt;APIKEY&gt;"</span><span class="er">)</span></span></code></pre></div>
 <p>This now set the API key every time you start up this particular project. Note: If you are using GitHub/Gitlab, do not forget to add .Renviron to .gitignore!</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -393,7 +137,8 @@
 <ol style="list-style-type: decimal">
 <li><strong>Addins &gt; GPTSTUDIO &gt; ChatGPT</strong></li>
 <li>Type your question.</li>
-<li>**Addins &gt; GPTSTUDIO &gt; GPT Chat</li>
+<li>Click “Chat”</li>
+<li>Ask more questions</li>
 </ol>
 <video src="https://user-images.githubusercontent.com/6314313/225774512-bc0b0296-51c6-44a7-b665-e906610bed06.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 width-fit" style="max-height:640px;"></video>
 </div>
@@ -407,23 +152,23 @@
 <h3 id="spelling-ang-grammar-check">Spelling ang grammar check<a class="anchor" aria-label="anchor" href="#spelling-ang-grammar-check"></a>
 </h3>
 <p><strong>Addins &gt; GPTSTUDIO &gt; Spelling and Grammar:</strong> Takes the selected text sends it to OpenAI’s best model and instructs it to return a spelling and grammar checked version.</p>
-<div class="figure">
-<img src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/spelling.gif" alt=""><p class="caption">spelling</p>
-</div>
+<figure><img src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/spelling.gif" alt="spelling"><figcaption aria-hidden="true">
+spelling
+</figcaption></figure>
 </div>
 <div class="section level3">
 <h3 id="comment-your-code">Comment your code:<a class="anchor" aria-label="anchor" href="#comment-your-code"></a>
 </h3>
 <p><strong>Addins &gt; GPTSTUDIO &gt; Comment your code:</strong> Takes the selected text sends it to OpenAI as a prompt for a code specific model to work with, asks for a version with a comment added explaining the code line by line.</p>
-<div class="figure">
-<img src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/comments.gif" alt=""><p class="caption">add comments to code</p>
-</div>
+<figure><img src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/comments.gif" alt="add comments to code"><figcaption aria-hidden="true">
+add comments to code
+</figcaption></figure>
 </div>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
-<p>Please note that the gptstudio project is released with a Contributor Code of Conduct. By contributing to this project, you agree to abide by its terms.</p>
+<p>Please note that the gptstudio project is released with a <a href="https://github.com/MichelNivard/gptstudio/blob/main/.github/CODE_OF_CONDUCT.md" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
