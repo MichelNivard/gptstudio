@@ -30,12 +30,14 @@ For further addins, tailored for R developers, also see the sister package: [gpt
 ## Install the addins from this package:
 
 ```{r}
+#| eval: false
 install.packages("gptstudio")
 ```
 
 To get a bug fix or to use a feature from the development version, you can install the development version of this package from GitHub.
 
 ```{r}
+#| eval: false
 # install.packages("pak")
 pak::pak("MichelNivard/gptstudio")
 ```
@@ -61,16 +63,18 @@ The R package is designed to share only the text or code that you specifically h
 
 2.  [Create an OpenAI API key](https://platform.openai.com/account/api-keys) to use with the package.
 
-3.  Set the API key up in Rstudio in one of two ways:
+3.  Set the API key up in Rstudio
 
--   By default, API calls will look for `OPENAI_API_KEY` environment variable. If you want to set a global environment variable, you can use the following command, where `"<APIKEY>"` should be replaced with your actual key:
+### Setting OpenAI API Key
+
+By default, API calls will look for `OPENAI_API_KEY` environment variable. If you want to set a global environment variable, you can use the following command, where `"<APIKEY>"` should be replaced with your actual key:
 
 ```{r}
 #| eval: false
 Sys.setenv(OPENAI_API_KEY = "<APIKEY>")
 ```
 
--   Otherwise, you can add the key to the .Renviron file of the project. The following commands will open .Renviron for editing:
+Otherwise, you can add the key to the .Renviron file of the project. The following commands will open .Renviron for editing:
 
 ```{r}
 #| eval: false
@@ -94,7 +98,8 @@ Some examples of use.
 
 1. **Addins \> GPTSTUDIO \> ChatGPT**
 2. Type your question.
-3. **Addins \> GPTSTUDIO \> GPT Chat
+3. Click "Chat"
+4. Ask more questions
 
 <video src="https://user-images.githubusercontent.com/6314313/225774512-bc0b0296-51c6-44a7-b665-e906610bed06.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 width-fit" style="max-height:640px;">
 </video>
@@ -120,4 +125,4 @@ Some examples of use.
 
 ## Code of Conduct
 
-Please note that the gptstudio project is released with a Contributor Code of Conduct. By contributing to this project, you agree to abide by its terms.
+Please note that the gptstudio project is released with a [Contributor Code of Conduct](https://github.com/MichelNivard/gptstudio/blob/main/.github/CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
