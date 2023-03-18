@@ -57,14 +57,16 @@ formats the remaining messages with appropriate styling.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>history</dt>
-<dd><p>A list of chat messages with elements containing 'role' and 'content'.</p></dd>
+<dd><p>A list of chat messages with elements containing 'role' and
+'content'.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A list of formatted chat messages with styling applied, excluding system messages.</p>
+<p>A list of formatted chat messages with styling applied, excluding
+system messages.</p>
     </div>
 
     <div class="section level2">
@@ -75,31 +77,6 @@ formats the remaining messages with appropriate styling.</p>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>role <span class="op">=</span> <span class="st">"assistant"</span>, content <span class="op">=</span> <span class="st">"Hi, how can I help?"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">make_chat_history</span><span class="op">(</span><span class="va">chat_history_example</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Making history...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$role</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "user"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$content</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Hello, World!"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]$role</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "system"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]$content</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "System message"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]$role</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "assistant"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]$content</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Hi, how can I help?"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]][[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;strong&gt;USER&lt;/strong&gt;</span>
