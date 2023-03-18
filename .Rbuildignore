@@ -10,3 +10,4 @@ _\.new\.png$
 ^docs$
 ^pkgdown$
 ^cran-comments\.md$
+^CRAN-SUBMISSION$

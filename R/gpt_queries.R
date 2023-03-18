@@ -260,7 +260,8 @@ gpt_chat <- function(query,
 #' # Example 1: Get help with a tidyverse question in a source file
 #' # Select the following code comment in RStudio and run gpt_chat_in_source()
 #' # How can I filter rows of a data frame?
-#' tidyverse_response <- gpt_chat_in_source(style = "tidyverse", skill = "beginner")
+#' tidyverse_response <- gpt_chat_in_source(style = "tidyverse",
+#'                                          skill = "beginner")
 #'
 #' # Example 2: Get help with a base R question in a source file
 #' # Select the following code comment in RStudio and run gpt_chat_in_source()
@@ -270,7 +271,8 @@ gpt_chat <- function(query,
 #' # Example 3: No style preference in a source file
 #' # Select the following code comment in RStudio and run gpt_chat_in_source()
 #' # What is the best way to handle missing values in R?
-#' no_preference_response <- gpt_chat_in_source(style = "no preference", skill = "advanced")
+#' no_preference_response <- gpt_chat_in_source(style = "no preference",
+#'                                              skill = "advanced")
 #' }
 #'
 gpt_chat_in_source <- function(history = NULL,

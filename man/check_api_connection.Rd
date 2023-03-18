@@ -4,12 +4,14 @@
 \alias{check_api_connection}
 \title{Check connection to OpenAI's API works}
 \usage{
-check_api_connection(api_key, update_api = TRUE)
+check_api_connection(api_key, update_api = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{api_key}{An API key.}
 
 \item{update_api}{Whether to attempt to update api if invalid}
+
+\item{verbose}{Whether to provide information about the API connection}
 }
 \value{
 Nothing is returned. If the API key is valid, a success message is

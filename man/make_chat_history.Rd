@@ -7,10 +7,12 @@
 make_chat_history(history)
 }
 \arguments{
-\item{history}{A list of chat messages with elements containing 'role' and 'content'.}
+\item{history}{A list of chat messages with elements containing 'role' and
+'content'.}
 }
 \value{
-A list of formatted chat messages with styling applied, excluding system messages.
+A list of formatted chat messages with styling applied, excluding
+system messages.
 }
 \description{
 This function processes the chat history, filters out system messages, and

@@ -5,6 +5,7 @@
 #'
 #' @param api_key An API key.
 #' @param update_api Whether to attempt to update api if invalid
+#' @param verbose Whether to provide information about the API connection
 #'
 #' @return Nothing is returned. If the API key is valid, a success message is
 #' printed. If the API key is invalid, an error message is printed and the
@@ -16,26 +17,26 @@
 #' \dontrun{check_api_connection("my_api_key")}
 #' # Call the function with an API key and avoid updating the API key
 #' \dontrun{check_api_connection("my_api_key", update_api = FALSE)}
-check_api_connection <- function(api_key, update_api = TRUE) {
+check_api_connection <- function(api_key, update_api = TRUE, verbose = FALSE) {
   if (!check_api_key(api_key, update_api)) {
     invisible()
   } else {
     status_code <- simple_api_check(api_key)
     if (status_code == 200) {
-      # If the status code is 200, the key is valid
-      cli_alert_success("API key is valid and a simple API call worked.")
-      cli_alert_info("The API is validated once per session.")
-      cli_text("The default value for number of tokens per query is 500.
+      if (verbose) {
+        cli_alert_success("API key is valid and a simple API call worked.")
+        cli_alert_info("The API is validated once per session.")
+        cli_text("The default value for number of tokens per query is 500.
                     This equates to approximately $0.01 USD per query. You can
                     increase or decrease the number of tokens with the
                     `gptstudio.max_tokens` option. Here is an example to lower
                     the max tokens to 100 tokens per query:")
-      cli_code("options(\"gptstudio.max_tokens\" = 100)")
-      options("gptstudio.valid_api" = TRUE)
-      options("gptstudio.openai_key" = api_key)
+        cli_code("options(\"gptstudio.max_tokens\" = 100)")
+        options("gptstudio.valid_api" = TRUE)
+        options("gptstudio.openai_key" = api_key)
+      }
       invisible(TRUE)
     } else {
-      # If the status code is not 200, the key is invalid
       cli_alert_danger("API key found but call was unsuccessful.")
       cli_alert_info("Attempted to use API key: {obscure_key(api_key)}")
       if (interactive() && update_api) {
@@ -74,15 +75,15 @@ check_api_key <- function(api_key, update_api = TRUE) {
   } else {
     regex <- "^[a-zA-Z0-9-]{30,60}$"
     if (grepl(regex, api_key)) {
-      cli_alert_success("API key found and matches the expected format.")
       invisible(TRUE)
     } else {
-      cli_alert_danger("API key not found or is not formatted correctly.")
-      cli_alert_info(
-        "Attempted to validate key: {obscure_key(api_key)}"
-      )
-      cli_alert_info(
-        "Generate a key at {.url https://platform.openai.com/account/api-keys}"
+      cli_alert_danger(
+        c(
+          "!" = "API key not found or is not formatted correctly.",
+          "i" = "Attempted to validate key: {obscure_key(api_key)}",
+          "i" = "Generate a key at {.url
+        https://platform.openai.com/account/api-keys}"
+        )
       )
       if (update_api) {
         ask_to_set_api()
@@ -110,10 +111,8 @@ check_api <- function() {
   valid_api <- getOption("gptstudio.valid_api")
   saved_key <- getOption("gptstudio.openai_key")
   if (!valid_api) {
-    cli_inform("Checking API key using OPENAI_API_KEY environment variable...")
     check_api_connection(api_key)
   } else if (saved_key == Sys.getenv("OPENAI_API_KEY")) {
-    cli_alert_success("API already validated in this session.")
     invisible(TRUE)
   } else {
     cli_alert_warning("API key has changed. Re-checking API connection.")
@@ -133,14 +132,20 @@ set_openai_api_key <- function() {
   new_api_key <- readline_wrapper("Copy and paste your API key here: ")
   Sys.setenv(OPENAI_API_KEY = new_api_key)
   if (check_api()) {
-    cli_alert_success("API key is valid.")
-    cli_alert_info("Setting OPENAI_API_KEY environment variable.")
-    cli_alert_info("You can set this variable in your .Renviron file.")
+    cli_alert_success(
+      c(
+        "v" = "API key is valid.",
+        "i" = "Setting OPENAI_API_KEY environment variable.",
+        "i" = "You can set this variable in your .Renviron file."
+      )
+    )
     invisible(TRUE)
   } else {
-    cli_alert_danger("API key is invalid.")
-    cli_alert_info(
-      "Get key from {.url https://platform.openai.com/account/api-keys}"
+    cli_alert_danger(
+      c(
+        "!" = "API key is invalid.",
+        "i" = "Get key from {.url https://platform.openai.com/account/api-keys}"
+      )
     )
     if (interactive()) {
       try_again <- ui_yeah_wrapper("Woud you like to try again?")

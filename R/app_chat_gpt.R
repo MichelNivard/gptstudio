@@ -20,9 +20,11 @@ addin_chatgpt <- function() {
 #' This function processes the chat history, filters out system messages, and
 #' formats the remaining messages with appropriate styling.
 #'
-#' @param history A list of chat messages with elements containing 'role' and 'content'.
+#' @param history A list of chat messages with elements containing 'role' and
+#' 'content'.
 #'
-#' @return A list of formatted chat messages with styling applied, excluding system messages.
+#' @return A list of formatted chat messages with styling applied, excluding
+#' system messages.
 #' @export
 #' @examples
 #' chat_history_example <- list(
@@ -32,8 +34,6 @@ addin_chatgpt <- function() {
 #' )
 #' make_chat_history(chat_history_example)
 make_chat_history <- function(history) {
-  cli_inform("Making history...")
-  cat_print(history)
   history <-
     purrr::map(history, ~ {
       if (.x$role == "system") NULL else .x

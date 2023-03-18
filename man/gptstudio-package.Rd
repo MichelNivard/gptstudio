@@ -4,11 +4,11 @@
 \name{gptstudio-package}
 \alias{gptstudio}
 \alias{gptstudio-package}
-\title{gptstudio: Add Functionality from Large Language Models Directly into RStudio}
+\title{gptstudio: Use Large Language Models Directly in your Development Environment}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-OpenAI offers a number of large language models accessible via API. This package lowers the barrier to using this API inside of RStudio IDE.
+Large language models are readily accessible via API. This package lowers the barrier to use the API inside of your development environment. For more on the API, see \url{https://platform.openai.com/docs/introduction}.
 }
 \seealso{
 Useful links:
