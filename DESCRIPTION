@@ -1,7 +1,7 @@
 Package: gptstudio
 Type: Package
 Title: Use Large Language Models Directly in your Development Environment
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R:
   c(person(given = "Michel",
            family = "Nivard",
