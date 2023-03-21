@@ -12,6 +12,8 @@ status](https://www.r-pkg.org/badges/version/gptstudio)](https://CRAN.R-project.
 [![Codecov test
 coverage](https://codecov.io/gh/MichelNivard/gptstudio/branch/main/graph/badge.svg)](https://app.codecov.io/gh/MichelNivard/gptstudio?branch=main)
 [![R-CMD-check](https://github.com/MichelNivard/gptstudio/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MichelNivard/gptstudio/actions/workflows/R-CMD-check.yaml)
+[![CRAN RStudio mirror
+downloads](http://cranlogs.r-pkg.org/badges/gptstudio)](http://www.r-pkg.org/pkg/gptstudio)
 <!-- badges: end -->
 
 The goal of gptstudio is for R programmers to easily incorporate use of
@@ -142,12 +144,7 @@ desire or can dream up to a selection of code or text.
 sends it to OpenAI’s best model and instructs it to return a spelling
 and grammar checked version.
 
-<figure>
-<img
-src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/spelling.gif"
-alt="spelling" />
-<figcaption aria-hidden="true">spelling</figcaption>
-</figure>
+![spelling](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/spelling.gif)
 
 ### Comment your code:
 
@@ -156,12 +153,8 @@ sends it to OpenAI as a prompt for a code specific model to work with,
 asks for a version with a comment added explaining the code line by
 line.
 
-<figure>
-<img
-src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/comments.gif"
-alt="add comments to code" />
-<figcaption aria-hidden="true">add comments to code</figcaption>
-</figure>
+![add comments to
+code](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/comments.gif)
 
 ## Code of Conduct
 
