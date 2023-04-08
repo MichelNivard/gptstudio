@@ -195,3 +195,17 @@ query_openai_api <- function(body, openai_api_key, task) {
 value_between <- function(x, lower, upper) {
   x >= lower && x <= upper
 }
+
+get_available_models <- function() {
+  check_api()
+  httr::GET(
+    "https://api.openai.com/v1/models",
+    httr::add_headers(
+      "Authorization" = glue("Bearer {Sys.getenv(\"OPENAI_API_KEY\")}")
+    )
+  ) |>
+    httr::content(as = "text", encoding = "UTF-8") |>
+    jsonlite::fromJSON(flatten = TRUE) |>
+    purrr::pluck("data") |>
+    dplyr::pull("root")
+}

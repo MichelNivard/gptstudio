@@ -14,3 +14,4 @@ DS.Store
 *.icloud
 .Rprofile
 .Renviron
+pkgdown

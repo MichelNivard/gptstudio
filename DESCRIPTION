@@ -22,6 +22,7 @@ LazyData: true
 Imports: 
     assertthat,
     cli,
+    dplyr,
     glue,
     httr,
     jsonlite,

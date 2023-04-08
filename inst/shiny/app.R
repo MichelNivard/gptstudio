@@ -1,5 +1,5 @@
 rlang::check_installed("waiter")
-rlang::check_installed("bslib")
+rlang::check_installed("bslib", version = "0.4.2")
 library(gptstudio)
 library(waiter)
 
