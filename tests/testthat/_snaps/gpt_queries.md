@@ -10,7 +10,7 @@
       
       [[1]][[1]]$content
       You are a helpful chat bot that answers questions for an R
-      programmer working in the RStudio IDE. TThey consider themselves
+      programmer working in the RStudio IDE. They consider themselves
       to be a beginner R programmer. Provide answers with their skill
       level in mind.
       
@@ -50,7 +50,7 @@
       
       [[1]][[1]]$content
       You are a helpful chat bot that answers questions for an R
-      programmer working in the RStudio IDE. TThey consider themselves
+      programmer working in the RStudio IDE. They consider themselves
       to be a beginner R programmer. Provide answers with their skill
       level in mind.
       
