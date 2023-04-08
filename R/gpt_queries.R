@@ -216,7 +216,7 @@ gpt_chat <- function(query,
             content =
               glue(
                 "You are a helpful chat bot that answers questions for an R
-                programmer working in the RStudio IDE. TThey consider themselves
+                programmer working in the RStudio IDE. They consider themselves
                 to be a {skill} R programmer. Provide answers with their skill
                 level in mind."
               )
