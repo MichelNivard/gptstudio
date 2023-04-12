@@ -3,16 +3,21 @@
 \name{addin_chatgpt}
 \alias{addin_chatgpt}
 \title{Run Chat GPT
-Run the Chat GPT Shiny App}
+Run the Chat GPT Shiny App as a background job and show it in the viewer pane}
 \usage{
-addin_chatgpt()
+addin_chatgpt(host = getOption("shiny.host", "127.0.0.1"))
+}
+\arguments{
+\item{host}{The IPv4 address that the application should listen on. Defaults
+to the \code{shiny.host} option, if set, or \code{"127.0.0.1"} if not. See
+Details.}
 }
 \value{
 This function has no return value.
 }
 \description{
 Run Chat GPT
-Run the Chat GPT Shiny App
+Run the Chat GPT Shiny App as a background job and show it in the viewer pane
 }
 \examples{
 # Call the function as an RStudio addin
