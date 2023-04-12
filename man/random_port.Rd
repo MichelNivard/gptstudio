@@ -10,8 +10,5 @@ random_port()
 A single integer representing the randomly selected safe port number.
 }
 \description{
-This function generates a random port number between 3000 and 8000, but excludes some commonly unsafe ports from the selection.
-}
-\examples{
-random_port()
+This function generates a random port allowed by shiny::runApp.
 }
