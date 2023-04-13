@@ -21,6 +21,7 @@ test_that("Commenting code works", {
 })
 
 test_that("chatgpt_addin runs", {
+  skip_if_not(rstudioapi::isAvailable())
   mockr::local_mock(
     check_api = function() {
       TRUE
