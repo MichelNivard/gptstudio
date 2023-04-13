@@ -49,6 +49,9 @@
     <loc>/reference/check_api_key.html</loc>
   </url>
   <url>
+    <loc>/reference/create_tmp_job_script.html</loc>
+  </url>
+  <url>
     <loc>/reference/gpt_chat.html</loc>
   </url>
   <url>
@@ -70,6 +73,9 @@
     <loc>/reference/make_chat_history.html</loc>
   </url>
   <url>
+    <loc>/reference/open_bg_shinyapp.html</loc>
+  </url>
+  <url>
     <loc>/reference/openai_create_chat_completion.html</loc>
   </url>
   <url>
@@ -80,5 +86,11 @@
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>/reference/random_port.html</loc>
+  </url>
+  <url>
+    <loc>/reference/run_app_as_bg_job.html</loc>
   </url>
 </urlset>
