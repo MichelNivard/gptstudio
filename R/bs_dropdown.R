@@ -10,10 +10,10 @@
 bs_dropdown <- function(label, ..., class = NULL) {
   id <- ids::random_id()
   div(
-    class = "dropdown float-right",
-    class = class,
+    class = "dropdown",
     htmltools::tags$button(
-      class="btn btn-secondary dropdown-toggle btn-sm",
+      class="btn dropdown-toggle",
+      class = class,
       type="button",
       `data-bs-toggle`="dropdown",
       `data-bs-auto-close`="outside",
