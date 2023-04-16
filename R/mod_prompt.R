@@ -153,16 +153,33 @@ chat_create_history <- function(response) {
 #' )
 #' make_chat_history(chat_history_example)
 make_chat_history <- function(history) {
-  history <-
-    purrr::map(history, ~ {
-      if (.x$role == "system") NULL else .x
-    }) %>%
-    purrr::compact()
+  history <- purrr::discard(history, ~.x$role == "system")
 
-  purrr::map(history, ~ {
-    list(
-      shiny::strong(toupper(.x$role)),
-      shiny::markdown(.x$content)
+  purrr::map(history, chat_message)
+}
+
+chat_message <- function(message) {
+  icon_name <- switch (message$role,
+    "user" = "fas fa-user",
+    "assistant" = "fas fa-robot"
+  )
+
+  bg_class <- switch (message$role,
+    "user" = "bg-primary",
+    "assistant" = "bg-secondary"
+  )
+
+  position_class <- switch (message$role,
+    "user" = "justify-content-end",
+    "assistant" = "justify-content-start"
+  )
+
+  htmltools::div(
+    class = glue("row m-0 p-0 {position_class}"),
+    htmltools::tags$div(
+      class = glue("p-2 mb-2 rounded d-inline-block w-auto mw-100 {bg_class}"),
+      fontawesome::fa(icon_name),
+      shiny::markdown(message$content)
     )
-  })
+  )
 }

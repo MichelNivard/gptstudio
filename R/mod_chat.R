@@ -16,11 +16,7 @@ mod_chat_ui <- function(id) {
           class = "d-flex flex-column h-100",
 
           div(
-            class = "p-2 bg-warning",
-            style = htmltools::css(
-              `max-height` = "100%",
-              overflow = "auto"
-            ),
+            class = "p-2 mh-100 overflow-auto",
             shiny::uiOutput(ns("all_chats_box")),
           ),
           div(
