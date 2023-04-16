@@ -107,6 +107,7 @@ textAreaInputWrapper <-
       inputId = inputId,
       label = label,
       value = value,
+      width = width,
       height = height,
       cols = cols,
       rows = rows,
