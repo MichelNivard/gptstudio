@@ -52,8 +52,43 @@ mod_prompt_ui <- function(id) {
   )
 }
 
-mod_prompt_server <- function(id) {
+mod_prompt_server <- function(id, rv) {
     moduleServer(id, function(input, output, session) {
+
+      r <- shiny::reactiveValues()
+      r$all_chats_formatted <- NULL
+      r$all_chats <- NULL
+
+      shiny::observe({
+        waiter::waiter_show(
+          html = shiny::tagList(spin_flower(), shiny::h3("Asking ChatGPT...")),
+          color = waiter::transparent(0.5)
+        )
+
+        interim <- gpt_chat(
+          query = input$chat_input,
+          history = r$all_chats,
+          style = input$style,
+          skill = input$skill
+        )
+
+        r$all_chats <- chat_create_history(interim)
+
+        r$all_chats_formatted <- make_chat_history(r$all_chats)
+
+        waiter::waiter_hide()
+        shiny::updateTextAreaInput(session, "chat_input", value = "")
+      }) %>%
+        shiny::bindEvent(input$chat)
+
+      output$all_chats_box <- shiny::renderUI({
+        shiny::req(length(r$all_chats) > 0)
+
+        r$all_chats_formatted
+      })
+
+      shiny::observe(r$all_chats <- NULL) %>%
+        shiny::bindEvent(input$clear_history)
 
     })
 }
@@ -89,3 +124,52 @@ textAreaInputWrapper <-
       tag
     }
   }
+
+chat_create_history <- function(response) {
+  previous_responses <- response[[1]]
+  last_response <- response[[2]]$choices
+
+  c(
+    previous_responses,
+    list(
+      list(
+        role    = last_response$message.role,
+        content = last_response$message.content
+      )
+    )
+  )
+}
+
+
+#' Make Chat History
+#'
+#' This function processes the chat history, filters out system messages, and
+#' formats the remaining messages with appropriate styling.
+#'
+#' @param history A list of chat messages with elements containing 'role' and
+#' 'content'.
+#'
+#' @return A list of formatted chat messages with styling applied, excluding
+#' system messages.
+#' @export
+#' @examples
+#' chat_history_example <- list(
+#'   list(role = "user", content = "Hello, World!"),
+#'   list(role = "system", content = "System message"),
+#'   list(role = "assistant", content = "Hi, how can I help?")
+#' )
+#' make_chat_history(chat_history_example)
+make_chat_history <- function(history) {
+  history <-
+    purrr::map(history, ~ {
+      if (.x$role == "system") NULL else .x
+    }) %>%
+    purrr::compact()
+
+  purrr::map(history, ~ {
+    list(
+      shiny::strong(toupper(.x$role)),
+      shiny::markdown(.x$content)
+    )
+  })
+}

@@ -47,6 +47,9 @@ mod_chat_ui <- function(id) {
 
 mod_chat_server <- function(id) {
     moduleServer(id, function(input, output, session) {
+      rv <- reactiveValues()
+
+      prompt <- mod_prompt_server("prompt", rv)
 
     })
 }
