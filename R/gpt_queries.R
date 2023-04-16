@@ -173,7 +173,7 @@ gpt_chat <- function(query,
     ),
     list(
       role = "user",
-      content = glue({"query"})
+      content = glue("{query}")
     )
   )
 
@@ -234,7 +234,7 @@ gpt_chat_in_source <- function(history = NULL,
     ),
     list(
       role = "user",
-      content = glue({"query"})
+      content = glue("{query}")
     )
   )
 
