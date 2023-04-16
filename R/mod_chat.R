@@ -36,14 +36,10 @@ mod_chat_ui <- function(id) {
 #'
 mod_chat_server <- function(id) {
     moduleServer(id, function(input, output, session) {
-      rv <- reactiveValues()
-
-      prompt <- mod_prompt_server("prompt", rv)
+      prompt <- mod_prompt_server("prompt")
 
       output$all_chats_box <- shiny::renderUI({
-        shiny::req(length(rv$all_chats) > 0)
-
-        rv$all_chats_formatted
+        prompt$all_chats_formatted
       })
 
     })
