@@ -10,7 +10,6 @@ mod_chat_ui <- function(id) {
     bslib::card(
       height = "100%",
       bslib::card_body(
-        # fill = TRUE,
         class = "py-2 h-100",
 
         div(
@@ -22,19 +21,7 @@ mod_chat_ui <- function(id) {
               `max-height` = "100%",
               overflow = "auto"
             ),
-            lapply(1:10, \(x) {
-              tagList(
-                htmltools::div(
-                  class = "bg-info mb-2",
-                  style = htmltools::css(height = "100px")
-                ),
-                htmltools::div(
-                  class = "bg-danger mb-2",
-                  style = htmltools::css(height = "100px")
-                )
-              )
-            }),
-            shiny::uiOutput("all_chats_box"),
+            shiny::uiOutput(ns("all_chats_box")),
           ),
           div(
             class = "mt-auto",
@@ -45,11 +32,23 @@ mod_chat_ui <- function(id) {
     )
 }
 
+#' Chat server
+#'
+#' @param id id of the module
+#'
+#' @export
+#'
 mod_chat_server <- function(id) {
     moduleServer(id, function(input, output, session) {
       rv <- reactiveValues()
 
       prompt <- mod_prompt_server("prompt", rv)
+
+      output$all_chats_box <- shiny::renderUI({
+        shiny::req(length(rv$all_chats) > 0)
+
+        rv$all_chats_formatted
+      })
 
     })
 }

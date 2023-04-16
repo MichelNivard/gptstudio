@@ -55,9 +55,8 @@ mod_prompt_ui <- function(id) {
 mod_prompt_server <- function(id, rv) {
     moduleServer(id, function(input, output, session) {
 
-      r <- shiny::reactiveValues()
-      r$all_chats_formatted <- NULL
-      r$all_chats <- NULL
+      rv$all_chats_formatted <- NULL
+      rv$all_chats <- NULL
 
       shiny::observe({
         waiter::waiter_show(
@@ -67,27 +66,21 @@ mod_prompt_server <- function(id, rv) {
 
         interim <- gpt_chat(
           query = input$chat_input,
-          history = r$all_chats,
+          history = rv$all_chats,
           style = input$style,
           skill = input$skill
         )
 
-        r$all_chats <- chat_create_history(interim)
+        rv$all_chats <- chat_create_history(interim)
 
-        r$all_chats_formatted <- make_chat_history(r$all_chats)
+        rv$all_chats_formatted <- make_chat_history(rv$all_chats)
 
         waiter::waiter_hide()
         shiny::updateTextAreaInput(session, "chat_input", value = "")
       }) %>%
         shiny::bindEvent(input$chat)
 
-      output$all_chats_box <- shiny::renderUI({
-        shiny::req(length(r$all_chats) > 0)
-
-        r$all_chats_formatted
-      })
-
-      shiny::observe(r$all_chats <- NULL) %>%
+      shiny::observe(rv$all_chats <- NULL) %>%
         shiny::bindEvent(input$clear_history)
 
     })
