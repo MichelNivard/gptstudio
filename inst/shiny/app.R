@@ -4,10 +4,26 @@ library(gptstudio)
 library(waiter)
 library(shiny)
 
+rstudio_theme_info <- rstudioapi::getThemeInfo()
+
+rgb_str_to_hex <- function(rgb_string) {
+  rgb_vec <- unlist(strsplit(gsub("[rgb() ]", "", rgb_string), ","))
+  rgb(
+    as.numeric(rgb_vec[1]) / 255,
+    as.numeric(rgb_vec[2]) / 255,
+    as.numeric(rgb_vec[3]) / 255,
+    names = FALSE
+  )
+}
 
 ui <- shiny::fluidPage(
   useWaiter(),
-  theme = bslib::bs_theme(bootswatch = "morph", version = 5),
+  theme = bslib::bs_theme(
+    # bootswatch = "morph",
+    version = 5,
+    bg = rgb_str_to_hex(rstudio_theme_info$background),
+    fg = rgb_str_to_hex(rstudio_theme_info$foreground)
+  ),
   title = "ChatGPT from gptstudio",
   class = "vh-100 p-3",
 
