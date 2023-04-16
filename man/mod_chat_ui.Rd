@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod_chat.R
 \name{mod_chat_ui}
 \alias{mod_chat_ui}
-\title{Chat}
+\title{Chat UI}
 \usage{
 mod_chat_ui(id)
 }
@@ -10,5 +10,5 @@ mod_chat_ui(id)
 \item{id}{id of the module}
 }
 \description{
-Chat
+Chat UI
 }

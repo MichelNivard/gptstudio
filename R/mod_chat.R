@@ -1,4 +1,4 @@
-#' Chat
+#' Chat UI
 #'
 #' @param id id of the module
 #'

@@ -61,7 +61,7 @@ mod_prompt_server <- function(id) {
 
       shiny::observe({
         waiter::waiter_show(
-          html = shiny::tagList(spin_flower(), shiny::h3("Asking ChatGPT...")),
+          html = shiny::tagList(waiter::spin_flower(), shiny::h3("Asking ChatGPT...")),
           color = waiter::transparent(0.5)
         )
 
