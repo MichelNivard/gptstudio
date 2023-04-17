@@ -166,6 +166,8 @@ make_chat_history <- function(history) {
 }
 
 chat_message <- function(message) {
+  rstudio_theme_info <- rstudioapi::getThemeInfo()
+
   icon_name <- switch (message$role,
     "user" = "fas fa-user",
     "assistant" = "fas fa-robot"
@@ -184,7 +186,7 @@ chat_message <- function(message) {
   htmltools::div(
     class = glue("row m-0 p-0 {position_class}"),
     htmltools::tags$div(
-      class = glue("p-2 mb-2 rounded d-inline-block w-auto mw-100 {bg_class}"),
+      class = glue("p-2 mb-2 rounded d-inline-block w-auto mw-100 {bg_class} opacity-25"),
       fontawesome::fa(icon_name),
       shiny::markdown(message$content)
     )
