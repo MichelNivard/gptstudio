@@ -9,6 +9,8 @@ bs_dropdown(label, id, ..., class = NULL)
 \arguments{
 \item{label}{The label}
 
+\item{id}{ID of the dropdown element}
+
 \item{...}{additional arguments passed to card_body()}
 
 \item{class}{Additional classes}

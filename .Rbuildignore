@@ -11,3 +11,4 @@ _\.new\.png$
 ^pkgdown$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+diagram.svg

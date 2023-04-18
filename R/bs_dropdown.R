@@ -1,6 +1,7 @@
 #' Boostrap 5 dropdown
 #'
 #' @param label The label
+#' @param id ID of the dropdown element
 #' @param ... additional arguments passed to card_body()
 #' @param class Additional classes
 #'
