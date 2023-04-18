@@ -79,7 +79,7 @@ style_chat_history <- function(history) {
 #'
 #' @return An HTML element.
 style_chat_message <- function(message) {
-  colors <- create_rstheme_matching_colors(message$role)
+  colors <- create_ide_matching_colors(message$role)
 
   icon_name <- switch (message$role,
                        "user" = "fas fa-user",
@@ -113,27 +113,44 @@ style_chat_message <- function(message) {
 #'
 #' @return list
 #'
-create_rstheme_matching_colors <- function(role) {
-  rstheme_info <- rstudioapi::getThemeInfo()
-  bg <- rgb_str_to_hex(rstheme_info$background)
-  fg <- rgb_str_to_hex(rstheme_info$foreground)
+create_ide_matching_colors <- function(role) {
+  ide_colors <- get_ide_colors()
 
-  bg_colors <- if (rstheme_info$dark) {
+  bg_colors <- if (ide_colors$is_dark) {
     list(
-      user = lighten_color(bg, 0.20),
-      assistant = lighten_color(bg, 0.35)
+      user = lighten_color(ide_colors$bg, 0.20),
+      assistant = lighten_color(ide_colors$bg, 0.35)
     )
   } else {
     list(
-      user = lighten_color(bg, -0.2),
-      assistant = lighten_color(bg, -0.1)
+      user = lighten_color(ide_colors$bg, -0.2),
+      assistant = lighten_color(ide_colors$bg, -0.1)
     )
   }
 
   list(
     bg_color = bg_colors[[role]],
-    fg_color = fg
+    fg_color = ide_colors$fg
   )
+}
+
+get_ide_colors <- function() {
+  if (rstudioapi::isAvailable()) {
+    rstheme_info <- rstudioapi::getThemeInfo()
+
+    list(
+      is_dark = rstheme_info$dark,
+      bg = rgb_str_to_hex(rstheme_info$background),
+      fg = rgb_str_to_hex(rstheme_info$foreground)
+    )
+  } else {
+    # based on RStudio IDE theme "Solarized Dark"
+    list(
+      is_dark = TRUE,
+      bg = "#002B36",
+      fg = "#93A1A1"
+    )
+  }
 }
 
 #' Make a color lighter or darker
