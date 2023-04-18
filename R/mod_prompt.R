@@ -166,16 +166,11 @@ make_chat_history <- function(history) {
 }
 
 chat_message <- function(message) {
-  rstudio_theme_info <- rstudioapi::getThemeInfo()
+  colors <- create_rstheme_matching_colors(message$role)
 
   icon_name <- switch (message$role,
     "user" = "fas fa-user",
     "assistant" = "fas fa-robot"
-  )
-
-  bg_class <- switch (message$role,
-    "user" = "bg-primary",
-    "assistant" = "bg-secondary"
   )
 
   position_class <- switch (message$role,
@@ -186,11 +181,43 @@ chat_message <- function(message) {
   htmltools::div(
     class = glue("row m-0 p-0 {position_class}"),
     htmltools::tags$div(
-      class = glue("p-2 mb-2 rounded d-inline-block w-auto mw-100 {bg_class} opacity-25"),
+      class = glue("p-2 mb-2 rounded d-inline-block w-auto mw-100"),
+      style = htmltools::css(
+        `color` = colors$fg_color,
+        `background-color` = colors$bg_color
+      ),
       fontawesome::fa(icon_name),
       shiny::markdown(message$content)
     )
   )
+}
+
+create_rstheme_matching_colors <- function(role) {
+  rstheme_info <- rstudioapi::getThemeInfo()
+  bg <- rgb_str_to_hex(rstheme_info$background)
+  fg <- rgb_str_to_hex(rstheme_info$foreground)
+
+  bg_colors <- if (rstheme_info$dark) {
+    list(
+      user = lighten_color(bg, 0.20),
+      assistant = lighten_color(bg, 0.35)
+    )
+  } else {
+    list(
+      user = lighten_color(bg, -0.2),
+      assistant = lighten_color(bg, -0.1)
+    )
+  }
+
+  list(
+    bg_color = bg_colors[[role]],
+    fg_color = fg
+  )
+}
+
+lighten_color <- function(color, percentage = 0) {
+  ratio <- 1 + percentage
+  adjustcolor(color, red.f = ratio, green.f = ratio, blue.f = ratio)
 }
 
 chat_message_default <- function() {
