@@ -65,7 +65,7 @@ mod_prompt_server <- function(id) {
     moduleServer(id, function(input, output, session) {
 
       rv <- reactiveValues()
-      rv$all_chats_formatted <- make_chat_history(chat_message_default())
+      rv$all_chats_formatted <- style_chat_history(chat_message_default())
       rv$all_chats <- NULL
 
       shiny::observe({
@@ -83,7 +83,7 @@ mod_prompt_server <- function(id) {
 
         rv$all_chats <- chat_create_history(interim)
 
-        rv$all_chats_formatted <- make_chat_history(rv$all_chats)
+        rv$all_chats_formatted <- style_chat_history(rv$all_chats)
 
         waiter::waiter_hide()
         shiny::updateTextAreaInput(session, "chat_input", value = "")
@@ -92,7 +92,7 @@ mod_prompt_server <- function(id) {
 
       shiny::observe({
         rv$all_chats <- NULL
-        rv$all_chats_formatted <- make_chat_history(chat_message_default())
+        rv$all_chats_formatted <- style_chat_history(chat_message_default())
       }) %>%
         shiny::bindEvent(input$clear_history)
 
@@ -170,7 +170,7 @@ chat_create_history <- function(response) {
 }
 
 
-#' Make Chat History
+#' Style Chat History
 #'
 #' This function processes the chat history, filters out system messages, and
 #' formats the remaining messages with appropriate styling.
@@ -180,7 +180,6 @@ chat_create_history <- function(response) {
 #'
 #' @return A list of formatted chat messages with styling applied, excluding
 #' system messages.
-#' @export
 #' @examples
 #' chat_history_example <- list(
 #'   list(role = "user", content = "Hello, World!"),
@@ -188,14 +187,21 @@ chat_create_history <- function(response) {
 #'   list(role = "assistant", content = "Hi, how can I help?")
 #' )
 #'
-#' \dontrun{make_chat_history(chat_history_example)}
-make_chat_history <- function(history) {
-  history <- purrr::discard(history, ~.x$role == "system")
-
-  purrr::map(history, chat_message)
+#' \dontrun{style_chat_history(chat_history_example)}
+style_chat_history <- function(history) {
+  history %>%
+    purrr::discard(~.x$role == "system") %>%
+    purrr::map(style_chat_message)
 }
 
-chat_message <- function(message) {
+#' Style chat message
+#'
+#' Style a message based on the role of its author.
+#'
+#' @param message A chat message.
+#'
+#' @return An HTML element.
+style_chat_message <- function(message) {
   colors <- create_rstheme_matching_colors(message$role)
 
   icon_name <- switch (message$role,
