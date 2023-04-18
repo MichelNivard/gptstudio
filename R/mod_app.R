@@ -42,12 +42,14 @@ mod_app_server <- function(id) {
 
 
 rgb_str_to_hex <- function(rgb_string) {
-  rgb_vec <- unlist(strsplit(gsub("[rgb() ]", "", rgb_string), ","))
+  rgb_vec <- unlist(strsplit(gsub("[rgba() ]", "", rgb_string), ","))
   rgb(
-    as.numeric(rgb_vec[1]) / 255,
-    as.numeric(rgb_vec[2]) / 255,
-    as.numeric(rgb_vec[3]) / 255,
-    names = FALSE
+    red = as.numeric(rgb_vec[1]),
+    green = as.numeric(rgb_vec[2]),
+    blue = as.numeric(rgb_vec[3]),
+    # alpha = if (is.na(rgb_vec[4])) 1 else rgb_vec[4],
+    names = FALSE,
+    maxColorValue = 255
   )
 }
 
