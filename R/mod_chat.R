@@ -39,6 +39,11 @@ mod_chat_server <- function(id) {
           style_chat_history()
       })
 
+      # testing ----
+      exportTestValues(
+        chat_history = prompt$chat_history
+      )
+
     })
 }
 
@@ -114,17 +119,20 @@ style_chat_message <- function(message) {
 #' @return list
 #'
 create_ide_matching_colors <- function(role) {
-  ide_colors <- get_ide_colors()
+
+  assert_that(role %in% c("user", "assistant"))
+
+  ide_colors <- get_ide_theme_info()
 
   bg_colors <- if (ide_colors$is_dark) {
     list(
-      user = lighten_color(ide_colors$bg, 0.20),
-      assistant = lighten_color(ide_colors$bg, 0.35)
+      user = colorspace::lighten(ide_colors$bg, 0.20),
+      assistant = colorspace::lighten(ide_colors$bg, 0.35)
     )
   } else {
     list(
-      user = lighten_color(ide_colors$bg, -0.2),
-      assistant = lighten_color(ide_colors$bg, -0.1)
+      user = colorspace::lighten(ide_colors$bg, -0.2),
+      assistant = colorspace::lighten(ide_colors$bg, -0.1)
     )
   }
 
@@ -132,37 +140,4 @@ create_ide_matching_colors <- function(role) {
     bg_color = bg_colors[[role]],
     fg_color = ide_colors$fg
   )
-}
-
-get_ide_colors <- function() {
-  if (rstudioapi::isAvailable()) {
-    rstheme_info <- rstudioapi::getThemeInfo()
-
-    list(
-      is_dark = rstheme_info$dark,
-      bg = rgb_str_to_hex(rstheme_info$background),
-      fg = rgb_str_to_hex(rstheme_info$foreground)
-    )
-  } else {
-    # based on RStudio IDE theme "Solarized Dark"
-    list(
-      is_dark = TRUE,
-      bg = "#002B36",
-      fg = "#93A1A1"
-    )
-  }
-}
-
-#' Make a color lighter or darker
-#'
-#' This wraps `grDevices::adjustcolor()` for easier usage. Leaves the alpha value as is.
-#'
-#' @param color An hex color
-#' @param percentage A number from 0 to 1 indicating how lighter should the color be. When negative it will darken `color`
-#'
-#' @return An hex color
-#'
-lighten_color <- function(color, percentage = 0) {
-  ratio <- 1 + percentage
-  grDevices::adjustcolor(color, red.f = ratio, green.f = ratio, blue.f = ratio)
 }

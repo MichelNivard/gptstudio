@@ -52,7 +52,8 @@ rgb_str_to_hex <- function(rgb_string) {
     # alpha = if (is.na(rgb_vec[4])) 1 else rgb_vec[4],
     names = FALSE,
     maxColorValue = 255
-  )
+  ) %>%
+    unname()
 }
 
 #' Chat App Theme
@@ -62,12 +63,31 @@ rgb_str_to_hex <- function(rgb_string) {
 #' @return A bslib theme
 create_chat_app_theme <- function() {
 
-  rstudio_theme_info <- rstudioapi::getThemeInfo()
+  theme_info <- get_ide_theme_info()
 
   bslib::bs_theme(
     version = 5,
-    bg = rgb_str_to_hex(rstudio_theme_info$background),
-    fg = rgb_str_to_hex(rstudio_theme_info$foreground),
+    bg = theme_info$bg,
+    fg = theme_info$fg,
     font_scale = 0.9
   )
+}
+
+get_ide_theme_info <- function() {
+  if (rstudioapi::isAvailable()) {
+    rstudio_theme_info <- rstudioapi::getThemeInfo()
+
+    list(
+      is_dark = rstudio_theme_info$dark,
+      bg = rgb_str_to_hex(rstudio_theme_info$background),
+      fg = rgb_str_to_hex(rstudio_theme_info$foreground)
+    )
+  } else {
+    if (interactive()) cli::cli_inform("Using fallback ide theme")
+    list(
+      is_dark = TRUE,
+      bg = "#002B36",
+      fg = "#93A1A1"
+    )
+  }
 }

@@ -1,14 +1,5 @@
 # Define a test for the 'style_chat_history' function
 test_that("style_chat_history function returns expected output", {
-  mockr::local_mock(
-    create_ide_matching_colors = function(role) {
-      # default in get_ide_colors()
-      list(
-        bg_color = if(role == "user") "#003441FF" else "#003A49FF",
-        fg_color = "#93A1A1"
-      )
-    }
-  )
 
   # Generate sample chat history data
   sample_history <- list(

@@ -93,6 +93,11 @@ mod_prompt_server <- function(id) {
       }) %>%
         shiny::bindEvent(input$clear_history)
 
+      # testing ----
+      exportTestValues(
+        chat_history = rv$chat_history
+      )
+
       # module return ----
       rv
     })
