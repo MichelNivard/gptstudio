@@ -4,7 +4,7 @@
 \alias{bs_dropdown}
 \title{Boostrap 5 dropdown}
 \usage{
-bs_dropdown(label, ..., class = NULL)
+bs_dropdown(label, id, ..., class = NULL)
 }
 \arguments{
 \item{label}{The label}
