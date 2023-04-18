@@ -58,9 +58,9 @@ create_chat_app_theme <- function() {
   rstudio_theme_info <- rstudioapi::getThemeInfo()
 
   bslib::bs_theme(
-    # bootswatch = "morph",
     version = 5,
     bg = rgb_str_to_hex(rstudio_theme_info$background),
-    fg = rgb_str_to_hex(rstudio_theme_info$foreground)
+    fg = rgb_str_to_hex(rstudio_theme_info$foreground),
+    font_scale = 0.9
   )
 }
