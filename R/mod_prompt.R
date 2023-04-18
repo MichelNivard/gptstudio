@@ -36,6 +36,7 @@ mod_prompt_ui <- function(id) {
       ),
       bs_dropdown(
         label = fontawesome::fa("gear"),
+        id = "dropd_settings",
         class = "w-100 btn-primary mt-2 p-1",
         shiny::selectInput(
           inputId = ns("style"),

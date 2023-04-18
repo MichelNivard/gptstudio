@@ -7,8 +7,7 @@
 #' @return A Bootstrap 5 dropdown
 #' @export
 #'
-bs_dropdown <- function(label, ..., class = NULL) {
-  id <- ids::random_id()
+bs_dropdown <- function(label, id, ..., class = NULL) {
   div(
     class = "dropdown",
     htmltools::tags$button(
