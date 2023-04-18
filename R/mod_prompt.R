@@ -1,8 +1,10 @@
-#' Chat card
+#' Prompt of the chat
 #'
-#' @return A chat card
-#' @export
+#' HTML element with a text input and some buttons
 #'
+#' @param id id of the module
+#'
+#' @return HTML element
 mod_prompt_ui <- function(id) {
   ns <- shiny::NS(id)
 
@@ -52,6 +54,13 @@ mod_prompt_ui <- function(id) {
   )
 }
 
+#' Prompt Server
+#'
+#' This server receives the input of the user and makes the chat history
+#'
+#' @param id id of the module
+#'
+#' @return A shiny server
 mod_prompt_server <- function(id) {
     moduleServer(id, function(input, output, session) {
 
@@ -92,6 +101,18 @@ mod_prompt_server <- function(id) {
     })
 }
 
+
+
+
+#' Custom textAreaInput
+#'
+#' Modified version of `textAreaInput()` that removes the label container.
+#' It's used in `mod_prompt_ui()`
+#'
+#' @inheritParams shiny::textAreaInput
+#'
+#' @return A modified textAreaInput
+#'
 textAreaInputWrapper <-
   function(inputId,
            label,
@@ -125,6 +146,14 @@ textAreaInputWrapper <-
     }
   }
 
+#' Chat history
+#'
+#' This takes a response from chatgpt and converts it to a nice and consistent list.
+#'
+#' @param response A response from `gpt_chat()`.
+#'
+#' @return list of chat messages
+#'
 chat_create_history <- function(response) {
   previous_responses <- response[[1]]
   last_response <- response[[2]]$choices
@@ -158,7 +187,8 @@ chat_create_history <- function(response) {
 #'   list(role = "system", content = "System message"),
 #'   list(role = "assistant", content = "Hi, how can I help?")
 #' )
-#' make_chat_history(chat_history_example)
+#'
+#' \dontrun{make_chat_history(chat_history_example)}
 make_chat_history <- function(history) {
   history <- purrr::discard(history, ~.x$role == "system")
 
@@ -192,6 +222,14 @@ chat_message <- function(message) {
   )
 }
 
+#' Chat message colors in RStudio
+#'
+#' This returns a list of color properties for a chat message
+#'
+#' @param role The role of the message author
+#'
+#' @return list
+#'
 create_rstheme_matching_colors <- function(role) {
   rstheme_info <- rstudioapi::getThemeInfo()
   bg <- rgb_str_to_hex(rstheme_info$background)
@@ -215,11 +253,23 @@ create_rstheme_matching_colors <- function(role) {
   )
 }
 
+#' Make a color lighter or darker
+#'
+#' This wraps `grDevices::adjustcolor()` for easier usage. Leaves the alpha value as is.
+#'
+#' @param color An hex color
+#' @param percentage A number from 0 to 1 indicating how lighter should the color be. When negative it will darken `color`
+#'
+#' @return An hex color
+#'
 lighten_color <- function(color, percentage = 0) {
   ratio <- 1 + percentage
-  adjustcolor(color, red.f = ratio, green.f = ratio, blue.f = ratio)
+  grDevices::adjustcolor(color, red.f = ratio, green.f = ratio, blue.f = ratio)
 }
 
+#' Default chat message
+#'
+#' @return A default chat message for welcoming users.
 chat_message_default <- function() {
 
   welcome_messages <- c(

@@ -2,13 +2,16 @@
 % Please edit documentation in R/mod_prompt.R
 \name{mod_prompt_ui}
 \alias{mod_prompt_ui}
-\title{Chat card}
+\title{Prompt of the chat}
 \usage{
 mod_prompt_ui(id)
 }
+\arguments{
+\item{id}{id of the module}
+}
 \value{
-A chat card
+HTML element
 }
 \description{
-Chat card
+HTML element with a text input and some buttons
 }

@@ -24,5 +24,6 @@ chat_history_example <- list(
   list(role = "system", content = "System message"),
   list(role = "assistant", content = "Hi, how can I help?")
 )
-make_chat_history(chat_history_example)
+
+\dontrun{make_chat_history(chat_history_example)}
 }

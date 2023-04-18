@@ -174,3 +174,4 @@ test_that("gpt_chat_in_source returns expected output", {
   expect_type(result_with_history, "list")
   expect_snapshot(result_with_history)
 })
+

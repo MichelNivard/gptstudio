@@ -190,11 +190,7 @@ gpt_chat <- function(query,
 #' Provides the same functionality as `gpt_chat()` with minor modifications to
 #' give more useful output in a source (i.e., *.R) file.
 #'
-#' @param history A list of the previous chat responses
-#' @param style A character string indicating the preferred coding style, the
-#' default is "tidyverse".
-#' @param skill The self-described skill level of the programmer,
-#' default is "beginner"
+#' @inheritParams gpt_chat
 #'
 #' @return A list containing the instructions for answering the question, the
 #'   context in which the question was asked, and the suggested answer.
@@ -247,6 +243,15 @@ gpt_chat_in_source <- function(history = NULL,
   insert_text(text_to_insert)
 }
 
+#' Create system prompt
+#'
+#' This creates a system prompt based on the user defined parameters.
+#'
+#' @inheritParams gpt_chat
+#' @param in_source Whether to add intructions to act as in a source script.
+#'
+#' @return A string
+#'
 chat_create_system_prompt <- function(style, skill, in_source) {
   arg_match(style, c("tidyverse", "base", "no preference"))
   arg_match(skill, c("beginner", "intermediate", "advanced", "genius"))

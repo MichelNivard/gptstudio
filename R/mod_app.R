@@ -4,7 +4,6 @@
 #'
 #' @import htmltools
 #' @import shiny
-#' @export
 #'
 mod_app_ui <- function(id) {
   ns <- NS(id)
@@ -32,8 +31,6 @@ mod_app_ui <- function(id) {
 #'
 #' @param id id of the module
 #'
-#' @export
-#'
 mod_app_server <- function(id) {
   moduleServer(id, function(input, output, session) {
     mod_chat_server("chat")
@@ -41,9 +38,14 @@ mod_app_server <- function(id) {
 }
 
 
+#' RGB str to hex
+#'
+#' @param rgb_string The RGB string as returned by `rstudioapi::getThemeInfo()`
+#'
+#' @return hex color
 rgb_str_to_hex <- function(rgb_string) {
   rgb_vec <- unlist(strsplit(gsub("[rgba() ]", "", rgb_string), ","))
-  rgb(
+  grDevices::rgb(
     red = as.numeric(rgb_vec[1]),
     green = as.numeric(rgb_vec[2]),
     blue = as.numeric(rgb_vec[3]),
@@ -53,6 +55,11 @@ rgb_str_to_hex <- function(rgb_string) {
   )
 }
 
+#' Chat App Theme
+#'
+#' Create a bslib theme that matches the user's RStudio IDE theme.
+#'
+#' @return A bslib theme
 create_chat_app_theme <- function() {
 
   rstudio_theme_info <- rstudioapi::getThemeInfo()

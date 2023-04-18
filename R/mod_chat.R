@@ -2,8 +2,6 @@
 #'
 #' @param id id of the module
 #'
-#' @export
-#'
 mod_chat_ui <- function(id) {
     ns <- NS(id)
 
@@ -31,8 +29,6 @@ mod_chat_ui <- function(id) {
 #' Chat server
 #'
 #' @param id id of the module
-#'
-#' @export
 #'
 mod_chat_server <- function(id) {
     moduleServer(id, function(input, output, session) {
