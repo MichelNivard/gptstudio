@@ -204,8 +204,8 @@ get_available_models <- function() {
       "Authorization" = glue("Bearer {Sys.getenv(\"OPENAI_API_KEY\")}")
     )
   ) |>
-    httr::content(as = "text", encoding = "UTF-8") |>
-    jsonlite::fromJSON(flatten = TRUE) |>
-    purrr::pluck("data") |>
+    httr::content(as = "text", encoding = "UTF-8") %>%
+    jsonlite::fromJSON(flatten = TRUE) %>%
+    purrr::pluck("data") %>%
     dplyr::pull("root")
 }
