@@ -33,7 +33,7 @@ mod_chat_ui <- function(id) {
 #'
 mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
     moduleServer(id, function(input, output, session) {
-      prompt <- mod_prompt_server("prompt")
+      prompt <- mod_prompt_server("prompt", ide_colors)
 
       output$all_chats_box <- shiny::renderUI({
         prompt$chat_history %>%

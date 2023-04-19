@@ -60,16 +60,17 @@ mod_prompt_ui <- function(id) {
 #' This server receives the input of the user and makes the chat history
 #'
 #' @param id id of the module
+#' @inheritParams run_chatgpt_app
 #'
 #' @return A shiny server
-mod_prompt_server <- function(id) {
+mod_prompt_server <- function(id, ide_colors = get_ide_theme_info()) {
     moduleServer(id, function(input, output, session) {
 
       rv <- reactiveValues()
       rv$chat_history <- chat_message_default()
 
       shiny::observe({
-        waiter_color <- if (get_ide_theme_info()$is_dark) "rgba(255,255,255,0.5)" else "rgba(0,0,0,0.5)"
+        waiter_color <- if (ide_colors$is_dark) "rgba(255,255,255,0.5)" else "rgba(0,0,0,0.5)"
         waiter::waiter_show(
           html = shiny::tagList(waiter::spin_flower(), shiny::h3("Asking ChatGPT...")),
           color = waiter_color
