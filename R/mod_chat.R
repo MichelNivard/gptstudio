@@ -107,7 +107,10 @@ style_chat_message <- function(message, ide_colors = get_ide_theme_info()) {
         `background-color` = colors$bg_color
       ),
       fontawesome::fa(icon_name),
-      shiny::markdown(message$content)
+      tagList(
+        copy_to_clipboard_dep(),
+        shiny::markdown(message$content)
+      )
     )
   )
 }
@@ -139,5 +142,15 @@ create_ide_matching_colors <- function(role, ide_colors = get_ide_theme_info()) 
   list(
     bg_color = bg_colors[[role]],
     fg_color = ide_colors$fg
+  )
+}
+
+copy_to_clipboard_dep <- function() {
+  htmltools::htmlDependency(
+    name = "copyToClipboard",
+    version = "0.1.0",
+    src = "js",
+    script = "copyToClipboard.js",
+    package = "gptstudio"
   )
 }
