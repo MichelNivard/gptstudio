@@ -4,7 +4,11 @@
 \alias{run_chatgpt_app}
 \title{Run the ChatGPT app}
 \usage{
-run_chatgpt_app(ide_colors = get_ide_theme_info(), host, port)
+run_chatgpt_app(
+  ide_colors = get_ide_theme_info(),
+  host = getOption("shiny.host", "127.0.0.1"),
+  port = getOption("shiny.port")
+)
 }
 \arguments{
 \item{ide_colors}{List containing the colors of the IDE theme.}
