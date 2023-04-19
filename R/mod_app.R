@@ -1,16 +1,17 @@
 #' App UI
 #'
 #' @param id id of the module
+#' @inheritParams run_chatgpt_app
 #'
 #' @import htmltools
 #' @import shiny
 #'
-mod_app_ui <- function(id) {
+mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
   ns <- NS(id)
 
   bslib::page_fluid(
     waiter::useWaiter(),
-    theme = create_chat_app_theme(),
+    theme = create_chat_app_theme(ide_colors),
     title = "ChatGPT from gptstudio",
     class = "vh-100 p-3 m-0",
 
@@ -29,9 +30,10 @@ mod_app_ui <- function(id) {
 
 #' App Server
 #'
-#' @param id id of the module
+#' @inheritParams mod_app_ui
+#' @inheritParams run_chatgpt_app
 #'
-mod_app_server <- function(id) {
+mod_app_server <- function(id, ide_colors = get_ide_theme_info()) {
   moduleServer(id, function(input, output, session) {
     mod_chat_server("chat")
   })
@@ -60,34 +62,49 @@ rgb_str_to_hex <- function(rgb_string) {
 #'
 #' Create a bslib theme that matches the user's RStudio IDE theme.
 #'
+#' @inheritParams run_chatgpt_app
+#'
 #' @return A bslib theme
-create_chat_app_theme <- function() {
-
-  theme_info <- get_ide_theme_info()
+create_chat_app_theme <- function(ide_colors = get_ide_theme_info()) {
 
   bslib::bs_theme(
     version = 5,
-    bg = theme_info$bg,
-    fg = theme_info$fg,
+    bg = ide_colors$bg,
+    fg = ide_colors$fg,
     font_scale = 0.9
   )
 }
 
+
+#' Get IDE theme information.
+#'
+#' This function returns a list with the current IDE theme's information.
+#'
+#' @return A list with three components:
+#' \item{is_dark}{A boolean indicating whether the current IDE theme is dark.}
+#' \item{bg}{The current IDE theme's background color.}
+#' \item{fg}{The current IDE theme's foreground color.}
+#'
+#' @export
+#'
 get_ide_theme_info <- function() {
   if (rstudioapi::isAvailable()) {
     rstudio_theme_info <- rstudioapi::getThemeInfo()
 
+    # create a list with three components
     list(
-      is_dark = rstudio_theme_info$dark,
-      bg = rgb_str_to_hex(rstudio_theme_info$background),
-      fg = rgb_str_to_hex(rstudio_theme_info$foreground)
+      is_dark = rstudio_theme_info$dark, # A boolean indicating whether the current IDE theme is dark.
+      bg = rgb_str_to_hex(rstudio_theme_info$background), # The current IDE theme's background color.
+      fg = rgb_str_to_hex(rstudio_theme_info$foreground) # The current IDE theme's foreground color.
     )
   } else {
     if (interactive()) cli::cli_inform("Using fallback ide theme")
+
+    # create a list with three components with fallback values
     list(
-      is_dark = TRUE,
-      bg = "#002B36",
-      fg = "#93A1A1"
+      is_dark = TRUE, # A boolean indicating whether the current IDE theme is dark is TRUE in this case.
+      bg = "#002B36", # The fallback background color.
+      fg = "#93A1A1" # The fallback foreground color.
     )
   }
 }

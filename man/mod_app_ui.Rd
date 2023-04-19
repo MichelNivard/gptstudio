@@ -4,10 +4,12 @@
 \alias{mod_app_ui}
 \title{App UI}
 \usage{
-mod_app_ui(id)
+mod_app_ui(id, ide_colors = get_ide_theme_info())
 }
 \arguments{
 \item{id}{id of the module}
+
+\item{ide_colors}{List containing the colors of the IDE theme.}
 }
 \description{
 App UI

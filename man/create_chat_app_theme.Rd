@@ -4,7 +4,10 @@
 \alias{create_chat_app_theme}
 \title{Chat App Theme}
 \usage{
-create_chat_app_theme()
+create_chat_app_theme(ide_colors = get_ide_theme_info())
+}
+\arguments{
+\item{ide_colors}{List containing the colors of the IDE theme.}
 }
 \value{
 A bslib theme

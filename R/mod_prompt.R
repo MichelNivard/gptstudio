@@ -69,9 +69,10 @@ mod_prompt_server <- function(id) {
       rv$chat_history <- chat_message_default()
 
       shiny::observe({
+        waiter_color <- if (get_ide_theme_info()$is_dark) "rgba(255,255,255,0.5)" else "rgba(0,0,0,0.5)"
         waiter::waiter_show(
           html = shiny::tagList(waiter::spin_flower(), shiny::h3("Asking ChatGPT...")),
-          color = waiter::transparent(0.5)
+          color = waiter_color
         )
 
         chat_response <- gpt_chat(

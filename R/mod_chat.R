@@ -126,8 +126,8 @@ create_ide_matching_colors <- function(role) {
 
   bg_colors <- if (ide_colors$is_dark) {
     list(
-      user = colorspace::lighten(ide_colors$bg, 0.20),
-      assistant = colorspace::lighten(ide_colors$bg, 0.35)
+      user = colorspace::lighten(ide_colors$bg, 0.15),
+      assistant = colorspace::lighten(ide_colors$bg, 0.25)
     )
   } else {
     list(

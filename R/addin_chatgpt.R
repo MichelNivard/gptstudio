@@ -15,7 +15,7 @@ addin_chatgpt <- function(host = getOption("shiny.host", "127.0.0.1")) {
   stopifnot(rstudioapi::hasFun("viewer"))
 
   port <- random_port()
-  app_dir <- system.file("shiny", package = "gptstudio")
+  app_dir <- create_tmp_app_dir()
 
   run_app_as_bg_job(appDir = app_dir, job_name = "GPT-Studio", host, port)
 
@@ -56,14 +56,57 @@ run_app_as_bg_job <- function(appDir = ".", job_name, host, port) {
 #' @inheritParams shiny::runApp
 #' @return A string containing the path of a temporary job script
 create_tmp_job_script <- function(appDir, port, host) {
-	script_file <- tempfile(fileext = ".R")
+  script_file <- tempfile(fileext = ".R")
 
-	line <- glue::glue("shiny::runApp(appDir = '{appDir}', port = {port}, host = '{host}')")
+  line <- glue::glue("shiny::runApp(appDir = '{appDir}', port = {port}, host = '{host}')")
 
-	file_con <- file(script_file)
-	writeLines(line, con = script_file)
-	close(file_con)
-	return(script_file)
+  file_con <- file(script_file)
+  writeLines(line, con = script_file)
+  close(file_con)
+  return(script_file)
+}
+
+create_tmp_app_dir <- function() {
+  dir <- tempdir()
+
+  if (.Platform$OS.type == "windows") {
+    dir <- gsub(pattern = "[\\]", replacement = "/", x = dir)
+  }
+
+  app_file <- create_tmp_app_file()
+  file.copy(from = app_file, to = file.path(dir, "app.R"), overwrite = TRUE)
+  return(dir)
+}
+
+create_tmp_app_file <- function() {
+  script_file <- tempfile(fileext = ".R")
+  ide_theme <- get_ide_theme_info() %>% dput() %>% utils::capture.output()
+
+  line_theme <- glue::glue(
+    "ide_colors <- {ide_theme}"
+  )
+  line_ui <- glue::glue(
+    "ui <- gptstudio:::mod_app_ui('app', ide_colors)"
+  )
+  line_server <- glue::glue(
+    "server <- function(input, output, session) {
+      gptstudio:::mod_app_server('app', ide_colors)
+    }",
+    .open = "{{",
+    .close = "}}"
+  )
+  line_run_app <- glue::glue("shiny::shinyApp(ui, server)")
+
+  file_con <- file(script_file)
+
+  writeLines(
+    text = c(line_theme, line_ui, line_server, line_run_app),
+    sep = "\n\n",
+    con = script_file
+  )
+
+  close(file_con)
+  return(script_file)
 }
 
 
