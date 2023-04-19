@@ -4,10 +4,12 @@
 \alias{style_chat_message}
 \title{Style chat message}
 \usage{
-style_chat_message(message)
+style_chat_message(message, ide_colors = get_ide_theme_info())
 }
 \arguments{
 \item{message}{A chat message.}
+
+\item{ide_colors}{List containing the colors of the IDE theme.}
 }
 \value{
 An HTML element.

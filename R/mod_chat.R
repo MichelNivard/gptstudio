@@ -29,14 +29,15 @@ mod_chat_ui <- function(id) {
 #' Chat server
 #'
 #' @param id id of the module
+#' @inheritParams run_chatgpt_app
 #'
-mod_chat_server <- function(id) {
+mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
     moduleServer(id, function(input, output, session) {
       prompt <- mod_prompt_server("prompt")
 
       output$all_chats_box <- shiny::renderUI({
         prompt$chat_history %>%
-          style_chat_history()
+          style_chat_history(ide_colors = ide_colors)
       })
 
       # testing ----
@@ -59,6 +60,7 @@ mod_chat_server <- function(id) {
 #'
 #' @param history A list of chat messages with elements containing 'role' and
 #' 'content'.
+#' @inheritParams run_chatgpt_app
 #'
 #' @return A list of formatted chat messages with styling applied, excluding
 #' system messages.
@@ -70,10 +72,10 @@ mod_chat_server <- function(id) {
 #' )
 #'
 #' \dontrun{style_chat_history(chat_history_example)}
-style_chat_history <- function(history) {
+style_chat_history <- function(history, ide_colors = get_ide_theme_info()) {
   history %>%
     purrr::discard(~.x$role == "system") %>%
-    purrr::map(style_chat_message)
+    purrr::map(style_chat_message, ide_colors = ide_colors)
 }
 
 #' Style chat message
@@ -81,10 +83,10 @@ style_chat_history <- function(history) {
 #' Style a message based on the role of its author.
 #'
 #' @param message A chat message.
-#'
+#' @inheritParams run_chatgpt_app
 #' @return An HTML element.
-style_chat_message <- function(message) {
-  colors <- create_ide_matching_colors(message$role)
+style_chat_message <- function(message, ide_colors = get_ide_theme_info()) {
+  colors <- create_ide_matching_colors(message$role, ide_colors)
 
   icon_name <- switch (message$role,
                        "user" = "fas fa-user",
@@ -115,14 +117,12 @@ style_chat_message <- function(message) {
 #' This returns a list of color properties for a chat message
 #'
 #' @param role The role of the message author
-#'
+#' @inheritParams run_chatgpt_app
 #' @return list
 #'
-create_ide_matching_colors <- function(role) {
+create_ide_matching_colors <- function(role, ide_colors = get_ide_theme_info()) {
 
   assert_that(role %in% c("user", "assistant"))
-
-  ide_colors <- get_ide_theme_info()
 
   bg_colors <- if (ide_colors$is_dark) {
     list(

@@ -4,11 +4,13 @@
 \alias{style_chat_history}
 \title{Style Chat History}
 \usage{
-style_chat_history(history)
+style_chat_history(history, ide_colors = get_ide_theme_info())
 }
 \arguments{
 \item{history}{A list of chat messages with elements containing 'role' and
 'content'.}
+
+\item{ide_colors}{List containing the colors of the IDE theme.}
 }
 \value{
 A list of formatted chat messages with styling applied, excluding

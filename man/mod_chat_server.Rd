@@ -4,10 +4,12 @@
 \alias{mod_chat_server}
 \title{Chat server}
 \usage{
-mod_chat_server(id)
+mod_chat_server(id, ide_colors = get_ide_theme_info())
 }
 \arguments{
 \item{id}{id of the module}
+
+\item{ide_colors}{List containing the colors of the IDE theme.}
 }
 \description{
 Chat server
