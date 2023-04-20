@@ -137,23 +137,59 @@ get_node_params <- function(node) {
   }
 }
 
-get_nodeset_params <- function(nodeset) {
-
+node_params_to_str <- function(node_params) {
+  if (node_params$name == "text") {
+    node_params$contents
+  } else {
+    tag_name <- glue::glue("htmltools::tags${node_params$name}")
+    params_collapsed <- attrs_to_params(node_params$attrs)
+    contents <- node_params$contents
+    if (length(contents) > 0) {
+      contents <- contents |>
+        purrr::map_chr(node_params_to_str)
+      contents <- paste0(", ", contents)
+    } else {
+      contents <- ""
+    }
+    glue::glue("{tag_name}({params_collapsed}{contents})")
+  }
 }
+
+attrs_to_params <- function(attrs) {
+  if (length(attrs) == 0) return("")
+  params_names <- names(attrs)
+  params_values <- unname(attrs)
+  params <- glue::glue("`{params_names}` = \"{params_values}\"")
+  glue::glue_collapse(params, ", ")
+}
+
+fake_nodeset <- list()
+class(fake_nodeset) <- c("xml_nodeset", class(fake_nodeset))
+
+list(
+  name = "div",
+  attrs = c(class = "card"),
+  contents = list(
+    list(
+      name = "div",
+      attrs = c(class = "card-header", "data-toggle" = "yes"),
+      contents = list(
+        list(
+          name = "div",
+          attrs = character(),
+          contents = fake_nodeset
+        )
+      )
+    )
+  )
+) |>
+  node_params_to_str()
 
 test_html_2 |>
   get_nodeset_from_string() |>
   purrr::map(get_node_params) |>
+  node_params_to_str()
   identity()
-  get_node_params() |>
-  purrr::pluck(1) |>
-  purrr::pluck(1) |>
-  content_is_nodeset()
-  purrr::map(get_node_params) |>
-  purrr::pluck(2, "contents") |>
-  purrr::map(get_node_params) |>
-  purrr::pluck(1, "contents") |>
-  purrr::map(get_node_params) |>
 
 ui <- fluidPage(
   titlePanel("HTML to R Converter"),
