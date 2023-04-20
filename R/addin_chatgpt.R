@@ -120,7 +120,7 @@ create_tmp_app_file <- function() {
 #' @return None (opens the Shiny app in the viewer pane or browser window)
 open_bg_shinyapp <- function(host, port) {
   url <- glue::glue("http://{host}:{port}")
-  translated_url <- rstudioapi::translateLocalUrl(url)
+  translated_url <- rstudioapi::translateLocalUrl(url, absolute = TRUE)
 
   if (host %in% c("127.0.0.1")) {
     cli::cli_alert_info("Showing app in 'Viewer' pane")
