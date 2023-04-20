@@ -4,10 +4,12 @@
 \alias{mod_prompt_server}
 \title{Prompt Server}
 \usage{
-mod_prompt_server(id)
+mod_prompt_server(id, ide_colors = get_ide_theme_info())
 }
 \arguments{
 \item{id}{id of the module}
+
+\item{ide_colors}{List containing the colors of the IDE theme.}
 }
 \value{
 A shiny server
