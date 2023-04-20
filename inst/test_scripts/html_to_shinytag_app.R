@@ -1,37 +1,52 @@
-library(shiny)
-library(XML)
 library(magrittr)
-library(purrr)
-library(stringr)
 
-test_html <-
-	' <table style="width:100%">
-	  <tr>
-	    <th>Firstname</th>
-	    <th>Lastname</th>
-	    <th>Age</th>
-	  </tr>
-	  <tr>
-	    <td>Jill</td>
-	    <td>Smith</td>
-	    <td>50</td>
-	  </tr>
-	  <tr>
-	    <td>Eve</td>
-	    <td>Jackson</td>
-	    <td>94</td>
-	  </tr>
-	</table>'
+test_html_1 <-
+	'
+  <div>
+    <table style="width:100%">
+  	  <tr>
+  	    <th>Firstname</th>
+  	    <th>Lastname</th>
+  	    <th>Age</th>
+  	  </tr>
+  	  <tr>
+  	    <td>Jill</td>
+  	    <td>Smith</td>
+  	    <td>50</td>
+  	  </tr>
+  	  <tr>
+  	    <td>Eve</td>
+  	    <td>Jackson</td>
+  	    <td>94</td>
+  	  </tr>
+  	</table>
+  </div>
+  '
+test_html_2 <-
+	'
+  <div class="bs-dropdown" data-toggle>
+  <img src="here">
+  <div>Hello</div>
+    <table style="width:100%">
+  	  <tr>
+  	    <th>Firstname</th>
+  	    <th>Lastname</th>
+  	    <th>Age</th>
+  	  </tr>
+  	  <tr>
+  	    <td>Jill</td>
+  	    <td>Smith</td>
+  	    <td>50</td>
+  	  </tr>
+  	  <tr>
+  	    <td>Eve</td>
+  	    <td>Jackson</td>
+  	    <td>94</td>
+  	  </tr>
+  	</table>
+  </div>
+  '
 
-
-makeAttrs <- function(node) {
-	attrs <- XML::xmlAttrs(node)
-	names(attrs) %>%
-		Map(function (name) {
-			val <- attrs[[name]]
-			paste0(name, ' = ', if (val == "") "NA" else paste0('"', val, '"'))
-		}, .)
-}
 
 make_attrs_list <- function(node) {
   attrs <- xml2::xml_attrs(node)
@@ -40,56 +55,105 @@ make_attrs_list <- function(node) {
   })
 }
 
-renderNode <- function(node, indent = 0, prefix = FALSE) {
-	if (XML::xmlName(node) == "text") {
-		txt <- XML::xmlValue(node)
-		if (nchar(trimws(txt)) > 0) {
-			paste0('"', trimws(txt), '"')
-		}
-	} else {
-		tagName <- if (prefix) paste0("tags$", XML::xmlName(node)) else XML::xmlName(node)
-		newIndent <- indent + length(tagName) + 1
-		XML::xmlChildren(node) %>%
-		  purrr::map(renderNode, indent = newIndent, prefix = prefix) %>%
-		  purrr::compact() %>%
-			append(makeAttrs(node), after = 0) %>%
-			paste(collapse = stringr::str_pad(",\n", width = newIndent, side = c("right"))) %>%
-			trimws(which = c("left")) %>%
-			paste0(tagName, "(", ., ")")
-	}
-}
-
-renderNode2 <- function(node, indent = 0, prefix = FALSE) {
+render_node <- function(node, indent = 0, prefix = FALSE) {
 	if (xml2::xml_name(node) == "text") {
-		txt <- xml2::xml_text(node)
-		if (nchar(trimws(txt)) > 0) {
-			paste0('"', trimws(txt), '"')
-		}
+		# txt <- xml2::xml_text(node)
+		# if (nchar(trimws(txt)) > 0) {
+		# 	paste0('"', trimws(txt), '"')
+		# }
+	  render_text(node)
 	} else {
 		tagName <- if (prefix) paste0("tags$", xml2::xml_name(node)) else xml2::xml_name(node)
 		newIndent <- indent + length(tagName) + 1
 		xml2::xml_contents(node) %>%
-		  purrr::map(renderNode2, indent = newIndent, prefix = prefix) %>%
+		  purrr::map(render_node, indent = newIndent, prefix = prefix) %>%
 		  purrr::compact() %>%
 			append(make_attrs_list(node), after = 0) %>%
 			paste(collapse = stringr::str_pad(",\n", width = newIndent, side = c("right"))) %>%
 			trimws(which = c("left")) %>%
 			paste0(tagName, "(", ., ")")
+		  # identity()
 	}
 }
+
+render_text <- function(node) {
+  txt <- xml2::xml_text(node)
+  if (nchar(trimws(txt)) > 0) {
+    paste0('"', trimws(txt), '"')
+  }
+}
+
 
 html2R <- function(htmlStr, prefix = FALSE) {
 	htmlStr %>%
     xml2::read_xml(tree) %>%
     xml2::xml_find_first(".") %>%
-		# XML::htmlParse() %>%
-		# XML::getNodeSet("/html/body/*") %>%
-		# `[[`(1) %>%
-		renderNode2(prefix = prefix)
+		render_node(prefix = prefix)
 }
 
-html2R(test_html) |> cat()
+'<div>Hello</div>' |>
+  xml2::read_html() |>
+  xml2::xml_find_all("./body/*") |>
+  purrr::map(xml2::xml_contents)
 
+get_nodeset_from_string <- function(str) {
+  str |>
+    xml2::read_html() |>
+    xml2::xml_find_all("./body/*")
+}
+
+node_is_text <- function(node) xml2::xml_name(node) == "text"
+
+node_text_is_empty <- function(node) xml2::xml_text(node, trim = TRUE) == ""
+
+content_is_nodeset <- function(node) "xml_nodeset" %in% class(node$contents)
+
+content_is_empty <- function(node) length(node$content) == 0
+
+get_nodeset_tag_contents <- function(nodeset) {
+  nodeset |>
+    xml2::xml_contents() |>
+    purrr::discard(\(node) node_is_text(node) && node_text_is_empty(node))
+}
+
+get_node_params <- function(node) {
+  if (node_is_text(node)) {
+    list(
+      name = "text",
+      attrs = xml2::xml_attrs(node),
+      contents = xml2::xml_text(node)
+    )
+  } else {
+    node_with_params <- list(
+      name = xml2::xml_name(node),
+      attrs = xml2::xml_attrs(node),
+      contents = get_nodeset_tag_contents(node)
+    )
+    if (content_is_nodeset(node_with_params) && !content_is_empty(node_with_params)) {
+      node_with_params$contents <- node_with_params$contents |>
+        purrr::map(get_node_params)
+    }
+    node_with_params
+  }
+}
+
+get_nodeset_params <- function(nodeset) {
+
+}
+
+test_html_2 |>
+  get_nodeset_from_string() |>
+  purrr::map(get_node_params) |>
+  identity()
+  get_node_params() |>
+  purrr::pluck(1) |>
+  purrr::pluck(1) |>
+  content_is_nodeset()
+  purrr::map(get_node_params) |>
+  purrr::pluck(2, "contents") |>
+  purrr::map(get_node_params) |>
+  purrr::pluck(1, "contents") |>
+  purrr::map(get_node_params) |>
 
 ui <- fluidPage(
   titlePanel("HTML to R Converter"),
