@@ -34,6 +34,7 @@ Imports:
     rstudioapi (>= 0.12),
     shiny,
     usethis,
+    utils,
     waiter
 Suggests: 
     mockr,
