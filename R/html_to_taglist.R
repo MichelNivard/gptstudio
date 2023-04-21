@@ -125,7 +125,8 @@ attrs_to_params <- function(attrs) {
 #'
 node_params_to_str <- function(node_params) {
   if (node_params$name == "text") {
-    paste0("'", node_params$contents, "'")
+    safe_text <- gsub("'", "\\\\'", node_params$contents)
+    glue::glue("'{safe_text}'")
   } else {
     tag_name <- glue::glue("htmltools::tags${node_params$name}")
     params <- attrs_to_params(node_params$attrs)
