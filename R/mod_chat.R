@@ -108,7 +108,6 @@ style_chat_message <- function(message, ide_colors = get_ide_theme_info()) {
       ),
       fontawesome::fa(icon_name),
       htmltools::tagList(
-        # copy_to_clipboard_dep(),
         shiny::markdown(message$content) |>
           html_to_taglist() |>
           add_copy_btns_to_pre()

@@ -14,7 +14,8 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
     theme = create_chat_app_theme(ide_colors),
     title = "ChatGPT from gptstudio",
     class = "vh-100 p-3 m-0",
-    tags$header(
+    copy_to_clipboard_dep(),
+    tags$head(
       includeCSS(system.file("css/mod_app.css", package = "gptstudio"))
     ),
 
