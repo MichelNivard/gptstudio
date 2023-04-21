@@ -35,7 +35,8 @@ Imports:
     shiny,
     usethis,
     utils,
-    waiter
+    waiter,
+    xml2
 Suggests: 
     mockr,
     shinytest2,
