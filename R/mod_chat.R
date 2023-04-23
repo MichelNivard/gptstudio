@@ -33,12 +33,20 @@ mod_chat_ui <- function(id) {
 #'
 mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
     moduleServer(id, function(input, output, session) {
+      ns <- session$ns
+
       prompt <- mod_prompt_server("prompt", ide_colors)
 
       output$all_chats_box <- shiny::renderUI({
         prompt$chat_history %>%
-          style_chat_history(ide_colors = ide_colors)
+          style_chat_history(ide_colors = ide_colors, copy_btn_id = ns("codeChunkCopied"))
       })
+
+      observe({
+        shiny::showNotification("pressed", session = session)
+        clipr::write_clip(input$codeChunkCopied, allow_non_interactive = TRUE)
+      }) %>%
+        bindEvent(input$codeChunkCopied)
 
       # testing ----
       exportTestValues(
@@ -72,10 +80,10 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
 #' )
 #'
 #' \dontrun{style_chat_history(chat_history_example)}
-style_chat_history <- function(history, ide_colors = get_ide_theme_info()) {
+style_chat_history <- function(history, ide_colors = get_ide_theme_info(), copy_btn_id = "codeCopied") {
   history %>%
     purrr::discard(~.x$role == "system") %>%
-    purrr::map(style_chat_message, ide_colors = ide_colors)
+    purrr::map(style_chat_message, ide_colors = ide_colors, copy_btn_id = copy_btn_id)
 }
 
 #' Style chat message
@@ -85,7 +93,7 @@ style_chat_history <- function(history, ide_colors = get_ide_theme_info()) {
 #' @param message A chat message.
 #' @inheritParams run_chatgpt_app
 #' @return An HTML element.
-style_chat_message <- function(message, ide_colors = get_ide_theme_info()) {
+style_chat_message <- function(message, ide_colors = get_ide_theme_info(), copy_btn_id = "codeCopied") {
   colors <- create_ide_matching_colors(message$role, ide_colors)
 
   icon_name <- switch (message$role,
@@ -110,7 +118,7 @@ style_chat_message <- function(message, ide_colors = get_ide_theme_info()) {
       htmltools::tagList(
         shiny::markdown(message$content) |>
           html_to_taglist() |>
-          add_copy_btns_to_pre()
+          add_copy_btns_to_pre(copy_btn_id = copy_btn_id)
       )
     )
   )

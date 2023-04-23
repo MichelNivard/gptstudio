@@ -1,17 +1,23 @@
-add_copy_btns_to_pre <- function(tag_list) {
+add_copy_btns_to_pre <- function(tag_list, copy_btn_id = "codeCopied") {
   tq <- htmltools::tagQuery(tag_list)
   tq$
     siblings("pre")$
-    each(add_copy_btn_before_tag)$
+    each(add_copy_btn_factory(copy_btn_id))$
     allTags()
 }
 
-add_copy_btn_before_tag <- function(tag, i) {
+add_copy_btn_factory <- function(copy_btn_id) {
+  function(tag, i) {
+    add_copy_btn_before_tag(tag, i, copy_btn_id)
+  }
+}
+
+add_copy_btn_before_tag <- function(tag, i, copy_btn_id = "codeCopied") {
   tq <- tagQuery(tag)
 
   language <- get_code_language(tq)
   code_text <- get_pre_text(tag)
-  copy_btn_div <- create_copy_btn_div(language, code_text)
+  copy_btn_div <- create_copy_btn_div(language, code_text, copy_btn_id)
 
   tq$
     addAttrs(
@@ -27,7 +33,7 @@ get_code_language <- function(tq) {
   tagGetAttribute(code_element, "class") %||% "output"
 }
 
-create_copy_btn_div <- function(language, text_to_copy) {
+create_copy_btn_div <- function(language, text_to_copy, copy_btn_id = "codeCopied") {
   tags$div(
     class = "d-flex justify-content-between bg-dark",
     style = htmltools::css(`border-radius` = "5px 5px 0 0"),
@@ -38,6 +44,7 @@ create_copy_btn_div <- function(language, text_to_copy) {
     tags$button(
       class = "btn btn-secondary btn-sm btn-clipboard",
       style = htmltools::css(`border-radius` = "0 5px 0 0"),
+      `class-input-value` = copy_btn_id,
       `text-to-copy` = text_to_copy,
       "Copy"
     )
