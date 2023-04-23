@@ -30,6 +30,7 @@ Imports:
     jsonlite,
     magrittr,
     purrr,
+    rclipboard,
     rlang,
     rstudioapi (>= 0.12),
     shiny,
