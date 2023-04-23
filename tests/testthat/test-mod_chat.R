@@ -53,11 +53,11 @@ test_that("style_chat_message() fails when role is not permitted",{
 
 test_that("style_chat_history() returns expected output", {
   history <- list(
-    list(role = "system", "some message"),
-    list(role = "user", "some message"),
-    list(role = "assistant", "some message"),
-    list(role = "user", "some message"),
-    list(role = "assistant", "some message")
+    list(role = "system", content = "some message"),
+    list(role = "user", content = "some message"),
+    list(role = "assistant", content = "some message"),
+    list(role = "user", content = "some message"),
+    list(role = "assistant", content = "some message")
   ) %>%
     style_chat_history()
 
