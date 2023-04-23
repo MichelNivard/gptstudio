@@ -43,8 +43,12 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
       })
 
       observe({
-        shiny::showNotification("pressed", session = session)
-        clipr::write_clip(input$codeChunkCopied, allow_non_interactive = TRUE)
+        tryCatch(
+          {
+            clipr::write_clip(input$codeChunkCopied, allow_non_interactive = TRUE)
+          }, error = function(e) showNotification(ui = e, session = session, type = "warning")
+        )
+        shiny::showNotification("Code copied", duration =  3, session = session)
       }) %>%
         bindEvent(input$codeChunkCopied)
 
