@@ -40,18 +40,8 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
 
       output$all_chats_box <- shiny::renderUI({
         prompt$chat_history %>%
-          style_chat_history(ide_colors = ide_colors, copy_btn_id = ns("codeChunkCopied"))
+          style_chat_history(ide_colors = ide_colors)
       })
-
-      observe({
-        tryCatch(
-          {
-            clipr::write_clip(input$codeChunkCopied, allow_non_interactive = TRUE)
-          }, error = function(e) showNotification(ui = e, session = session, type = "warning")
-        )
-        shiny::showNotification("Code copied", duration =  3, session = session)
-      }) %>%
-        bindEvent(input$codeChunkCopied)
 
       # testing ----
       exportTestValues(
@@ -85,10 +75,10 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
 #' )
 #'
 #' \dontrun{style_chat_history(chat_history_example)}
-style_chat_history <- function(history, ide_colors = get_ide_theme_info(), copy_btn_id = "codeCopied") {
+style_chat_history <- function(history, ide_colors = get_ide_theme_info()) {
   history %>%
     purrr::discard(~.x$role == "system") %>%
-    purrr::map(style_chat_message, ide_colors = ide_colors, copy_btn_id = copy_btn_id)
+    purrr::map(style_chat_message, ide_colors = ide_colors)
 }
 
 #' Style chat message
@@ -98,7 +88,7 @@ style_chat_history <- function(history, ide_colors = get_ide_theme_info(), copy_
 #' @param message A chat message.
 #' @inheritParams run_chatgpt_app
 #' @return An HTML element.
-style_chat_message <- function(message, ide_colors = get_ide_theme_info(), copy_btn_id = "codeCopied") {
+style_chat_message <- function(message, ide_colors = get_ide_theme_info()) {
   colors <- create_ide_matching_colors(message$role, ide_colors)
 
   icon_name <- switch (message$role,
@@ -123,7 +113,7 @@ style_chat_message <- function(message, ide_colors = get_ide_theme_info(), copy_
       htmltools::tagList(
         shiny::markdown(message$content) |>
           html_to_taglist() |>
-          add_copy_btns_to_pre(copy_btn_id = copy_btn_id)
+          add_copy_btns_to_pre()
       )
     )
   )

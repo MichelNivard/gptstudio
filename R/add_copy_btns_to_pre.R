@@ -1,4 +1,4 @@
-add_copy_btns_to_pre <- function(tag_list, copy_btn_id = "codeCopied") {
+add_copy_btns_to_pre <- function(tag_list) {
   tq <- htmltools::tagQuery(tag_list)
   tq$
     siblings("pre")$
