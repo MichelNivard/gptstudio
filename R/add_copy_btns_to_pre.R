@@ -39,7 +39,7 @@ create_copy_btn_div <- function(language, text_to_copy, copy_btn_id = "codeCopie
       class = "btn-secondary btn-sm btn-clipboard",
       style = htmltools::css(`border-radius` = "0 5px 0 0"),
       inputId = copy_btn_id,
-      label = "Copy",
+      label = tags$span(fontawesome::fa("far fa-clipboard"), "Copy"),
       text_to_copy = text_to_copy
     )
   )

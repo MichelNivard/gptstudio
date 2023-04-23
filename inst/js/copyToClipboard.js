@@ -1,9 +1,11 @@
 $(document).on('click', '.btn-clipboard', function(event) {
   const $codeButton = $(this);
-  $codeButton.text("Copied!")
+  const $originalContent = $codeButton.html()
+
+  $codeButton.html("Copied!")
 
   setTimeout(function() {
-    $codeButton.text("Copy")
+    $codeButton.html($originalContent)
   }, 1000);
 });
 
