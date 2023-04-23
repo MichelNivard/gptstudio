@@ -21,7 +21,6 @@ Imports:
     bslib (>= 0.4.2),
     cli,
     colorspace,
-    dplyr,
     fontawesome,
     glue,
     grDevices,

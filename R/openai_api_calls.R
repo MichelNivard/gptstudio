@@ -206,6 +206,5 @@ get_available_models <- function() {
   ) |>
     httr::content(as = "text", encoding = "UTF-8") %>%
     jsonlite::fromJSON(flatten = TRUE) %>%
-    purrr::pluck("data") %>%
-    dplyr::pull("root")
+    purrr::pluck("data", "root")
 }
