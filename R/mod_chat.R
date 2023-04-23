@@ -6,6 +6,7 @@ mod_chat_ui <- function(id) {
     ns <- NS(id)
 
     bslib::card(
+      rclipboard::rclipboardSetup(),
       height = "100%",
       bslib::card_body(
         class = "py-2 h-100",
