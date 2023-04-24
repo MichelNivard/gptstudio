@@ -12,7 +12,7 @@ give more useful output in a source (i.e., *.R) file."><meta property="og:image"
     
     <a class="navbar-brand me-2" href="../index.html">gptstudio</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,8 +91,10 @@ context in which the question was asked, and the suggested answer.</p>
 <span class="r-in"><span><span class="co"># Example 1: Get help with a tidyverse question in a source file</span></span></span>
 <span class="r-in"><span><span class="co"># Select the following code comment in RStudio and run gpt_chat_in_source()</span></span></span>
 <span class="r-in"><span><span class="co"># How can I filter rows of a data frame?</span></span></span>
-<span class="r-in"><span><span class="va">tidyverse_response</span> <span class="op">&lt;-</span> <span class="fu">gpt_chat_in_source</span><span class="op">(</span>style <span class="op">=</span> <span class="st">"tidyverse"</span>,</span></span>
-<span class="r-in"><span>                                         skill <span class="op">=</span> <span class="st">"beginner"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tidyverse_response</span> <span class="op">&lt;-</span> <span class="fu">gpt_chat_in_source</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  style <span class="op">=</span> <span class="st">"tidyverse"</span>,</span></span>
+<span class="r-in"><span>  skill <span class="op">=</span> <span class="st">"beginner"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example 2: Get help with a base R question in a source file</span></span></span>
 <span class="r-in"><span><span class="co"># Select the following code comment in RStudio and run gpt_chat_in_source()</span></span></span>
@@ -102,8 +104,10 @@ context in which the question was asked, and the suggested answer.</p>
 <span class="r-in"><span><span class="co"># Example 3: No style preference in a source file</span></span></span>
 <span class="r-in"><span><span class="co"># Select the following code comment in RStudio and run gpt_chat_in_source()</span></span></span>
 <span class="r-in"><span><span class="co"># What is the best way to handle missing values in R?</span></span></span>
-<span class="r-in"><span><span class="va">no_preference_response</span> <span class="op">&lt;-</span> <span class="fu">gpt_chat_in_source</span><span class="op">(</span>style <span class="op">=</span> <span class="st">"no preference"</span>,</span></span>
-<span class="r-in"><span>                                             skill <span class="op">=</span> <span class="st">"advanced"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">no_preference_response</span> <span class="op">&lt;-</span> <span class="fu">gpt_chat_in_source</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  style <span class="op">=</span> <span class="st">"no preference"</span>,</span></span>
+<span class="r-in"><span>  skill <span class="op">=</span> <span class="st">"advanced"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
@@ -113,7 +117,7 @@ context in which the question was asked, and the suggested answer.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Michel Nivard, James Wade.</p>
+  <p></p><p>Developed by Michel Nivard, James Wade, Samuel Calderon.</p>
 </div>
 
 <div class="pkgdown-footer-right">

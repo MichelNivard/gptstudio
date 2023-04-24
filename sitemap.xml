@@ -40,6 +40,21 @@
     <loc>/reference/addin_spelling_grammar.html</loc>
   </url>
   <url>
+    <loc>/reference/attrs_to_params.html</loc>
+  </url>
+  <url>
+    <loc>/reference/bs_dropdown.html</loc>
+  </url>
+  <url>
+    <loc>/reference/chat_create_history.html</loc>
+  </url>
+  <url>
+    <loc>/reference/chat_create_system_prompt.html</loc>
+  </url>
+  <url>
+    <loc>/reference/chat_message_default.html</loc>
+  </url>
+  <url>
     <loc>/reference/check_api.html</loc>
   </url>
   <url>
@@ -49,7 +64,22 @@
     <loc>/reference/check_api_key.html</loc>
   </url>
   <url>
+    <loc>/reference/create_chat_app_theme.html</loc>
+  </url>
+  <url>
+    <loc>/reference/create_ide_matching_colors.html</loc>
+  </url>
+  <url>
     <loc>/reference/create_tmp_job_script.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_ide_theme_info.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_node_params.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_nodeset_tag_contents.html</loc>
   </url>
   <url>
     <loc>/reference/gpt_chat.html</loc>
@@ -67,10 +97,40 @@
     <loc>/reference/gptstudio-package.html</loc>
   </url>
   <url>
+    <loc>/reference/html_str_to_nodeset.html</loc>
+  </url>
+  <url>
+    <loc>/reference/html_to_r.html</loc>
+  </url>
+  <url>
+    <loc>/reference/html_to_taglist.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/make_chat_history.html</loc>
+    <loc>/reference/into_taglist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mod_app_server.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mod_app_ui.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mod_chat_server.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mod_chat_ui.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mod_prompt_server.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mod_prompt_ui.html</loc>
+  </url>
+  <url>
+    <loc>/reference/node_params_to_str.html</loc>
   </url>
   <url>
     <loc>/reference/open_bg_shinyapp.html</loc>
@@ -91,6 +151,21 @@
     <loc>/reference/random_port.html</loc>
   </url>
   <url>
+    <loc>/reference/rgb_str_to_hex.html</loc>
+  </url>
+  <url>
     <loc>/reference/run_app_as_bg_job.html</loc>
+  </url>
+  <url>
+    <loc>/reference/run_chatgpt_app.html</loc>
+  </url>
+  <url>
+    <loc>/reference/style_chat_history.html</loc>
+  </url>
+  <url>
+    <loc>/reference/style_chat_message.html</loc>
+  </url>
+  <url>
+    <loc>/reference/text_area_input_wrapper.html</loc>
   </url>
 </urlset>
