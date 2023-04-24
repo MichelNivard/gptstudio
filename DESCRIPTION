@@ -5,7 +5,9 @@ Version: 0.2.0
 Authors@R: c(
     person("Michel", "Nivard", , "m.g.nivard@vu.nl", role = c("aut", "cph")),
     person("James", "Wade", , "github@jameshwade.com", role = c("aut", "cre", "cph"),
-           comment = c(ORCID = "0000-0002-9740-1905"))
+           comment = c(ORCID = "0000-0002-9740-1905")),
+    person("Samuel", "Calderon", , "samuel.calderon@uarm.pe", role = c("aut"),
+           comment = c(ORCID = "0000-0001-6847-1210"))       
   )
 Maintainer: James Wade <github@jameshwade.com>
 Description: Large language models are readily accessible via API. This
