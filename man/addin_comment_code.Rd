@@ -15,5 +15,7 @@ Call this function as a Rstudio addin to ask GPT to add comments to your code
 \examples{
 # Open a R file in Rstudio
 # Then call the function as an RStudio addin
-\dontrun{addin_comment_code()}
+\dontrun{
+addin_comment_code()
+}
 }

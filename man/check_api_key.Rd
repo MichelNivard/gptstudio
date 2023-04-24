@@ -22,7 +22,11 @@ correct format.
 }
 \examples{
 # Call the function with an API key
-\dontrun{check_api_key("my_api_key")}
+\dontrun{
+check_api_key("my_api_key")
+}
 # Call the function with an API key and avoid updating the API key
-\dontrun{check_api_key("my_api_key", update_api = FALSE)}
+\dontrun{
+check_api_key("my_api_key", update_api = FALSE)
+}
 }

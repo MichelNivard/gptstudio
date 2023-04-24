@@ -18,5 +18,7 @@ has already been validated in the current session.
 }
 \examples{
 # Call the function to check the API key
-\dontrun{check_api()}
+\dontrun{
+check_api()
+}
 }

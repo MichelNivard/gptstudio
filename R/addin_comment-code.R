@@ -8,7 +8,9 @@
 #' @examples
 #' # Open a R file in Rstudio
 #' # Then call the function as an RStudio addin
-#' \dontrun{addin_comment_code()}
+#' \dontrun{
+#' addin_comment_code()
+#' }
 addin_comment_code <- function() {
   gpt_edit(
     model = "code-davinci-edit-001",

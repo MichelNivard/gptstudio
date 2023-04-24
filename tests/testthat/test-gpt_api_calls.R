@@ -29,8 +29,10 @@ test_that("OpenAI create edit fails with bad key", {
 
 test_that("OpenAI create chat completion fails with bad key", {
   expect_snapshot(
-    openai_create_chat_completion(prompt = "What is your name?",
-                                  openai_api_key = sample_key)
+    openai_create_chat_completion(
+      prompt = "What is your name?",
+      openai_api_key = sample_key
+    )
   )
 })
 

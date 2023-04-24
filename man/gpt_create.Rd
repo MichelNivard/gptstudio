@@ -36,9 +36,11 @@ grammar of the selected text in the current RStudio session.
 \examples{
 # Call the function as an RStudio addin
 \dontrun{
-  gpt_create(model = "text-davinci-002",
-             temperature = 0.5,
-             max_tokens = 100,
-             openai_api_key = "my_api_key")
+gpt_create(
+  model = "text-davinci-002",
+  temperature = 0.5,
+  max_tokens = 100,
+  openai_api_key = "my_api_key"
+)
 }
 }

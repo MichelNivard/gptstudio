@@ -12,4 +12,4 @@
   invisible()
 }
 
-globalVariables(".rs.invokeShinyPaneViewer")
+utils::globalVariables(".rs.invokeShinyPaneViewer")

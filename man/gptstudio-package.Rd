@@ -25,6 +25,7 @@ Useful links:
 Authors:
 \itemize{
   \item Michel Nivard \email{m.g.nivard@vu.nl} [copyright holder]
+  \item Samuel Calderon \email{samuel.calderon@uarm.pe} (\href{https://orcid.org/0000-0001-6847-1210}{ORCID})
 }
 
 }

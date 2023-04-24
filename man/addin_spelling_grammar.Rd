@@ -16,5 +16,7 @@ grammar of selected text.
 \examples{
 # Select some text in Rstudio
 # Then call the function as an RStudio addin
-\dontrun{addin_spelling_grammar()}
+\dontrun{
+addin_spelling_grammar()
+}
 }

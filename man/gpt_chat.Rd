@@ -35,23 +35,29 @@ skill level.
 \dontrun{
 # Example 1: Get help with a tidyverse question
 tidyverse_query <- "How can I filter rows of a data frame?"
-tidyverse_response <- gpt_chat(query = tidyverse_query,
-                               style = "tidyverse",
-                               skill = "beginner")
+tidyverse_response <- gpt_chat(
+  query = tidyverse_query,
+  style = "tidyverse",
+  skill = "beginner"
+)
 print(tidyverse_response)
 
 # Example 2: Get help with a base R question
 base_r_query <- "How can I merge two data frames?"
-base_r_response <- gpt_chat(query = base_r_query,
-                            style = "base",
-                            skill = "intermediate")
+base_r_response <- gpt_chat(
+  query = base_r_query,
+  style = "base",
+  skill = "intermediate"
+)
 print(base_r_response)
 
 # Example 3: No style preference
 no_preference_query <- "What is the best way to handle missing values in R?"
-no_preference_response <- gpt_chat(query = no_preference_query,
-                                   style = "no preference",
-                                   skill = "advanced")
+no_preference_response <- gpt_chat(
+  query = no_preference_query,
+  style = "no preference",
+  skill = "advanced"
+)
 print(no_preference_response)
 }
 }

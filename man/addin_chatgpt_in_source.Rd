@@ -16,5 +16,7 @@ grammar of selected text.
 \examples{
 # Select some text in a source file
 # Then call the function as an RStudio addin
-\dontrun{addin_chatgpt_in_source()}
+\dontrun{
+addin_chatgpt_in_source()
+}
 }
