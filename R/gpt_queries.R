@@ -19,10 +19,12 @@
 #' # Select some text in Rstudio
 #' # Then call the function as an RStudio addin
 #' \dontrun{
-#'   gpt_edit(model = "text-davinci-002",
-#'            instruction = "Improve spelling and grammar",
-#'            temperature = 0.5,
-#'            openai_api_key = "my_api_key")
+#' gpt_edit(
+#'   model = "text-davinci-002",
+#'   instruction = "Improve spelling and grammar",
+#'   temperature = 0.5,
+#'   openai_api_key = "my_api_key"
+#' )
 #' }
 gpt_edit <- function(model,
                      instruction,
@@ -76,10 +78,12 @@ gpt_edit <- function(model,
 #' @examples
 #' # Call the function as an RStudio addin
 #' \dontrun{
-#'   gpt_create(model = "text-davinci-002",
-#'              temperature = 0.5,
-#'              max_tokens = 100,
-#'              openai_api_key = "my_api_key")
+#' gpt_create(
+#'   model = "text-davinci-002",
+#'   temperature = 0.5,
+#'   max_tokens = 100,
+#'   openai_api_key = "my_api_key"
+#' )
 #' }
 gpt_create <- function(model,
                        temperature,
@@ -142,30 +146,35 @@ insert_text <- function(improved_text) {
 #' \dontrun{
 #' # Example 1: Get help with a tidyverse question
 #' tidyverse_query <- "How can I filter rows of a data frame?"
-#' tidyverse_response <- gpt_chat(query = tidyverse_query,
-#'                                style = "tidyverse",
-#'                                skill = "beginner")
+#' tidyverse_response <- gpt_chat(
+#'   query = tidyverse_query,
+#'   style = "tidyverse",
+#'   skill = "beginner"
+#' )
 #' print(tidyverse_response)
 #'
 #' # Example 2: Get help with a base R question
 #' base_r_query <- "How can I merge two data frames?"
-#' base_r_response <- gpt_chat(query = base_r_query,
-#'                             style = "base",
-#'                             skill = "intermediate")
+#' base_r_response <- gpt_chat(
+#'   query = base_r_query,
+#'   style = "base",
+#'   skill = "intermediate"
+#' )
 #' print(base_r_response)
 #'
 #' # Example 3: No style preference
 #' no_preference_query <- "What is the best way to handle missing values in R?"
-#' no_preference_response <- gpt_chat(query = no_preference_query,
-#'                                    style = "no preference",
-#'                                    skill = "advanced")
+#' no_preference_response <- gpt_chat(
+#'   query = no_preference_query,
+#'   style = "no preference",
+#'   skill = "advanced"
+#' )
 #' print(no_preference_response)
 #' }
 gpt_chat <- function(query,
                      history = NULL,
                      style = getOption("gptstudio.code_style"),
                      skill = getOption("gptstudio.skill")) {
-
   instructions <- list(
     list(
       role = "system",
@@ -177,7 +186,7 @@ gpt_chat <- function(query,
     )
   )
 
-  history <- purrr::discard(history, ~.x$role == "system")
+  history <- purrr::discard(history, ~ .x$role == "system")
 
   prompt <- c(history, instructions)
   answer <- openai_create_chat_completion(prompt)
@@ -202,8 +211,10 @@ gpt_chat <- function(query,
 #' # Example 1: Get help with a tidyverse question in a source file
 #' # Select the following code comment in RStudio and run gpt_chat_in_source()
 #' # How can I filter rows of a data frame?
-#' tidyverse_response <- gpt_chat_in_source(style = "tidyverse",
-#'                                          skill = "beginner")
+#' tidyverse_response <- gpt_chat_in_source(
+#'   style = "tidyverse",
+#'   skill = "beginner"
+#' )
 #'
 #' # Example 2: Get help with a base R question in a source file
 #' # Select the following code comment in RStudio and run gpt_chat_in_source()
@@ -213,8 +224,10 @@ gpt_chat <- function(query,
 #' # Example 3: No style preference in a source file
 #' # Select the following code comment in RStudio and run gpt_chat_in_source()
 #' # What is the best way to handle missing values in R?
-#' no_preference_response <- gpt_chat_in_source(style = "no preference",
-#'                                              skill = "advanced")
+#' no_preference_response <- gpt_chat_in_source(
+#'   style = "no preference",
+#'   skill = "advanced"
+#' )
 #' }
 #'
 gpt_chat_in_source <- function(history = NULL,
@@ -234,11 +247,13 @@ gpt_chat_in_source <- function(history = NULL,
     )
   )
 
-  history <- purrr::discard(history, ~.x$role == "system")
+  history <- purrr::discard(history, ~ .x$role == "system")
   prompt <- c(history, instructions)
   answer <- openai_create_chat_completion(prompt)
-  text_to_insert <- c(as.character(query),
-                      as.character(answer$choices$message.content))
+  text_to_insert <- c(
+    as.character(query),
+    as.character(answer$choices$message.content)
+  )
   cli_inform(c("i" = "Inserting response from ChatGPT..."))
   insert_text(text_to_insert)
 }
@@ -265,8 +280,7 @@ chat_create_system_prompt <- function(style, skill, in_source) {
     with their skill level in mind."
   )
 
-  about_style <- switch (
-    style,
+  about_style <- switch(style,
     "no preference" = "",
     "base" = "They prefer to use a base R style of coding. When possible, answer
       code quesetions using base R rather than the tidyverse.",
@@ -278,8 +292,9 @@ chat_create_system_prompt <- function(style, skill, in_source) {
   in_source_intructions <- if (in_source) {
     "For any text that is not R code, write it as a code
     comment. Do not use code blocks or free text. Only use code and code comments."
-  } else ""
+  } else {
+    ""
+  }
 
   glue("{intro} {about_skill} {about_style} {in_source_intructions}")
-
 }

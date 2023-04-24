@@ -20,10 +20,9 @@ test_that("create_ide_matching_colors() returns default output when outside rstu
     expect_type("list") %>%
     expect_length(2) %>%
     expect_named(c("bg_color", "fg_color"))
-
 })
 
-test_that("creat_ide_matching_colors() fails when role is not permitted",{
+test_that("creat_ide_matching_colors() fails when role is not permitted", {
   expect_error(create_ide_matching_colors("system"))
 })
 
@@ -47,7 +46,7 @@ test_that("style_chat_message() returns HTML element", {
     expect_s3_class("shiny.tag")
 })
 
-test_that("style_chat_message() fails when role is not permitted",{
+test_that("style_chat_message() fails when role is not permitted", {
   expect_error(style_chat_message(list(role = "system", message = "some message")))
 })
 

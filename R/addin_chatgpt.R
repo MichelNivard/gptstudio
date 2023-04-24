@@ -8,7 +8,9 @@
 #' @inheritParams shiny::runApp
 #' @examples
 #' # Call the function as an RStudio addin
-#' \dontrun{addin_chatgpt()}
+#' \dontrun{
+#' addin_chatgpt()
+#' }
 addin_chatgpt <- function(host = getOption("shiny.host", "127.0.0.1")) {
   check_api()
   rstudioapi::verifyAvailable()
@@ -48,7 +50,7 @@ random_port <- function() {
 run_app_as_bg_job <- function(appDir = ".", job_name, host, port) {
   job_script <- create_tmp_job_script(appDir = appDir, port = port, host = host)
   rstudioapi::jobRunScript(job_script, name = job_name)
-  cli::cli_alert_success(paste0("'", job_name,"'", " initialized as background job in RStudio"))
+  cli::cli_alert_success(paste0("'", job_name, "'", " initialized as background job in RStudio"))
 }
 
 
@@ -82,7 +84,9 @@ create_tmp_app_dir <- function() {
 
 create_tmp_app_file <- function() {
   script_file <- tempfile(fileext = ".R")
-  ide_theme <- get_ide_theme_info() %>% dput() %>% utils::capture.output()
+  ide_theme <- get_ide_theme_info() %>%
+    dput() %>%
+    utils::capture.output()
 
   line_theme <- glue::glue(
     "ide_colors <- {ide_theme}"

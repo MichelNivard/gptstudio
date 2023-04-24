@@ -3,28 +3,26 @@
 #' @param id id of the module
 #'
 mod_chat_ui <- function(id) {
-    ns <- NS(id)
+  ns <- NS(id)
 
-    bslib::card(
-      rclipboard::rclipboardSetup(),
-      height = "100%",
-      bslib::card_body(
-        class = "py-2 h-100",
-
+  bslib::card(
+    rclipboard::rclipboardSetup(),
+    height = "100%",
+    bslib::card_body(
+      class = "py-2 h-100",
+      div(
+        class = "d-flex flex-column h-100",
         div(
-          class = "d-flex flex-column h-100",
-
-          div(
-            class = "p-2 mh-100 overflow-auto",
-            shiny::uiOutput(ns("all_chats_box")),
-          ),
-          div(
-            class = "mt-auto",
-            mod_prompt_ui(ns("prompt"))
-          )
+          class = "p-2 mh-100 overflow-auto",
+          shiny::uiOutput(ns("all_chats_box")),
+        ),
+        div(
+          class = "mt-auto",
+          mod_prompt_ui(ns("prompt"))
         )
       )
     )
+  )
 }
 
 #' Chat server
@@ -33,22 +31,21 @@ mod_chat_ui <- function(id) {
 #' @inheritParams run_chatgpt_app
 #'
 mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
-    moduleServer(id, function(input, output, session) {
-      ns <- session$ns
+  moduleServer(id, function(input, output, session) {
+    ns <- session$ns
 
-      prompt <- mod_prompt_server("prompt", ide_colors)
+    prompt <- mod_prompt_server("prompt", ide_colors)
 
-      output$all_chats_box <- shiny::renderUI({
-        prompt$chat_history %>%
-          style_chat_history(ide_colors = ide_colors)
-      })
-
-      # testing ----
-      exportTestValues(
-        chat_history = prompt$chat_history
-      )
-
+    output$all_chats_box <- shiny::renderUI({
+      prompt$chat_history %>%
+        style_chat_history(ide_colors = ide_colors)
     })
+
+    # testing ----
+    exportTestValues(
+      chat_history = prompt$chat_history
+    )
+  })
 }
 
 
@@ -74,10 +71,12 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
 #'   list(role = "assistant", content = "Hi, how can I help?")
 #' )
 #'
-#' \dontrun{style_chat_history(chat_history_example)}
+#' \dontrun{
+#' style_chat_history(chat_history_example)
+#' }
 style_chat_history <- function(history, ide_colors = get_ide_theme_info()) {
   history %>%
-    purrr::discard(~.x$role == "system") %>%
+    purrr::discard(~ .x$role == "system") %>%
     purrr::map(style_chat_message, ide_colors = ide_colors)
 }
 
@@ -91,14 +90,14 @@ style_chat_history <- function(history, ide_colors = get_ide_theme_info()) {
 style_chat_message <- function(message, ide_colors = get_ide_theme_info()) {
   colors <- create_ide_matching_colors(message$role, ide_colors)
 
-  icon_name <- switch (message$role,
-                       "user" = "fas fa-user",
-                       "assistant" = "fas fa-robot"
+  icon_name <- switch(message$role,
+    "user" = "fas fa-user",
+    "assistant" = "fas fa-robot"
   )
 
-  position_class <- switch (message$role,
-                            "user" = "justify-content-end",
-                            "assistant" = "justify-content-start"
+  position_class <- switch(message$role,
+    "user" = "justify-content-end",
+    "assistant" = "justify-content-start"
   )
 
   htmltools::div(
@@ -128,7 +127,6 @@ style_chat_message <- function(message, ide_colors = get_ide_theme_info()) {
 #' @return list
 #'
 create_ide_matching_colors <- function(role, ide_colors = get_ide_theme_info()) {
-
   assert_that(role %in% c("user", "assistant"))
 
   bg_colors <- if (ide_colors$is_dark) {

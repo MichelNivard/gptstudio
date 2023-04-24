@@ -1,6 +1,5 @@
 # Define a test for the 'style_chat_history' function
 test_that("style_chat_history function returns expected output", {
-
   # Generate sample chat history data
   sample_history <- list(
     list(role = "system", content = "Hello, I am a bot."),
@@ -19,5 +18,4 @@ test_that("style_chat_history function returns expected output", {
 
   # Test that the function returns the expected output
   expect_equal(chat_history, expected_output)
-
 })

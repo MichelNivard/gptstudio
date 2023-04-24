@@ -18,7 +18,6 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
     tags$head(
       includeCSS(system.file("css/mod_app.css", package = "gptstudio"))
     ),
-
     div(
       class = "row justify-content-center h-100",
       div(
@@ -70,7 +69,6 @@ rgb_str_to_hex <- function(rgb_string) {
 #'
 #' @return A bslib theme
 create_chat_app_theme <- function(ide_colors = get_ide_theme_info()) {
-
   bslib::bs_theme(
     version = 5,
     bg = ide_colors$bg,

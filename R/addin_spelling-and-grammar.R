@@ -10,7 +10,9 @@
 #' @examples
 #' # Select some text in Rstudio
 #' # Then call the function as an RStudio addin
-#' \dontrun{addin_spelling_grammar()}
+#' \dontrun{
+#' addin_spelling_grammar()
+#' }
 addin_spelling_grammar <- function() {
   gpt_edit(
     model = "text-davinci-edit-001",

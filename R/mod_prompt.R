@@ -64,45 +64,44 @@ mod_prompt_ui <- function(id) {
 #'
 #' @return A shiny server
 mod_prompt_server <- function(id, ide_colors = get_ide_theme_info()) {
-    moduleServer(id, function(input, output, session) {
+  moduleServer(id, function(input, output, session) {
+    rv <- reactiveValues()
+    rv$chat_history <- chat_message_default()
 
-      rv <- reactiveValues()
-      rv$chat_history <- chat_message_default()
-
-      shiny::observe({
-        waiter_color <- if (ide_colors$is_dark) "rgba(255,255,255,0.5)" else "rgba(0,0,0,0.5)"
-        waiter::waiter_show(
-          html = shiny::tagList(waiter::spin_flower(), shiny::h3("Asking ChatGPT...")),
-          color = waiter_color
-        )
-
-        chat_response <- gpt_chat(
-          query = input$chat_input,
-          history = rv$chat_history,
-          style = input$style,
-          skill = input$skill
-        )
-
-        rv$chat_history <- chat_create_history(chat_response)
-
-        waiter::waiter_hide()
-        shiny::updateTextAreaInput(session, "chat_input", value = "")
-      }) %>%
-        shiny::bindEvent(input$chat)
-
-      shiny::observe({
-        rv$chat_history <- chat_message_default()
-      }) %>%
-        shiny::bindEvent(input$clear_history)
-
-      # testing ----
-      exportTestValues(
-        chat_history = rv$chat_history
+    shiny::observe({
+      waiter_color <- if (ide_colors$is_dark) "rgba(255,255,255,0.5)" else "rgba(0,0,0,0.5)"
+      waiter::waiter_show(
+        html = shiny::tagList(waiter::spin_flower(), shiny::h3("Asking ChatGPT...")),
+        color = waiter_color
       )
 
-      # module return ----
-      rv
-    })
+      chat_response <- gpt_chat(
+        query = input$chat_input,
+        history = rv$chat_history,
+        style = input$style,
+        skill = input$skill
+      )
+
+      rv$chat_history <- chat_create_history(chat_response)
+
+      waiter::waiter_hide()
+      shiny::updateTextAreaInput(session, "chat_input", value = "")
+    }) %>%
+      shiny::bindEvent(input$chat)
+
+    shiny::observe({
+      rv$chat_history <- chat_message_default()
+    }) %>%
+      shiny::bindEvent(input$clear_history)
+
+    # testing ----
+    exportTestValues(
+      chat_history = rv$chat_history
+    )
+
+    # module return ----
+    rv
+  })
 }
 
 
@@ -127,7 +126,6 @@ textAreaInputWrapper <-
            rows = NULL,
            placeholder = NULL,
            resize = NULL) {
-
     tag <- shiny::textAreaInput(
       inputId = inputId,
       label = label,
@@ -140,11 +138,10 @@ textAreaInputWrapper <-
       resize = resize
     )
 
-    if(is.null(label)) {
+    if (is.null(label)) {
       tag_query <- htmltools::tagQuery(tag)
 
       tag_query$children("label")$remove()$allTags()
-
     } else {
       tag
     }
@@ -178,7 +175,6 @@ chat_create_history <- function(response) {
 #'
 #' @return A default chat message for welcoming users.
 chat_message_default <- function() {
-
   welcome_messages <- c(
     "Welcome to the R programming language! I'm here to assist you in your journey, no matter your skill level.",
     "Hello there! Whether you're a beginner or a seasoned R user, I'm here to help.",

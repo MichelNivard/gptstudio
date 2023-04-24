@@ -106,7 +106,9 @@ get_node_params <- function(node) {
 #' @param attrs A named character vector representing attributes
 #' @return A character string that can be used as a parameter list in an HTML tag
 attrs_to_params <- function(attrs) {
-  if (length(attrs) == 0) return("")
+  if (length(attrs) == 0) {
+    return("")
+  }
   params_names <- names(attrs)
   params_values <- unname(attrs)
   params <- glue::glue("`{params_names}` = \"{params_values}\"")
@@ -157,4 +159,3 @@ node_params_to_str <- function(node_params) {
 into_taglist <- function(tags_str) {
   glue::glue("htmltools::tagList({tags_str})")
 }
-

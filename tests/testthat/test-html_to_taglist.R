@@ -55,5 +55,4 @@ test_that("html_to_taglist() works", {
   test_html_2 |>
     html_to_taglist() |>
     expect_equal(test_shinytags_2)
-
 })

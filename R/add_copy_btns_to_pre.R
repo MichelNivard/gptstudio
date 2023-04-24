@@ -15,8 +15,8 @@ add_copy_btn_before_tag <- function(tag, i) {
 
   tq$
     addAttrs(
-      style = htmltools::css(`border-radius` = "0 0 5px 5px")
-    )$
+    style = htmltools::css(`border-radius` = "0 0 5px 5px")
+  )$
     before(copy_btn_div)
 
   tq$allTags()

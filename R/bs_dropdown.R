@@ -11,19 +11,19 @@ bs_dropdown <- function(label, id, ..., class = NULL) {
   div(
     class = "dropdown",
     htmltools::tags$button(
-      class="btn dropdown-toggle",
+      class = "btn dropdown-toggle",
       class = class,
-      type="button",
-      `data-bs-toggle`="dropdown",
-      `data-bs-auto-close`="outside",
-      `aria-expanded`="false",
-      id=id,
+      type = "button",
+      `data-bs-toggle` = "dropdown",
+      `data-bs-auto-close` = "outside",
+      `aria-expanded` = "false",
+      id = id,
       label
     ),
     div(
       class = "dropdown-menu p-3",
       style = htmltools::css(width = "250px"),
-      `aria-labelledby`= id,
+      `aria-labelledby` = id,
       ...
     )
   )
