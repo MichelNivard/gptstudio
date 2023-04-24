@@ -7,12 +7,14 @@
 get_node_params(node)
 }
 \arguments{
-\item{node}{A node representing an element or text node in a parsed HTML document}
+\item{node}{A node representing an element or text node in a parsed HTML
+document}
 }
 \value{
 A list with the name, attributes, and contents of the node
 }
 \description{
-This function takes a node and returns a list with its name, attributes, and contents.
-This functions applies recursively to every element of its contents until the element is plain text or has no extra content.
+This function takes a node and returns a list with its name, attributes, and
+contents. This functions applies recursively to every element of its contents
+until the element is plain text or has no extra content.
 }

@@ -54,7 +54,6 @@ rgb_str_to_hex <- function(rgb_string) {
     red = as.numeric(rgb_vec[1]),
     green = as.numeric(rgb_vec[2]),
     blue = as.numeric(rgb_vec[3]),
-    # alpha = if (is.na(rgb_vec[4])) 1 else rgb_vec[4],
     names = FALSE,
     maxColorValue = 255
   ) %>%
@@ -95,18 +94,18 @@ get_ide_theme_info <- function() {
 
     # create a list with three components
     list(
-      is_dark = rstudio_theme_info$dark, # A boolean indicating whether the current IDE theme is dark.
-      bg = rgb_str_to_hex(rstudio_theme_info$background), # The current IDE theme's background color.
-      fg = rgb_str_to_hex(rstudio_theme_info$foreground) # The current IDE theme's foreground color.
+      is_dark = rstudio_theme_info$dark,
+      bg = rgb_str_to_hex(rstudio_theme_info$background),
+      fg = rgb_str_to_hex(rstudio_theme_info$foreground)
     )
   } else {
     if (interactive()) cli::cli_inform("Using fallback ide theme")
 
     # create a list with three components with fallback values
     list(
-      is_dark = TRUE, # A boolean indicating whether the current IDE theme is dark is TRUE in this case.
-      bg = "#002B36", # The fallback background color.
-      fg = "#93A1A1" # The fallback foreground color.
+      is_dark = TRUE,
+      bg = "#002B36",
+      fg = "#93A1A1"
     )
   }
 }

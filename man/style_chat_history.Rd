@@ -27,5 +27,7 @@ chat_history_example <- list(
   list(role = "assistant", content = "Hi, how can I help?")
 )
 
-\dontrun{style_chat_history(chat_history_example)}
+\dontrun{
+style_chat_history(chat_history_example)
+}
 }

@@ -1,4 +1,3 @@
-# File: tests/testthat/test-inst-apps.R
 library(shinytest2)
 
 test_that("mod_prompt works", {

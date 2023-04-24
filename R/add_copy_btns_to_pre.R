@@ -11,13 +11,13 @@ add_copy_btn_before_tag <- function(tag, i) {
 
   language <- get_code_language(tq)
   code_text <- get_pre_text(tag)
-  copy_btn_div <- create_copy_btn_div(language, code_text, copy_btn_id = paste0("copy_", i))
+  copy_btn_div <- create_copy_btn_div(language,
+                                      code_text,
+                                      copy_btn_id = paste0("copy_", i))
 
-  tq$
-    addAttrs(
+  tq$addAttrs(
     style = htmltools::css(`border-radius` = "0 0 5px 5px")
-  )$
-    before(copy_btn_div)
+    )$before(copy_btn_div)
 
   tq$allTags()
 }
@@ -27,7 +27,9 @@ get_code_language <- function(tq) {
   tagGetAttribute(code_element, "class") %||% "output"
 }
 
-create_copy_btn_div <- function(language, text_to_copy, copy_btn_id = "codeCopied") {
+create_copy_btn_div <- function(language,
+                                text_to_copy,
+                                copy_btn_id = "codeCopied") {
   tags$div(
     class = "d-flex justify-content-between bg-dark",
     style = htmltools::css(`border-radius` = "5px 5px 0 0"),

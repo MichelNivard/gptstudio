@@ -10,10 +10,11 @@ html_to_r(html)
 \item{html}{A character string of HTML code}
 }
 \value{
-A character string of styled R code that can be used to recreate the HTML structure
+A character string of styled R code that can be used to recreate the
+HTML structure
 }
 \description{
-This function takes a character string of HTML code and returns a styled R code that can be used
-to recreate the HTML structure. The resulting R code is a character string that can be copied and
-pasted into an R script or console.
+This function takes a character string of HTML code and returns a styled R
+code that can be used to recreate the HTML structure. The resulting R code is
+a character string that can be copied and pasted into an R script or console.
 }

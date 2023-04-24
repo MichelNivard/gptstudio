@@ -34,5 +34,6 @@ Details.}
 A string containing the path of a temporary job script
 }
 \description{
-This function creates a temporary R script file that runs the Shiny application from the specified directory with the specified port and host.
+This function creates a temporary R script file that runs the Shiny
+application from the specified directory with the specified port and host.
 }

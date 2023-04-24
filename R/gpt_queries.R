@@ -270,31 +270,28 @@ gpt_chat_in_source <- function(history = NULL,
 chat_create_system_prompt <- function(style, skill, in_source) {
   arg_match(style, c("tidyverse", "base", "no preference"))
   arg_match(skill, c("beginner", "intermediate", "advanced", "genius"))
-  assert_that(is.logical(in_source), msg = "chat system prompt creation needs logical `in_source`")
+  assert_that(is.logical(in_source),
+              msg = "chat system prompt creation needs logical `in_source`")
 
-  intro <- "You are a helpful chat bot that answers questions for an R
-    programmer working in the RStudio IDE."
+  # nolint start
+  intro <- "You are a helpful chat bot that answers questions for an R programmer working in the RStudio IDE."
 
   about_skill <- glue(
-    "They consider themselves to be a {skill} R programmer. Provide answers
-    with their skill level in mind."
+    "They consider themselves to be a {skill} R programmer. Provide answers with their skill level in mind."
   )
 
   about_style <- switch(style,
     "no preference" = "",
-    "base" = "They prefer to use a base R style of coding. When possible, answer
-      code quesetions using base R rather than the tidyverse.",
-    "tidyverse" = "They prefer to use a tidyverse style of coding. When possible,
-      answer code quesetions using tidyverse, r-lib, and tidymodels family
-      of packages. R for Data Science is also a good resource to pull from."
+    "base" = "They prefer to use a base R style of coding. When possible, answer code quesetions using base R rather than the tidyverse.",
+    "tidyverse" = "They prefer to use a tidyverse style of coding. When possible, answer code quesetions using tidyverse, r-lib, and tidymodels family of packages. R for Data Science is also a good resource to pull from."
   )
 
   in_source_intructions <- if (in_source) {
-    "For any text that is not R code, write it as a code
-    comment. Do not use code blocks or free text. Only use code and code comments."
+    "For any text that is not R code, write it as a code comment. Do not use code blocks or free text. Only use code and code comments."
   } else {
     ""
   }
+  #nolint end
 
   glue("{intro} {about_skill} {about_style} {in_source_intructions}")
 }

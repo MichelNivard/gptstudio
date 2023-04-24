@@ -17,33 +17,37 @@ test_html <-
   	</table>
   '
 # this works in console but not in app
-format_r_code_str <- function(code_str){
+format_r_code_str <- function(code_str) {
   code_str |>
-    stringr::str_replace_all("(\\()([a-z[:symbol:]])", "\\1\n\\2") |> # new line after parenthesis or opening backtick
-    stringr::str_replace_all("(,)", "\\1\n") |> # newline after comma
+    # new line after parenthesis or opening back tick
+    stringr::str_replace_all("(\\()([a-z[:symbol:]])", "\\1\n\\2") |>
+    # newline after comma
+    stringr::str_replace_all("(,)", "\\1\n") |>
     styler::style_text()
 }
 
 ui <- fluidPage(
   titlePanel("HTML to R Converter"),
   fluidRow(
-    column(5, textAreaInput("html", "HTML", rows=20, value = test_html)
-    ),
-    column(2, checkboxInput("prefix", "Prefix"), actionButton("convert", "Convert")),
-    column(5, tags$pre(textOutput("rCode")))
+    column(5,
+           textAreaInput("html", "HTML", rows = 20, value = test_html)),
+    column(2,
+           checkboxInput("prefix", "Prefix"),
+           actionButton("convert", "Convert")),
+    column(5,
+           tags$pre(textOutput("r_code")))
   ),
   fluidRow(tags$a(href = "https://github.com/alandipert/html2r", "Github"))
 )
 
 server <- function(input, output, session) {
+  rcode <- eventReactive(input$convert, {
+    input$html |>
+      html_to_r() |>
+      format_r_code_str()
+  }, ignoreInit = TRUE)
 
-	rcode <- eventReactive(input$convert, {
-	  input$html |>
-	    html_to_r() |>
-	    format_r_code_str()
-	}, ignoreInit = TRUE)
-
-	output$rCode <- renderText(rcode())
+  output$r_code <- renderText(rcode())
 }
 
 shinyApp(ui, server)

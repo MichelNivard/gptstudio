@@ -12,7 +12,7 @@ mod_prompt_ui <- function(id) {
     class = "d-flex p-3",
     div(
       class = "flex-grow-1 pe-3",
-      textAreaInputWrapper(
+      text_area_input_wrapper(
         inputId = ns("chat_input"),
         label = NULL,
         width = "100%",
@@ -69,9 +69,11 @@ mod_prompt_server <- function(id, ide_colors = get_ide_theme_info()) {
     rv$chat_history <- chat_message_default()
 
     shiny::observe({
-      waiter_color <- if (ide_colors$is_dark) "rgba(255,255,255,0.5)" else "rgba(0,0,0,0.5)"
+      waiter_color <-
+        if (ide_colors$is_dark) "rgba(255,255,255,0.5)" else "rgba(0,0,0,0.5)"
       waiter::waiter_show(
-        html = shiny::tagList(waiter::spin_flower(), shiny::h3("Asking ChatGPT...")),
+        html = shiny::tagList(waiter::spin_flower(),
+                              shiny::h3("Asking ChatGPT...")),
         color = waiter_color
       )
 
@@ -116,7 +118,7 @@ mod_prompt_server <- function(id, ide_colors = get_ide_theme_info()) {
 #'
 #' @return A modified textAreaInput
 #'
-textAreaInputWrapper <-
+text_area_input_wrapper <-
   function(inputId,
            label,
            value = "",
@@ -149,7 +151,8 @@ textAreaInputWrapper <-
 
 #' Chat history
 #'
-#' This takes a response from chatgpt and converts it to a nice and consistent list.
+#' This takes a response from chatgpt and converts it to a nice and consistent
+#' list.
 #'
 #' @param response A response from `gpt_chat()`.
 #'
@@ -175,6 +178,7 @@ chat_create_history <- function(response) {
 #'
 #' @return A default chat message for welcoming users.
 chat_message_default <- function() {
+  # nolint start
   welcome_messages <- c(
     "Welcome to the R programming language! I'm here to assist you in your journey, no matter your skill level.",
     "Hello there! Whether you're a beginner or a seasoned R user, I'm here to help.",
@@ -214,6 +218,7 @@ chat_message_default <- function() {
     - Clear the current chat history ({eraser})
     - Change the settings ({gear})"
   )
+  # nolint end
 
   content <- glue(
     "{sample(welcome_messages, 1)}

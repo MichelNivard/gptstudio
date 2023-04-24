@@ -33,8 +33,10 @@ by Google Chrome for being considered unsafe: 3659, 4045, 5060,
 ports will be tried.}
 }
 \value{
-This function returns nothing because is meant to run an app as a side effect.
+This function returns nothing because is meant to run an app as a
+side effect.
 }
 \description{
-This function runs an R Shiny app as a background job using the specified directory, name, host, and port.
+This function runs an R Shiny app as a background job using the specified
+directory, name, host, and port.
 }

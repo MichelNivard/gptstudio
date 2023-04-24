@@ -3,7 +3,7 @@ library(shinyjs)
 library(httr)
 library(jsonlite)
 
-audioRecorderUI <- function(id) {
+audio_recorder_ui <- function(id) {
   ns <- NS(id)
 
   tagList(
@@ -24,7 +24,7 @@ audioRecorderUI <- function(id) {
   )
 }
 
-audioRecorder <- function(input, output, session) {
+audio_recorder <- function(input, output, session) {
   observeEvent(input$startrec, {
     runjs(sprintf("
       navigator.mediaDevices.getUserMedia({ audio: true })
@@ -81,7 +81,8 @@ audioRecorder <- function(input, output, session) {
               vadBufferCount = 0;
             } else {
               vadBufferCount++;
-              if (vadBufferCount >= vadBufferMax && Date.now() - lastVoiceTime >= 500) {
+              if (vadBufferCount >=
+                  vadBufferMax && Date.now() - lastVoiceTime >= 500) {
                 stopRecording();
               }
             }
@@ -90,7 +91,8 @@ audioRecorder <- function(input, output, session) {
           mediaRecorder.addEventListener('stop', () => {
             clearInterval(timer);
             clearInterval(vadTimer);
-            const blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+            const blob = new Blob(chunks,
+                                  { 'type' : 'audio/ogg; codecs=opus' });
             const url = URL.createObjectURL(blob);
             document.getElementById('%s').src = url;
           });
@@ -111,7 +113,7 @@ audioRecorder <- function(input, output, session) {
 
 # Main app UI
 ui <- fluidPage(
-  audioRecorderUI("recorder1"),
+  audio_recorder_ui("recorder1"),
   hr(),
   h3("Transcription:"),
   verbatimTextOutput("transcription")
@@ -119,12 +121,11 @@ ui <- fluidPage(
 
 # Main app server function
 server <- function(input, output, session) {
-  callModule(audioRecorder, "recorder1")
+  callModule(audio_recorder, "recorder1")
 
   observeEvent(input$recorder1_stoprec, {
-    cat('up here')
-    req(input$recorder1_recorded_audio)  # Ensure the recorded_audio input exists
-    cat('here')
+    # Ensure the recorded_audio input exists
+    req(input$recorder1_recorded_audio)
     # Save the recorded audio as a file on the server
     audio_content <- input$recorder1_recorded_audio
     audio_filepath <- tempfile(fileext = ".ogg")
@@ -149,9 +150,13 @@ server <- function(input, output, session) {
 
     # Check for errors and parse the transcription
     if (httr::http_error(res)) {
-      stop("Error occurred during transcription:", httr::http_status(res)$message)
+      stop("Error occurred during transcription:",
+           httr::http_status(res)$message)
     } else {
-      transcription <- jsonlite::fromJSON(httr::content(res, "text", encoding = "UTF-8"))$choices[[1]]$text
+      transcription <-
+        jsonlite::fromJSON(
+          httr::content(res, "text", encoding = "UTF-8")
+          )$choices[[1]]$text
       output$transcription <- renderText(transcription)
     }
   })

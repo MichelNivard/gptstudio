@@ -10,9 +10,11 @@ attrs_to_params(attrs)
 \item{attrs}{A named character vector representing attributes}
 }
 \value{
-A character string that can be used as a parameter list in an HTML tag
+A character string that can be used as a parameter list in an HTML
+tag
 }
 \description{
-This function takes a named character vector representing attributes and returns a character string
-that can be used as a parameter list in an HTML tag.
+This function takes a named character vector representing attributes and
+returns a character string that can be used as a parameter list in an HTML
+tag.
 }

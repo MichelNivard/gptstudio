@@ -7,7 +7,7 @@ test_that("get_ide_theme_info() returns expected output", {
     expect_named(c("is_dark", "bg", "fg"))
 })
 
-test_that("create_ide_matching_colors() returns default output when outside rstudio", {
+test_that("create_ide_matching_colors() returns default outside of rstudio", {
   user_colors <- create_ide_matching_colors("user")
   assistant_colors <- create_ide_matching_colors("assistant")
 
@@ -47,7 +47,8 @@ test_that("style_chat_message() returns HTML element", {
 })
 
 test_that("style_chat_message() fails when role is not permitted", {
-  expect_error(style_chat_message(list(role = "system", message = "some message")))
+  expect_error(style_chat_message(list(role = "system",
+                                       message = "some message")))
 })
 
 test_that("style_chat_history() returns expected output", {

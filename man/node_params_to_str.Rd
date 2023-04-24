@@ -13,7 +13,7 @@ node_params_to_str(node_params)
 A character string that represents the tag with the given parameters
 }
 \description{
-This function takes a list of parameters for an HTML tag and returns a character string that
-represents the tag with the given parameters. Aplies recursively to every child content until
-content is text or empty.
+This function takes a list of parameters for an HTML tag and returns a
+character string that represents the tag with the given parameters. Aplies
+recursively to every child content until content is text or empty.
 }

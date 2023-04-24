@@ -13,5 +13,6 @@ chat_create_history(response)
 list of chat messages
 }
 \description{
-This takes a response from chatgpt and converts it to a nice and consistent list.
+This takes a response from chatgpt and converts it to a nice and consistent
+list.
 }

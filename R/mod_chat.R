@@ -32,8 +32,6 @@ mod_chat_ui <- function(id) {
 #'
 mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
   moduleServer(id, function(input, output, session) {
-    ns <- session$ns
-
     prompt <- mod_prompt_server("prompt", ide_colors)
 
     output$all_chats_box <- shiny::renderUI({
@@ -92,13 +90,13 @@ style_chat_message <- function(message, ide_colors = get_ide_theme_info()) {
 
   icon_name <- switch(message$role,
     "user" = "fas fa-user",
-    "assistant" = "fas fa-robot"
-  )
+    "assistant" = "fas fa-robot")
 
+  # nolint start
   position_class <- switch(message$role,
     "user" = "justify-content-end",
-    "assistant" = "justify-content-start"
-  )
+    "assistant" = "justify-content-start")
+  # nolint end
 
   htmltools::div(
     class = glue("row m-0 p-0 {position_class}"),
@@ -126,7 +124,8 @@ style_chat_message <- function(message, ide_colors = get_ide_theme_info()) {
 #' @inheritParams run_chatgpt_app
 #' @return list
 #'
-create_ide_matching_colors <- function(role, ide_colors = get_ide_theme_info()) {
+create_ide_matching_colors <- function(role,
+                                       ide_colors = get_ide_theme_info()) {
   assert_that(role %in% c("user", "assistant"))
 
   bg_colors <- if (ide_colors$is_dark) {

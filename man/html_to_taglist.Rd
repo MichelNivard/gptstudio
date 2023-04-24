@@ -13,8 +13,9 @@ html_to_taglist(html)
 A tag list that can be used to display the HTML content
 }
 \description{
-This function takes a character string of HTML code and returns a tag list that can be used to
-display the HTML content in an R Markdown document or Shiny app. The resulting tag list can be
-passed as an argument to the \code{htmltools::tagQuery()} function or used as an input to other HTML
-rendering functions in R.
+This function takes a character string of HTML code and returns a tag list
+that can be used to display the HTML content in an R Markdown document or
+Shiny app. The resulting tag list can be passed as an argument to the
+\code{htmltools::tagQuery()} function or used as an input to other HTML rendering
+functions in R.
 }

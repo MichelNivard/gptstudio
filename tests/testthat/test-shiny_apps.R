@@ -12,8 +12,10 @@ test_that("style_chat_history function returns expected output", {
 
   # Define expected output
   expected_output <- list(
-    style_chat_message(list(role = "user", content = "Hi there!")),
-    style_chat_message(list(role = "assistant", content = "How can I help you today?"))
+    style_chat_message(
+      list(role = "user", content = "Hi there!")),
+    style_chat_message(
+      list(role = "assistant", content = "How can I help you today?"))
   )
 
   # Test that the function returns the expected output

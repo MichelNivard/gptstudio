@@ -29,5 +29,6 @@ ports will be tried.}
 Nothing.
 }
 \description{
-This starts the chatgpt app. It is exported to be able to run it from an R script.
+This starts the chatgpt app. It is exported to be able to run it from an R
+script.
 }

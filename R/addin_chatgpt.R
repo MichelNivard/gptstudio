@@ -42,27 +42,37 @@ random_port <- function() {
 
 #' Run an R Shiny app in the background
 #'
-#' This function runs an R Shiny app as a background job using the specified directory, name, host, and port.
+#' This function runs an R Shiny app as a background job using the specified
+#' directory, name, host, and port.
 #'
 #' @param job_name The name of the background job to be created
 #' @inheritParams shiny::runApp
-#' @return This function returns nothing because is meant to run an app as a side effect.
+#' @return This function returns nothing because is meant to run an app as a
+#'   side effect.
 run_app_as_bg_job <- function(appDir = ".", job_name, host, port) {
-  job_script <- create_tmp_job_script(appDir = appDir, port = port, host = host)
+  job_script <- create_tmp_job_script(appDir = appDir,
+                                      port = port,
+                                      host = host)
   rstudioapi::jobRunScript(job_script, name = job_name)
-  cli::cli_alert_success(paste0("'", job_name, "'", " initialized as background job in RStudio"))
+  cli::cli_alert_success(
+    paste0("'", job_name, "'", " initialized as background job in RStudio")
+  )
 }
 
 
 #' Create a temporary job script
 #'
-#' This function creates a temporary R script file that runs the Shiny application from the specified directory with the specified port and host.
+#' This function creates a temporary R script file that runs the Shiny
+#' application from the specified directory with the specified port and host.
 #' @inheritParams shiny::runApp
 #' @return A string containing the path of a temporary job script
 create_tmp_job_script <- function(appDir, port, host) {
   script_file <- tempfile(fileext = ".R")
 
-  line <- glue::glue("shiny::runApp(appDir = '{appDir}', port = {port}, host = '{host}')")
+  line <-
+    glue::glue(
+      "shiny::runApp(appDir = '{appDir}', port = {port}, host = '{host}')"
+    )
 
   file_con <- file(script_file)
   writeLines(line, con = script_file)
@@ -118,10 +128,13 @@ create_tmp_app_file <- function() {
 
 #' Open browser to local Shiny app
 #'
-#' This function takes in the host and port of a local Shiny app and opens the app in the default browser.
+#' This function takes in the host and port of a local Shiny app and opens the
+#' app in the default browser.
 #'
-#' @param host A character string representing the IP address or domain name of the server where the Shiny app is hosted.
-#' @param port An integer representing the port number on which the Shiny app is hosted.
+#' @param host A character string representing the IP address or domain name of
+#'   the server where the Shiny app is hosted.
+#' @param port An integer representing the port number on which the Shiny app is
+#'   hosted.
 #'
 #' @return None (opens the Shiny app in the viewer pane or browser window)
 open_bg_shinyapp <- function(host, port) {

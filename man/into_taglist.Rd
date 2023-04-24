@@ -10,9 +10,10 @@ into_taglist(tags_str)
 \item{tags_str}{A list of HTML tags}
 }
 \value{
-A character string that, when evaluated, will produce a tagList object containing the given tags
+A character string that, when evaluated, will produce a tagList
+object containing the given tags
 }
 \description{
-This function takes a list of HTML tags and returns a character string that, when evaluated,
-will produce a tagList object containing the given tags.
+This function takes a list of HTML tags and returns a character string that,
+when evaluated, will produce a tagList object containing the given tags.
 }

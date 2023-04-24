@@ -21,5 +21,7 @@ Run the Chat GPT Shiny App as a background job and show it in the viewer pane
 }
 \examples{
 # Call the function as an RStudio addin
-\dontrun{addin_chatgpt()}
+\dontrun{
+addin_chatgpt()
+}
 }
