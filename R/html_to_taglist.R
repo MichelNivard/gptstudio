@@ -139,6 +139,9 @@ node_params_to_str <- function(node_params) {
   } else {
     tag_name <- glue::glue("htmltools::tags${node_params$name}")
     params <- attrs_to_params(node_params$attrs)
+    if (node_params$name == "code") {
+      params = c(params, '.noWS="outside"')
+    }
     contents <- node_params$contents
     if (length(contents) > 0) {
       contents <- contents %>%
