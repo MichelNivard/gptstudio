@@ -16,7 +16,8 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
     class = "vh-100 p-3 m-0",
     copy_to_clipboard_dep(),
     tags$head(
-      includeCSS(system.file("css/mod_app.css", package = "gptstudio"))
+      includeCSS(system.file("css/mod_app.css", package = "gptstudio")),
+      rclipboard::rclipboardSetup()
     ),
     div(
       class = "row justify-content-center h-100",
