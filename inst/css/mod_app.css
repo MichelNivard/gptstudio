@@ -14,3 +14,8 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #999;
 }
+
+/* Fix response alignment */
+pre code {
+  display: block;
+}
