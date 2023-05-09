@@ -106,3 +106,13 @@ get_ide_theme_info <- function() {
     )
   }
 }
+
+html_dependencies <- function() {
+  htmltools::htmlDependency(
+    name = "gptstudio-assets", version = "0.2.0",
+    package = methods::getPackageName(),
+    src = "assets",
+    script = c("js/copyToClipboard.js", "js/ctrlEnter.js"),
+    stylesheet = c("css/mod_app.css")
+  )
+}
