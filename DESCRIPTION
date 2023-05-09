@@ -38,8 +38,7 @@ Imports:
     shiny,
     usethis,
     utils,
-    waiter,
-    xml2
+    waiter
 Suggests: 
     mockr,
     shinytest2,
