@@ -116,6 +116,7 @@ mod_prompt_server <- function(id, ide_colors = get_ide_theme_info()) {
 #' It's used in `mod_prompt_ui()`
 #'
 #' @inheritParams shiny::textAreaInput
+#' @param textarea_class Class to be applied to the textarea element
 #'
 #' @return A modified textAreaInput
 #'
