@@ -220,7 +220,7 @@ chat_message_default <- function() {
   explain_btns <- glue(
     "In this chat you can:
 
-    - Send me a prompt ({paperplane})
+    - Send me a prompt ({paperplane} or Enter key)
     - Clear the current chat history ({eraser})
     - Change the settings ({gear})"
   )
