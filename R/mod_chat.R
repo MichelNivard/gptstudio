@@ -144,12 +144,12 @@ create_ide_matching_colors <- function(role,
   )
 }
 
-copy_to_clipboard_dep <- function() {
+html_dependencies <- function() {
   htmltools::htmlDependency(
-    name = "copyToClipboard",
-    version = "0.1.0",
-    src = "js",
-    script = "copyToClipboard.js",
-    package = "gptstudio"
+    name = "gptstudio-assets", version = "0.2.0",
+    package = methods::getPackageName(),
+    src = "assets",
+    script = c("js/copyToClipboard.js", "js/ctrlEnter.js"),
+    stylesheet = c("css/mod_app.css")
   )
 }

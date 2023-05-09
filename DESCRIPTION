@@ -30,6 +30,7 @@ Imports:
     httr,
     jsonlite,
     magrittr,
+    methods,
     purrr,
     rclipboard,
     rlang,
