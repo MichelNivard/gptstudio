@@ -13,7 +13,8 @@ text_area_input_wrapper(
   cols = NULL,
   rows = NULL,
   placeholder = NULL,
-  resize = NULL
+  resize = NULL,
+  textarea_class = NULL
 )
 }
 \arguments{
@@ -46,6 +47,8 @@ option.}
 \item{resize}{Which directions the textarea box can be resized. Can be one of
 \code{"both"}, \code{"none"}, \code{"vertical"}, and \code{"horizontal"}. The default, \code{NULL},
 will use the client browser's default setting for resizing textareas.}
+
+\item{textarea_class}{Class to be applied to the textarea element}
 }
 \value{
 A modified textAreaInput

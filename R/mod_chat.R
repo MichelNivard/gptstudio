@@ -6,8 +6,8 @@ mod_chat_ui <- function(id) {
   ns <- NS(id)
 
   bslib::card(
-    rclipboard::rclipboardSetup(),
-    height = "100%",
+    class = "h-100",
+
     bslib::card_body(
       class = "py-2 h-100",
       div(
@@ -108,9 +108,7 @@ style_chat_message <- function(message, ide_colors = get_ide_theme_info()) {
       ),
       fontawesome::fa(icon_name),
       htmltools::tagList(
-        shiny::markdown(message$content) |>
-          html_to_taglist() |>
-          add_copy_btns_to_pre()
+        shiny::markdown(message$content)
       )
     )
   )
@@ -143,15 +141,5 @@ create_ide_matching_colors <- function(role,
   list(
     bg_color = bg_colors[[role]],
     fg_color = ide_colors$fg
-  )
-}
-
-copy_to_clipboard_dep <- function() {
-  htmltools::htmlDependency(
-    name = "copyToClipboard",
-    version = "0.1.0",
-    src = "js",
-    script = "copyToClipboard.js",
-    package = "gptstudio"
   )
 }

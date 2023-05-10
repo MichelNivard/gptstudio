@@ -19,7 +19,8 @@ mod_prompt_ui <- function(id) {
         placeholder = "Write your prompt here",
         value = "",
         resize = "vertical",
-        rows = 3
+        rows = 5,
+        textarea_class = "chat-prompt"
       )
     ),
     div(
@@ -27,7 +28,7 @@ mod_prompt_ui <- function(id) {
       shiny::actionButton(
         inputId = ns("chat"),
         label = fontawesome::fa("fas fa-paper-plane"),
-        class = "w-100 btn-primary p-1"
+        class = "w-100 btn-primary p-1 chat-send-btn"
       ),
       actionButton(
         inputId = ns("clear_history"),
@@ -115,6 +116,7 @@ mod_prompt_server <- function(id, ide_colors = get_ide_theme_info()) {
 #' It's used in `mod_prompt_ui()`
 #'
 #' @inheritParams shiny::textAreaInput
+#' @param textarea_class Class to be applied to the textarea element
 #'
 #' @return A modified textAreaInput
 #'
@@ -127,7 +129,8 @@ text_area_input_wrapper <-
            cols = NULL,
            rows = NULL,
            placeholder = NULL,
-           resize = NULL) {
+           resize = NULL,
+           textarea_class = NULL) {
     tag <- shiny::textAreaInput(
       inputId = inputId,
       label = label,
@@ -140,13 +143,17 @@ text_area_input_wrapper <-
       resize = resize
     )
 
-    if (is.null(label)) {
-      tag_query <- htmltools::tagQuery(tag)
+    tag_query <- htmltools::tagQuery(tag)
 
-      tag_query$children("label")$remove()$allTags()
-    } else {
-      tag
+    if (is.null(label)) {
+      tag_query$children("label")$remove()$resetSelected()
     }
+
+    if (!is.null(textarea_class)) {
+      tag_query$children("textarea")$addClass(textarea_class)$resetSelected
+    }
+
+    tag_query$allTags()
   }
 
 #' Chat history
@@ -214,7 +221,7 @@ chat_message_default <- function() {
   explain_btns <- glue(
     "In this chat you can:
 
-    - Send me a prompt ({paperplane})
+    - Send me a prompt ({paperplane} or Enter key)
     - Clear the current chat history ({eraser})
     - Change the settings ({gear})"
   )

@@ -14,10 +14,7 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
     theme = create_chat_app_theme(ide_colors),
     title = "ChatGPT from gptstudio",
     class = "vh-100 p-3 m-0",
-    copy_to_clipboard_dep(),
-    tags$head(
-      includeCSS(system.file("css/mod_app.css", package = "gptstudio"))
-    ),
+    html_dependencies(),
     div(
       class = "row justify-content-center h-100",
       div(
@@ -108,4 +105,14 @@ get_ide_theme_info <- function() {
       fg = "#93A1A1"
     )
   }
+}
+
+html_dependencies <- function() {
+  htmltools::htmlDependency(
+    name = "gptstudio-assets", version = "0.2.0",
+    package = methods::getPackageName(),
+    src = "assets",
+    script = c("js/copyToClipboard.js", "js/shiftEnter.js"),
+    stylesheet = c("css/mod_app.css")
+  )
 }
