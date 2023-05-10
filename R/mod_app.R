@@ -112,7 +112,7 @@ html_dependencies <- function() {
     name = "gptstudio-assets", version = "0.2.0",
     package = methods::getPackageName(),
     src = "assets",
-    script = c("js/copyToClipboard.js", "js/ctrlEnter.js"),
+    script = c("js/copyToClipboard.js", "js/shiftEnter.js"),
     stylesheet = c("css/mod_app.css")
   )
 }
