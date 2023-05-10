@@ -25,7 +25,7 @@ check_api_connection <- function(api_key, update_api = TRUE, verbose = FALSE) {
   if (!check_api_key(api_key, update_api)) {
     invisible()
   } else {
-    status_code <- simple_api_check(api_key)
+    status_code <- simple_api_check()
     if (status_code == 200) {
       if (verbose) {
         cli_alert_success("API key is valid and a simple API call worked.")
@@ -130,12 +130,11 @@ check_api <- function() {
   }
 }
 
-simple_api_check <- function(api_key = Sys.getenv("OPENAI_API_KEY")) {
-  response <- httr::GET(
-    "https://api.openai.com/v1/models",
-    httr::add_headers(Authorization = paste0("Bearer ", api_key))
-  )
-  httr::status_code(response)
+simple_api_check <- function() {
+  request_base(task = "models") |>
+    httr2::req_error(is_error = \(resp) FALSE) |>
+    httr2::req_perform() |>
+    httr2::resp_status()
 }
 
 set_openai_api_key <- function() {
