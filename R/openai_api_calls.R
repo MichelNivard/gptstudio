@@ -71,6 +71,8 @@ openai_create_edit <- function(model,
 #' @param task The task that specifies the API url to use, defaults to
 #' "completions" and "chat/completions" is required for ChatGPT model.
 #'
+#' @importFrom assertthat assert_that
+#'
 #' @return A list with the generated completions and other information returned
 #'   by the API.
 #' @examples
@@ -162,7 +164,7 @@ openai_create_chat_completion <-
   }
 
 query_openai_api <- function(body, openai_api_key, task) {
-  arg_match(task, c("completions", "chat/completions", "edits", "embeddings"))
+
 
   base_url <- glue("https://api.openai.com/v1/{task}")
 
@@ -207,4 +209,40 @@ get_available_models <- function() {
     httr::content(as = "text", encoding = "UTF-8") %>%
     jsonlite::fromJSON(flatten = TRUE) %>%
     purrr::pluck("data", "root")
+}
+
+
+#' Base for a request to the OPENAI API
+#'
+#' This function sends a request to a specific OpenAI API \code{task} endpoint at the base URL \code{https://api.openai.com/v1}, and authenticates with an API key using a Bearer token.
+#'
+#' @param task character string specifying an OpenAI API endpoint task
+#' @param token character string containing an API Bearer token; defaults to the OPENAI_API_KEY environmental variable if not specified.
+#' @keywords openai, api, authentication
+#' @return An httr2 request object
+request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
+
+  if (! task %in% get_available_endpoints()) {
+    cli::cli_abort(message = c(
+      "{.var task} must be a supported endpoint",
+      "i" = "Run {.run gptstudio::get_available_endpoints()} to get a list of supported endpoints"
+    ))
+  }
+
+  httr2::request("https://api.openai.com/v1") |>
+    httr2::req_url_path_append(task) |>
+    httr2::req_auth_bearer_token(token = token)
+}
+
+#' List supported endpoints
+#'
+#' Get a list of the endpoints supported by gptstudio.
+#'
+#' @return A character vector
+#' @export
+#'
+#' @examples
+#' get_available_endpoints()
+get_available_endpoints <- function() {
+  c("completions", "chat/completions", "edits", "embeddings")
 }
