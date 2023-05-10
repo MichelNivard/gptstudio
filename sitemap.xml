@@ -40,9 +40,6 @@
     <loc>/reference/addin_spelling_grammar.html</loc>
   </url>
   <url>
-    <loc>/reference/attrs_to_params.html</loc>
-  </url>
-  <url>
     <loc>/reference/bs_dropdown.html</loc>
   </url>
   <url>
@@ -76,12 +73,6 @@
     <loc>/reference/get_ide_theme_info.html</loc>
   </url>
   <url>
-    <loc>/reference/get_node_params.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_nodeset_tag_contents.html</loc>
-  </url>
-  <url>
     <loc>/reference/gpt_chat.html</loc>
   </url>
   <url>
@@ -97,19 +88,7 @@
     <loc>/reference/gptstudio-package.html</loc>
   </url>
   <url>
-    <loc>/reference/html_str_to_nodeset.html</loc>
-  </url>
-  <url>
-    <loc>/reference/html_to_r.html</loc>
-  </url>
-  <url>
-    <loc>/reference/html_to_taglist.html</loc>
-  </url>
-  <url>
     <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/into_taglist.html</loc>
   </url>
   <url>
     <loc>/reference/mod_app_server.html</loc>
@@ -128,9 +107,6 @@
   </url>
   <url>
     <loc>/reference/mod_prompt_ui.html</loc>
-  </url>
-  <url>
-    <loc>/reference/node_params_to_str.html</loc>
   </url>
   <url>
     <loc>/reference/open_bg_shinyapp.html</loc>
