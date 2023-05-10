@@ -49,7 +49,7 @@ openai_create_edit <- function(model,
     top_p = top_p
   )
 
-  query_openai_api(body, openai_api_key, task = "edits")
+  query_openai_api(task = "edits", request_body = body, openai_api_key = openai_api_key)
 }
 
 
@@ -114,7 +114,7 @@ openai_create_completion <-
       temperature = temperature
     )
 
-    query_openai_api(body, openai_api_key, task = task)
+    query_openai_api(task = task, request_body = body, openai_api_key = openai_api_key)
   }
 
 #' Generate text completions using OpenAI's API for Chat
@@ -160,7 +160,7 @@ openai_create_chat_completion <-
       messages = prompt
     )
 
-    query_openai_api(body, openai_api_key, task = task)
+    query_openai_api(task = task, request_body = body, openai_api_key = openai_api_key)
   }
 
 
@@ -170,12 +170,13 @@ openai_create_chat_completion <-
 #'
 #' @param task A character string that specifies the task to send to the API.
 #' @param request_body A list that contains the parameters for the task.
+#' @param openai_api_key String containing an OpenAI API key. Defaults to the OPENAI_API_KEY environmental variable if not specified.
 #'
 #' @return The response from the API.
 #'
-query_openai_api <- function(task, request_body) {
+query_openai_api <- function(task, request_body, openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
 
-  response <- request_base(task) |>
+  response <- request_base(task, token = openai_api_key) |>
     httr2::req_body_json(data = request_body) |>
     httr2::req_retry(max_tries = 3) |>
     httr2::req_error(is_error = \(resp) FALSE) |>
@@ -230,7 +231,7 @@ get_available_models <- function() {
 #' This function sends a request to a specific OpenAI API \code{task} endpoint at the base URL \code{https://api.openai.com/v1}, and authenticates with an API key using a Bearer token.
 #'
 #' @param task character string specifying an OpenAI API endpoint task
-#' @param token character string containing an API Bearer token; defaults to the OPENAI_API_KEY environmental variable if not specified.
+#' @param token String containing an OpenAI API key. Defaults to the OPENAI_API_KEY environmental variable if not specified.
 #' @keywords openai, api, authentication
 #' @return An httr2 request object
 request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
