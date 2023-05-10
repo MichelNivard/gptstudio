@@ -1,3 +1,5 @@
+# gptstudio 0.2.1
+
 # gptstudio 0.2.0
 
 # gptstudio
