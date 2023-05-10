@@ -19,7 +19,7 @@ mod_prompt_ui <- function(id) {
         placeholder = "Write your prompt here",
         value = "",
         resize = "vertical",
-        rows = 3,
+        rows = 5,
         textarea_class = "chat-prompt"
       )
     ),
