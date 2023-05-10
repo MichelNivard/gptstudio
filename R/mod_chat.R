@@ -6,8 +6,8 @@ mod_chat_ui <- function(id) {
   ns <- NS(id)
 
   bslib::card(
-    rclipboard::rclipboardSetup(),
-    height = "100%",
+    class = "h-100",
+
     bslib::card_body(
       class = "py-2 h-100",
       div(
@@ -141,15 +141,5 @@ create_ide_matching_colors <- function(role,
   list(
     bg_color = bg_colors[[role]],
     fg_color = ide_colors$fg
-  )
-}
-
-html_dependencies <- function() {
-  htmltools::htmlDependency(
-    name = "gptstudio-assets", version = "0.2.0",
-    package = methods::getPackageName(),
-    src = "assets",
-    script = c("js/copyToClipboard.js", "js/ctrlEnter.js"),
-    stylesheet = c("css/mod_app.css")
   )
 }
