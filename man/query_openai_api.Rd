@@ -4,12 +4,18 @@
 \alias{query_openai_api}
 \title{A function that sends a request to the OpenAI API and returns the response.}
 \usage{
-query_openai_api(task, request_body)
+query_openai_api(
+  task,
+  request_body,
+  openai_api_key = Sys.getenv("OPENAI_API_KEY")
+)
 }
 \arguments{
 \item{task}{A character string that specifies the task to send to the API.}
 
 \item{request_body}{A list that contains the parameters for the task.}
+
+\item{openai_api_key}{String containing an OpenAI API key. Defaults to the OPENAI_API_KEY environmental variable if not specified.}
 }
 \value{
 The response from the API.
