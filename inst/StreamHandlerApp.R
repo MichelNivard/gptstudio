@@ -1,4 +1,5 @@
 library(shiny)
+library(gptstudio)
 
 ui <- fluidPage(
   sidebarLayout(
@@ -6,7 +7,7 @@ ui <- fluidPage(
       textAreaInput(
         inputId = "text",
         label = "Input",
-        value = "Count from 1 to 50",
+        value = "Give me two examples of ggplot2 code",
         height = "800px"
       ),
       actionButton("go", "Render"),

@@ -1,5 +1,6 @@
 #' @importFrom rlang %||%
 #' @importFrom magrittr %>%
+#' @export
 StreamHandler <- R6::R6Class(
   classname = "StreamHandler",
   public = list(
@@ -36,6 +37,7 @@ StreamHandler <- R6::R6Class(
   )
 )
 
+#' @export
 stream_chat_completion <-
   function(messages,
            element_callback = cat,
