@@ -1,4 +1,5 @@
 library(shiny)
+library(gptstudio)
 
 ui <- fluidPage(
   sidebarLayout(
