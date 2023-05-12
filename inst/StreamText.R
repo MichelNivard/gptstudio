@@ -196,14 +196,29 @@ StreamText <- R6::R6Class(
 
       if (chunk_list_is_null) return(NULL)
 
+      # handle buffer value
+
+      private$value_buffer <- paste0(private$value_buffer, private$value)
+
+      end_of_content_regex <- "(\"\\},\")" # detects '\"},\"'
+      value_is_end_of_content <- stringr::str_detect(private$value, end_of_content_regex)
+      buffer_is_end_of_content <- stringr::str_detect(private$value_buffer, end_of_content_regex)
+
+      if (value_is_end_of_content) {
+        buffered_value <- stringr::str_replace()
+      }
+
+      # End of buffer value handling
+
       new_chunk <- private$generate_single_chunk(
         delta_name = "content",
         delta_value = private$value
       )
 
-      private$chunk_list <- c(private$chunk_list, list(new_chunk))
+      private$chunk_list <- c(private$chunk_list, list(new_chunk)) # not memory efficient, but we are not expecting huge lengths
 
       # reset value
+      private$value_buffer <- private$value
       private$value <- ""
     }
 
@@ -212,6 +227,11 @@ StreamText <- R6::R6Class(
 
 full_stream <- "{\"id\":\"chatcmpl-7F2EGwP25x19nSqqewmxKHzbsNCeQ\",\"object\":\"chat.completion\",\"created\":1683817844,\"model\":\"gpt-3.5-turbo-0301\",\"usage\":{\"prompt_tokens\":15,\"completion_tokens\":59,\"total_tokens\":74},\"choices\":[{\"message\":{\"role\":\"assistant\",\"content\":\"1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20.\"},\"finish_reason\":\"stop\",\"index\":0}]}\n"
 
+usage_regex <- "^\\{\"usage\":\\{\"prompt_tokens\":\\d+,\"completion_tokens\":\\d+,\"total_tokens\":\\d+\\},"
+choices_regex <- "\"choices\":\\[\\{\"message\":\\{\"role\":\"assistant\",\"content\":\""
+
+full_regex <- paste0(usage_regex, choices_regex)
+
 full_stream |>
   stringr::str_replace("^(\\{)\"id\":\"chatcmpl-[a-zA-Z0-9]+\",", "\\1") |>
   stringr::str_replace("^(\\{)\"object\":\"[\\w\\.]+\",", "\\1") |>
@@ -219,31 +239,31 @@ full_stream |>
   stringr::str_replace("^(\\{)\"model\":\"[\\w\\d\\.\\-]+\",", "\\1") |>
   stringr::str_replace(full_regex, "")
 
-tempchar <- character()
-
-handle_stream <- function(x, char) {
-  parsed <- rawToChar(x)
-
-  # print(parsed)
-
-  # char$handle_text_stream(parsed)
-
-  tempchar <<- c(tempchar, parsed)
-
-  return(TRUE)
-}
-
-request_base("chat/completions") |>
-  httr2::req_body_json(data = list(
-    model = "gpt-3.5-turbo",
-    messages = list(
-      list(
-        role = "user",
-        content = "Generate a JSON text to store customer data. return a single object for 3 customers."
-      )
-    )
-  )) |>
-  httr2::req_stream(callback = \(x) handle_stream(x, tempchar), buffer_kb = 10/1024)
+# tempchar <- character()
+#
+# handle_stream <- function(x, char) {
+#   parsed <- rawToChar(x)
+#
+#   # print(parsed)
+#
+#   # char$handle_text_stream(parsed)
+#
+#   tempchar <<- c(tempchar, parsed)
+#
+#   return(TRUE)
+# }
+#
+# request_base("chat/completions") |>
+#   httr2::req_body_json(data = list(
+#     model = "gpt-3.5-turbo",
+#     messages = list(
+#       list(
+#         role = "user",
+#         content = "Generate a JSON text to store customer data. return a single object for 3 customers."
+#       )
+#     )
+#   )) |>
+#   httr2::req_stream(callback = \(x) handle_stream(x, tempchar), buffer_kb = 10/1024)
 
 example_stream2 <-
   c(
