@@ -12,16 +12,27 @@ StreamHandler <- R6::R6Class(
       self$shinySession <- session
     },
     handle_streamed_element = function(x) {
-      translated <- self$translate_element(x)
+      translated <- private$translate_element(x)
       self$chunks <- c(self$chunks, translated)
-      self$current_value <- self$convert_chunks_into_response_str()
+      self$current_value <- private$convert_chunks_into_response_str()
 
       if (!is.null(self$shinySession)) {
         # any communication with JS should be handled here!!
-        self$shinySession$sendCustomMessage(type = "render-stream", message = shiny::markdown(self$current_value))
+        self$shinySession$sendCustomMessage(
+          type = "render-stream",
+          message = shiny::markdown(self$current_value)
+        )
       }
-
     },
+    extract_message = function() {
+      list(
+        role = "assistant",
+        content = self$current_value
+      )
+    }
+
+  ),
+  private = list(
     translate_element = function(x) {
       x %>%
         stringr::str_remove("^data: ") %>% # handle first element
@@ -39,7 +50,8 @@ StreamHandler <- R6::R6Class(
 
 #' @export
 stream_chat_completion <-
-  function(messages,
+  function(prompt,
+           history = NULL,
            element_callback = cat,
            model = "gpt-3.5-turbo",
            openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
@@ -52,8 +64,12 @@ stream_chat_completion <-
       "Authorization" = paste0("Bearer ", openai_api_key)
     )
 
-    if (!is.list(messages)) {
-      messages <- list(list(role = "user", content = messages))
+    current_message <- list(role = "user", content = prompt)
+
+    if (is.null(history)) {
+      messages <- list(current_message)
+    } else {
+      messages <- c(history, list(current_message))
     }
 
     # Set the request body
