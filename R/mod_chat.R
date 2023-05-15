@@ -15,7 +15,7 @@ mod_chat_ui <- function(id) {
         div(
           class = "p-2 mh-100 overflow-auto",
           welcomeMessageOutput(ns("welcome")),
-          shiny::uiOutput(ns("all_chats_box"))
+          shiny::uiOutput(ns("history"))
         ),
         div(
           class = "mt-auto",
@@ -33,6 +33,10 @@ mod_chat_ui <- function(id) {
 #'
 mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
   moduleServer(id, function(input, output, session) {
+
+    waiter_color <-
+      if (ide_colors$is_dark) "rgba(255,255,255,0.5)" else "rgba(0,0,0,0.5)"
+
     prompt <- mod_prompt_server("prompt", ide_colors)
 
     output$welcome <- renderWelcomeMessage({
@@ -40,10 +44,38 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
     }) |>
       bindEvent(prompt$clear_history)
 
-    output$all_chats_box <- shiny::renderUI({
+    output$history <- shiny::renderUI({
       prompt$chat_history %>%
         style_chat_history(ide_colors = ide_colors)
     })
+
+    shiny::observe({
+
+      waiter::waiter_show(
+        html = shiny::tagList(waiter::spin_flower(),
+                              shiny::h3("Asking ChatGPT...")),
+        color = waiter_color
+      )
+
+      stream_handler <- StreamHandler$new()
+
+      stream_chat_completion(
+        prompt = prompt$input_prompt,
+        history = prompt$chat_history,
+        style = prompt$input_style,
+        skill = prompt$input_skill,
+        element_callback = stream_handler$handle_streamed_element
+      )
+
+      prompt$chat_history <- chat_history_append(
+        history = prompt$chat_history,
+        role = "assistant",
+        content = stream_handler$current_value
+      )
+
+      waiter::waiter_hide()
+    }) %>%
+      shiny::bindEvent(prompt$start_stream, ignoreInit = TRUE)
 
     # testing ----
     exportTestValues(
