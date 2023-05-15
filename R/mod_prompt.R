@@ -67,7 +67,8 @@ mod_prompt_ui <- function(id) {
 mod_prompt_server <- function(id, ide_colors = get_ide_theme_info()) {
   moduleServer(id, function(input, output, session) {
     rv <- reactiveValues()
-    rv$chat_history <- chat_message_default()
+    rv$chat_history <- list()
+    rv$clear_history <- 0L
 
     shiny::observe({
       waiter_color <-
@@ -93,7 +94,8 @@ mod_prompt_server <- function(id, ide_colors = get_ide_theme_info()) {
       shiny::bindEvent(input$chat)
 
     shiny::observe({
-      rv$chat_history <- chat_message_default()
+      rv$chat_history <- list()
+      rv$clear_history <- rv$clear_history + 1L
     }) %>%
       shiny::bindEvent(input$clear_history)
 

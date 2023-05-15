@@ -14,7 +14,8 @@ mod_chat_ui <- function(id) {
         class = "d-flex flex-column h-100",
         div(
           class = "p-2 mh-100 overflow-auto",
-          shiny::uiOutput(ns("all_chats_box")),
+          welcomeMessageOutput(ns("welcome")),
+          shiny::uiOutput(ns("all_chats_box"))
         ),
         div(
           class = "mt-auto",
@@ -33,6 +34,11 @@ mod_chat_ui <- function(id) {
 mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
   moduleServer(id, function(input, output, session) {
     prompt <- mod_prompt_server("prompt", ide_colors)
+
+    output$welcome <- renderWelcomeMessage({
+      welcomeMessage()
+    }) |>
+      bindEvent(prompt$clear_history)
 
     output$all_chats_box <- shiny::renderUI({
       prompt$chat_history %>%
