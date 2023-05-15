@@ -61,7 +61,6 @@ mod_prompt_ui <- function(id) {
 #' This server receives the input of the user and makes the chat history
 #'
 #' @param id id of the module
-#' @inheritParams run_chatgpt_app
 #'
 #' @return A shiny server
 mod_prompt_server <- function(id) {
@@ -160,7 +159,7 @@ text_area_input_wrapper <-
     tag_query$allTags()
   }
 
-#' Chat history
+#' Append to chat history
 #'
 #' This appends a new response to the chat history
 #'
