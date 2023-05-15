@@ -15,7 +15,8 @@ mod_chat_ui <- function(id) {
         div(
           class = "p-2 mh-100 overflow-auto",
           welcomeMessageOutput(ns("welcome")),
-          shiny::uiOutput(ns("history"))
+          shiny::uiOutput(ns("history")),
+          streamingMessageOutput(ns("streaming"))
         ),
         div(
           class = "mt-auto",
@@ -34,30 +35,44 @@ mod_chat_ui <- function(id) {
 mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
   moduleServer(id, function(input, output, session) {
 
+    rv <- reactiveValues()
+    rv$stream_ended <- 0L
+
     waiter_color <-
       if (ide_colors$is_dark) "rgba(255,255,255,0.5)" else "rgba(0,0,0,0.5)"
 
-    prompt <- mod_prompt_server("prompt", ide_colors)
+    prompt <- mod_prompt_server("prompt")
 
     output$welcome <- renderWelcomeMessage({
-      welcomeMessage()
-    }) |>
+      welcomeMessage(ide_colors)
+    }) %>%
       bindEvent(prompt$clear_history)
+
+
+    output$streaming <- renderStreamingMessage({
+      # This has display: none by default. It is inly shown when receiving an stream
+      # After the stream is completed it will reset.
+      streamingMessage(ide_colors)
+    }) %>%
+      bindEvent(rv$stream_ended)
+
 
     output$history <- shiny::renderUI({
       prompt$chat_history %>%
         style_chat_history(ide_colors = ide_colors)
-    })
+    }) |>
+      bindEvent(prompt$chat_history, prompt$clear_history)
+
 
     shiny::observe({
 
-      waiter::waiter_show(
-        html = shiny::tagList(waiter::spin_flower(),
-                              shiny::h3("Asking ChatGPT...")),
-        color = waiter_color
-      )
+      # waiter::waiter_show(
+      #   html = shiny::tagList(waiter::spin_flower(),
+      #                         shiny::h3("Asking ChatGPT...")),
+      #   color = waiter_color
+      # )
 
-      stream_handler <- StreamHandler$new()
+      stream_handler <- StreamHandler$new(session = session)
 
       stream_chat_completion(
         prompt = prompt$input_prompt,
@@ -73,7 +88,9 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
         content = stream_handler$current_value
       )
 
-      waiter::waiter_hide()
+      rv$stream_ended <-  rv$stream_ended + 1L
+
+      # waiter::waiter_hide()
     }) %>%
       shiny::bindEvent(prompt$start_stream, ignoreInit = TRUE)
 
@@ -145,8 +162,11 @@ style_chat_message <- function(message, ide_colors = get_ide_theme_info()) {
         `background-color` = colors$bg_color
       ),
       fontawesome::fa(icon_name),
-      htmltools::tagList(
-        shiny::markdown(message$content)
+      htmltools::tags$div(
+        class = "message-wrapper",
+        htmltools::tagList(
+          shiny::markdown(message$content)
+        )
       )
     )
   )

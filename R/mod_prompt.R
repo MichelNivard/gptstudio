@@ -64,7 +64,7 @@ mod_prompt_ui <- function(id) {
 #' @inheritParams run_chatgpt_app
 #'
 #' @return A shiny server
-mod_prompt_server <- function(id, ide_colors = get_ide_theme_info()) {
+mod_prompt_server <- function(id) {
   moduleServer(id, function(input, output, session) {
 
     rv <- reactiveValues()
@@ -88,8 +88,13 @@ mod_prompt_server <- function(id, ide_colors = get_ide_theme_info()) {
       rv$input_skill <- input$skill
 
       shiny::updateTextAreaInput(session, "chat_input", value = "")
+    }, priority = 1000) %>%
+      shiny::bindEvent(input$chat)
+
+
+    shiny::observe({
       rv$start_stream <- rv$start_stream + 1L
-    }) %>%
+    }, priority = -10) %>%
       shiny::bindEvent(input$chat)
 
 

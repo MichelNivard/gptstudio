@@ -4,13 +4,13 @@
 #' This has been created to be able to bind the message to a shiny event to trigger a new render.
 #'
 #' @import htmlwidgets
-welcomeMessage <- function(width = NULL, height = NULL, elementId = NULL) {
+welcomeMessage <- function(ide_colors = get_ide_theme_info(), width = NULL, height = NULL, elementId = NULL) {
 
   default_message <- chat_message_default()
 
   # forward options using x
   x = list(
-    message = style_chat_message(default_message) |> as.character()
+    message = style_chat_message(default_message, ide_colors = ide_colors) %>% as.character()
   )
 
   # create widget
