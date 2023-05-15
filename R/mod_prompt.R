@@ -167,17 +167,9 @@ text_area_input_wrapper <-
 #'
 chat_create_history <- function(response) {
   previous_responses <- response[[1]]
-  last_response <- response[[2]]$choices
+  last_response <- response[[2]]$choices[[1]]$message
 
-  c(
-    previous_responses,
-    list(
-      list(
-        role    = last_response$message.role,
-        content = last_response$message.content
-      )
-    )
-  )
+  c(previous_responses, list(last_response))
 }
 
 
