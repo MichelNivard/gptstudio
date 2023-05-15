@@ -36,8 +36,15 @@ Shiny.addCustomMessageHandler(
     const $el = $('.streaming-message')
     $el.removeClass('d-none')
 
-    const $messageWrapper = $el.find('.message-wrapper')
-    $messageWrapper.html($.parseHTML(message))
+
+    const $userMessage = $el.find('.user-message-wrapper')
+    const $assistantMessage = $el.find('.assistant-message-wrapper')
+
+    if ($userMessage.html().length == 0) {
+      $userMessage.html($.parseHTML(message.user))
+    }
+
+    $assistantMessage.html($.parseHTML(message.assistant))
 
 });
 

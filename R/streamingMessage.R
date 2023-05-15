@@ -8,11 +8,17 @@
 #' @export
 streamingMessage <- function(ide_colors = get_ide_theme_info(), width = NULL, height = NULL, elementId = NULL) {
 
-  message <- list(role = "assistant", content = "")
+  message <- list(
+    list(role = "user", content = ""),
+    list(role = "assistant", content = "")
+  ) %>%
+    style_chat_history(ide_colors = ide_colors)
+
+
 
   # forward options using x
   x = list(
-    message = style_chat_message(message, ide_colors = ide_colors) %>% as.character()
+    message =  htmltools::tags$div(message) %>% as.character()
   )
 
   # create widget

@@ -6,10 +6,12 @@ StreamHandler <- R6::R6Class(
   public = list(
     current_value = NULL,
     shinySession = NULL,
+    user_message = NULL,
     chunks = list(),
-    initialize = function(session = NULL) {
+    initialize = function(session = NULL, user_prompt = NULL) {
       self$current_value <- ""
       self$shinySession <- session
+      self$user_message <- shiny::markdown(user_prompt)
     },
     handle_streamed_element = function(x) {
       translated <- private$translate_element(x)
@@ -20,7 +22,10 @@ StreamHandler <- R6::R6Class(
         # any communication with JS should be handled here!!
         self$shinySession$sendCustomMessage(
           type = "render-stream",
-          message = shiny::markdown(self$current_value)
+          message = list(
+            user = self$user_message,
+            assistant = shiny::markdown(self$current_value)
+          )
         )
       }
     },

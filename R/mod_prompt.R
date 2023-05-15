@@ -88,13 +88,8 @@ mod_prompt_server <- function(id) {
       rv$input_skill <- input$skill
 
       shiny::updateTextAreaInput(session, "chat_input", value = "")
-    }, priority = 1000) %>%
-      shiny::bindEvent(input$chat)
-
-
-    shiny::observe({
       rv$start_stream <- rv$start_stream + 1L
-    }, priority = -10) %>%
+    }) %>%
       shiny::bindEvent(input$chat)
 
 

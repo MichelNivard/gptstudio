@@ -72,7 +72,10 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
       #   color = waiter_color
       # )
 
-      stream_handler <- StreamHandler$new(session = session)
+      stream_handler <- StreamHandler$new(
+        session = session,
+        user_prompt = prompt$input_prompt
+      )
 
       stream_chat_completion(
         prompt = prompt$input_prompt,
@@ -89,6 +92,8 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
       )
 
       rv$stream_ended <-  rv$stream_ended + 1L
+
+      # showNotification("test", session = session)
 
       # waiter::waiter_hide()
     }) %>%
@@ -163,7 +168,7 @@ style_chat_message <- function(message, ide_colors = get_ide_theme_info()) {
       ),
       fontawesome::fa(icon_name),
       htmltools::tags$div(
-        class = "message-wrapper",
+        class = glue("{message$role}-message-wrapper"),
         htmltools::tagList(
           shiny::markdown(message$content)
         )
