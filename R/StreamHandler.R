@@ -53,6 +53,8 @@ stream_chat_completion <-
   function(prompt,
            history = NULL,
            element_callback = cat,
+           style = getOption("gptstudio.code_style"),
+           skill = getOption("gptstudio.skill"),
            model = "gpt-3.5-turbo",
            openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
     # Set the API endpoint URL
@@ -64,13 +66,20 @@ stream_chat_completion <-
       "Authorization" = paste0("Bearer ", openai_api_key)
     )
 
-    current_message <- list(role = "user", content = prompt)
+    instructions <- list(
+      list(
+        role = "system",
+        content = chat_create_system_prompt(style, skill, in_source = FALSE)
+      ),
+      list(
+        role = "user",
+        content = prompt
+      )
+    )
 
-    if (is.null(history)) {
-      messages <- list(current_message)
-    } else {
-      messages <- c(history, list(current_message))
-    }
+    history <- purrr::discard(history, ~ .x$role == "system")
+
+    messages <- c(history, instructions)
 
     # Set the request body
     body <- list(
