@@ -175,7 +175,6 @@ openai_create_chat_completion <-
 #' @return The response from the API.
 #'
 query_openai_api <- function(task, request_body, openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
-
   response <- request_base(task, token = openai_api_key) |>
     httr2::req_body_json(data = request_body) |>
     httr2::req_retry(max_tries = 3) |>
@@ -215,7 +214,6 @@ value_between <- function(x, lower, upper) {
 #' @examples
 #' get_available_endpoints()
 get_available_models <- function() {
-
   check_api()
 
   request_base("models") |>
@@ -235,8 +233,7 @@ get_available_models <- function() {
 #' @keywords openai, api, authentication
 #' @return An httr2 request object
 request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
-
-  if (! task %in% get_available_endpoints()) {
+  if (!task %in% get_available_endpoints()) {
     cli::cli_abort(message = c(
       "{.var task} must be a supported endpoint",
       "i" = "Run {.run gptstudio::get_available_endpoints()} to get a list of supported endpoints"

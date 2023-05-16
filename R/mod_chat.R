@@ -7,7 +7,6 @@ mod_chat_ui <- function(id) {
 
   bslib::card(
     class = "h-100",
-
     bslib::card_body(
       class = "py-2 h-100",
       div(
@@ -34,7 +33,6 @@ mod_chat_ui <- function(id) {
 #'
 mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
   moduleServer(id, function(input, output, session) {
-
     rv <- reactiveValues()
     rv$stream_ended <- 0L
 
@@ -65,7 +63,6 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
 
 
     shiny::observe({
-
       # waiter::waiter_show(
       #   html = shiny::tagList(waiter::spin_flower(),
       #                         shiny::h3("Asking ChatGPT...")),
@@ -91,7 +88,7 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
         content = stream_handler$current_value
       )
 
-      rv$stream_ended <-  rv$stream_ended + 1L
+      rv$stream_ended <- rv$stream_ended + 1L
 
       # showNotification("test", session = session)
 
@@ -150,12 +147,14 @@ style_chat_message <- function(message, ide_colors = get_ide_theme_info()) {
 
   icon_name <- switch(message$role,
     "user" = "fas fa-user",
-    "assistant" = "fas fa-robot")
+    "assistant" = "fas fa-robot"
+  )
 
   # nolint start
   position_class <- switch(message$role,
     "user" = "justify-content-end",
-    "assistant" = "justify-content-start")
+    "assistant" = "justify-content-start"
+  )
   # nolint end
 
   htmltools::div(

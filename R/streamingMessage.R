@@ -8,7 +8,6 @@
 #' @inheritParams streamingMessage-shiny
 #' @param elementId The element's id
 streamingMessage <- function(ide_colors = get_ide_theme_info(), width = NULL, height = NULL, elementId = NULL) {
-
   message <- list(
     list(role = "user", content = ""),
     list(role = "assistant", content = "")
@@ -18,17 +17,17 @@ streamingMessage <- function(ide_colors = get_ide_theme_info(), width = NULL, he
 
 
   # forward options using x
-  x = list(
-    message =  htmltools::tags$div(message) %>% as.character()
+  x <- list(
+    message = htmltools::tags$div(message) %>% as.character()
   )
 
   # create widget
   htmlwidgets::createWidget(
-    name = 'streamingMessage',
+    name = "streamingMessage",
     x,
     width = width,
     height = height,
-    package = 'gptstudio',
+    package = "gptstudio",
     elementId = elementId
   )
 }
@@ -49,12 +48,14 @@ streamingMessage <- function(ide_colors = get_ide_theme_info(), width = NULL, he
 #'
 #' @name streamingMessage-shiny
 #'
-streamingMessageOutput <- function(outputId, width = '100%', height = NULL){
-  htmlwidgets::shinyWidgetOutput(outputId, 'streamingMessage', width, height, package = 'gptstudio')
+streamingMessageOutput <- function(outputId, width = "100%", height = NULL) {
+  htmlwidgets::shinyWidgetOutput(outputId, "streamingMessage", width, height, package = "gptstudio")
 }
 
 #' @rdname streamingMessage-shiny
 renderStreamingMessage <- function(expr, env = parent.frame(), quoted = FALSE) {
-  if (!quoted) { expr <- substitute(expr) } # force quoted
+  if (!quoted) {
+    expr <- substitute(expr)
+  } # force quoted
   htmlwidgets::shinyRenderWidget(expr, streamingMessageOutput, env, quoted = TRUE)
 }

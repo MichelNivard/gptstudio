@@ -65,7 +65,6 @@ mod_prompt_ui <- function(id) {
 #' @return A shiny server
 mod_prompt_server <- function(id) {
   moduleServer(id, function(input, output, session) {
-
     rv <- reactiveValues()
     rv$chat_history <- list()
     rv$clear_history <- 0L
@@ -170,9 +169,7 @@ text_area_input_wrapper <-
 #' @return list of chat messages
 #'
 chat_history_append <- function(history, role, content) {
-
   c(history, list(
     list(role = role, content = content)
   ))
 }
-

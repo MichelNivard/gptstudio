@@ -8,21 +8,20 @@
 #' @inheritParams welcomeMessage-shiny
 #' @param elementId The element's id
 welcomeMessage <- function(ide_colors = get_ide_theme_info(), width = NULL, height = NULL, elementId = NULL) {
-
   default_message <- chat_message_default()
 
   # forward options using x
-  x = list(
+  x <- list(
     message = style_chat_message(default_message, ide_colors = ide_colors) %>% as.character()
   )
 
   # create widget
   htmlwidgets::createWidget(
-    name = 'welcomeMessage',
+    name = "welcomeMessage",
     x,
     width = width,
     height = height,
-    package = 'gptstudio',
+    package = "gptstudio",
     elementId = elementId
   )
 }
@@ -43,13 +42,15 @@ welcomeMessage <- function(ide_colors = get_ide_theme_info(), width = NULL, heig
 #'
 #' @name welcomeMessage-shiny
 #'
-welcomeMessageOutput <- function(outputId, width = '100%', height = NULL){
-  htmlwidgets::shinyWidgetOutput(outputId, 'welcomeMessage', width, height, package = 'gptstudio')
+welcomeMessageOutput <- function(outputId, width = "100%", height = NULL) {
+  htmlwidgets::shinyWidgetOutput(outputId, "welcomeMessage", width, height, package = "gptstudio")
 }
 
 #' @rdname welcomeMessage-shiny
 renderWelcomeMessage <- function(expr, env = parent.frame(), quoted = FALSE) {
-  if (!quoted) { expr <- substitute(expr) } # force quoted
+  if (!quoted) {
+    expr <- substitute(expr)
+  } # force quoted
   htmlwidgets::shinyRenderWidget(expr, welcomeMessageOutput, env, quoted = TRUE)
 }
 

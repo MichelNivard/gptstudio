@@ -271,7 +271,8 @@ chat_create_system_prompt <- function(style, skill, in_source) {
   arg_match(style, c("tidyverse", "base", "no preference"))
   arg_match(skill, c("beginner", "intermediate", "advanced", "genius"))
   assert_that(is.logical(in_source),
-              msg = "chat system prompt creation needs logical `in_source`")
+    msg = "chat system prompt creation needs logical `in_source`"
+  )
 
   # nolint start
   intro <- "You are a helpful chat bot that answers questions for an R programmer working in the RStudio IDE."
@@ -291,7 +292,7 @@ chat_create_system_prompt <- function(style, skill, in_source) {
   } else {
     ""
   }
-  #nolint end
+  # nolint end
 
   glue("{intro} {about_skill} {about_style} {in_source_intructions}")
 }

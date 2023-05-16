@@ -64,7 +64,6 @@ StreamHandler <- R6::R6Class(
         content = self$current_value
       )
     }
-
   ),
   private = list(
     # Translates a streamed element and converts it to chunk.
@@ -161,4 +160,3 @@ stream_chat_completion <-
 
 # stream_chat_completion(messages = "Count from 1 to 10")
 # stream_chat_completion(messages = "Count from 1 to 10", element_callback = stream_handler$handle_streamed_element)
-
