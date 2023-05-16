@@ -163,7 +163,9 @@ text_area_input_wrapper <-
 #'
 #' This appends a new response to the chat history
 #'
-#' @param response A response from `gpt_chat()`.
+#' @param history List containing previous responses.
+#' @param role Author of the message. One of `c("user", "assitant")`
+#' @param content Content of the message. If it is from the user most probably comes from an interactive input.
 #'
 #' @return list of chat messages
 #'

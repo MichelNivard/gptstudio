@@ -11,6 +11,15 @@ welcomeMessage(
   elementId = NULL
 )
 }
+\arguments{
+\item{ide_colors}{List containing the colors of the IDE theme.}
+
+\item{width, height}{Must be a valid CSS unit (like \code{'100\%'},
+\code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
+string and have \code{'px'} appended.}
+
+\item{elementId}{The element's id}
+}
 \description{
 HTML widget for showing a welcome message in the chat app.
 This has been created to be able to bind the message to a shiny event to trigger a new render.

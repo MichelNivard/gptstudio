@@ -11,6 +11,15 @@ streamingMessage(
   elementId = NULL
 )
 }
+\arguments{
+\item{ide_colors}{List containing the colors of the IDE theme.}
+
+\item{width, height}{Must be a valid CSS unit (like \code{'100\%'},
+\code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
+string and have \code{'px'} appended.}
+
+\item{elementId}{The element's id}
+}
 \description{
 Places an invisible empty chat message that will hold a streaming message.
 It can be resetted dynamically inside a shiny app

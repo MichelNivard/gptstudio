@@ -4,8 +4,9 @@
 #' It can be resetted dynamically inside a shiny app
 #'
 #' @import htmlwidgets
-#'
-#' @export
+#' @inheritParams run_chatgpt_app
+#' @inheritParams streamingMessage-shiny
+#' @param elementId The element's id
 streamingMessage <- function(ide_colors = get_ide_theme_info(), width = NULL, height = NULL, elementId = NULL) {
 
   message <- list(
@@ -48,13 +49,11 @@ streamingMessage <- function(ide_colors = get_ide_theme_info(), width = NULL, he
 #'
 #' @name streamingMessage-shiny
 #'
-#' @export
 streamingMessageOutput <- function(outputId, width = '100%', height = NULL){
   htmlwidgets::shinyWidgetOutput(outputId, 'streamingMessage', width, height, package = 'gptstudio')
 }
 
 #' @rdname streamingMessage-shiny
-#' @export
 renderStreamingMessage <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
   htmlwidgets::shinyRenderWidget(expr, streamingMessageOutput, env, quoted = TRUE)

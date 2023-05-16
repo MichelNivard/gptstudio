@@ -7,7 +7,11 @@
 chat_history_append(history, role, content)
 }
 \arguments{
-\item{response}{A response from \code{gpt_chat()}.}
+\item{history}{List containing previous responses.}
+
+\item{role}{Author of the message. One of \code{c("user", "assitant")}}
+
+\item{content}{Content of the message. If it is from the user most probably comes from an interactive input.}
 }
 \value{
 list of chat messages
