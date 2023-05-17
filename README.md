@@ -128,8 +128,8 @@ Some examples of use.
 4.  Ask more questions
 5.  Copy and try code
 
-https://github.com/calderonsamuel/gptstudio/assets/19418298/ee6597fd-1447-43c7-b817-a5562173f067
-
+<video src="https://user-images.githubusercontent.com/19418298/239023191-ee6597fd-1447-43c7-b817-a5562173f067.mp4" data-canonical-src="https://user-images.githubusercontent.com/19418298/239023191-ee6597fd-1447-43c7-b817-a5562173f067.mp4" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px">
+</video>
 
 ### Provide your own instructions in R, R Markdown, or Quarto files
 
