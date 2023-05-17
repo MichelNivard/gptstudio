@@ -131,9 +131,9 @@ check_api <- function() {
 }
 
 simple_api_check <- function(api_key = Sys.getenv("OPENAI_API_KEY")) {
-  request_base(task = "models", token = api_key) |>
-    httr2::req_error(is_error = \(resp) FALSE) |>
-    httr2::req_perform() |>
+  request_base(task = "models", token = api_key) %>%
+    httr2::req_error(is_error = \(resp) FALSE) %>%
+    httr2::req_perform() %>%
     httr2::resp_status()
 }
 

@@ -58,7 +58,7 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
     output$history <- shiny::renderUI({
       prompt$chat_history %>%
         style_chat_history(ide_colors = ide_colors)
-    }) |>
+    }) %>%
       bindEvent(prompt$chat_history, prompt$clear_history)
 
 
