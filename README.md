@@ -124,11 +124,12 @@ Some examples of use.
 
 1.  **Addins \> GPTSTUDIO \> ChatGPT**
 2.  Type your question.
-3.  Click “Chat”
+3.  Click “Send” button
 4.  Ask more questions
+5.  Copy and try code
 
-<video src="https://user-images.githubusercontent.com/6314313/225774512-bc0b0296-51c6-44a7-b665-e906610bed06.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 width-fit" style="max-height:640px;">
-</video>
+https://github.com/calderonsamuel/gptstudio/assets/19418298/ee6597fd-1447-43c7-b817-a5562173f067
+
 
 ### Provide your own instructions in R, R Markdown, or Quarto files
 
