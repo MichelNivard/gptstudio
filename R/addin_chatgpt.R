@@ -144,7 +144,10 @@ open_bg_shinyapp <- function(host, port) {
   translated_url <- rstudioapi::translateLocalUrl(url, absolute = TRUE)
 
   if (host %in% c("127.0.0.1")) {
-    cli::cli_alert_info("Showing app in 'Viewer' pane")
+    cli::cli_inform(c(
+      "i" = "Showing app in 'Viewer' pane",
+      "i" = "Run {.run rstudioapi::viewer(\"{url}\")} to see it"
+    ))
   } else {
     cli::cli_alert_info("Showing app in browser window")
   }
