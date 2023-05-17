@@ -28,6 +28,9 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/StreamHandler.html</loc>
+  </url>
+  <url>
     <loc>/reference/addin_chatgpt.html</loc>
   </url>
   <url>
@@ -43,10 +46,10 @@
     <loc>/reference/bs_dropdown.html</loc>
   </url>
   <url>
-    <loc>/reference/chat_create_history.html</loc>
+    <loc>/reference/chat_create_system_prompt.html</loc>
   </url>
   <url>
-    <loc>/reference/chat_create_system_prompt.html</loc>
+    <loc>/reference/chat_history_append.html</loc>
   </url>
   <url>
     <loc>/reference/chat_message_default.html</loc>
@@ -68,6 +71,12 @@
   </url>
   <url>
     <loc>/reference/create_tmp_job_script.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_available_endpoints.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_available_models.html</loc>
   </url>
   <url>
     <loc>/reference/get_ide_theme_info.html</loc>
@@ -124,7 +133,13 @@
     <loc>/reference/pipe.html</loc>
   </url>
   <url>
+    <loc>/reference/query_openai_api.html</loc>
+  </url>
+  <url>
     <loc>/reference/random_port.html</loc>
+  </url>
+  <url>
+    <loc>/reference/request_base.html</loc>
   </url>
   <url>
     <loc>/reference/rgb_str_to_hex.html</loc>
@@ -136,6 +151,15 @@
     <loc>/reference/run_chatgpt_app.html</loc>
   </url>
   <url>
+    <loc>/reference/stream_chat_completion.html</loc>
+  </url>
+  <url>
+    <loc>/reference/streamingMessage-shiny.html</loc>
+  </url>
+  <url>
+    <loc>/reference/streamingMessage.html</loc>
+  </url>
+  <url>
     <loc>/reference/style_chat_history.html</loc>
   </url>
   <url>
@@ -143,5 +167,11 @@
   </url>
   <url>
     <loc>/reference/text_area_input_wrapper.html</loc>
+  </url>
+  <url>
+    <loc>/reference/welcomeMessage-shiny.html</loc>
+  </url>
+  <url>
+    <loc>/reference/welcomeMessage.html</loc>
   </url>
 </urlset>
