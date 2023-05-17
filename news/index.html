@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gptstudio</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,10 +45,75 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0" id="gptstudio-030">gptstudio 0.3.0<a class="anchor" aria-label="anchor" href="#gptstudio-030"></a></h2>
+<div class="section level3">
+<h3 id="httr2-0-3-0"><code>{httr2}</code><a class="anchor" aria-label="anchor" href="#httr2-0-3-0"></a></h3>
+<p>The requests are now handled with httr2 functions. This provides a more intuitive way to extend the functionality of the package, meaning that new request parameters to any endpoint are one pipe away from being implemented.</p>
+</div>
+<div class="section level3">
+<h3 id="stream-chat-completions-0-3-0">Stream chat completions<a class="anchor" aria-label="anchor" href="#stream-chat-completions-0-3-0"></a></h3>
+<p>Instead of waiting for the full response to be received before showing it to the user, the chat app now streams the response generation in real time. This makes for shorter wait times and removes the need to use <a href="https://waiter.john-coene.com/" class="external-link">waiter</a>. Fix <a href="https://github.com/MichelNivard/gptstudio/issues/85" class="external-link">#85</a></p>
+</div>
+<div class="section level3">
+<h3 id="bug-fixes-0-3-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-0"></a></h3>
+<ul><li>The welcome message is no longer consumed by the chat history. Fix <a href="https://github.com/MichelNivard/gptstudio/issues/80" class="external-link">#80</a></li>
+<li>Errors in requests now point to the OpenAI documentation. Fix <a href="https://github.com/MichelNivard/gptstudio/issues/72" class="external-link">#72</a></li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.1" id="gptstudio-021">gptstudio 0.2.1<a class="anchor" aria-label="anchor" href="#gptstudio-021"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-2-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-1"></a></h3>
+<ul><li>In the chat app, removed unnecessary whitespace in the first line of code chunks.</li>
+<li>In the chat app, the Enter key can now be used to send the user instruction as an alternative to clicking the “Send” button.</li>
+<li>In the chat app, the copy button is now added via JS instead of a previous fragile R implementation. (by <a href="https://github.com/idavydov" class="external-link">@idavydov</a>)</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="gptstudio-020">gptstudio 0.2.0<a class="anchor" aria-label="anchor" href="#gptstudio-020"></a></h2>
+<div class="section level3">
+<h3 id="new-look-of-the-message-history-0-2-0">New look of the message history<a class="anchor" aria-label="anchor" href="#new-look-of-the-message-history-0-2-0"></a></h3>
+<p>Each individual message is now rounded and has an icon indicating whether it comes from the user or from the assistant. Each role has a different horizontal aligment and a slightly different background color.</p>
+<div class="figure">
+<img src="https://user-images.githubusercontent.com/19418298/233134945-06311099-92c0-4f4f-b728-66eb37f67836.png" alt=""><p class="caption">image</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="simplified-user-inputs-0-2-0">Simplified user inputs<a class="anchor" aria-label="anchor" href="#simplified-user-inputs-0-2-0"></a></h3>
+<p>The prompt and buttons have been simplified to give the chat more room to expand.</p>
+<div class="figure">
+<img src="https://user-images.githubusercontent.com/19418298/233137057-7d0991d8-ab56-4b7f-ae93-e88cba41e600.png" alt=""><p class="caption">image</p>
+</div>
+<p>Now the app has a settings button where the user can still choose its skill level and prefered style.</p>
+<div class="figure">
+<img src="https://user-images.githubusercontent.com/19418298/233137374-4593410a-3132-4c1a-a886-5fd4966cb7e5.png" alt=""><p class="caption">image</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="welcome-message-with-instructions-0-2-0">Welcome message with instructions<a class="anchor" aria-label="anchor" href="#welcome-message-with-instructions-0-2-0"></a></h3>
+<p>When the app starts (or history is cleared) the assistant greets the user with a random welcome message and instructions on how to use the app.</p>
+<div class="figure">
+<img src="https://user-images.githubusercontent.com/19418298/233138306-675e8693-e44a-4266-a293-070460e39e36.png" alt=""><p class="caption">image</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="the-chat-can-be-adjusted-vertically-horizontally-and-is-scrollable-0-2-0">The chat can be adjusted vertically, horizontally and is scrollable<a class="anchor" aria-label="anchor" href="#the-chat-can-be-adjusted-vertically-horizontally-and-is-scrollable-0-2-0"></a></h3>
+<p>Limited to 800px width. The prompt input is always fixed to the bottom of the app.</p>
+<p><a href="https://user-images.githubusercontent.com/19418298/233140923-5787ee5e-1042-4e84-8a42-6f1a55a47801.mp4" class="external-link uri">https://user-images.githubusercontent.com/19418298/233140923-5787ee5e-1042-4e84-8a42-6f1a55a47801.mp4</a></p>
+</div>
+<div class="section level3">
+<h3 id="the-chat-inherits-the-current-rstudio-theme-0-2-0">The chat inherits the current rstudio theme<a class="anchor" aria-label="anchor" href="#the-chat-inherits-the-current-rstudio-theme-0-2-0"></a></h3>
+<p>This makes it look more integrated with the IDE, giving the feel of what an extension does in <a href="https://code.visualstudio.com/" class="external-link">VScode</a>.</p>
+<p><a href="https://user-images.githubusercontent.com/19418298/233145316-5efe0e77-2192-48e6-97a1-02d87bd37255.mp4" class="external-link uri">https://user-images.githubusercontent.com/19418298/233145316-5efe0e77-2192-48e6-97a1-02d87bd37255.mp4</a></p>
+</div>
+<div class="section level3">
+<h3 id="copy-to-clipboard-button-in-code-chunks-0-2-0">Copy to clipboard button in code chunks<a class="anchor" aria-label="anchor" href="#copy-to-clipboard-button-in-code-chunks-0-2-0"></a></h3>
+<p>Every code chunk now has on top a bar indicating the language of the code displayed and a “Copy” button. When the user clicks the button writes the code in the clipboard and shows a short “Copied” feedback in the button.</p>
+</div>
+<div class="section level3">
+<h3 id="custom-scrollbar-0-2-0">Custom scrollbar<a class="anchor" aria-label="anchor" href="#custom-scrollbar-0-2-0"></a></h3>
+<p>The app uses now a narrower grey scrollbar.</p>
+</div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="gptstudio-010">gptstudio 0.1.0<a class="anchor" aria-label="anchor" href="#gptstudio-010"></a></h2><p class="text-muted">CRAN release: 2023-03-20</p>
