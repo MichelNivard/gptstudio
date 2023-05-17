@@ -49,7 +49,7 @@ openai_create_edit <- function(model,
     top_p = top_p
   )
 
-  query_openai_api(body, openai_api_key, task = "edits")
+  query_openai_api(task = "edits", request_body = body, openai_api_key = openai_api_key)
 }
 
 
@@ -70,6 +70,8 @@ openai_create_edit <- function(model,
 #'   function will try to use the `OPENAI_API_KEY` environment variable.
 #' @param task The task that specifies the API url to use, defaults to
 #' "completions" and "chat/completions" is required for ChatGPT model.
+#'
+#' @importFrom assertthat assert_that
 #'
 #' @return A list with the generated completions and other information returned
 #'   by the API.
@@ -112,7 +114,7 @@ openai_create_completion <-
       temperature = temperature
     )
 
-    query_openai_api(body, openai_api_key, task = task)
+    query_openai_api(task = task, request_body = body, openai_api_key = openai_api_key)
   }
 
 #' Generate text completions using OpenAI's API for Chat
@@ -158,53 +160,102 @@ openai_create_chat_completion <-
       messages = prompt
     )
 
-    query_openai_api(body, openai_api_key, task = task)
+    query_openai_api(task = task, request_body = body, openai_api_key = openai_api_key)
   }
 
-query_openai_api <- function(body, openai_api_key, task) {
-  arg_match(task, c("completions", "chat/completions", "edits", "embeddings"))
 
-  base_url <- glue("https://api.openai.com/v1/{task}")
+# Make a request to the OpenAI API
 
-  headers <- c(
-    "Authorization" = glue("Bearer {openai_api_key}"),
-    "Content-Type" = "application/json"
-  )
+#' A function that sends a request to the OpenAI API and returns the response.
+#'
+#' @param task A character string that specifies the task to send to the API.
+#' @param request_body A list that contains the parameters for the task.
+#' @param openai_api_key String containing an OpenAI API key. Defaults to the OPENAI_API_KEY environmental variable if not specified.
+#'
+#' @return The response from the API.
+#'
+query_openai_api <- function(task, request_body, openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
+  response <- request_base(task, token = openai_api_key) |>
+    httr2::req_body_json(data = request_body) |>
+    httr2::req_retry(max_tries = 3) |>
+    httr2::req_error(is_error = \(resp) FALSE) |>
+    httr2::req_perform()
 
-  response <-
-    httr::RETRY("POST",
-      url = base_url,
-      httr::add_headers(headers), body = body,
-      encode = "json",
-      quiet = TRUE
-    )
+  # error handling
+  if (httr2::resp_is_error(response)) {
+    status <- httr2::resp_status(response)
+    description <- httr2::resp_status_desc(response)
 
-  parsed <- response %>%
-    httr::content(as = "text", encoding = "UTF-8") %>%
-    jsonlite::fromJSON(flatten = TRUE)
-
-  if (httr::http_error(response)) {
-    cli_alert_warning(c(
-      "x" = glue("OpenAI API request failed [{httr::status_code(response)}]."),
-      "i" = glue("Error message: {parsed$error$message}")
+    cli::cli_abort(message = c(
+      "x" = "OpenAI API request failed. Error {status} - {description}",
+      "i" = "Visit the {.href [OpenAi Error code guidance](https://help.openai.com/en/articles/6891839-api-error-code-guidance)} for more details",
+      "i" = "You can also visit the {.href [API documentation](https://platform.openai.com/docs/guides/error-codes/api-errors)}"
     ))
   }
-  parsed
+
+  response |>
+    httr2::resp_body_json()
 }
+
+
 
 value_between <- function(x, lower, upper) {
   x >= lower && x <= upper
 }
 
+
+#' List supported models
+#'
+#' Get a list of the models supported by the OpenAI API.
+#'
+#' @return A character vector
+#' @export
+#'
+#' @examples
+#' get_available_endpoints()
 get_available_models <- function() {
   check_api()
-  httr::GET(
-    "https://api.openai.com/v1/models",
-    httr::add_headers(
-      "Authorization" = glue("Bearer {Sys.getenv(\"OPENAI_API_KEY\")}")
-    )
-  ) |>
-    httr::content(as = "text", encoding = "UTF-8") %>%
-    jsonlite::fromJSON(flatten = TRUE) %>%
-    purrr::pluck("data", "root")
+
+  request_base("models") |>
+    httr2::req_perform() |>
+    httr2::resp_body_json() |>
+    purrr::pluck("data") |>
+    purrr::map_chr("root")
+}
+
+
+#' Base for a request to the OPENAI API
+#'
+#' This function sends a request to a specific OpenAI API \code{task} endpoint at the base URL \code{https://api.openai.com/v1}, and authenticates with an API key using a Bearer token.
+#'
+#' @param task character string specifying an OpenAI API endpoint task
+#' @param token String containing an OpenAI API key. Defaults to the OPENAI_API_KEY environmental variable if not specified.
+#' @keywords openai, api, authentication
+#' @return An httr2 request object
+request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
+  if (!task %in% get_available_endpoints()) {
+    cli::cli_abort(message = c(
+      "{.var task} must be a supported endpoint",
+      "i" = "Run {.run gptstudio::get_available_endpoints()} to get a list of supported endpoints"
+    ))
+  }
+
+  httr2::request("https://api.openai.com/v1") |>
+    httr2::req_url_path_append(task) |>
+    httr2::req_auth_bearer_token(token = token)
+}
+
+
+
+#' List supported endpoints
+#'
+#' Get a list of the endpoints supported by gptstudio.
+#'
+#' @return A character vector
+#' @export
+#'
+#' @examples
+#' get_available_endpoints()
+get_available_endpoints <- function() {
+  c("completions", "chat/completions", "edits", "embeddings", "models")
 }

@@ -50,9 +50,11 @@ random_port <- function() {
 #' @return This function returns nothing because is meant to run an app as a
 #'   side effect.
 run_app_as_bg_job <- function(appDir = ".", job_name, host, port) {
-  job_script <- create_tmp_job_script(appDir = appDir,
-                                      port = port,
-                                      host = host)
+  job_script <- create_tmp_job_script(
+    appDir = appDir,
+    port = port,
+    host = host
+  )
   rstudioapi::jobRunScript(job_script, name = job_name)
   cli::cli_alert_success(
     paste0("'", job_name, "'", " initialized as background job in RStudio")
