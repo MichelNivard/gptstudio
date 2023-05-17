@@ -65,8 +65,6 @@ Every code chunk now has on top a bar indicating the language of the code displa
 
 The app uses now a narrower grey scrollbar.
 
-# gptstudio
-
 # gptstudio 0.1.0
 
 -   Added a `NEWS.md` file to track changes to the package.
