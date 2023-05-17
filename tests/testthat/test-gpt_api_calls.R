@@ -22,7 +22,6 @@ test_that("OpenAI create edit fails with bad key", {
     input = "I is a human.",
     temperature = 1,
     instruction = "fix the grammar",
-    top_p = 1,
     openai_api_key = sample_key
   ))
 })
