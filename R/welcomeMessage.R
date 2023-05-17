@@ -91,7 +91,7 @@ chat_message_default <- function() {
     "Hi there! I'm your personal R virtual assistant, and I'm committed to helping you achieve your coding goals."
   )
 
-  paperplane <- fontawesome::fa("fas fa-paper-plane") |> as.character()
+  paperplane <- fontawesome::fa("fas fa-paper-plane") %>% as.character()
   eraser <- fontawesome::fa("eraser")
   gear <- fontawesome::fa("gear")
 

@@ -31,13 +31,13 @@ server <- function(input, output, session) {
 
   output$my_ui <- renderUI({
 
-  }) |>
+  }) %>%
     bindEvent(input$go)
 
   observe({
     stream_handler <- StreamHandler$new(session = session)
     stream_chat_completion(input$text, element_callback = stream_handler$handle_streamed_element)
-  }) |>
+  }) %>%
     bindEvent(input$go)
 }
 
