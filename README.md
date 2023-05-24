@@ -131,6 +131,12 @@ Some examples of use.
 <video src="https://user-images.githubusercontent.com/19418298/239023191-ee6597fd-1447-43c7-b817-a5562173f067.mp4" data-canonical-src="https://user-images.githubusercontent.com/19418298/239023191-ee6597fd-1447-43c7-b817-a5562173f067.mp4" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px">
 </video>
 
+The ChatGPT addin supports internationalization. You can set the
+“GPTSTUDIO_LANGUAGE” environmental variable to the language of your
+preference (i.e. `GPTSTUDIO_LANGUAGE="es"` for spanish). See the full
+list of supported languages in the translation file
+(`"inst/translations/translation.json"`).
+
 ### Provide your own instructions in R, R Markdown, or Quarto files
 
 **Addins \> GPTSTUDIO \> ChatGPT in Source:** Apply any edit what YOU
