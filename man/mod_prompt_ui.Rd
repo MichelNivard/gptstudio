@@ -4,10 +4,12 @@
 \alias{mod_prompt_ui}
 \title{Prompt of the chat}
 \usage{
-mod_prompt_ui(id)
+mod_prompt_ui(id, translator = create_translator())
 }
 \arguments{
 \item{id}{id of the module}
+
+\item{translator}{A Translator from \code{shiny.i18n::Translator}}
 }
 \value{
 HTML element

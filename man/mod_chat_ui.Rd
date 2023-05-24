@@ -4,10 +4,12 @@
 \alias{mod_chat_ui}
 \title{Chat UI}
 \usage{
-mod_chat_ui(id)
+mod_chat_ui(id, translator = create_translator())
 }
 \arguments{
 \item{id}{id of the module}
+
+\item{translator}{A Translator from \code{shiny.i18n::Translator}}
 }
 \description{
 Chat UI

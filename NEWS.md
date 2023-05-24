@@ -1,3 +1,7 @@
+# gptstudio 0.3.1
+
+- The ChatGPT addin can now receive translations. If anyone wants to contribute with a new translation only needs to edit the translation file ("inst/translations/translation.json"). Currently supported languages are english and spanish. Closes #94 
+
 # gptstudio 0.3.0
 
 ## `{httr2}`

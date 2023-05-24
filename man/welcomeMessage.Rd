@@ -6,6 +6,7 @@
 \usage{
 welcomeMessage(
   ide_colors = get_ide_theme_info(),
+  translator = create_translator(),
   width = NULL,
   height = NULL,
   elementId = NULL
@@ -13,6 +14,8 @@ welcomeMessage(
 }
 \arguments{
 \item{ide_colors}{List containing the colors of the IDE theme.}
+
+\item{translator}{A Translator from \code{shiny.i18n::Translator}}
 
 \item{width, height}{Must be a valid CSS unit (like \code{'100\%'},
 \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a

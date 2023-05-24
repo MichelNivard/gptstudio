@@ -4,7 +4,10 @@
 \alias{chat_message_default}
 \title{Default chat message}
 \usage{
-chat_message_default()
+chat_message_default(translator = create_translator())
+}
+\arguments{
+\item{translator}{A Translator from \code{shiny.i18n::Translator}}
 }
 \value{
 A default chat message for welcoming users.
