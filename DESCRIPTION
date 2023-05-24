@@ -38,10 +38,10 @@ Imports:
     rlang,
     rstudioapi (>= 0.12),
     shiny,
+    shiny.i18n,
     stringr,
     usethis,
-    utils,
-    waiter
+    utils
 Suggests: 
     mockr,
     shinytest2,
