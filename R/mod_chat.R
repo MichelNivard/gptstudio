@@ -1,8 +1,9 @@
 #' Chat UI
 #'
 #' @param id id of the module
+#' @param translator A Translator from `shiny.i18n::Translator`
 #'
-mod_chat_ui <- function(id) {
+mod_chat_ui <- function(id, translator = create_translator()) {
   ns <- NS(id)
 
   bslib::card(
@@ -19,7 +20,7 @@ mod_chat_ui <- function(id) {
         ),
         div(
           class = "mt-auto",
-          mod_prompt_ui(ns("prompt"))
+          mod_prompt_ui(ns("prompt"), translator)
         )
       )
     )
@@ -63,11 +64,6 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
 
 
     shiny::observe({
-      # waiter::waiter_show(
-      #   html = shiny::tagList(waiter::spin_flower(),
-      #                         shiny::h3("Asking ChatGPT...")),
-      #   color = waiter_color
-      # )
 
       stream_handler <- StreamHandler$new(
         session = session,
@@ -90,9 +86,6 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
 
       rv$stream_ended <- rv$stream_ended + 1L
 
-      # showNotification("test", session = session)
-
-      # waiter::waiter_hide()
     }) %>%
       shiny::bindEvent(prompt$start_stream, ignoreInit = TRUE)
 

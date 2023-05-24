@@ -6,9 +6,14 @@
 #' @import htmlwidgets
 #' @inheritParams run_chatgpt_app
 #' @inheritParams welcomeMessage-shiny
+#' @inheritParams chat_message_default
 #' @param elementId The element's id
-welcomeMessage <- function(ide_colors = get_ide_theme_info(), width = NULL, height = NULL, elementId = NULL) {
-  default_message <- chat_message_default()
+welcomeMessage <- function(ide_colors = get_ide_theme_info(),
+                           translator = create_translator(),
+                           width = NULL,
+                           height = NULL,
+                           elementId = NULL) {
+  default_message <- chat_message_default(translator = translator)
 
   # forward options using x
   x <- list(
@@ -59,9 +64,9 @@ renderWelcomeMessage <- function(expr, env = parent.frame(), quoted = FALSE) {
 
 
 #' Default chat message
-#'
+#' @inheritParams mod_chat_ui
 #' @return A default chat message for welcoming users.
-chat_message_default <- function() {
+chat_message_default <- function(translator = create_translator()) {
   # nolint start
   welcome_messages <- c(
     "Welcome to the R programming language! I'm here to assist you in your journey, no matter your skill level.",
@@ -89,28 +94,33 @@ chat_message_default <- function() {
     "Greetings! As your virtual assistant for R, I'm here to help you become a confident and proficient R user.",
     "Welcome to the R community! I'm your virtual assistant, and I'm here to support you every step of the way.",
     "Hi there! I'm your personal R virtual assistant, and I'm committed to helping you achieve your coding goals."
-  )
+  ) %>%
+    purrr::map_chr(\(x) translator$t(x))
 
   paperplane <- fontawesome::fa("fas fa-paper-plane") %>% as.character()
   eraser <- fontawesome::fa("eraser")
   gear <- fontawesome::fa("gear")
 
-  explain_btns <- glue(
-    "In this chat you can:
+  explain_btns <- c(
+    "In this chat you can:\n\n",
+    "- Send me a prompt ({paperplane} or Enter key)\n",
+    "- Clear the current chat history ({eraser})\n",
+    "- Change the settings ({gear})\n"
+  ) %>%
+    purrr::map_chr(\(x) translator$t(x)) %>%
+    glue::glue_collapse() %>%
+    glue::glue()
 
-    - Send me a prompt ({paperplane} or Enter key)
-    - Clear the current chat history ({eraser})
-    - Change the settings ({gear})"
-  )
   # nolint end
 
-  content <- glue(
-    "{sample(welcome_messages, 1)}
+  content <- c(
+    "{sample(welcome_messages, 1)}\n\n",
+    "{explain_btns}\n\n",
+    translator$t("Type anything to start our conversation.")
+  ) %>%
+    glue::glue_collapse() %>%
+    glue::glue()
 
-    {explain_btns}
-
-    Type anything to start our conversation."
-  )
 
   list(
     role = "assistant",

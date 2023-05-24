@@ -3,9 +3,10 @@
 #' HTML element with a text input and some buttons
 #'
 #' @param id id of the module
+#' @inheritParams mod_chat_ui
 #'
 #' @return HTML element
-mod_prompt_ui <- function(id) {
+mod_prompt_ui <- function(id, translator = create_translator()) {
   ns <- shiny::NS(id)
 
   htmltools::div(
@@ -16,7 +17,7 @@ mod_prompt_ui <- function(id) {
         inputId = ns("chat_input"),
         label = NULL,
         width = "100%",
-        placeholder = "Write your prompt here",
+        placeholder = translator$t("Write your prompt here"),
         value = "",
         resize = "vertical",
         rows = 5,
@@ -41,13 +42,13 @@ mod_prompt_ui <- function(id) {
         class = "w-100 btn-primary mt-2 p-1",
         shiny::selectInput(
           inputId = ns("style"),
-          label = "Programming Style",
+          label = translator$t("Programming Style"),
           choices = c("tidyverse", "base", "no preference"),
           width = "100%"
         ),
         shiny::selectInput(
           inputId = ns("skill"),
-          label = "Programming Proficiency",
+          label = translator$t("Programming Proficiency"),
           choices = c("beginner", "intermediate", "advanced", "genius"),
           width = "100%"
         )
