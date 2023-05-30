@@ -19,7 +19,7 @@ addin_chatgpt <- function(host = getOption("shiny.host", "127.0.0.1")) {
   port <- random_port()
   app_dir <- create_tmp_app_dir()
 
-  run_app_as_bg_job(appDir = app_dir, job_name = "GPT-Studio", host, port)
+  run_app_as_bg_job(appDir = app_dir, job_name = "gptstudio", host, port)
 
   if (.Platform$OS.type == "unix") Sys.sleep(1.5)
 
@@ -54,8 +54,8 @@ run_app_as_bg_job <- function(appDir = ".", job_name, host, port) {
                                       port = port,
                                       host = host)
   rstudioapi::jobRunScript(job_script, name = job_name)
-  cli::cli_alert_success(
-    paste0("'", job_name, "'", " initialized as background job in RStudio")
+  cli_alert_success(
+    glue("{job_name} initialized as background job in RStudio")
   )
 }
 
