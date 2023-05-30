@@ -50,9 +50,11 @@ random_port <- function() {
 #' @return This function returns nothing because is meant to run an app as a
 #'   side effect.
 run_app_as_bg_job <- function(appDir = ".", job_name, host, port) {
-  job_script <- create_tmp_job_script(appDir = appDir,
-                                      port = port,
-                                      host = host)
+  job_script <- create_tmp_job_script(
+    appDir = appDir,
+    port = port,
+    host = host
+  )
   rstudioapi::jobRunScript(job_script, name = job_name)
   cli_alert_success(
     glue("{job_name} initialized as background job in RStudio")
@@ -142,7 +144,10 @@ open_bg_shinyapp <- function(host, port) {
   translated_url <- rstudioapi::translateLocalUrl(url, absolute = TRUE)
 
   if (host %in% c("127.0.0.1")) {
-    cli::cli_alert_info("Showing app in 'Viewer' pane")
+    cli::cli_inform(c(
+      "i" = "Showing app in 'Viewer' pane",
+      "i" = "Run {.run rstudioapi::viewer(\"{url}\")} to see it"
+    ))
   } else {
     cli::cli_alert_info("Showing app in browser window")
   }

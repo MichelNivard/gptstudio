@@ -9,8 +9,9 @@
 mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
   ns <- NS(id)
 
+  translator <- create_translator(language = getOption("gptstudio.language"))
+
   bslib::page_fluid(
-    waiter::useWaiter(),
     theme = create_chat_app_theme(ide_colors),
     title = "ChatGPT from gptstudio",
     class = "vh-100 p-3 m-0",
@@ -20,7 +21,7 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
       div(
         class = "col h-100",
         style = htmltools::css(`max-width` = "800px"),
-        mod_chat_ui(ns("chat"))
+        mod_chat_ui(ns("chat"), translator)
       )
     )
   )
@@ -115,4 +116,25 @@ html_dependencies <- function() {
     script = c("js/copyToClipboard.js", "js/shiftEnter.js"),
     stylesheet = c("css/mod_app.css")
   )
+}
+
+#' Internationalization for the ChatGPT addin
+#'
+#' The language can be set via `options("gptstudio.language" = "<language>")`
+#' (defaults to "en") or the "GPTSTUDIO_LANGUAGE" environment variable.
+#'
+#' @param language The language to be found in the translation JSON file.
+#'
+#' @return A Translator from `shiny.i18n::Translator`
+create_translator <- function(language = getOption("gptstudio.language")) {
+  translator  <- shiny.i18n::Translator$new(translation_json_path = system.file("translations/translation.json", package = "gptstudio"))
+  supported_languages <- translator$get_languages()
+
+  if (! language %in% supported_languages) {
+    cli::cli_abort("Language {.val {language}} is not supported. Must be one of {.val {supported_languages}}")
+  }
+
+  translator$set_translation_language(language)
+
+  translator
 }

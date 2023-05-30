@@ -47,8 +47,10 @@ test_that("style_chat_message() returns HTML element", {
 })
 
 test_that("style_chat_message() fails when role is not permitted", {
-  expect_error(style_chat_message(list(role = "system",
-                                       message = "some message")))
+  expect_error(style_chat_message(list(
+    role = "system",
+    message = "some message"
+  )))
 })
 
 test_that("style_chat_history() returns expected output", {

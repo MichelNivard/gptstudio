@@ -131,11 +131,10 @@ check_api <- function() {
 }
 
 simple_api_check <- function(api_key = Sys.getenv("OPENAI_API_KEY")) {
-  response <- httr::GET(
-    "https://api.openai.com/v1/models",
-    httr::add_headers(Authorization = paste0("Bearer ", api_key))
-  )
-  httr::status_code(response)
+  request_base(task = "models", token = api_key) %>%
+    httr2::req_error(is_error = \(resp) FALSE) %>%
+    httr2::req_perform() %>%
+    httr2::resp_status()
 }
 
 set_openai_api_key <- function() {

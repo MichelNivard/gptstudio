@@ -233,6 +233,7 @@ gpt_chat <- function(query,
 gpt_chat_in_source <- function(history = NULL,
                                style = getOption("gptstudio.code_style"),
                                skill = getOption("gptstudio.skill")) {
+
   check_api()
   query <- get_selection()
 
@@ -249,13 +250,18 @@ gpt_chat_in_source <- function(history = NULL,
 
   history <- purrr::discard(history, ~ .x$role == "system")
   prompt <- c(history, instructions)
+
+  cli::cli_progress_step("Sending query to ChatGPT...", msg_done = "ChatGPT responded")
+
   answer <- openai_create_chat_completion(prompt)
+
   text_to_insert <- c(
     as.character(query),
-    as.character(answer$choices$message.content)
+    as.character(answer$choices[[1]]$message$content)
   )
-  cli_inform(c("i" = "Inserting response from ChatGPT..."))
+  cli::cli_progress_step("Inserting response", msg_done = "Response was inserted")
   insert_text(text_to_insert)
+
 }
 
 #' Create system prompt
@@ -271,7 +277,8 @@ chat_create_system_prompt <- function(style, skill, in_source) {
   arg_match(style, c("tidyverse", "base", "no preference"))
   arg_match(skill, c("beginner", "intermediate", "advanced", "genius"))
   assert_that(is.logical(in_source),
-              msg = "chat system prompt creation needs logical `in_source`")
+    msg = "chat system prompt creation needs logical `in_source`"
+  )
 
   # nolint start
   intro <- "You are a helpful chat bot that answers questions for an R programmer working in the RStudio IDE."
@@ -291,7 +298,7 @@ chat_create_system_prompt <- function(style, skill, in_source) {
   } else {
     ""
   }
-  #nolint end
+  # nolint end
 
   glue("{intro} {about_skill} {about_style} {in_source_intructions}")
 }
