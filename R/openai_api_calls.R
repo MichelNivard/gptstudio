@@ -230,7 +230,6 @@ get_available_models <- function() {
 #'
 #' @param task character string specifying an OpenAI API endpoint task
 #' @param token String containing an OpenAI API key. Defaults to the OPENAI_API_KEY environmental variable if not specified.
-#' @keywords openai, api, authentication
 #' @return An httr2 request object
 request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
   if (!task %in% get_available_endpoints()) {
