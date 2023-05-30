@@ -24,6 +24,7 @@ test_that("API checking works on CI", {
 test_that("API checking works, assumes OPENAI_API_KEY is set", {
   skip_if_offline()
   skip_on_ci()
+  skip_on_cran()
   withr::local_options(gptstudio.valid_api = FALSE)
   expect_snapshot(check_api())
   # make sure skipping check works if first check works
@@ -46,6 +47,7 @@ test_that("API connection checking works", {
 test_that("API connection can return true", {
   skip_if_offline()
   skip_on_ci()
+  skip_on_cran()
   withr::local_options(gptstudio.valid_api = FALSE)
   expect_snapshot(check_api_connection(Sys.getenv("OPENAI_API_KEY")))
 })

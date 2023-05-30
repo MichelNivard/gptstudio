@@ -1,0 +1,38 @@
+Package: gptstudio
+Type: Package
+Title: Use Large Language Models Directly in your Development
+        Environment
+Version: 0.1.0
+Authors@R: 
+  c(person(given = "Michel",
+           family = "Nivard",
+           role = c("aut", "cph"),
+           email = "m.g.nivard@vu.nl"),
+    person(given = "James",
+           family = "Wade",
+           role = c("aut", "cre", "cph"), 
+           email = "github@jameshwade.com",
+           comment = c(ORCID = "0000-0002-9740-1905")))
+Maintainer: James Wade <github@jameshwade.com>
+Description: Large language models are readily accessible via API. This package 
+    lowers the barrier to use the API inside of your development environment.
+    For more on the API, see <https://platform.openai.com/docs/introduction>.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Imports: assertthat, cli, glue, httr, jsonlite, magrittr, purrr, rlang,
+        rstudioapi (>= 0.12), shiny, usethis,
+RoxygenNote: 7.2.3
+Suggests: bslib (>= 0.4.2), covr, mockr, testthat (>= 3.0.0), uuid,
+        spelling, shinytest2, waiter, withr
+Config/testthat/edition: 3
+URL: https://github.com/MichelNivard/gptstudio,
+        https://michelnivard.github.io/gptstudio/
+BugReports: https://github.com/MichelNivard/gptstudio/issues
+Language: en-US
+NeedsCompilation: no
+Packaged: 2023-03-17 19:16:10 UTC; james
+Author: Michel Nivard [aut, cph],
+  James Wade [aut, cre, cph] (<https://orcid.org/0000-0002-9740-1905>)
+Repository: CRAN
+Date/Publication: 2023-03-20 10:40:03 UTC
+Built: R 4.3.0; ; 2023-04-06 18:24:52 UTC; unix

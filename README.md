@@ -6,14 +6,14 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+maturing](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/gptstudio)](https://CRAN.R-project.org/package=gptstudio)
 [![Codecov test
 coverage](https://codecov.io/gh/MichelNivard/gptstudio/branch/main/graph/badge.svg)](https://app.codecov.io/gh/MichelNivard/gptstudio?branch=main)
 [![R-CMD-check](https://github.com/MichelNivard/gptstudio/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MichelNivard/gptstudio/actions/workflows/R-CMD-check.yaml)
 [![CRAN RStudio mirror
-downloads](http://cranlogs.r-pkg.org/badges/gptstudio)](http://www.r-pkg.org/pkg/gptstudio)
+downloads](http://cranlogs.r-pkg.org/badges/gptstudio)](https://www.r-pkg.org:443/pkg/gptstudio)
 <!-- badges: end -->
 
 The goal of gptstudio is for R programmers to easily incorporate use of
@@ -142,7 +142,7 @@ list of supported languages in the translation file
 **Addins \> GPTSTUDIO \> ChatGPT in Source:** Apply any edit what YOU
 desire or can dream up to a selection of code or text.
 
-<video src="https://user-images.githubusercontent.com/6314313/225774578-72e4e966-a740-4afc-beca-1ac25abb504c.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 width-fit" style="max-height:640px;">
+<video src="https://user-images.githubusercontent.com/6314313/225774578-72e4e966-a740-4afc-beca-1ac25abb504c.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px">
 </video>
 
 ### Spelling ang grammar check
@@ -151,7 +151,12 @@ desire or can dream up to a selection of code or text.
 sends it to OpenAI’s best model and instructs it to return a spelling
 and grammar checked version.
 
-![spelling](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/spelling.gif)
+<figure>
+<img
+src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/spelling.gif"
+alt="spelling" />
+<figcaption aria-hidden="true">spelling</figcaption>
+</figure>
 
 ### Comment your code:
 
@@ -160,8 +165,12 @@ sends it to OpenAI as a prompt for a code specific model to work with,
 asks for a version with a comment added explaining the code line by
 line.
 
-![add comments to
-code](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/comments.gif)
+<figure>
+<img
+src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/comments.gif"
+alt="add comments to code" />
+<figcaption aria-hidden="true">add comments to code</figcaption>
+</figure>
 
 ## Code of Conduct
 

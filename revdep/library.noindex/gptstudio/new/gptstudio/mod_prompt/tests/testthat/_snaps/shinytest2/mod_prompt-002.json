@@ -1,0 +1,20 @@
+{
+  "input": {
+    "prompt-chat": 1,
+    "prompt-chat_input": "",
+    "prompt-clear_history": 0,
+    "prompt-skill": "beginner",
+    "prompt-style": "tidyverse"
+  },
+  "output": {
+
+  },
+  "export": {
+    "prompt-chat_history": [
+      {
+        "role": "user",
+        "content": "return to me just the 'random' in plain text. make no comments about it."
+      }
+    ]
+  }
+}

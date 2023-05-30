@@ -1,0 +1,20 @@
+addin_chatgpt           Run Chat GPT Run the Chat GPT Shiny App
+addin_chatgpt_in_source
+                        ChatGPT in Source
+addin_comment_code      Comment Code Addin
+addin_spelling_grammar
+                        Spelling and Grammar Addin
+check_api               Check API setup
+check_api_connection    Check connection to OpenAI's API works
+check_api_key           Check API key
+gpt_chat                ChatGPT in RStudio
+gpt_chat_in_source      ChatGPT in Source
+gpt_create              Use GPT to improve text
+gpt_edit                Use GPT to improve text
+make_chat_history       Make Chat History
+openai_create_chat_completion
+                        Generate text completions using OpenAI's API
+                        for Chat
+openai_create_completion
+                        Generate text completions using OpenAI's API
+openai_create_edit      Create and edit text using OpenAI's API

@@ -37,6 +37,7 @@ test_that("OpenAI create chat completion fails with bad key", {
 
 test_that("OpenAI create completion works", {
   skip_on_ci()
+  skip_on_cran()
   expect_type(
     openai_create_completion(
       model = "text-davinci-003",
@@ -49,6 +50,7 @@ test_that("OpenAI create completion works", {
 
 test_that("OpenAI create edit works", {
   skip_on_ci()
+  skip_on_cran()
   expect_type(
     openai_create_edit(
       model = "text-davinci-edit-001",
