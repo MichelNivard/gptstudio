@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gptstudio</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,36 +45,27 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.1" id="gptstudio-031">gptstudio 0.3.1<a class="anchor" aria-label="anchor" href="#gptstudio-031"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.2.0" id="gptstudio-020">gptstudio 0.2.0<a class="anchor" aria-label="anchor" href="#gptstudio-020"></a></h2>
+<div class="section level3">
+<h3 id="translations-0-2-0">Translations<a class="anchor" aria-label="anchor" href="#translations-0-2-0"></a></h3>
 <p>The ChatGPT addin can now receive translations. If anyone wants to contribute with a new translation only needs to edit the translation file (“inst/translations/translation.json”). Currently supported languages are English and Spanish.</p>
 </div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.0" id="gptstudio-030">gptstudio 0.3.0<a class="anchor" aria-label="anchor" href="#gptstudio-030"></a></h2>
 <div class="section level3">
-<h3 id="httr2-0-3-0"><code>{httr2}</code><a class="anchor" aria-label="anchor" href="#httr2-0-3-0"></a></h3>
+<h3 id="httr2-0-2-0"><code>{httr2}</code><a class="anchor" aria-label="anchor" href="#httr2-0-2-0"></a></h3>
 <p>The requests are now handled with httr2 functions. This provides a more intuitive way to extend the functionality of the package, meaning that new request parameters to any endpoint are one pipe away from being implemented.</p>
 </div>
 <div class="section level3">
-<h3 id="stream-chat-completions-0-3-0">Stream chat completions<a class="anchor" aria-label="anchor" href="#stream-chat-completions-0-3-0"></a></h3>
+<h3 id="stream-chat-completions-0-2-0">Stream chat completions<a class="anchor" aria-label="anchor" href="#stream-chat-completions-0-2-0"></a></h3>
 <p>Instead of waiting for the full response to be received before showing it to the user, the chat app now streams the response generation in real time. This makes for shorter wait times and removes the need to use <a href="https://waiter.john-coene.com/" class="external-link">waiter</a>.</p>
 </div>
 <div class="section level3">
-<h3 id="bug-fixes-0-3-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-0"></a></h3>
+<h3 id="bug-fixes-0-2-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-0"></a></h3>
 <ul><li>The welcome message is no longer consumed by the chat history.</li>
 <li>Errors in requests now point to the OpenAI documentation.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.1" id="gptstudio-021">gptstudio 0.2.1<a class="anchor" aria-label="anchor" href="#gptstudio-021"></a></h2>
-<div class="section level3">
-<h3 id="bug-fixes-0-2-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-1"></a></h3>
-<ul><li>In the chat app, removed unnecessary whitespace in the first line of code chunks.</li>
+<li>In the chat app, removed unnecessary whitespace in the first line of code chunks.</li>
 <li>In the chat app, the Enter key can now be used to send the user instruction as an alternative to clicking the “Send” button.</li>
 <li>In the chat app, the copy button is now added via JS instead of a previous fragile R implementation. (by <a href="https://github.com/idavydov" class="external-link">@idavydov</a>)</li>
 </ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.0" id="gptstudio-020">gptstudio 0.2.0<a class="anchor" aria-label="anchor" href="#gptstudio-020"></a></h2>
 <div class="section level3">
 <h3 id="new-look-of-the-message-history-0-2-0">New look of the message history<a class="anchor" aria-label="anchor" href="#new-look-of-the-message-history-0-2-0"></a></h3>
 <p>Each individual message is now rounded and has an icon indicating whether it comes from the user or from the assistant. Each role has a different horizontal aligment and a slightly different background color.</p>
