@@ -1,3 +1,5 @@
+# gptstudio (development version)
+
 # gptstudio 0.2.0
 
 ## Translations
