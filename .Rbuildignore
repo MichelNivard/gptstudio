@@ -12,3 +12,4 @@ _\.new\.png$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
 diagram.svg
+^revdep$
