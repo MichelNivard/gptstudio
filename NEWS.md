@@ -1,8 +1,8 @@
-# gptstudio 0.3.1
+# gptstudio 0.2.0
+
+## Translations
 
 The ChatGPT addin can now receive translations. If anyone wants to contribute with a new translation only needs to edit the translation file ("inst/translations/translation.json"). Currently supported languages are English and Spanish. 
-
-# gptstudio 0.3.0
 
 ## `{httr2}`
 
@@ -16,16 +16,9 @@ Instead of waiting for the full response to be received before showing it to the
 
 - The welcome message is no longer consumed by the chat history.
 - Errors in requests now point to the OpenAI documentation.
-
-# gptstudio 0.2.1
-
-## Bug fixes
-
 -   In the chat app, removed unnecessary whitespace in the first line of code chunks.
 -   In the chat app, the Enter key can now be used to send the user instruction as an alternative to clicking the "Send" button.
 -   In the chat app, the copy button is now added via JS instead of a previous fragile R implementation. (by @idavydov)
-
-# gptstudio 0.2.0
 
 ## New look of the message history
 
