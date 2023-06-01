@@ -1,5 +1,9 @@
 # gptstudio (development version)
 
+## Bug fixes
+
+- Fixed a bug that prevented the "Spelling and Grammar" and the "Comment your code" addins to actually insert text in source. Fix #101
+
 # gptstudio 0.2.0
 
 ## Translations
