@@ -11,7 +11,11 @@ test_that("gpt_edit can replace and append text", {
   mockr::local_mock(
     openai_create_edit =
       function(model, input, instruction, temperature, openai_api_key) {
-        list(choices = data.frame(text = "here are edits openai returns"))
+        list(
+          choices = list(
+            list(text = "here are edits openai returns")
+          )
+        )
       }
   )
   mockr::local_mock(check_api = function() TRUE)

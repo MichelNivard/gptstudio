@@ -43,17 +43,17 @@ gpt_edit <- function(model,
     openai_api_key = openai_api_key
   )
 
-  cli::cat_print(edit)
+  # cli::cat_print(edit) # print debugging
 
   if (append_text) {
-    improved_text <- c(selection$value, edit$choices$text)
+    improved_text <- c(selection$value, edit$choices[[1]]$text)
     inform("Appending text from GPT...")
   } else {
-    improved_text <- edit$choices$text
+    improved_text <- edit$choices[[1]]$text
     inform("Inserting text from GPT...")
   }
 
-  cli_text("{improved_text}")
+  # cli_text("{improved_text}") # print debugging
 
   insert_text(improved_text)
 }
