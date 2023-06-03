@@ -9,6 +9,9 @@
 mod_prompt_ui <- function(id, translator = create_translator()) {
   ns <- shiny::NS(id)
 
+  models <- get_available_models()
+  chat_models <- models[stringr::str_detect(models, "gpt-3.5|gpt-4")]
+
   htmltools::div(
     class = "d-flex p-3",
     div(
@@ -51,6 +54,12 @@ mod_prompt_ui <- function(id, translator = create_translator()) {
           label = translator$t("Programming Proficiency"),
           choices = c("beginner", "intermediate", "advanced", "genius"),
           width = "100%"
+        ),
+        shiny::selectInput(
+          inputId = ns("chat_model"),
+          label = "Chat Model",
+          choices = chat_models,
+          selected = getOption("gptstudio.chat_model")
         )
       )
     )
@@ -85,6 +94,7 @@ mod_prompt_server <- function(id) {
       rv$input_prompt <- input$chat_input
       rv$input_style <- input$style
       rv$input_skill <- input$skill
+      rv$input_model <- input$chat_model
 
       shiny::updateTextAreaInput(session, "chat_input", value = "")
       rv$start_stream <- rv$start_stream + 1L

@@ -64,7 +64,10 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
 
 
     shiny::observe({
+<<<<<<< HEAD
 
+=======
+>>>>>>> a68bc5d (tweaking tests)
       stream_handler <- StreamHandler$new(
         session = session,
         user_prompt = prompt$input_prompt
@@ -73,9 +76,10 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
       stream_chat_completion(
         prompt = prompt$input_prompt,
         history = prompt$chat_history,
+        element_callback = stream_handler$handle_streamed_element,
         style = prompt$input_style,
         skill = prompt$input_skill,
-        element_callback = stream_handler$handle_streamed_element
+        model = prompt$input_model
       )
 
       prompt$chat_history <- chat_history_append(
@@ -85,7 +89,6 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
       )
 
       rv$stream_ended <- rv$stream_ended + 1L
-
     }) %>%
       shiny::bindEvent(prompt$start_stream, ignoreInit = TRUE)
 

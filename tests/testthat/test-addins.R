@@ -1,23 +1,29 @@
 test_that("Spelling and grammer editing works", {
   mockr::local_mock(
-    gpt_edit = function(model = "a-model",
-                        instruction = "some instructions",
-                        temperature = .05) {
+    gpt_chat_in_source = function(
+    task = "Add comments to explain this code. Your output will go directly into
+    a source (.R) file. Comment the code line by line",
+    style = getOption("gptstudio.code_style"),
+    skill = getOption("gptstudio.skill")
+    ) {
       list("text" = "new text")
     }
   )
-  expect_type(addin_spelling_grammar(), "list")
+  expect_type(addin_spelling_grammar(), "character")
 })
 
 test_that("Commenting code works", {
   mockr::local_mock(
-    gpt_edit = function(model = "code-davinci-edit-001",
-                        instruction = "some instructions",
-                        temperature = 0.1) {
+    gpt_chat_in_source = function(
+      task = "Add comments to explain this code. Your output will go directly into
+    a source (.R) file. Comment the code line by line",
+    style = getOption("gptstudio.code_style"),
+    skill = getOption("gptstudio.skill")
+    ) {
       list("text" = "new text")
     }
   )
-  expect_type(addin_comment_code(), "list")
+  expect_type(addin_comment_code(), "character")
 })
 
 test_that("chatgpt_addin runs", {
@@ -36,5 +42,5 @@ test_that("chatgpt_addin_in_source runs", {
       list("text" = "here is some text")
     }
   )
-  expect_type(addin_chatgpt_in_source(), "list")
+  expect_type(addin_chatgpt_in_source(), "character")
 })

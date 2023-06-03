@@ -6,12 +6,15 @@
 \usage{
 gpt_chat_in_source(
   history = NULL,
+  task = NULL,
   style = getOption("gptstudio.code_style"),
   skill = getOption("gptstudio.skill")
 )
 }
 \arguments{
 \item{history}{A list of the previous chat responses}
+
+\item{task}{Specific instructions to provide to the model as a system prompt}
 
 \item{style}{A character string indicating the preferred coding style, the
 default is "tidyverse".}

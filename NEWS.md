@@ -3,6 +3,17 @@
 ## Bug fixes
 
 - Fixed a bug that prevented the "Spelling and Grammar" and the "Comment your code" addins to actually insert text in source. Fix #101
+<<<<<<< HEAD
+=======
+
+## Model selection
+
+- The ChatGPT addin now comes with an integrated model selection feature. This allows users to choose any chat completion model that matches to either `gpt-3.5` or `gpt-4` in the model name. The default model is `gpt-3.5-turbo`, which can be customized via the `gptstudio.chat_model` option.
+
+## Addins converted to chat/completions
+
+- The addins for code commenting and spelling & grammar checking have been upgraded to utilize the chat/completions endpoint. They default to the `gpt-3.5-turbo` model. To change this default setting, users can adjust the `gptstudio.chat_model` option.
+>>>>>>> a68bc5d (tweaking tests)
 
 # gptstudio 0.2.0
 
