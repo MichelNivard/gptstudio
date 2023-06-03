@@ -200,6 +200,7 @@ gpt_chat <- function(query,
 #' give more useful output in a source (i.e., *.R) file.
 #'
 #' @inheritParams gpt_chat
+#' @param task Specific instructions to provide to the model as a system prompt
 #'
 #' @return A list containing the instructions for answering the question, the
 #'   context in which the question was asked, and the suggested answer.
@@ -231,22 +232,31 @@ gpt_chat <- function(query,
 #' }
 #'
 gpt_chat_in_source <- function(history = NULL,
+                               task = NULL,
                                style = getOption("gptstudio.code_style"),
                                skill = getOption("gptstudio.skill")) {
 
   check_api()
   query <- get_selection()
 
+  if (!is.null(task)) {
+    task <- list(
+      role = "system",
+      content = task
+    )
+  }
+
   instructions <- list(
     list(
       role = "system",
       content = chat_create_system_prompt(style, skill, in_source = TRUE)
     ),
+    task,
     list(
       role = "user",
-      content = glue("{query}")
+      content = query$value
     )
-  )
+  ) |> purrr::compact()
 
   history <- purrr::discard(history, ~ .x$role == "system")
   prompt <- c(history, instructions)
@@ -254,14 +264,8 @@ gpt_chat_in_source <- function(history = NULL,
   cli::cli_progress_step("Sending query to ChatGPT...", msg_done = "ChatGPT responded")
 
   answer <- openai_create_chat_completion(prompt)
-
-  text_to_insert <- c(
-    as.character(query),
-    as.character(answer$choices[[1]]$message$content)
-  )
-  cli::cli_progress_step("Inserting response", msg_done = "Response was inserted")
+  text_to_insert <- as.character(answer$choices[[1]]$message$content)
   insert_text(text_to_insert)
-
 }
 
 #' Create system prompt
@@ -269,7 +273,7 @@ gpt_chat_in_source <- function(history = NULL,
 #' This creates a system prompt based on the user defined parameters.
 #'
 #' @inheritParams gpt_chat
-#' @param in_source Whether to add intructions to act as in a source script.
+#' @param in_source Whether to add instructions to act as in a source script.
 #'
 #' @return A string
 #'
@@ -277,7 +281,7 @@ chat_create_system_prompt <- function(style, skill, in_source) {
   arg_match(style, c("tidyverse", "base", "no preference"))
   arg_match(skill, c("beginner", "intermediate", "advanced", "genius"))
   assert_that(is.logical(in_source),
-    msg = "chat system prompt creation needs logical `in_source`"
+              msg = "chat system prompt creation needs logical `in_source`"
   )
 
   # nolint start
@@ -288,9 +292,9 @@ chat_create_system_prompt <- function(style, skill, in_source) {
   )
 
   about_style <- switch(style,
-    "no preference" = "",
-    "base" = "They prefer to use a base R style of coding. When possible, answer code quesetions using base R rather than the tidyverse.",
-    "tidyverse" = "They prefer to use a tidyverse style of coding. When possible, answer code quesetions using tidyverse, r-lib, and tidymodels family of packages. R for Data Science is also a good resource to pull from."
+                        "no preference" = "",
+                        "base" = "They prefer to use a base R style of coding. When possible, answer code quesetions using base R rather than the tidyverse.",
+                        "tidyverse" = "They prefer to use a tidyverse style of coding. When possible, answer code quesetions using tidyverse, r-lib, and tidymodels family of packages. R for Data Science is also a good resource to pull from."
   )
 
   in_source_intructions <- if (in_source) {

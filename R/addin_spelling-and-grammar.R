@@ -14,9 +14,11 @@
 #' addin_spelling_grammar()
 #' }
 addin_spelling_grammar <- function() {
-  gpt_edit(
-    model = "text-davinci-edit-001",
-    instruction = "Improve spelling and grammar of this text",
-    temperature = 0.1
+  cli_process_start("Sending query to ChatGPT")
+  gpt_chat_in_source(
+    task = "Improve spelling and grammar of the text",
+    style = getOption("gptstudio.code_style"),
+    skill = getOption("gptstudio.skill")
   )
+  cli_process_done()
 }
