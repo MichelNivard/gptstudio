@@ -57,7 +57,7 @@ mod_prompt_ui <- function(id, translator = create_translator()) {
         ),
         shiny::selectInput(
           inputId = ns("chat_model"),
-          label = "Chat Model",
+          label = translator$t("Chat Model"),
           choices = chat_models,
           selected = getOption("gptstudio.chat_model")
         )

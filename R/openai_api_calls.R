@@ -167,10 +167,10 @@ openai_create_chat_completion <-
 #' @return The response from the API.
 #'
 query_openai_api <- function(task, request_body, openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
-  response <- request_base(task, token = openai_api_key) %>%
-    httr2::req_body_json(data = request_body) %>%
-    httr2::req_retry(max_tries = 3) %>%
-    httr2::req_error(is_error = \(resp) FALSE) %>%
+  response <- request_base(task, token = openai_api_key) |>
+    httr2::req_body_json(data = request_body) |>
+    httr2::req_retry(max_tries = 3) |>
+    httr2::req_error(is_error = \(resp) FALSE) |>
     httr2::req_perform()
 
   # error handling
@@ -185,7 +185,7 @@ query_openai_api <- function(task, request_body, openai_api_key = Sys.getenv("OP
     ))
   }
 
-  response %>%
+  response |>
     httr2::resp_body_json()
 }
 
@@ -208,10 +208,10 @@ value_between <- function(x, lower, upper) {
 get_available_models <- function() {
   check_api()
 
-  request_base("models") %>%
-    httr2::req_perform() %>%
-    httr2::resp_body_json() %>%
-    purrr::pluck("data") %>%
+  request_base("models") |>
+    httr2::req_perform() |>
+    httr2::resp_body_json() |>
+    purrr::pluck("data") |>
     purrr::map_chr("root")
 }
 
@@ -222,6 +222,7 @@ get_available_models <- function() {
 #'
 #' @param task character string specifying an OpenAI API endpoint task
 #' @param token String containing an OpenAI API key. Defaults to the OPENAI_API_KEY environmental variable if not specified.
+#' @keywords openai, api, authentication
 #' @return An httr2 request object
 request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
   if (!task %in% get_available_endpoints()) {
@@ -231,8 +232,8 @@ request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
     ))
   }
 
-  httr2::request("https://api.openai.com/v1") %>%
-    httr2::req_url_path_append(task) %>%
+  httr2::request("https://api.openai.com/v1") |>
+    httr2::req_url_path_append(task) |>
     httr2::req_auth_bearer_token(token = token)
 }
 

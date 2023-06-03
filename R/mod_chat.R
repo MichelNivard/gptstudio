@@ -37,9 +37,6 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
     rv <- reactiveValues()
     rv$stream_ended <- 0L
 
-    waiter_color <-
-      if (ide_colors$is_dark) "rgba(255,255,255,0.5)" else "rgba(0,0,0,0.5)"
-
     prompt <- mod_prompt_server("prompt")
 
     output$welcome <- renderWelcomeMessage({
@@ -64,10 +61,6 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
 
 
     shiny::observe({
-<<<<<<< HEAD
-
-=======
->>>>>>> a68bc5d (tweaking tests)
       stream_handler <- StreamHandler$new(
         session = session,
         user_prompt = prompt$input_prompt

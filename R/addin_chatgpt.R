@@ -19,7 +19,7 @@ addin_chatgpt <- function(host = getOption("shiny.host", "127.0.0.1")) {
   port <- random_port()
   app_dir <- create_tmp_app_dir()
 
-  run_app_as_bg_job(appDir = app_dir, job_name = "gptstudio", host, port)
+  run_app_as_bg_job(appDir = app_dir, job_name = "GPT-Studio", host, port)
 
   if (.Platform$OS.type == "unix") Sys.sleep(1.5)
 
@@ -56,8 +56,8 @@ run_app_as_bg_job <- function(appDir = ".", job_name, host, port) {
     host = host
   )
   rstudioapi::jobRunScript(job_script, name = job_name)
-  cli_alert_success(
-    glue("{job_name} initialized as background job in RStudio")
+  cli::cli_alert_success(
+    paste0("'", job_name, "'", " initialized as background job in RStudio")
   )
 }
 
@@ -144,10 +144,7 @@ open_bg_shinyapp <- function(host, port) {
   translated_url <- rstudioapi::translateLocalUrl(url, absolute = TRUE)
 
   if (host %in% c("127.0.0.1")) {
-    cli::cli_inform(c(
-      "i" = "Showing app in 'Viewer' pane",
-      "i" = "Run {.run rstudioapi::viewer(\"{url}\")} to see it"
-    ))
+    cli::cli_alert_info("Showing app in 'Viewer' pane")
   } else {
     cli::cli_alert_info("Showing app in browser window")
   }

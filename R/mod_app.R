@@ -9,8 +9,6 @@
 mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
   ns <- NS(id)
 
-  translator <- create_translator(language = getOption("gptstudio.language"))
-
   bslib::page_fluid(
     theme = create_chat_app_theme(ide_colors),
     title = "ChatGPT from gptstudio",
@@ -21,7 +19,7 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
       div(
         class = "col h-100",
         style = htmltools::css(`max-width` = "800px"),
-        mod_chat_ui(ns("chat"), translator)
+        mod_chat_ui(ns("chat"))
       )
     )
   )
@@ -130,7 +128,7 @@ create_translator <- function(language = getOption("gptstudio.language")) {
   translator  <- shiny.i18n::Translator$new(translation_json_path = system.file("translations/translation.json", package = "gptstudio"))
   supported_languages <- translator$get_languages()
 
-  if (! language %in% supported_languages) {
+  if (!language %in% supported_languages) {
     cli::cli_abort("Language {.val {language}} is not supported. Must be one of {.val {supported_languages}}")
   }
 
