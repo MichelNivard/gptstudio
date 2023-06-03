@@ -19,7 +19,7 @@ addin_chatgpt <- function(host = getOption("shiny.host", "127.0.0.1")) {
   port <- random_port()
   app_dir <- create_tmp_app_dir()
 
-  run_app_as_bg_job(appDir = app_dir, job_name = "GPT-Studio", host, port)
+  run_app_as_bg_job(appDir = app_dir, job_name = "gptstudio", host, port)
 
   if (.Platform$OS.type == "unix") Sys.sleep(1.5)
 
