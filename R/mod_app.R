@@ -19,7 +19,7 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
       div(
         class = "col h-100",
         style = htmltools::css(`max-width` = "800px"),
-        mod_chat_ui(ns("chat"))
+        mod_chat_ui(ns("chat"), translator)
       )
     )
   )

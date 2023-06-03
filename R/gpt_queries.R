@@ -254,7 +254,7 @@ gpt_chat_in_source <- function(history = NULL,
       role = "user",
       content = query$value
     )
-  ) |> purrr::compact()
+  ) %>% purrr::compact()
 
   history <- purrr::discard(history, ~ .x$role == "system")
   prompt <- c(history, instructions)
