@@ -37,10 +37,6 @@ openai_create_edit <- function(model,
     value_between(top_p, 0, 1) || is.null(top_p)
   )
 
-  if (is.number(temperature) && is.number(top_p)) {
-    cli_warn("Specify either temperature or top_p, not both.")
-  }
-
   body <- list(
     model = model,
     input = input,
@@ -102,10 +98,6 @@ openai_create_completion <-
       value_between(top_p, 0, 1) || is.null(top_p)
     )
 
-    if (is.number(temperature) && is.number(top_p)) {
-      cli_warn("Specify either temperature or top_p, not both.")
-    }
-
     body <- list(
       model = model,
       prompt = prompt,
@@ -138,7 +130,7 @@ openai_create_completion <-
 #' @export
 openai_create_chat_completion <-
   function(prompt = "<|endoftext|>",
-           model = "gpt-3.5-turbo",
+           model = getOption("gptstudio.chat_model"),
            openai_api_key = Sys.getenv("OPENAI_API_KEY"),
            task = "chat/completions") {
     assert_that(
@@ -230,6 +222,7 @@ get_available_models <- function() {
 #'
 #' @param task character string specifying an OpenAI API endpoint task
 #' @param token String containing an OpenAI API key. Defaults to the OPENAI_API_KEY environmental variable if not specified.
+#' @keywords openai, api, authentication
 #' @return An httr2 request object
 request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
   if (!task %in% get_available_endpoints()) {

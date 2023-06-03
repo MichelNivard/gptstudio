@@ -13,7 +13,7 @@ default is "tidyverse".}
 \item{skill}{The self-described skill level of the programmer,
 default is "beginner"}
 
-\item{in_source}{Whether to add intructions to act as in a source script.}
+\item{in_source}{Whether to add instructions to act as in a source script.}
 }
 \value{
 A string

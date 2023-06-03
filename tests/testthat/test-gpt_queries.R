@@ -81,7 +81,7 @@ test_that("gpt_create can replace & append text", {
 test_that("gpt_chat_in_source returns expected output", {
   mockr::local_mock(
     check_api = function() TRUE,
-    get_selection = function() "What is the sum of 2 and 2?",
+    get_selection = list(value = "What is the sum of 2 and 2?"),
     insert_text = function(improved_text) improved_text,
     openai_create_chat_completion = function(prompt) {
       list(
@@ -101,10 +101,7 @@ test_that("gpt_chat_in_source returns expected output", {
   # Check that the result is a list with the expected structure
   expect_type(result, "character")
   # Check that the suggested answer is as expected
-  expect_equal(result, c(
-    "What is the sum of 2 and 2?",
-    "The sum of 2 and 2 is 4."
-  ))
+  expect_equal(result, "The sum of 2 and 2 is 4.")
   result_with_history <-
     gpt_chat_in_source(
       history = list(
@@ -112,17 +109,14 @@ test_that("gpt_chat_in_source returns expected output", {
       )
     )
   expect_type(result, "character")
-  expect_equal(result, c(
-    "What is the sum of 2 and 2?",
-    "The sum of 2 and 2 is 4."
-  ))
+  expect_equal(result, "The sum of 2 and 2 is 4.")
 })
 
 
 test_that("gpt_chat_in_source returns expected output", {
   mockr::local_mock(
     check_api = function() TRUE,
-    get_selection = function() "What is the sum of 2 and 2?",
+    get_selection = function() list(value = "What is the sum of 2 and 2?"),
     insert_text = function(improved_text) improved_text,
     openai_create_chat_completion = function(prompt) {
       list(
@@ -142,10 +136,7 @@ test_that("gpt_chat_in_source returns expected output", {
   # Check that the result is a list with the expected structure
   expect_type(result, "character")
   # Check that the suggested answer is as expected
-  expect_equal(result, c(
-    "What is the sum of 2 and 2?",
-    "The sum of 2 and 2 is 4."
-  ))
+  expect_equal(result, "The sum of 2 and 2 is 4.")
   result_with_history <-
     gpt_chat_in_source(
       history = list(
@@ -153,10 +144,7 @@ test_that("gpt_chat_in_source returns expected output", {
       )
     )
   expect_type(result_with_history, "character")
-  expect_equal(result_with_history, c(
-    "What is the sum of 2 and 2?",
-    "The sum of 2 and 2 is 4."
-  ))
+  expect_equal(result_with_history, "The sum of 2 and 2 is 4.")
 })
 
 

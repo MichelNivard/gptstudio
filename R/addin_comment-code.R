@@ -12,9 +12,12 @@
 #' addin_comment_code()
 #' }
 addin_comment_code <- function() {
-  gpt_edit(
-    model = "code-davinci-edit-001",
-    instruction = "add comments to each line of code to explain the code",
-    temperature = 0.1
+  cli_process_start("Sending query to ChatGPT")
+  gpt_chat_in_source(
+    task = "Add comments to explain this code. Your output will go directly into
+    a source (.R) file. Comment the code line by line",
+    style = getOption("gptstudio.code_style"),
+    skill = getOption("gptstudio.skill")
   )
+  cli_process_done()
 }

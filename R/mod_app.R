@@ -130,7 +130,7 @@ create_translator <- function(language = getOption("gptstudio.language")) {
   translator  <- shiny.i18n::Translator$new(translation_json_path = system.file("translations/translation.json", package = "gptstudio"))
   supported_languages <- translator$get_languages()
 
-  if (! language %in% supported_languages) {
+  if (!language %in% supported_languages) {
     cli::cli_abort("Language {.val {language}} is not supported. Must be one of {.val {supported_languages}}")
   }
 
