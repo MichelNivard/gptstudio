@@ -40,7 +40,6 @@ Imports:
     shiny,
     shiny.i18n,
     stringr,
-    usethis,
     utils
 Suggests: 
     mockr,
