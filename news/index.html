@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gptstudio</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,6 +49,14 @@
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li>Fixed a bug that prevented the “Spelling and Grammar” and the “Comment your code” addins to actually insert text in source. Fix <a href="https://github.com/MichelNivard/gptstudio/issues/101" class="external-link">#101</a></li>
+</ul></div>
+<div class="section level3">
+<h3 id="model-selection-development-version">Model selection<a class="anchor" aria-label="anchor" href="#model-selection-development-version"></a></h3>
+<ul><li>The ChatGPT addin now comes with an integrated model selection feature. This allows users to choose any chat completion model that matches to either <code>gpt-3.5</code> or <code>gpt-4</code> in the model name. The default model is <code>gpt-3.5-turbo</code>, which can be customized via the <code>gptstudio.chat_model</code> option.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="addins-converted-to-chatcompletions-development-version">Addins converted to chat/completions<a class="anchor" aria-label="anchor" href="#addins-converted-to-chatcompletions-development-version"></a></h3>
+<ul><li>The addins for code commenting and spelling &amp; grammar checking have been upgraded to utilize the chat/completions endpoint. They default to the <code>gpt-3.5-turbo</code> model. To change this default setting, users can adjust the <code>gptstudio.chat_model</code> option.</li>
 </ul></div>
 </div>
     <div class="section level2">
