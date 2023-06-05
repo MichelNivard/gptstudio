@@ -10,7 +10,7 @@ stream_chat_completion(
   element_callback = cat,
   style = getOption("gptstudio.code_style"),
   skill = getOption("gptstudio.skill"),
-  model = "gpt-3.5-turbo",
+  model = getOption("gptstudio.chat_model"),
   openai_api_key = Sys.getenv("OPENAI_API_KEY")
 )
 }
@@ -19,19 +19,25 @@ stream_chat_completion(
 
 \item{history}{A list of previous messages in the conversation (optional).}
 
-\item{element_callback}{A callback function to handle each element of the streamed response (optional).}
+\item{element_callback}{A callback function to handle each element of the
+streamed response (optional).}
 
-\item{style}{The style of the chat conversation (optional). Default is retrieved from the "gptstudio.code_style" option.}
+\item{style}{The style of the chat conversation (optional). Default is
+retrieved from the "gptstudio.code_style" option.}
 
-\item{skill}{The skill to use for the chat conversation (optional). Default is retrieved from the "gptstudio.skill" option.}
+\item{skill}{The skill to use for the chat conversation (optional). Default
+is retrieved from the "gptstudio.skill" option.}
 
-\item{model}{The model to use for chat completion (optional). Default is "gpt-3.5-turbo".}
+\item{model}{The model to use for chat completion (optional). Default is
+"gpt-3.5-turbo".}
 
-\item{openai_api_key}{The OpenAI API key (optional). By default, it is fetched from the "OPENAI_API_KEY" environment variable.}
+\item{openai_api_key}{The OpenAI API key (optional). By default, it is
+fetched from the "OPENAI_API_KEY" environment variable.}
 }
 \value{
 the same as \code{curl::curl_fetch_stream}
 }
 \description{
-This function sends a prompt to the OpenAI API for chat-based completion and retrieves the streamed response.
+This function sends a prompt to the OpenAI API for chat-based completion and
+retrieves the streamed response.
 }

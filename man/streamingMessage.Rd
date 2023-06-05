@@ -22,5 +22,5 @@ string and have \code{'px'} appended.}
 }
 \description{
 Places an invisible empty chat message that will hold a streaming message.
-It can be resetted dynamically inside a shiny app
+It can be reset dynamically inside a shiny app
 }

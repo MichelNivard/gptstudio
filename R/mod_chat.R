@@ -67,17 +67,17 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
       )
 
       stream_chat_completion(
-        prompt = prompt$input_prompt,
-        history = prompt$chat_history,
+        prompt           = prompt$input_prompt,
+        history          = prompt$chat_history,
         element_callback = stream_handler$handle_streamed_element,
-        style = prompt$input_style,
-        skill = prompt$input_skill,
-        model = prompt$input_model
+        style            = prompt$input_style,
+        skill            = prompt$input_skill,
+        model            = prompt$input_model
       )
 
       prompt$chat_history <- chat_history_append(
         history = prompt$chat_history,
-        role = "assistant",
+        role    = "assistant",
         content = stream_handler$current_value
       )
 

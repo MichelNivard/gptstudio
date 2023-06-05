@@ -1,0 +1,79 @@
+#' Base for a request to the HuggingFace API
+#'
+#' This function sends a request to a specific HuggingFace API endpoint and
+#' authenticates with an API key using a Bearer token.
+#'
+#' @param task character string specifying a HuggingFace API endpoint task
+#' @param token String containing a HuggingFace API key. Defaults to the
+#'   HF_API_KEY environmental variable if not specified.
+#' @keywords huggingface, api, authentication
+#' @return An httr2 request object
+request_base_hf <- function(task, token = Sys.getenv("HF_API_KEY")) {
+  httr2::request("https://api-inference.huggingface.co/models") %>%
+    httr2::req_url_path_append(task) %>%
+    httr2::req_auth_bearer_token(token = token)
+}
+
+#' A function that sends a request to the HuggingFace API and returns the
+#' response.
+#'
+#' @param task A character string that specifies the task to send to the API.
+#' @param request_body A list that contains the parameters for the task.
+#' @param token String containing a HuggingFace API key. Defaults
+#'   to the HF_API_KEY environmental variable if not specified.
+#'
+#' @return The response from the API.
+#'
+query_huggingface_api <- function(task,
+                                  request_body,
+                                  token = Sys.getenv("HF_API_KEY")) {
+  response <- request_base_hf(task, token) %>%
+    httr2::req_body_json(data = request_body) %>%
+    httr2::req_retry(max_tries = 3) %>%
+    httr2::req_error(is_error = \(resp) FALSE) %>%
+    httr2::req_perform()
+
+  # error handling
+  if (httr2::resp_is_error(response)) {
+    status <- httr2::resp_status(response)
+    description <- httr2::resp_status_desc(response)
+
+    cli::cli_abort(message = c(
+      "x" = "HuggingFace API request failed. Error {status} - {description}",
+      "i" = "Visit the HuggingFace API documentation for more details"
+    ))
+  }
+
+  response %>%
+    httr2::resp_body_json()
+}
+
+#' Generate text completions using HuggingFace's API
+#'
+#' @param model The model to use for generating text
+#' @param prompt The prompt for generating completions
+#' @param hf_api_key The API key for accessing HuggingFace's API. By default, the
+#'   function will try to use the `HF_API_KEY` environment variable.
+#'
+#' @return A list with the generated completions and other information returned
+#'   by the API.
+#' @examples
+#' \dontrun{
+#' hf_create_completion(
+#'   model = "gpt2",
+#'   prompt = "Hello world!"
+#' )
+#' }
+#' @export
+hf_create_completion <- function(prompt = "", model = "gpt2", hf_api_key = Sys.getenv("HF_API_KEY")) {
+  assert_that(is.string(model), is.string(hf_api_key))
+
+  # The request body for the HuggingFace API should be a list with the 'inputs' field set to the prompt
+  request_body <- list(inputs = prompt)
+
+  # The task is the model name
+  task <- model
+
+  # Call the HuggingFace API
+  query_huggingface_api(task = task, request_body = request_body, token = hf_api_key)
+}
