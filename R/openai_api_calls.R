@@ -170,8 +170,11 @@ query_openai_api <- function(task, request_body, openai_api_key = Sys.getenv("OP
   response <- request_base(task, token = openai_api_key) %>%
     httr2::req_body_json(data = request_body) %>%
     httr2::req_retry(max_tries = 3) %>%
-    httr2::req_error(is_error = \(resp) FALSE) %>%
-    httr2::req_perform()
+    httr2::req_error(is_error = \(resp) FALSE)
+
+  response |> httr2::req_dry_run()
+
+  response <- httr2::req_perform(response)
 
   # error handling
   if (httr2::resp_is_error(response)) {

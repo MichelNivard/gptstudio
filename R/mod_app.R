@@ -21,7 +21,7 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
       div(
         class = "col h-100",
         style = htmltools::css(`max-width` = "800px"),
-        mod_chat_ui(ns("chat"), translator)
+        mod_chat_nostream_ui(ns("chat"), translator)
       )
     )
   )
@@ -36,7 +36,7 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
 #'
 mod_app_server <- function(id, ide_colors = get_ide_theme_info()) {
   moduleServer(id, function(input, output, session) {
-    mod_chat_server("chat", ide_colors)
+    mod_chat_nostream_server("chat", ide_colors)
   })
 }
 

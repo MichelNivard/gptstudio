@@ -46,19 +46,17 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
 
 
     output$streaming <- renderStreamingMessage({
-      # This has display: none by default. It is inly shown when receiving an stream
-      # After the stream is completed it will reset.
+      # This has display: none by default. It is only shown when receiving a
+      # stream. After the stream is completed it will reset.
       streamingMessage(ide_colors)
     }) %>%
       bindEvent(rv$stream_ended)
-
 
     output$history <- shiny::renderUI({
       prompt$chat_history %>%
         style_chat_history(ide_colors = ide_colors)
     }) %>%
       bindEvent(prompt$chat_history, prompt$clear_history)
-
 
     shiny::observe({
       stream_handler <- StreamHandler$new(
@@ -91,11 +89,6 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
     )
   })
 }
-
-
-
-
-
 
 #' Style Chat History
 #'
@@ -131,7 +124,8 @@ style_chat_history <- function(history, ide_colors = get_ide_theme_info()) {
 #' @param message A chat message.
 #' @inheritParams run_chatgpt_app
 #' @return An HTML element.
-style_chat_message <- function(message, ide_colors = get_ide_theme_info()) {
+style_chat_message <- function(message,
+                               ide_colors = get_ide_theme_info()) {
   colors <- create_ide_matching_colors(message$role, ide_colors)
 
   icon_name <- switch(message$role,

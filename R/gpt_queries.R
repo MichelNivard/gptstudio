@@ -169,26 +169,24 @@ insert_text <- function(improved_text) {
 #' )
 #' print(no_preference_response)
 #' }
-gpt_chat <- function(query,
-                     history = NULL,
+gpt_chat <- function(history,
                      style = getOption("gptstudio.code_style"),
-                     skill = getOption("gptstudio.skill")) {
-  instructions <- list(
-    list(
-      role = "system",
-      content = chat_create_system_prompt(style, skill, in_source = FALSE)
-    ),
-    list(
-      role = "user",
-      content = glue("{query}")
-    )
-  )
+                     skill = getOption("gptstudio.skill"),
+                     model = getOption("gptstudio.chat_model")) {
 
   history <- purrr::discard(history, ~ .x$role == "system")
 
-  prompt <- c(history, instructions)
-  answer <- openai_create_chat_completion(prompt)
-  list(prompt, answer)
+  system <- list(
+    role = "system",
+    content = chat_create_system_prompt(style, skill, in_source = FALSE)
+  )
+
+  user <- list(role = "user", content = prompt)
+
+  query <- c(list(system), history)
+
+  answer <- openai_create_chat_completion(query, model = model)
+  answer$choices[[1]]$message$content
 }
 
 
@@ -283,17 +281,18 @@ chat_create_system_prompt <- function(style, skill, in_source) {
   )
 
   # nolint start
-  intro <- "You are a helpful chat bot that answers questions for an R programmer working in the RStudio IDE."
+  intro <- "As a chat bot assisting an R programmer working in the RStudio IDE, it is important to tailor responses to their skill level and preferred coding style."
 
   about_skill <- glue(
     "They consider themselves to be a {skill} R programmer. Provide answers with their skill level in mind."
   )
 
-  about_style <- switch(style,
-                        "no preference" = "",
-                        "base" = "They prefer to use a base R style of coding. When possible, answer code quesetions using base R rather than the tidyverse.",
-                        "tidyverse" = "They prefer to use a tidyverse style of coding. When possible, answer code quesetions using tidyverse, r-lib, and tidymodels family of packages. R for Data Science is also a good resource to pull from."
-  )
+  about_style <-
+    switch(style,
+           "no preference" = "",
+           "base" = "They prefer to use a base R style of coding. When possible, answer code quesetions using base R rather than the tidyverse.",
+           "tidyverse" = "They prefer to use a tidyverse style of coding. When possible, answer code quesetions using tidyverse, r-lib, and tidymodels family of packages. R for Data Science is also a good resource to pull from."
+    )
 
   in_source_intructions <- if (in_source) {
     "For any text that is not R code, write it as a code comment. Do not use code blocks or free text. Only use code and code comments."
