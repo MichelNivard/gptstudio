@@ -1,0 +1,17 @@
+{
+  "input": {
+    "prompt-chat": 1,
+    "prompt-chat_input": "",
+    "prompt-clear_history": 1,
+    "prompt-skill": "beginner",
+    "prompt-style": "base"
+  },
+  "output": {
+
+  },
+  "export": {
+    "prompt-chat_history": [
+
+    ]
+  }
+}

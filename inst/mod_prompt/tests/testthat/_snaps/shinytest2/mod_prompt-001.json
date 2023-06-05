@@ -1,0 +1,17 @@
+{
+  "input": {
+    "prompt-chat": 0,
+    "prompt-chat_input": "",
+    "prompt-clear_history": 0,
+    "prompt-skill": "beginner",
+    "prompt-style": "tidyverse"
+  },
+  "output": {
+
+  },
+  "export": {
+    "prompt-chat_history": [
+
+    ]
+  }
+}

@@ -127,13 +127,12 @@ insert_text <- function(improved_text) {
 #' This function uses the ChatGPT API tailored to a user-provided style and
 #' skill level.
 #'
-#' @param query A character string representing the question or prompt to query
-#'   the index with.
 #' @param history A list of the previous chat responses
 #' @param style A character string indicating the preferred coding style, the
 #' default is "tidyverse".
 #' @param skill The self-described skill level of the programmer,
 #' default is "beginner"
+#' @param model The name of the GPT model to use.
 #'
 #' @return A list containing the instructions for answering the question, the
 #'   context in which the question was asked, and the suggested answer.
@@ -180,8 +179,6 @@ gpt_chat <- function(history,
     role = "system",
     content = chat_create_system_prompt(style, skill, in_source = FALSE)
   )
-
-  user <- list(role = "user", content = prompt)
 
   query <- c(list(system), history)
 

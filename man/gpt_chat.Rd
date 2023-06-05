@@ -5,16 +5,13 @@
 \title{ChatGPT in RStudio}
 \usage{
 gpt_chat(
-  query,
-  history = NULL,
+  history,
   style = getOption("gptstudio.code_style"),
-  skill = getOption("gptstudio.skill")
+  skill = getOption("gptstudio.skill"),
+  model = getOption("gptstudio.chat_model")
 )
 }
 \arguments{
-\item{query}{A character string representing the question or prompt to query
-the index with.}
-
 \item{history}{A list of the previous chat responses}
 
 \item{style}{A character string indicating the preferred coding style, the
@@ -22,6 +19,8 @@ default is "tidyverse".}
 
 \item{skill}{The self-described skill level of the programmer,
 default is "beginner"}
+
+\item{model}{The name of the GPT model to use.}
 }
 \value{
 A list containing the instructions for answering the question, the
