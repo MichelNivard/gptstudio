@@ -11,6 +11,10 @@ mod_prompt_ui <- function(id, translator = create_translator()) {
 
   models <- get_available_models()
   chat_models <- models[stringr::str_detect(models, "gpt-3.5|gpt-4")]
+  # remove "default" from api services
+  api_services <- utils::methods("call_api") %>%
+    stringr::str_remove(pattern = "call_api.") %>%
+    purrr::discard(~ .x == "default")
 
   htmltools::div(
     class = "d-flex p-3",
@@ -56,6 +60,12 @@ mod_prompt_ui <- function(id, translator = create_translator()) {
           width = "100%"
         ),
         shiny::selectInput(
+          inputId = ns("service"),
+          label = "Select API Service",
+          choices = api_services,
+          selected = "openai"
+        ),
+        shiny::selectInput(
           inputId = ns("chat_model"),
           label = translator$t("Chat Model"),
           choices = chat_models,
@@ -76,12 +86,15 @@ mod_prompt_ui <- function(id, translator = create_translator()) {
 mod_prompt_server <- function(id) {
   moduleServer(id, function(input, output, session) {
     rv <- reactiveValues()
-    rv$chat_history <- list()
+    rv$chat_history  <- list()
     rv$clear_history <- 0L
-    rv$start_stream <- 0L
-    rv$input_prompt <- NULL
-    rv$input_style <- NULL
-    rv$input_skill <- NULL
+    rv$start_stream  <- 0L
+    rv$input_prompt  <- NULL
+    rv$input_style   <- NULL
+    rv$input_skill   <- NULL
+    rv$input_model   <- NULL
+    rv$input_service <- NULL
+
 
 
     shiny::observe({
@@ -91,10 +104,11 @@ mod_prompt_server <- function(id) {
         content = input$chat_input
       )
 
-      rv$input_prompt <- input$chat_input
-      rv$input_style <- input$style
-      rv$input_skill <- input$skill
-      rv$input_model <- input$chat_model
+      rv$input_prompt  <- input$chat_input
+      rv$input_style   <- input$style
+      rv$input_skill   <- input$skill
+      rv$input_model   <- input$chat_model
+      rv$input_service <- input$service
 
       shiny::updateTextAreaInput(session, "chat_input", value = "")
       rv$start_stream <- rv$start_stream + 1L

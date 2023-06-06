@@ -1,33 +1,50 @@
 # Define the generic function
-api_call <- function(prompt, model = NULL, ...) {
-  UseMethod("api_call")
+#' @export
+call_api <- function(endoint, prompt, history = NULL, model = NULL, ...) {
+  UseMethod("call_api")
 }
 
 # Define the method for OpenAI
 #' @export
-api_call.openai <- function(prompt, model = NULL, ...) {
+call_api.openai <- function(endpoint,
+                            prompt,
+                            history = NULL,
+                            model = NULL,
+                            element_callback,
+                            style,
+                            skill) {
   cli_inform(c("i" = "Using OpenAI API"))
   if (is.null(model)) model <- getOption("gptstudio.chat_model")
-  openai_create_chat_completion(prompt = prompt, model = model)
+  stream_chat_completion(
+    prompt = prompt,
+    history = history,
+    element_callback = element_callback,
+    style = style,
+    skill = skill,
+    model = model
+  )
 }
 
 # Define the method for HuggingFace
 #' @export
-api_call.huggingface <- function(prompt, model = NULL, ...) {
+call_api.huggingface <- function(prompt, history = NULL, model = "gpt2", ...) {
   if (is.null(model)) model <- getOption("gptstudio.hf_model")
   cli_inform(c("i" = "Using HuggingFace API"))
-  hf_create_completion(prompt = prompt, model = model)
+  model = "gpt2"
+  answer <- hf_create_completion(prompt = prompt, model = model)
+  cat_print(answer[[1]]$generated_text)
+  answer[[1]]$generated_text
 }
 
 # Define the method for MakerSuite
 #' @export
-api_call.makersuite <- function(prompt, ...) {
+call_api.makersuite <- function(prompt, ...) {
   # Your code for calling the MakerSuite API goes here
   cli_warn("MakerSuite API calls are not yet implemented")
 }
 
 #' @export
-api_call.default <- function(prompt, ...) {
+call_api.default <- function(prompt, ...) {
   cli_abort(
     c("x" = "This API service is not been implemented or is missing.",
       "i" = "Class attribute for `prompt`: {class(prompt)}")

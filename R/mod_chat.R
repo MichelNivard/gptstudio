@@ -64,19 +64,25 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
         user_prompt = prompt$input_prompt
       )
 
-      stream_chat_completion(
-        prompt           = prompt$input_prompt,
-        history          = prompt$chat_history,
-        element_callback = stream_handler$handle_streamed_element,
-        style            = prompt$input_style,
-        skill            = prompt$input_skill,
-        model            = prompt$input_model
-      )
+      answer <-
+        call_api(
+          endpoint         = structure("", class = prompt$input_service),
+          prompt           = prompt$input_prompt,
+          history          = prompt$chat_history,
+          element_callback = stream_handler$handle_streamed_element,
+          style            = prompt$input_style,
+          skill            = prompt$input_skill,
+          model            = prompt$input_model
+        )
+
+      if (prompt$input_service == "openai") {
+        answer <- stream_handler$current_value
+      }
 
       prompt$chat_history <- chat_history_append(
         history = prompt$chat_history,
         role    = "assistant",
-        content = stream_handler$current_value
+        content = answer
       )
 
       rv$stream_ended <- rv$stream_ended + 1L
@@ -129,14 +135,14 @@ style_chat_message <- function(message,
   colors <- create_ide_matching_colors(message$role, ide_colors)
 
   icon_name <- switch(message$role,
-    "user" = "fas fa-user",
-    "assistant" = "fas fa-robot"
+                      "user" = "fas fa-user",
+                      "assistant" = "fas fa-robot"
   )
 
   # nolint start
   position_class <- switch(message$role,
-    "user" = "justify-content-end",
-    "assistant" = "justify-content-start"
+                           "user" = "justify-content-end",
+                           "assistant" = "justify-content-start"
   )
   # nolint end
 
