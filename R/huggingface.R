@@ -71,5 +71,7 @@ create_completion_hf <- function(prompt,
   # The request body for the HuggingFace API should be a list with the 'inputs'
   # field set to the prompt
   request_body <- list(inputs = prompt)
-  query_api(task = model, request_body = request_body, token = api_key)
+  query_api_hf(task = model,
+               request_body = request_body,
+               token = api_key)
 }

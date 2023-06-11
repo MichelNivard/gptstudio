@@ -7,7 +7,7 @@
 create_completion_hf(
   prompt,
   model = "gpt2",
-  hf_api_key = Sys.getenv("HF_API_KEY")
+  api_key = Sys.getenv("HF_API_KEY")
 )
 }
 \arguments{
