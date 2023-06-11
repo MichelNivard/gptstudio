@@ -31,7 +31,7 @@ call_api.huggingface <- function(prompt, history = NULL, model = "gpt2", ...) {
   if (is.null(model)) model <- getOption("gptstudio.hf_model")
   cli_inform(c("i" = "Using HuggingFace API"))
   model = "gpt2"
-  answer <- hf_create_completion(prompt = prompt, model = model)
+  answer <- create_completion_hf(prompt = prompt, model = model)
   cat_print(answer[[1]]$generated_text)
   answer[[1]]$generated_text
 }

@@ -24,9 +24,9 @@ request_base_hf <- function(task, token = Sys.getenv("HF_API_KEY")) {
 #'
 #' @return The response from the API.
 #'
-query_huggingface_api <- function(task,
-                                  request_body,
-                                  token = Sys.getenv("HF_API_KEY")) {
+query_api_hf <- function(task,
+                         request_body,
+                         token = Sys.getenv("HF_API_KEY")) {
   response <- request_base_hf(task, token) %>%
     httr2::req_body_json(data = request_body) %>%
     httr2::req_retry(max_tries = 3) %>%
@@ -59,25 +59,17 @@ query_huggingface_api <- function(task,
 #'   by the API.
 #' @examples
 #' \dontrun{
-#' hf_create_completion(
+#' create_completion_hf(
 #'   model = "gpt2",
 #'   prompt = "Hello world!"
 #' )
 #' }
 #' @export
-hf_create_completion <- function(prompt,
+create_completion_hf <- function(prompt,
                                  model = "gpt2",
-                                 hf_api_key = Sys.getenv("HF_API_KEY")) {
-  assert_that(is.string(model), is.string(hf_api_key))
-
-  cat_print(prompt)
-  cli_inform("Model: {model}")
-
-  # The request body for the HuggingFace API should be a list with the 'inputs' field set to the prompt
+                                 api_key = Sys.getenv("HF_API_KEY")) {
+  # The request body for the HuggingFace API should be a list with the 'inputs'
+  # field set to the prompt
   request_body <- list(inputs = prompt)
-
-  # Call the HuggingFace API
-  query_huggingface_api(task = model,
-                        request_body = request_body,
-                        token = hf_api_key)
+  query_api(task = model, request_body = request_body, token = api_key)
 }

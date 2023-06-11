@@ -1,3 +1,23 @@
+#' Base for a request to the OPENAI API
+#'
+#' This function sends a request to a specific OpenAI API \code{task} endpoint at the base URL \code{https://api.openai.com/v1}, and authenticates with an API key using a Bearer token.
+#'
+#' @param task character string specifying an OpenAI API endpoint task
+#' @param token String containing an OpenAI API key. Defaults to the OPENAI_API_KEY environmental variable if not specified.
+#' @keywords openai, api, authentication
+#' @return An httr2 request object
+request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
+  if (!task %in% get_available_endpoints()) {
+    cli::cli_abort(message = c(
+      "{.var task} must be a supported endpoint",
+      "i" = "Run {.run gptstudio::get_available_endpoints()} to get a list of supported endpoints"
+    ))
+  }
+  httr2::request("https://api.openai.com/v1") %>%
+    httr2::req_url_path_append(task) %>%
+    httr2::req_auth_bearer_token(token = token)
+}
+
 #' Create and edit text using OpenAI's API
 #'
 #' @param model The model to use for generating text
@@ -156,8 +176,6 @@ openai_create_chat_completion <-
   }
 
 
-# Make a request to the OpenAI API
-
 #' A function that sends a request to the OpenAI API and returns the response.
 #'
 #' @param task A character string that specifies the task to send to the API.
@@ -216,27 +234,6 @@ get_available_models <- function() {
     httr2::resp_body_json() %>%
     purrr::pluck("data") %>%
     purrr::map_chr("root")
-}
-
-
-#' Base for a request to the OPENAI API
-#'
-#' This function sends a request to a specific OpenAI API \code{task} endpoint at the base URL \code{https://api.openai.com/v1}, and authenticates with an API key using a Bearer token.
-#'
-#' @param task character string specifying an OpenAI API endpoint task
-#' @param token String containing an OpenAI API key. Defaults to the OPENAI_API_KEY environmental variable if not specified.
-#' @keywords openai, api, authentication
-#' @return An httr2 request object
-request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
-  if (!task %in% get_available_endpoints()) {
-    cli::cli_abort(message = c(
-      "{.var task} must be a supported endpoint",
-      "i" = "Run {.run gptstudio::get_available_endpoints()} to get a list of supported endpoints"
-    ))
-  }
-  httr2::request("https://api.openai.com/v1") %>%
-    httr2::req_url_path_append(task) %>%
-    httr2::req_auth_bearer_token(token = token)
 }
 
 
