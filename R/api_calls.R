@@ -62,10 +62,17 @@ call_api.huggingface <- function(endpoint,
 }
 
 #' @export
-call_api.makersuite <- function(endpoint,
-                                prompt,
-                                ...) {
-  create_completion_ms(prompt = prompt)
+call_api.palm <- function(endpoint,
+                          prompt,
+                          ...) {
+  create_completion_palm(prompt = prompt)
+}
+
+#' @export
+call_api.anthropic <- function(endpoint,
+                               prompt,
+                               ...) {
+  create_completion_anthropic(prompt = prompt)
 }
 
 #' @export
