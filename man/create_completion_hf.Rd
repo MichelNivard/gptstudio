@@ -4,18 +4,14 @@
 \alias{create_completion_hf}
 \title{Generate text completions using HuggingFace's API}
 \usage{
-create_completion_hf(
-  prompt,
-  model = "gpt2",
-  api_key = Sys.getenv("HF_API_KEY")
-)
+create_completion_hf(prompt, model = "gpt2", token = Sys.getenv("HF_API_KEY"))
 }
 \arguments{
 \item{prompt}{The prompt for generating completions}
 
 \item{model}{The model to use for generating text}
 
-\item{hf_api_key}{The API key for accessing HuggingFace's API. By default, the
+\item{token}{The API key for accessing HuggingFace's API. By default, the
 function will try to use the \code{HF_API_KEY} environment variable.}
 }
 \value{

@@ -52,7 +52,7 @@ query_api_hf <- function(task,
 #'
 #' @param model The model to use for generating text
 #' @param prompt The prompt for generating completions
-#' @param hf_api_key The API key for accessing HuggingFace's API. By default, the
+#' @param token The API key for accessing HuggingFace's API. By default, the
 #'   function will try to use the `HF_API_KEY` environment variable.
 #'
 #' @return A list with the generated completions and other information returned
@@ -67,11 +67,11 @@ query_api_hf <- function(task,
 #' @export
 create_completion_hf <- function(prompt,
                                  model = "gpt2",
-                                 api_key = Sys.getenv("HF_API_KEY")) {
+                                 token = Sys.getenv("HF_API_KEY")) {
   # The request body for the HuggingFace API should be a list with the 'inputs'
   # field set to the prompt
   request_body <- list(inputs = prompt)
   query_api_hf(task = model,
                request_body = request_body,
-               token = api_key)
+               token = token)
 }
