@@ -64,16 +64,30 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
         user_prompt = prompt$input_prompt
       )
 
-      answer <-
-        call_api(
-          endpoint         = structure("", class = prompt$input_service),
-          prompt           = prompt$input_prompt,
-          history          = prompt$chat_history,
-          element_callback = stream_handler$handle_streamed_element,
-          style            = prompt$input_style,
-          skill            = prompt$input_skill,
-          model            = prompt$input_model
+      if (prompt$input_service == "openai") {
+        stream  <- TRUE
+        handler <- stream_handler$handle_streamed_element
+      }  else {
+        stream  <- FALSE
+        handler <- NULL
+      }
+
+      request_skeleton <-
+        new_gpstudio_request_skeleton(
+          prompt  = prompt$input_prompt,
+          history = prompt$chat_history,
+          stream  = stream,
+          model   = prompt$input_model,
+          class   = prompt$input_service,
+          extras  = list(
+            style   = prompt$input_style,
+            skill   = prompt$input_skill
+          )
         )
+
+      answer <-
+        gptstudio_request_perform(skeleton       = request_skeleton,
+                                  stream_handler = NULL)
 
       if (prompt$input_service == "openai") {
         answer <- stream_handler$current_value
