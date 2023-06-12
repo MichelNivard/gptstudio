@@ -19,7 +19,7 @@ gptstudio_request_perform <- function(skeleton, ...) {
 
 
 #' @export
-gptstudio_request_perform.openai <- function(x, ...) {
+gptstudio_request_perform.gptstudio_request_openai <- function(x, ...) {
 
   # Translate request
   messages <- c(
@@ -87,7 +87,7 @@ gptstudio_request_perform.openai <- function(x, ...) {
 }
 
 #' @export
-gptstudio_request_perform.huggingface <- function(skeleton) {
+gptstudio_request_perform.gptstudio_request_huggingface <- function(skeleton) {
   cli_inform(c("i" = "Using HuggingFace API"))
   model <- if (is.null(model)) getOption("gptstudio.hf_model") else model
   answer <- create_completion_hf(prompt = prompt, model = model)
@@ -96,12 +96,12 @@ gptstudio_request_perform.huggingface <- function(skeleton) {
 }
 
 #' @export
-gptstudio_request_perform.palm <- function(skeleton, ...) {
+gptstudio_request_perform.gptstudio_request_palm <- function(skeleton, ...) {
   create_completion_palm(prompt = prompt)
 }
 
 #' @export
-gptstudio_request_perform.anthropic <- function(skeleton, ...) {
+gptstudio_request_perform.gptstudio_request_anthropic <- function(skeleton, ...) {
   create_completion_anthropic(prompt = prompt)
 }
 

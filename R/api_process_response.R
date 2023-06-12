@@ -6,7 +6,7 @@
 #'
 #' @param skeleton A `gptstudio_response_skeleton` object
 #'
-#' @return A character string object
+#' @return A `gptstudio_request_skeleton` with updated history and prompt removed
 #'
 #' @examples
 #' \dontrun{
@@ -19,14 +19,20 @@ gptstudio_process_response <- function(skeleton, ...) {
 
 #' @export
 gptstudio_process_response.openai <- function(skeleton, ...) {
-  cli_inform(c("i" = "Using OpenAI API"))
-  model <- if (is.null(model)) getOption("gptstudio.chat_model") else model
-  stream_chat_completion(
-    prompt = prompt,
-    history = history,
-    element_callback = element_callback,
-    style = style,
-    skill = skill,
-    model = model
-  )
+    skeleton <- skeleton$skeleton
+    last_response <- gptstudio_get_last_response(x) # another nice generic to have
+
+    new_history <- c(
+      skeleton$history,
+      list(
+        list(role = "user", content = skeleton$prompt),
+        list(role = "assistant", content = last_response)
+      )
+    )
+
+    skeleton$history <- new_history
+    skeleton$prompt <- NULL # remove the last prompt
+
+    # return value
+    skeleton
 }
