@@ -73,16 +73,12 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
       }
 
       request_skeleton <-
-        new_gpstudio_request_skeleton(
+        gpstudio_update_request_skeleton(
           prompt  = prompt$input_prompt,
           history = prompt$chat_history,
           stream  = stream,
           model   = prompt$input_model,
-          class   = prompt$input_service,
-          extras  = list(
-            style   = prompt$input_style,
-            skill   = prompt$input_skill
-          )
+          class   = prompt$input_service
         )
 
       answer <-
@@ -102,11 +98,6 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
       rv$stream_ended <- rv$stream_ended + 1L
     }) %>%
       shiny::bindEvent(prompt$start_stream, ignoreInit = TRUE)
-
-    # testing ----
-    exportTestValues(
-      chat_history = prompt$chat_history
-    )
   })
 }
 

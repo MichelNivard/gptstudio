@@ -39,9 +39,7 @@ new_gptstudio_request_skeleton_openai <- function(
     ),
     stream = FALSE,
     max_tokens = getOption("gptstudio.max_tokens"),
-    n = 1,
-    skill = getOption("gptstudio.skill"),
-    style = getOption("gptstudio.style")
+    n = 1
 ) {
   new_gpstudio_request_skeleton(url,
                                 api_key,
@@ -49,6 +47,6 @@ new_gptstudio_request_skeleton_openai <- function(
                                 prompt,
                                 history,
                                 stream,
-                                extrax = list(style, skill, max_tokens, n),
+                                extrax = list(max_tokens, n),
                                 class = "gptstudio_request_skeleton_openai")
 }

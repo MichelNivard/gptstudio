@@ -27,8 +27,6 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
   )
 }
 
-
-
 #' App Server
 #'
 #' @inheritParams mod_app_ui

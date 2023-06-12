@@ -95,8 +95,6 @@ mod_prompt_server <- function(id) {
     rv$input_model   <- NULL
     rv$input_service <- NULL
 
-
-
     shiny::observe({
       rv$chat_history <- chat_history_append(
         history = rv$chat_history,
@@ -122,20 +120,10 @@ mod_prompt_server <- function(id) {
     }) %>%
       shiny::bindEvent(input$clear_history)
 
-
-
-    # testing ----
-    exportTestValues(
-      chat_history = rv$chat_history
-    )
-
     # module return ----
     rv
   })
 }
-
-
-
 
 #' Custom textAreaInput
 #'
@@ -188,8 +176,9 @@ text_area_input_wrapper <-
 #' This appends a new response to the chat history
 #'
 #' @param history List containing previous responses.
-#' @param role Author of the message. One of `c("user", "assitant")`
-#' @param content Content of the message. If it is from the user most probably comes from an interactive input.
+#' @param role Author of the message. One of `c("user", "assistant")`
+#' @param content Content of the message. If it is from the user most probably
+#' comes from an interactive input.
 #'
 #' @return list of chat messages
 #'

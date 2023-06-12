@@ -1,4 +1,4 @@
-#' Call API
+#' Perform API Request
 #'
 #' This function provides a generic interface for calling different APIs
 #' (e.g., OpenAI, HuggingFace, PALM (MakerSuite)). It dispatches the actual API
