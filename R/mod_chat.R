@@ -53,7 +53,7 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
       bindEvent(rv$stream_ended)
 
     output$history <- shiny::renderUI({
-      prompt$chat_history %>%
+      prompt$skeleton$history %>%
         style_chat_history(ide_colors = ide_colors)
     }) %>%
       bindEvent(prompt$chat_history, prompt$clear_history)
@@ -65,35 +65,27 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
       )
 
       if (prompt$input_service == "openai") {
+        cli::cli_inform("Using openai with streaming.")
         stream  <- TRUE
-        handler <- stream_handler$handle_streamed_element
+        handler <- stream_handler
       }  else {
         stream  <- FALSE
         handler <- NULL
       }
 
-      request_skeleton <-
-        gpstudio_update_request_skeleton(
-          prompt  = prompt$input_prompt,
-          history = prompt$chat_history,
-          stream  = stream,
-          model   = prompt$input_model,
-          class   = prompt$input_service
-        )
+      prompt$skeleton <-
+        prompt$skeleton %>%
+        gptstudio_skeleton_build(skill    = prompt$input_skill,
+                                 style    = prompt$input_style) %>%
+        gptstudio_request_perform(stream_handler = handler) %>%
+        gptstudio_response_process()
 
-      answer <-
-        gptstudio_request_perform(skeleton       = request_skeleton,
-                                  stream_handler = NULL)
+      cat_print(prompt$skeleton)
 
+      prompt$chat_history <- prompt$skeleton$history
       if (prompt$input_service == "openai") {
         answer <- stream_handler$current_value
       }
-
-      prompt$chat_history <- chat_history_append(
-        history = prompt$chat_history,
-        role    = "assistant",
-        content = answer
-      )
 
       rv$stream_ended <- rv$stream_ended + 1L
     }) %>%

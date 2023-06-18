@@ -89,17 +89,12 @@ StreamHandler <- R6::R6Class(
 
 #' Stream Chat Completion
 #'
-#' This function sends a prompt to the OpenAI API for chat-based completion and
+#' This function sends the prepared chat completion request to the OpenAI API and
 #' retrieves the streamed response.
 #'
-#' @param prompt The user's message or prompt.
-#' @param history A list of previous messages in the conversation (optional).
+#' @param prompt The prepared chat completion prompt.
 #' @param element_callback A callback function to handle each element of the
 #'   streamed response (optional).
-#' @param style The style of the chat conversation (optional). Default is
-#'   retrieved from the "gptstudio.code_style" option.
-#' @param skill The skill to use for the chat conversation (optional). Default
-#'   is retrieved from the "gptstudio.skill" option.
 #' @param model The model to use for chat completion (optional). Default is
 #'   "gpt-3.5-turbo".
 #' @param openai_api_key The OpenAI API key (optional). By default, it is
@@ -107,56 +102,38 @@ StreamHandler <- R6::R6Class(
 #'
 #' @return the same as `curl::curl_fetch_stream`
 #'
-stream_chat_completion <-
-  function(prompt,
-           history = NULL,
-           element_callback = cat,
-           style = getOption("gptstudio.code_style"),
-           skill = getOption("gptstudio.skill"),
-           model = getOption("gptstudio.chat_model"),
-           openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
-    url <- "https://api.openai.com/v1/chat/completions"
+stream_chat_completion <- function(prompt,
+                                   element_callback = cat,
+                                   model = getOption("gptstudio.chat_model"),
+                                   openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
+  url <- "https://api.openai.com/v1/chat/completions"
 
-    headers <- list(
-      "Content-Type" = "application/json",
-      "Authorization" = glue("Bearer {openai_api_key}")
+  headers <- list(
+    "Content-Type" = "application/json",
+    "Authorization" = glue::glue("Bearer {openai_api_key}")
+  )
+
+  body <- list(
+    "model"    = model,
+    "messages" = prompt,
+    "stream"   = TRUE
+  )
+
+  # Create a new curl handle object
+  handle <-
+    curl::new_handle() %>%
+    curl::handle_setheaders(.list = headers) %>%
+    curl::handle_setopt(
+      postfields = jsonlite::toJSON(body, auto_unbox = TRUE)
     )
 
-    instructions <- list(
-      list(
-        role = "system",
-        content = chat_create_system_prompt(style, skill, in_source = FALSE)
-      ),
-      list(
-        role = "user",
-        content = prompt
-      )
-    )
-
-    history <- purrr::discard(history, ~ .x$role == "system")
-
-    messages <- c(history, instructions)
-    body <- list(
-      "model" = model,
-      "stream" = TRUE,
-      "messages" = messages
-    )
-
-    # Create a new curl handle object
-    handle <-
-      curl::new_handle() %>%
-      curl::handle_setheaders(.list = headers) %>%
-      curl::handle_setopt(
-        postfields = jsonlite::toJSON(body, auto_unbox = TRUE)
-      )
-
-    # Make the streaming request using curl_fetch_stream()
-    curl::curl_fetch_stream(
-      url = url,
-      fun = function(x) {
-        element <- rawToChar(x)
-        element_callback(element)
-      },
-      handle = handle
-    )
-  }
+  # Make the streaming request using curl_fetch_stream()
+  curl::curl_fetch_stream(
+    url = url,
+    fun = function(x) {
+      element <- rawToChar(x)
+      element_callback(element)
+    },
+    handle = handle
+  )
+}

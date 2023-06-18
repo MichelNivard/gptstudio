@@ -9,9 +9,10 @@ chat_history_append(history, role, content)
 \arguments{
 \item{history}{List containing previous responses.}
 
-\item{role}{Author of the message. One of \code{c("user", "assitant")}}
+\item{role}{Author of the message. One of \code{c("user", "assistant")}}
 
-\item{content}{Content of the message. If it is from the user most probably comes from an interactive input.}
+\item{content}{Content of the message. If it is from the user most probably
+comes from an interactive input.}
 }
 \value{
 list of chat messages

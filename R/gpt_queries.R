@@ -177,6 +177,31 @@ chat_create_system_prompt <- function(style, skill, in_source) {
   glue("{intro} {about_skill} {about_style} {in_source_intructions}")
 }
 
+#' Prepare chat completion prompt
+#'
+#' This function prepares the chat completion prompt to be sent to the OpenAI API.
+#'
+#' @param history A list of previous messages in the conversation (optional).
+#' @param style The style of the chat conversation (optional). Default is
+#'   retrieved from the "gptstudio.code_style" option.
+#' @param skill The skill to use for the chat conversation (optional). Default
+#'   is retrieved from the "gptstudio.skill" option.
+#'
+#' @return A list containing the body of the request.
+#'
+prepare_chat_history <- function(history = NULL,
+                                style = getOption("gptstudio.code_style"),
+                                skill = getOption("gptstudio.skill")) {
+  instructions <- list(
+    list(
+      role = "system",
+      content = chat_create_system_prompt(style, skill, in_source = FALSE)
+    )
+  )
+
+  history <- purrr::discard(history, ~ .x$role == "system")
+  c(history, instructions)
+}
 
 get_selection <- function() {
   rstudioapi::verifyAvailable()

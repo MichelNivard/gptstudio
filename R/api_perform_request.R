@@ -5,6 +5,7 @@
 #' calls to the relevant method based on the `class` of the `skeleton` argument.
 #'
 #' @param skeleton A `gptstudio_request_skeleton` object
+#' @param ... Extra arguments (e.g., `stream_handler`)
 #'
 #' @return A `gptstudio_response_skeleton` object
 #'
@@ -14,80 +15,96 @@
 #' }
 #' @export
 gptstudio_request_perform <- function(skeleton, ...) {
+  if (!inherits(skeleton, "gptstudio_request_skeleton")) {
+    cli::cli_abort("Skeleton must be a 'gptstudio_request_skeleton' or a child class")
+  }
   UseMethod("gptstudio_request_perform")
 }
 
 
 #' @export
-gptstudio_request_perform.gptstudio_request_openai <- function(x, ...) {
+gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...) {
 
+  url        <- skeleton$url
+  api_key    <- skeleton$api_key
+  prompt     <- skeleton$prompt
+  history    <- skeleton$history
+  stream     <- skeleton$stream
+  model      <- skeleton$model
+  max_tokens <- skeleton$extras$max_tokens
+  n          <- skeleton$extra$n
+
+  args <- list(...)
+  handler <- args$stream_handler
   # Translate request
   messages <- c(
-    x$history,
+    skeleton$history,
     list(
-      list(role = "user", content = x$prompt)
+      list(role = "user", content = skeleton$prompt)
     )
   )
 
   body <- list(
-    "model" = x$model,
-    "stream" = TRUE,
-    "messages" = messages,
-    "max_tokens" = x$extra$max_tokens,
-    "n" = x$extra$n
+    "model"      = model,
+    "stream"     = stream,
+    "messages"   = messages,
+    "max_tokens" = max_tokens,
+    "n"          = n
   )
 
   # Perform request
   response <- NULL
 
-  if (x$stream) {
-    assertthat::assert_that(!is.null(stream_handler),
+  if (skeleton$stream) {
+    assertthat::assert_that(!is.null(handler),
                             msg = "This request needs a stream handler")
 
     headers <- list(
       "Content-Type" = "application/json",
-      "Authorization" = paste0("Bearer ", x$api_key)
+      "Authorization" = paste0("Bearer ", skeleton$api_key)
     )
 
-    handle <- curl::new_handle() |>
-      curl::handle_setheaders(.list = headers) |>
+    handle <- curl::new_handle() %>%
+      curl::handle_setheaders(.list = headers) %>%
       curl::handle_setopt(
         postfields = jsonlite::toJSON(body, auto_unbox = TRUE)
       )
 
     curl::curl_fetch_stream(
-      url = x$url,
+      url = url,
       fun = \(i) {
         element <- rawToChar(i)
         # this method could communicate with a shiny session
-        stream_handler$handle_streamed_element(element)
+        handler$handle_streamed_element(element)
       },
       handle = handle
     )
 
     # this doesn't exist yet, but you get the idea
-    response <- stream_handler$response_value()
+    response <- handler
 
   } else {
-
-    response <- httr2::request(x$url) |>
-      httr2::req_auth_bearer_token(x$api_key) |>
-      httr2::req_body_json(body) |>
-      httr2::req_perform()
+    response <- httr2::request(url) %>%
+      httr2::req_auth_bearer_token(api_key) %>%
+      httr2::req_body_json(body) %>%
+      httr2::req_perform() %>%
+      httr2::resp_body_json()
   }
 
   # return value
   structure(
     list(
-      skeleton = x,
+      skeleton = skeleton,
       response = response
     ),
-    class = "llm_response_openai"
+    class = "gptstudio_response_openai"
   )
 }
 
 #' @export
-gptstudio_request_perform.gptstudio_request_huggingface <- function(skeleton) {
+gptstudio_request_perform.gptstudio_request_huggingface <- function(skeleton, ...) {
+  model <- skeleton$model
+  prompt <- skeleton$prompt
   cli_inform(c("i" = "Using HuggingFace API"))
   model <- if (is.null(model)) getOption("gptstudio.hf_model") else model
   answer <- create_completion_hf(prompt = prompt, model = model)
@@ -97,12 +114,12 @@ gptstudio_request_perform.gptstudio_request_huggingface <- function(skeleton) {
 
 #' @export
 gptstudio_request_perform.gptstudio_request_palm <- function(skeleton, ...) {
-  create_completion_palm(prompt = prompt)
+  create_completion_palm(prompt = skeleton$prompt)
 }
 
 #' @export
 gptstudio_request_perform.gptstudio_request_anthropic <- function(skeleton, ...) {
-  create_completion_anthropic(prompt = prompt)
+  create_completion_anthropic(prompt = skeleton$prompt)
 }
 
 #' @export

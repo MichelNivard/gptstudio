@@ -5,22 +5,24 @@
 #' calls to the relevant method based on the `class` of the `skeleton` argument.
 #'
 #' @param skeleton A `gptstudio_response_skeleton` object
+#' @param ... Extra arguments, not currently used
 #'
 #' @return A `gptstudio_request_skeleton` with updated history and prompt removed
 #'
 #' @examples
 #' \dontrun{
-#' gptstudio_request_perform(gptstudio_skeleton)
+#' gptstudio_response_process(gptstudio_skeleton)
 #' }
 #' @export
-gptstudio_process_response <- function(skeleton, ...) {
-  UseMethod("gptstudio_process_response")
+gptstudio_response_process <- function(skeleton, ...) {
+  UseMethod("gptstudio_response_process")
 }
 
 #' @export
-gptstudio_process_response.openai <- function(skeleton, ...) {
+gptstudio_response_process.gptstudio_response_openai <- function(skeleton, ...) {
+    response <- skeleton$response
     skeleton <- skeleton$skeleton
-    last_response <- gptstudio_get_last_response(x) # another nice generic to have
+    last_response <- response$choices[[1]]$message$content
 
     new_history <- c(
       skeleton$history,
@@ -32,7 +34,7 @@ gptstudio_process_response.openai <- function(skeleton, ...) {
 
     skeleton$history <- new_history
     skeleton$prompt <- NULL # remove the last prompt
-
-    # return value
+    class(skeleton) <- c("gptstudio_request_skeleton",
+                         "gptstudio_request_openai")
     skeleton
 }

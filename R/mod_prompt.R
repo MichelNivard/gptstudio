@@ -12,9 +12,9 @@ mod_prompt_ui <- function(id, translator = create_translator()) {
   models <- get_available_models()
   chat_models <- models[stringr::str_detect(models, "gpt-3.5|gpt-4")]
   # remove "default" from api services
-  api_services <- utils::methods("call_api") %>%
-    stringr::str_remove(pattern = "call_api.") %>%
-    purrr::discard(~ .x == "default")
+  api_services <- utils::methods("gptstudio_request_perform") %>%
+    stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
+    purrr::discard(~ .x == "gptstudio_request_perform.default")
 
   htmltools::div(
     class = "d-flex p-3",
@@ -94,6 +94,7 @@ mod_prompt_server <- function(id) {
     rv$input_skill   <- NULL
     rv$input_model   <- NULL
     rv$input_service <- NULL
+    rv$skeleton     <- NULL
 
     shiny::observe({
       rv$chat_history <- chat_history_append(
@@ -107,6 +108,9 @@ mod_prompt_server <- function(id) {
       rv$input_skill   <- input$skill
       rv$input_model   <- input$chat_model
       rv$input_service <- input$service
+      rv$skeleton <- gptstudio_create_skeleton(service = rv$input_service,
+                                               prompt  = rv$input_prompt,
+                                               model   = rv$input_model)
 
       shiny::updateTextAreaInput(session, "chat_input", value = "")
       rv$start_stream <- rv$start_stream + 1L
