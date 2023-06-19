@@ -107,19 +107,27 @@ value_between <- function(x, lower, upper) {
 #'
 #' Get a list of the models supported by the OpenAI API.
 #'
+#' @param service The API service
+#'
 #' @return A character vector
 #' @export
 #'
 #' @examples
 #' get_available_endpoints()
-get_available_models <- function() {
-  check_api()
-
-  request_base("models") %>%
-    httr2::req_perform() %>%
-    httr2::resp_body_json() %>%
-    purrr::pluck("data") %>%
-    purrr::map_chr("root")
+get_available_models <- function(service) {
+  if (service == "openai") {
+    check_api()
+    models <-
+      request_base("models") %>%
+      httr2::req_perform() %>%
+      httr2::resp_body_json() %>%
+      purrr::pluck("data") %>%
+      purrr::map_chr("root")
+    models[stringr::str_detect(models, "gpt-3.5|gpt-4")]
+  } else if (service == "huggingface") {
+    c("gpt2", "tiiuae/falcon-7b-instruct",
+      "bigcode/starcoderplus", "nomic-ai/gpt4all-j")
+  }
 }
 
 

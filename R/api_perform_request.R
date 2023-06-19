@@ -106,10 +106,14 @@ gptstudio_request_perform.gptstudio_request_huggingface <- function(skeleton, ..
   model <- skeleton$model
   prompt <- skeleton$prompt
   cli_inform(c("i" = "Using HuggingFace API"))
-  model <- if (is.null(model)) getOption("gptstudio.hf_model") else model
-  answer <- create_completion_hf(prompt = prompt, model = model)
-  cat_print(answer[[1]]$generated_text)
-  answer[[1]]$generated_text
+  response <- create_completion_huggingface(prompt = prompt, model = model)
+  structure(
+    list(
+      skeleton = skeleton,
+      response = response
+    ),
+    class = "gptstudio_response_huggingface"
+  )
 }
 
 #' @export

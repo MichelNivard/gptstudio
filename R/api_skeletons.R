@@ -67,7 +67,7 @@ new_gptstudio_request_skeleton_openai <- function(
 }
 
 
-new_gptstudio_request_skeleton_hf <- function(
+new_gptstudio_request_skeleton_huggingface <- function(
     url = "https://api-inference.huggingface.co/models",
     api_key = Sys.getenv("HF_API_KEY"),
     model = "gpt2",
@@ -106,7 +106,7 @@ gptstudio_create_skeleton <- function(service = "openai",
            prompt = prompt,
            history = history,
            stream = stream),
-         "huggingface" = new_gptstudio_request_skeleton_hf(
+         "huggingface" = new_gptstudio_request_skeleton_huggingface(
            model = model,
            prompt = prompt,
            history = history,

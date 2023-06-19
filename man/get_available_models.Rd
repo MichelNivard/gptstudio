@@ -4,7 +4,10 @@
 \alias{get_available_models}
 \title{List supported models}
 \usage{
-get_available_models()
+get_available_models(service)
+}
+\arguments{
+\item{service}{The API service}
 }
 \value{
 A character vector

@@ -11,7 +11,7 @@
     gptstudio.skill      = "beginner",
     gptstudio.language   = if (env_language == "") "en" else (env_language),
     gptstudio.chat_model = "gpt-3.5-turbo",
-    gptstudio.hf_model   = "gpt2"
+    gptstudio.huggingface_model   = "gpt2"
   )
   toset <- !(names(op_gptstudio) %in% names(op))
   if (any(toset)) options(op_gptstudio[toset])
