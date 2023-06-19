@@ -2,7 +2,9 @@
 
 ## Bug fixes
 
-- Fixed a bug that prevented the "Spelling and Grammar" and the "Comment your code" addins to actually insert text in source. Fix #101
+- Fixed a bug that prevented the "Spelling and Grammar" and the "Comment your code" addins to actually insert text in source. Fixes #101
+- Fixed a bug that prevented installation when `{stringr}` was previously installed with a version lower than 1.5.0 . Fixes #110
+- Fixed a bug that prevented installation on versions of R previous to 4.1. Fixes #114, closes #115
 
 ## Model selection
 
