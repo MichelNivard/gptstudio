@@ -123,9 +123,13 @@ get_available_models <- function(service) {
       httr2::resp_body_json() %>%
       purrr::pluck("data") %>%
       purrr::map_chr("root")
-    models[stringr::str_detect(models, "gpt-3.5|gpt-4")]
+    models <- models[stringr::str_detect(models, "gpt-3.5|gpt-4")]
+    idx <- which(models == "gpt-3.5-turbo")
+    models <- c(models[idx], models[-idx])
   } else if (service == "huggingface") {
     c("gpt2", "tiiuae/falcon-7b-instruct", "bigcode/starcoderplus")
+  } else if (service == "anthropic") {
+    c("claude-1", "claude-1-100k", "claude-instant-1", "claude-instant-1-100k")
   }
 }
 

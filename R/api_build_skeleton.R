@@ -42,3 +42,18 @@ gptstudio_skeleton_build.gptstudio_request_huggingface <-
                                                history = new_history,
                                                stream  = stream)
   }
+
+#' @export
+gptstudio_skeleton_build.gptstudio_request_anthropic <-
+  function(skeleton, skill, style, ...) {
+    prompt         <- skeleton$prompt
+    history        <- skeleton$history
+    model          <- skeleton$model
+    stream         <- skeleton$stream
+    new_history <- prepare_chat_history(history, style, skill)
+
+    new_gptstudio_request_skeleton_anthropic(model   = model,
+                                             prompt  = prompt,
+                                             history = new_history,
+                                             stream  = stream)
+  }

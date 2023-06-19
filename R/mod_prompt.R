@@ -101,8 +101,7 @@ mod_prompt_server <- function(id) {
 
     observe({
       shiny::updateSelectInput(session, inputId = "chat_model",
-                               choices = chat_models(),
-                               selected = "gpt-3.5-turbo")
+                               choices = chat_models())
     })
 
     shiny::observe({

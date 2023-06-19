@@ -89,6 +89,28 @@ new_gptstudio_request_skeleton_huggingface <- function(
                                 class = "gptstudio_request_huggingface")
 }
 
+new_gptstudio_request_skeleton_anthropic <- function(
+    url = "https://api.anthropic.com/v1/complete",
+    api_key = Sys.getenv("ANTHROPIC_API_KEY"),
+    model = "claude-1",
+    prompt = "What is a ggplot?",
+    history = list(
+      list(
+        role = "system",
+        content = "You are an R chat assistant"
+      )
+    ),
+    stream = FALSE
+) {
+  new_gpstudio_request_skeleton(url,
+                                api_key,
+                                model,
+                                prompt,
+                                history,
+                                stream,
+                                class = "gptstudio_request_anthropic")
+}
+
 gptstudio_create_skeleton <- function(service = "openai",
                                       prompt = "What is a ggplot?",
                                       history = list(
@@ -107,6 +129,11 @@ gptstudio_create_skeleton <- function(service = "openai",
            history = history,
            stream = stream),
          "huggingface" = new_gptstudio_request_skeleton_huggingface(
+           model = model,
+           prompt = prompt,
+           history = history,
+           stream = stream),
+         "anthropic" = new_gptstudio_request_skeleton_anthropic(
            model = model,
            prompt = prompt,
            history = history,

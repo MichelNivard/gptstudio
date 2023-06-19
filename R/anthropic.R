@@ -51,6 +51,7 @@ query_api_anthropic <- function(request_body,
 #' Generate text completions using Anthropic's API
 #'
 #' @param prompt The prompt for generating completions
+#' @param history A list of the previous chat responses
 #' @param model The model to use for generating text. By default, the
 #'   function will try to use "claude-1".
 #' @param max_tokens_to_sample The maximum number of tokens to generate. Defaults to 256.
@@ -69,11 +70,22 @@ query_api_anthropic <- function(request_body,
 #' }
 #' @export
 create_completion_anthropic <- function(prompt,
+                                        history = NULL,
                                         model = "claude-1",
                                         max_tokens_to_sample = 256,
                                         key = Sys.getenv("ANTHROPIC_API_KEY")) {
   # The request body for the Anthropic API should be a list with the 'prompt', 'model', and 'max_tokens_to_sample' fields set
-  prompt <- glue::glue("\n\nHuman: {prompt}\n\nAssistant:")
+  prepped_history <- ""
+  for (i in seq_along(history)) {
+    if (history[[i]]$role == 'system') {
+      prepped_history <- paste0(prepped_history, "\n\nHuman:\n", history[[i]]$content)
+    } else if (history[[i]]$role == 'user') {
+      prepped_history <- paste0(prepped_history, "\n\nHuman:\n", history[[i]]$content)
+    } else if (history[[i]]$role == 'assistant') {
+      prepped_history <- paste0(prepped_history, "\n\nAssistant:\n", history[[i]]$content)
+    }
+  }
+  prompt <- glue::glue("{prepped_history}\n\nHuman: {prompt}\n\nAssistant:")
   request_body <- list(prompt = prompt,
                        model = model,
                        max_tokens_to_sample = max_tokens_to_sample)

@@ -102,30 +102,46 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...) {
 }
 
 #' @export
-gptstudio_request_perform.gptstudio_request_huggingface <- function(skeleton, ...) {
-  model   <- skeleton$model
-  prompt  <- skeleton$prompt
-  history <- skeleton$history
-  cli_inform(c("i" = "Using HuggingFace API"))
-  response <- create_completion_huggingface(prompt, history, model)
-  structure(
-    list(
-      skeleton = skeleton,
-      response = response
-    ),
-    class = "gptstudio_response_huggingface"
-  )
-}
+gptstudio_request_perform.gptstudio_request_huggingface <-
+  function(skeleton, ...) {
+    model   <- skeleton$model
+    prompt  <- skeleton$prompt
+    history <- skeleton$history
+    cli_inform(c("i" = "Using HuggingFace API with {model} model"))
+    response <- create_completion_huggingface(prompt, history, model)
+    structure(
+      list(
+        skeleton = skeleton,
+        response = response
+      ),
+      class = "gptstudio_response_huggingface"
+    )
+  }
 
 #' @export
-gptstudio_request_perform.gptstudio_request_palm <- function(skeleton, ...) {
-  create_completion_palm(prompt = skeleton$prompt)
-}
+gptstudio_request_perform.gptstudio_request_palm <-
+  function(skeleton, ...) {
+    create_completion_palm(prompt = skeleton$prompt)
+  }
 
 #' @export
-gptstudio_request_perform.gptstudio_request_anthropic <- function(skeleton, ...) {
-  create_completion_anthropic(prompt = skeleton$prompt)
-}
+gptstudio_request_perform.gptstudio_request_anthropic <-
+  function(skeleton, ...) {
+    model   <- skeleton$model
+    prompt  <- skeleton$prompt
+    history <- skeleton$history
+    cli_inform(c("i" = "Using Anthropic API with {model} model"))
+    response <- create_completion_anthropic(prompt  = prompt,
+                                            history = history,
+                                            model   = model)
+    structure(
+      list(
+        skeleton = skeleton,
+        response = response
+      ),
+      class = "gptstudio_response_anthropic"
+    )
+  }
 
 #' @export
 gptstudio_request_perform.default <- function(skeleton, ...) {

@@ -6,6 +6,7 @@
 \usage{
 create_completion_anthropic(
   prompt,
+  history = NULL,
   model = "claude-1",
   max_tokens_to_sample = 256,
   key = Sys.getenv("ANTHROPIC_API_KEY")
@@ -13,6 +14,8 @@ create_completion_anthropic(
 }
 \arguments{
 \item{prompt}{The prompt for generating completions}
+
+\item{history}{A list of the previous chat responses}
 
 \item{model}{The model to use for generating text. By default, the
 function will try to use "claude-1".}

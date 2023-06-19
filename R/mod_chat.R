@@ -80,8 +80,6 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
         gptstudio_request_perform(stream_handler = handler) %>%
         gptstudio_response_process()
 
-      cat_print(prompt$skeleton)
-
       prompt$chat_history <- prompt$skeleton$history
       if (prompt$input_service == "openai") {
         answer <- stream_handler$current_value
