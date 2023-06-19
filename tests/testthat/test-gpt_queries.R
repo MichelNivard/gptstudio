@@ -49,7 +49,7 @@ test_that("gpt_create can replace & append text", {
     openai_create_completion =
       function(model, prompt, temperature, max_tokens,
                openai_api_key) {
-        list(choices = data.frame(text = "here are completions openai returns"))
+        list(choices = data.frame(text = "here are completions openai returns", stringsAsFactors = FALSE))
       }
   )
   mockr::local_mock(check_api = function() TRUE)
