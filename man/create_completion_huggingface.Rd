@@ -6,6 +6,7 @@
 \usage{
 create_completion_huggingface(
   prompt,
+  history = NULL,
   model = "tiiuae/falcon-7b-instruct",
   token = Sys.getenv("HF_API_KEY"),
   max_new_tokens = 250
@@ -13,6 +14,8 @@ create_completion_huggingface(
 }
 \arguments{
 \item{prompt}{The prompt for generating completions}
+
+\item{history}{A list of the previous chat responses}
 
 \item{model}{The model to use for generating text}
 

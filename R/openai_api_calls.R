@@ -125,8 +125,7 @@ get_available_models <- function(service) {
       purrr::map_chr("root")
     models[stringr::str_detect(models, "gpt-3.5|gpt-4")]
   } else if (service == "huggingface") {
-    c("gpt2", "tiiuae/falcon-7b-instruct",
-      "bigcode/starcoderplus", "nomic-ai/gpt4all-j")
+    c("gpt2", "tiiuae/falcon-7b-instruct", "bigcode/starcoderplus")
   }
 }
 

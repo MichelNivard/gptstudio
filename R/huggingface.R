@@ -25,8 +25,8 @@ request_base_huggingface <- function(task, token = Sys.getenv("HF_API_KEY")) {
 #' @return The response from the API.
 #'
 query_api_huggingface <- function(task,
-                         request_body,
-                         token = Sys.getenv("HF_API_KEY")) {
+                                  request_body,
+                                  token = Sys.getenv("HF_API_KEY")) {
   response <- request_base_huggingface(task, token) %>%
     httr2::req_body_json(data = request_body) %>%
     httr2::req_retry(max_tries = 3) %>%
@@ -50,8 +50,9 @@ query_api_huggingface <- function(task,
 
 #' Generate text completions using HuggingFace's API
 #'
-#' @param model The model to use for generating text
 #' @param prompt The prompt for generating completions
+#' @param history A list of the previous chat responses
+#' @param model The model to use for generating text
 #' @param token The API key for accessing HuggingFace's API. By default, the
 #'   function will try to use the `HF_API_KEY` environment variable.
 #' @param max_new_tokens Maximum number of tokens to generate, defaults to 250
@@ -67,15 +68,33 @@ query_api_huggingface <- function(task,
 #' }
 #' @export
 create_completion_huggingface <- function(prompt,
-                                 model = "tiiuae/falcon-7b-instruct",
-                                 token = Sys.getenv("HF_API_KEY"),
-                                 max_new_tokens = 250) {
-  # The request body for the HuggingFace API should be a list with the 'inputs'
-  # field set to the prompt
+                                          history = NULL,
+                                          model = "tiiuae/falcon-7b-instruct",
+                                          token = Sys.getenv("HF_API_KEY"),
+                                          max_new_tokens = 250) {
+
+  prepped_history <- ""
+  for (i in seq_along(history)) {
+    if (history[[i]]$role == 'system') {
+      prepped_history <-
+        paste0(prepped_history, "\nInstructions:\n", history[[i]]$content)
+    } else if (history[[i]]$role == 'user') {
+      prepped_history <-
+        paste0(prepped_history, "\nUser:\n", history[[i]]$content)
+    } else if (history[[i]]$role == 'assistant') {
+      prepped_history <-
+        paste0(prepped_history, "\nAssistant:\n", history[[i]]$content)
+    }
+  }
+
+  prompt <- glue::glue("{prepped_history}\nUser:\n{prompt}")
+
+  cat_print(prompt)
+
   request_body <- list(inputs = prompt,
                        parameters = list(max_new_tokens	= max_new_tokens,
                                          return_full_text = FALSE))
   query_api_huggingface(task = model,
-               request_body = request_body,
-               token = token)
+                        request_body = request_body,
+                        token = token)
 }

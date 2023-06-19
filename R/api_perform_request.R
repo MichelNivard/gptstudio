@@ -103,10 +103,11 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...) {
 
 #' @export
 gptstudio_request_perform.gptstudio_request_huggingface <- function(skeleton, ...) {
-  model <- skeleton$model
-  prompt <- skeleton$prompt
+  model   <- skeleton$model
+  prompt  <- skeleton$prompt
+  history <- skeleton$history
   cli_inform(c("i" = "Using HuggingFace API"))
-  response <- create_completion_huggingface(prompt = prompt, model = model)
+  response <- create_completion_huggingface(prompt, history, model)
   structure(
     list(
       skeleton = skeleton,
