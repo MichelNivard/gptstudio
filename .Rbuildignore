@@ -13,3 +13,4 @@ _\.new\.png$
 ^CRAN-SUBMISSION$
 diagram.svg
 ^revdep$
+dev/

@@ -39,7 +39,7 @@ Imports:
     rstudioapi (>= 0.12),
     shiny,
     shiny.i18n,
-    stringr,
+    stringr (>= 1.5.0),
     utils
 Suggests: 
     mockr,
