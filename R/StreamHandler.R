@@ -73,7 +73,7 @@ StreamHandler <- R6::R6Class(
         stringr::str_remove("^data: ") %>% # handle first element
         stringr::str_remove("(\n\ndata: \\[DONE\\])?\n\n$") %>% # handle last element
         stringr::str_split_1("\n\ndata: ") %>%
-        purrr::map(\(x) jsonlite::fromJSON(x, simplifyVector = FALSE))
+        purrr::map(~ jsonlite::fromJSON(.x, simplifyVector = FALSE))
     },
     # Reduces the chuks into just the message content.
     convert_chunks_into_response_str = function() {
@@ -148,7 +148,7 @@ stream_chat_completion <-
     # Make the streaming request using curl_fetch_stream()
     curl::curl_fetch_stream(
       url = url,
-      fun = \(x) {
+      fun = function(x) {
         element <- rawToChar(x)
         element_callback(element) # Do whatever element_callback does
       },

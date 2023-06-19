@@ -95,7 +95,7 @@ chat_message_default <- function(translator = create_translator()) {
     "Welcome to the R community! I'm your virtual assistant, and I'm here to support you every step of the way.",
     "Hi there! I'm your personal R virtual assistant, and I'm committed to helping you achieve your coding goals."
   ) %>%
-    purrr::map_chr(\(x) translator$t(x))
+    purrr::map_chr(~ translator$t(.x))
 
   paperplane <- fontawesome::fa("fas fa-paper-plane") %>% as.character()
   eraser <- fontawesome::fa("eraser")
@@ -107,7 +107,7 @@ chat_message_default <- function(translator = create_translator()) {
     "- Clear the current chat history ({eraser})\n",
     "- Change the settings ({gear})\n"
   ) %>%
-    purrr::map_chr(\(x) translator$t(x)) %>%
+    purrr::map_chr(~ translator$t(.x)) %>%
     glue::glue_collapse() %>%
     glue::glue()
 
