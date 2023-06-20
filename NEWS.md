@@ -2,7 +2,13 @@
 
 ## Bug fixes
 
-- Fixed a bug that prevented the "Spelling and Grammar" and the "Comment your code" addins to actually insert text in source. Fix #101
+- Fixed a bug that prevented the "Spelling and Grammar" and the "Comment your code" addins to actually insert text in source. Fixes #101
+- Fixed a bug that prevented installation when `{stringr}` was previously installed with a version lower than 1.5.0 . Fixes #110
+- Fixed a bug that prevented installation on versions of R previous to 4.1. Fixes #114, closes #115
+
+## Notes
+
+- We now use github actions to check on more R versions in ubuntu. At the time of writing, gptstudio will start running checks on R versions `3.6.3`, `4.0.5`, `4.1.3`, `4.2.3`, `4.3.1` (current), and the development version. This should ensure that users can install the package in all those versions. Users can still try and maybe achieve installing on older versions, but we won't actively check compatibility of new features on them.
 
 ## Model selection
 
