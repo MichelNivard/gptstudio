@@ -48,7 +48,13 @@
 <h2 class="pkg-version" data-toc-text="development version" id="gptstudio-development-version">gptstudio (development version)<a class="anchor" aria-label="anchor" href="#gptstudio-development-version"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>Fixed a bug that prevented the “Spelling and Grammar” and the “Comment your code” addins to actually insert text in source. Fix <a href="https://github.com/MichelNivard/gptstudio/issues/101" class="external-link">#101</a></li>
+<ul><li>Fixed a bug that prevented the “Spelling and Grammar” and the “Comment your code” addins to actually insert text in source. Fixes <a href="https://github.com/MichelNivard/gptstudio/issues/101" class="external-link">#101</a></li>
+<li>Fixed a bug that prevented installation when <a href="https://stringr.tidyverse.org" class="external-link">stringr</a> was previously installed with a version lower than 1.5.0 . Fixes <a href="https://github.com/MichelNivard/gptstudio/issues/110" class="external-link">#110</a></li>
+<li>Fixed a bug that prevented installation on versions of R previous to 4.1. Fixes <a href="https://github.com/MichelNivard/gptstudio/issues/114" class="external-link">#114</a>, closes <a href="https://github.com/MichelNivard/gptstudio/issues/115" class="external-link">#115</a></li>
+</ul></div>
+<div class="section level3">
+<h3 id="notes-development-version">Notes<a class="anchor" aria-label="anchor" href="#notes-development-version"></a></h3>
+<ul><li>We now use github actions to check on more R versions in ubuntu. At the time of writing, gptstudio will start running checks on R versions <code>3.6.3</code>, <code>4.0.5</code>, <code>4.1.3</code>, <code>4.2.3</code>, <code>4.3.1</code> (current), and the development version. This should ensure that users can install the package in all those versions. Users can still try and maybe achieve installing on older versions, but we won’t actively check compatibility of new features on them.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="model-selection-development-version">Model selection<a class="anchor" aria-label="anchor" href="#model-selection-development-version"></a></h3>
