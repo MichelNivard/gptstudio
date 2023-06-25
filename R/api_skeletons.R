@@ -53,7 +53,7 @@ new_gptstudio_request_skeleton_openai <- function(
         content = "You are an R chat assistant"
       )
     ),
-    stream = FALSE,
+    stream = TRUE,
     max_tokens = getOption("gptstudio.max_tokens"),
     n = 1
 ) {
@@ -119,7 +119,7 @@ gptstudio_create_skeleton <- function(service = "openai",
                                           content = "You are an R chat assistant"
                                         )
                                       ),
-                                      stream = FALSE,
+                                      stream,
                                       model = "gpt-3.5-turbo",
                                       ...) {
   switch(service,

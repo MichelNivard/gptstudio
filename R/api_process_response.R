@@ -23,7 +23,12 @@ gptstudio_response_process.gptstudio_response_openai <-
   function(skeleton, ...) {
     response <- skeleton$response
     skeleton <- skeleton$skeleton
-    last_response <- response$choices[[1]]$message$content
+
+    if (skeleton$stream == TRUE) {
+      last_response = response
+    } else {
+      last_response <- response$choices[[1]]$message$content
+    }
 
     new_history <- c(
       skeleton$history,
@@ -38,29 +43,29 @@ gptstudio_response_process.gptstudio_response_openai <-
     class(skeleton) <- c("gptstudio_request_skeleton",
                          "gptstudio_request_openai")
     skeleton
-}
+  }
 
 #' @export
 gptstudio_response_process.gptstudio_response_huggingface <-
   function(skeleton, ...) {
-  response <- skeleton$response
-  skeleton <- skeleton$skeleton
-  last_response <- response[[1]]$generated_text
+    response <- skeleton$response
+    skeleton <- skeleton$skeleton
+    last_response <- response[[1]]$generated_text
 
-  new_history <- c(
-    skeleton$history,
-    list(
-      list(role = "user", content = skeleton$prompt),
-      list(role = "assistant", content = last_response)
+    new_history <- c(
+      skeleton$history,
+      list(
+        list(role = "user", content = skeleton$prompt),
+        list(role = "assistant", content = last_response)
+      )
     )
-  )
 
-  skeleton$history <- new_history
-  skeleton$prompt <- NULL # remove the last prompt
-  class(skeleton) <- c("gptstudio_request_skeleton",
-                       "gptstudio_request_huggingface")
-  skeleton
-}
+    skeleton$history <- new_history
+    skeleton$prompt <- NULL # remove the last prompt
+    class(skeleton) <- c("gptstudio_request_skeleton",
+                         "gptstudio_request_huggingface")
+    skeleton
+  }
 
 #' @export
 gptstudio_response_process.gptstudio_response_anthropic <-

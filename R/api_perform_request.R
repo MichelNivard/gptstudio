@@ -35,7 +35,6 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...) {
   n          <- skeleton$extra$n
 
   args <- list(...)
-  handler <- args$stream_handler
   # Translate request
   messages <- c(
     skeleton$history,
@@ -55,34 +54,9 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...) {
   # Perform request
   response <- NULL
 
-  if (skeleton$stream) {
-    assertthat::assert_that(!is.null(handler),
-                            msg = "This request needs a stream handler")
-
-    headers <- list(
-      "Content-Type" = "application/json",
-      "Authorization" = paste0("Bearer ", skeleton$api_key)
-    )
-
-    handle <- curl::new_handle() %>%
-      curl::handle_setheaders(.list = headers) %>%
-      curl::handle_setopt(
-        postfields = jsonlite::toJSON(body, auto_unbox = TRUE)
-      )
-
-    curl::curl_fetch_stream(
-      url = url,
-      fun = \(i) {
-        element <- rawToChar(i)
-        # this method could communicate with a shiny session
-        handler$handle_streamed_element(element)
-      },
-      handle = handle
-    )
-
-    # this doesn't exist yet, but you get the idea
-    response <- handler
-
+  if (!is.null(skeleton$stream)) {
+    response <- stream_chat_completion(prompt = messages,
+                                       model = model)
   } else {
     response <- httr2::request(url) %>%
       httr2::req_auth_bearer_token(api_key) %>%
@@ -90,7 +64,6 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...) {
       httr2::req_perform() %>%
       httr2::resp_body_json()
   }
-
   # return value
   structure(
     list(
