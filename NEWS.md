@@ -1,5 +1,9 @@
 # gptstudio (development version)
 
+## Streaming Updates
+
+- Implement streaming with dependency on R6 inspired by Edgar Ruiz's work on [chattr](https://github.com/mlverse/chatter).
+
 ## Bug fixes
 
 - Fixed a bug that prevented the "Spelling and Grammar" and the "Comment your code" addins to actually insert text in source. Fix #101
