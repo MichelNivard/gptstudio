@@ -32,7 +32,7 @@ query_api_palm <- function(model,
   response <- request_base_palm(model, key) %>%
     httr2::req_body_json(data = request_body) %>%
     httr2::req_retry(max_tries = 3) %>%
-    httr2::req_error(is_error = \(resp) FALSE) %>%
+    httr2::req_error(is_error = function(resp) FALSE) %>%
     httr2::req_perform()
 
   # error handling
