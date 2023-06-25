@@ -8,7 +8,6 @@
 #'
 mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
   ns <- NS(id)
-
   translator <- create_translator(language = getOption("gptstudio.language"))
 
   bslib::page_fluid(

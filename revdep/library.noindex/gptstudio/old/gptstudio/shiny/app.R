@@ -1,7 +1,5 @@
-rlang::check_installed("waiter")
 rlang::check_installed("bslib")
 library(gptstudio)
-library(waiter)
 
 chat_card <- bslib::card(
   height = "550px",
@@ -58,10 +56,6 @@ server <- function(input, output, session) {
   r$all_chats <- NULL
 
   shiny::observe({
-    waiter::waiter_show(
-      html = shiny::tagList(spin_flower(), shiny::h3("Asking ChatGPT...")),
-      color = waiter::transparent(0.5)
-    )
     interim <- gpt_chat(
       query = input$chat_input,
       history = r$all_chats,
@@ -80,7 +74,6 @@ server <- function(input, output, session) {
         )
       )
     r$all_chats_formatted <- make_chat_history(r$all_chats)
-    waiter::waiter_hide()
     shiny::updateTextAreaInput(session, "chat_input", value = "")
   }) %>%
     shiny::bindEvent(input$chat)

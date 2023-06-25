@@ -73,7 +73,6 @@ server <- function(input, output, session) {
         )
       )
     r$all_chats_formatted <- make_chat_history(r$all_chats)
-    waiter::waiter_hide()
     shiny::updateTextAreaInput(session, "chat_input", value = "")
   }) %>%
     shiny::bindEvent(input$chat)
