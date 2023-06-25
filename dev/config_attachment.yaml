@@ -1,0 +1,12 @@
+path.n: NAMESPACE
+path.d: DESCRIPTION
+dir.r: R
+dir.v: vignettes
+dir.t: tests
+extra.suggests: ~
+pkg_ignore: ~
+document: yes
+normalize: yes
+inside_rmd: no
+must.exist: yes
+check_if_suggests_is_installed: yes

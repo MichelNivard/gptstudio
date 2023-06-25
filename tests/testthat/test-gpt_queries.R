@@ -1,12 +1,11 @@
 mockr::local_mock(
   get_selection = function() {
-    data.frame(value = "here is some selected text")
+    data.frame(value = "here is some selected text", stringsAsFactors = FALSE)
   }
 )
 
 mockr::local_mock(insert_text = function(improved_text) improved_text)
 sample_key <- uuid::UUIDgenerate()
-
 
 test_that("gpt_chat_in_source returns expected output", {
   mockr::local_mock(
