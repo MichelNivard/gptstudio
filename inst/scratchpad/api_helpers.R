@@ -32,7 +32,7 @@ query_api <- function(task, request_body, token = Sys.getenv("OPENAI_API_KEY")) 
     httr2::req_retry(max_tries = 3) %>%
     httr2::req_error(is_error = \(resp) FALSE)
 
-  response |> httr2::req_dry_run()
+  response %>% httr2::req_dry_run()
 
   response <- httr2::req_perform(response)
 

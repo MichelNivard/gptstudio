@@ -246,6 +246,6 @@ get_skeleton <- function() {
 }
 
 get_current_history <- function() {
-  history <- get_skeleton() |> purrr::pluck("history")
+  history <- get_skeleton() %>% purrr::pluck("history")
   gptstudio_env$current_history <- history
 }
