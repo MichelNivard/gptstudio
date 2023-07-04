@@ -1,8 +1,20 @@
 # gptstudio (development version)
 
+## More API services
+
+Models from other API services are now included include:
+
+- HuggingFace inference API: gpt2, tiiuae/falcon-7b-instruct, bigcode/starcoderplus
+- Anthropic's claude models: claude-1, claude-1-100k, claude-instant-1, claude-instant-1-100k
+- Google's MakerSuite: PALM
+
+## S3 Class for API Services
+
+API calls now use S3 classes that will make it easier to incorporate additional APIs in the future. 
+
 ## Streaming Updates
 
-- Implement streaming with dependency on R6 inspired by Edgar Ruiz's work on [chattr](https://github.com/mlverse/chatter).
+- Implement streaming without dependency on R6 inspired by Edgar Ruiz's work on [chattr](https://github.com/mlverse/chatter).
 
 ## Bug fixes
 
