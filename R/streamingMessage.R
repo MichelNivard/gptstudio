@@ -1,20 +1,21 @@
 #' Streaming message
 #'
 #' Places an invisible empty chat message that will hold a streaming message.
-#' It can be resetted dynamically inside a shiny app
+#' It can be reset dynamically inside a shiny app
 #'
 #' @import htmlwidgets
 #' @inheritParams run_chatgpt_app
 #' @inheritParams streamingMessage-shiny
 #' @param elementId The element's id
-streamingMessage <- function(ide_colors = get_ide_theme_info(), width = NULL, height = NULL, elementId = NULL) {
+streamingMessage <- function(ide_colors = get_ide_theme_info(),
+                             width = NULL,
+                             height = NULL,
+                             elementId = NULL) {
   message <- list(
     list(role = "user", content = ""),
     list(role = "assistant", content = "")
   ) %>%
     style_chat_history(ide_colors = ide_colors)
-
-
 
   # forward options using x
   x <- list(

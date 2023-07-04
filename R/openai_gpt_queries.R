@@ -1,139 +1,14 @@
-#' Use GPT to improve text
-#'
-#' This function uses the GPT model from OpenAI to improve the spelling and
-#' grammar of the selected text in the current RStudio session.
-#'
-#' @param model The name of the GPT model to use.
-#' @param instruction Instruction given to the model on how to improve the text.
-#' @param temperature A parameter for controlling the randomness of the GPT
-#' model's output.
-#' @param openai_api_key An API key for the OpenAI API.
-#' @param append_text Add text to selection rather than replace, defaults to
-#'  FALSE
-#'
-#' @return Nothing is returned. The improved text is inserted into the current
-#'  RStudio session.
-#' @export
-#'
-#' @examples
-#' # Select some text in Rstudio
-#' # Then call the function as an RStudio addin
-#' \dontrun{
-#' gpt_edit(
-#'   model = "text-davinci-002",
-#'   instruction = "Improve spelling and grammar",
-#'   temperature = 0.5,
-#'   openai_api_key = "my_api_key"
-#' )
-#' }
-gpt_edit <- function(model,
-                     instruction,
-                     temperature,
-                     openai_api_key = Sys.getenv("OPENAI_API_KEY"),
-                     append_text = FALSE) {
-  check_api()
-  selection <- get_selection()
-  inform("Asking GPT for help...")
-
-  edit <- openai_create_edit(
-    model = model,
-    input = selection$value,
-    instruction = instruction,
-    temperature = temperature,
-    openai_api_key = openai_api_key
-  )
-
-  if (append_text) {
-    improved_text <- c(selection$value, edit$choices[[1]]$text)
-    inform("Appending text from GPT...")
-  } else {
-    improved_text <- edit$choices[[1]]$text
-    inform("Inserting text from GPT...")
-  }
-
-  # cli_text("{improved_text}") # print debugging
-
-  insert_text(improved_text)
-}
-
-#' Use GPT to improve text
-#'
-#' This function uses the GPT model from OpenAI to improve the spelling and
-#'  grammar of the selected text in the current RStudio session.
-#'
-#' @param model The name of the GPT model to use.
-#' @param temperature A parameter for controlling the randomness of the GPT
-#'  model's output.
-#' @param max_tokens Maximum number of tokens to return (related to length of
-#' response), defaults to 500
-#' @param openai_api_key An API key for the OpenAI API.
-#' @param append_text Add text to selection rather than replace, default to TRUE
-#'
-#' @return Nothing is returned. The improved text is inserted into the current
-#' RStudio session.
-#' @export
-#'
-#' @examples
-#' # Call the function as an RStudio addin
-#' \dontrun{
-#' gpt_create(
-#'   model = "text-davinci-002",
-#'   temperature = 0.5,
-#'   max_tokens = 100,
-#'   openai_api_key = "my_api_key"
-#' )
-#' }
-gpt_create <- function(model,
-                       temperature,
-                       max_tokens = getOption("gptstudio.max_tokens"),
-                       openai_api_key = Sys.getenv("OPENAI_API_KEY"),
-                       append_text = TRUE) {
-  check_api()
-  selection <- get_selection()
-
-
-  edit <- openai_create_completion(
-    model = model,
-    prompt = selection$value,
-    temperature = temperature,
-    max_tokens = max_tokens,
-    openai_api_key = openai_api_key
-  )
-
-  inform("Inserting text from GPT...")
-
-  if (append_text) {
-    improved_text <- c(selection$value, edit$choices$text)
-    inform("Appending text from GPT...")
-  } else {
-    improved_text <- edit$choices$text
-    inform("Inserting text from GPT...")
-  }
-  insert_text(improved_text)
-}
-
-get_selection <- function() {
-  rstudioapi::verifyAvailable()
-  rstudioapi::selectionGet()
-}
-
-insert_text <- function(improved_text) {
-  rstudioapi::verifyAvailable()
-  rstudioapi::insertText(improved_text)
-}
-
 #' ChatGPT in RStudio
 #'
 #' This function uses the ChatGPT API tailored to a user-provided style and
 #' skill level.
 #'
-#' @param query A character string representing the question or prompt to query
-#'   the index with.
 #' @param history A list of the previous chat responses
 #' @param style A character string indicating the preferred coding style, the
 #' default is "tidyverse".
 #' @param skill The self-described skill level of the programmer,
 #' default is "beginner"
+#' @param model The name of the GPT model to use.
 #'
 #' @return A list containing the instructions for answering the question, the
 #'   context in which the question was asked, and the suggested answer.
@@ -169,26 +44,22 @@ insert_text <- function(improved_text) {
 #' )
 #' print(no_preference_response)
 #' }
-gpt_chat <- function(query,
-                     history = NULL,
+gpt_chat <- function(history,
                      style = getOption("gptstudio.code_style"),
-                     skill = getOption("gptstudio.skill")) {
-  instructions <- list(
-    list(
-      role = "system",
-      content = chat_create_system_prompt(style, skill, in_source = FALSE)
-    ),
-    list(
-      role = "user",
-      content = glue("{query}")
-    )
-  )
+                     skill = getOption("gptstudio.skill"),
+                     model = getOption("gptstudio.chat_model")) {
 
   history <- purrr::discard(history, ~ .x$role == "system")
 
-  prompt <- c(history, instructions)
-  answer <- openai_create_chat_completion(prompt)
-  list(prompt, answer)
+  system <- list(
+    role = "system",
+    content = chat_create_system_prompt(style, skill, in_source = FALSE)
+  )
+
+  query <- c(list(system), history)
+
+  answer <- openai_create_chat_completion(query, model = model)
+  answer$choices[[1]]$message$content
 }
 
 
@@ -283,17 +154,18 @@ chat_create_system_prompt <- function(style, skill, in_source) {
   )
 
   # nolint start
-  intro <- "You are a helpful chat bot that answers questions for an R programmer working in the RStudio IDE."
+  intro <- "As a chat bot assisting an R programmer working in the RStudio IDE, it is important to tailor responses to their skill level and preferred coding style."
 
   about_skill <- glue(
     "They consider themselves to be a {skill} R programmer. Provide answers with their skill level in mind."
   )
 
-  about_style <- switch(style,
-                        "no preference" = "",
-                        "base" = "They prefer to use a base R style of coding. When possible, answer code quesetions using base R rather than the tidyverse.",
-                        "tidyverse" = "They prefer to use a tidyverse style of coding. When possible, answer code quesetions using tidyverse, r-lib, and tidymodels family of packages. R for Data Science is also a good resource to pull from."
-  )
+  about_style <-
+    switch(style,
+           "no preference" = "",
+           "base" = "They prefer to use a base R style of coding. When possible, answer code quesetions using base R rather than the tidyverse.",
+           "tidyverse" = "They prefer to use a tidyverse style of coding. When possible, answer code quesetions using tidyverse, r-lib, and tidymodels family of packages. R for Data Science is also a good resource to pull from."
+    )
 
   in_source_intructions <- if (in_source) {
     "For any text that is not R code, write it as a code comment. Do not use code blocks or free text. Only use code and code comments."
@@ -303,4 +175,40 @@ chat_create_system_prompt <- function(style, skill, in_source) {
   # nolint end
 
   glue("{intro} {about_skill} {about_style} {in_source_intructions}")
+}
+
+#' Prepare chat completion prompt
+#'
+#' This function prepares the chat completion prompt to be sent to the OpenAI API.
+#'
+#' @param history A list of previous messages in the conversation (optional).
+#' @param style The style of the chat conversation (optional). Default is
+#'   retrieved from the "gptstudio.code_style" option.
+#' @param skill The skill to use for the chat conversation (optional). Default
+#'   is retrieved from the "gptstudio.skill" option.
+#'
+#' @return A list containing the body of the request.
+#'
+prepare_chat_history <- function(history = NULL,
+                                style = getOption("gptstudio.code_style"),
+                                skill = getOption("gptstudio.skill")) {
+  instructions <- list(
+    list(
+      role = "system",
+      content = chat_create_system_prompt(style, skill, in_source = FALSE)
+    )
+  )
+
+  history <- purrr::discard(history, ~ .x$role == "system")
+  c(history, instructions)
+}
+
+get_selection <- function() {
+  rstudioapi::verifyAvailable()
+  rstudioapi::selectionGet()
+}
+
+insert_text <- function(improved_text) {
+  rstudioapi::verifyAvailable()
+  rstudioapi::insertText(improved_text)
 }

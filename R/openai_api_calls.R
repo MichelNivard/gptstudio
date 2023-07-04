@@ -1,113 +1,22 @@
-#' Create and edit text using OpenAI's API
+#' Base for a request to the OPENAI API
 #'
-#' @param model The model to use for generating text
-#' @param input The input text to edit
-#' @param instruction The instruction for editing the text
-#' @param temperature The temperature to use for generating text (between 0 and
-#'   1). If `NULL`, the default temperature will be used. It is recommended NOT
-#'   to specify temperature and top_p at a time.
-#' @param top_p The top-p value to use for generating text (between 0 and 1). If
-#'   `NULL`, the default top-p value will be used. It is recommended NOT to
-#'   specify temperature and top_p at a time.
-#' @param openai_api_key The API key for accessing OpenAI's API. By default, the
-#'   function will try to use the `OPENAI_API_KEY` environment variable.
-#' @return A list with the edited text and other information returned by the
-#'   API.
-#' @export
-#' @examples
-#' \dontrun{
-#' openai_create_edit(
-#'   model = "text-davinci-002",
-#'   input = "Hello world!",
-#'   instruction = "Capitalize the first letter of each sentence."
-#' )
-#' }
-openai_create_edit <- function(model,
-                               input = '"',
-                               instruction,
-                               temperature = NULL,
-                               top_p = NULL,
-                               openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
-  assert_that(
-    is.string(model),
-    is.string(input),
-    is.string(instruction),
-    is.number(temperature) && value_between(temperature, 0, 1),
-    is.string(openai_api_key),
-    value_between(top_p, 0, 1) || is.null(top_p)
-  )
-
-  body <- list(
-    model = model,
-    input = input,
-    instruction = instruction,
-    temperature = temperature,
-    top_p = top_p
-  )
-
-  query_openai_api(task = "edits", request_body = body, openai_api_key = openai_api_key)
-}
-
-
-#' Generate text completions using OpenAI's API
+#' This function sends a request to a specific OpenAI API \code{task} endpoint at the base URL \code{https://api.openai.com/v1}, and authenticates with an API key using a Bearer token.
 #'
-#' @param model The model to use for generating text
-#' @param prompt The prompt for generating completions
-#' @param suffix The suffix for generating completions. If `NULL`, no suffix
-#'   will be used.
-#' @param max_tokens The maximum number of tokens to generate.
-#' @param temperature The temperature to use for generating text (between 0 and
-#'   1). If `NULL`, the default temperature will be used. It is recommended NOT
-#'   to specify temperature and top_p at a time.
-#' @param top_p The top-p value to use for generating text (between 0 and 1). If
-#'   `NULL`, the default top-p value will be used. It is recommended NOT to
-#'   specify temperature and top_p at a time.
-#' @param openai_api_key The API key for accessing OpenAI's API. By default, the
-#'   function will try to use the `OPENAI_API_KEY` environment variable.
-#' @param task The task that specifies the API url to use, defaults to
-#' "completions" and "chat/completions" is required for ChatGPT model.
-#'
-#' @importFrom assertthat assert_that
-#'
-#' @return A list with the generated completions and other information returned
-#'   by the API.
-#' @examples
-#' \dontrun{
-#' openai_create_completion(
-#'   model = "text-davinci-002",
-#'   prompt = "Hello world!"
-#' )
-#' }
-#' @export
-openai_create_completion <-
-  function(model = "text_davinci-003",
-           prompt = "<|endoftext|>",
-           suffix = NULL,
-           max_tokens = 16,
-           temperature = NULL,
-           top_p = NULL,
-           openai_api_key = Sys.getenv("OPENAI_API_KEY"),
-           task = "completions") {
-    assert_that(
-      is.string(model),
-      is.string(prompt),
-      is.count(max_tokens),
-      is.string(suffix) || is.null(suffix),
-      value_between(temperature, 0, 1) || is.null(temperature),
-      is.string(openai_api_key),
-      value_between(top_p, 0, 1) || is.null(top_p)
-    )
-
-    body <- list(
-      model = model,
-      prompt = prompt,
-      suffix = suffix,
-      max_tokens = max_tokens,
-      temperature = temperature
-    )
-
-    query_openai_api(task = task, request_body = body, openai_api_key = openai_api_key)
+#' @param task character string specifying an OpenAI API endpoint task
+#' @param token String containing an OpenAI API key. Defaults to the OPENAI_API_KEY environmental variable if not specified.
+#' @keywords openai, api, authentication
+#' @return An httr2 request object
+request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
+  if (!task %in% get_available_endpoints()) {
+    cli::cli_abort(message = c(
+      "{.var task} must be a supported endpoint",
+      "i" = "Run {.run gptstudio::get_available_endpoints()} to get a list of supported endpoints"
+    ))
   }
+  httr2::request("https://api.openai.com/v1") %>%
+    httr2::req_url_path_append(task) %>%
+    httr2::req_auth_bearer_token(token = token)
+}
 
 #' Generate text completions using OpenAI's API for Chat
 #'
@@ -156,8 +65,6 @@ openai_create_chat_completion <-
   }
 
 
-# Make a request to the OpenAI API
-
 #' A function that sends a request to the OpenAI API and returns the response.
 #'
 #' @param task A character string that specifies the task to send to the API.
@@ -200,41 +107,30 @@ value_between <- function(x, lower, upper) {
 #'
 #' Get a list of the models supported by the OpenAI API.
 #'
+#' @param service The API service
+#'
 #' @return A character vector
 #' @export
 #'
 #' @examples
 #' get_available_endpoints()
-get_available_models <- function() {
-  check_api()
-
-  request_base("models") %>%
-    httr2::req_perform() %>%
-    httr2::resp_body_json() %>%
-    purrr::pluck("data") %>%
-    purrr::map_chr("root")
-}
-
-
-#' Base for a request to the OPENAI API
-#'
-#' This function sends a request to a specific OpenAI API \code{task} endpoint at the base URL \code{https://api.openai.com/v1}, and authenticates with an API key using a Bearer token.
-#'
-#' @param task character string specifying an OpenAI API endpoint task
-#' @param token String containing an OpenAI API key. Defaults to the OPENAI_API_KEY environmental variable if not specified.
-#' @keywords openai, api, authentication
-#' @return An httr2 request object
-request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
-  if (!task %in% get_available_endpoints()) {
-    cli::cli_abort(message = c(
-      "{.var task} must be a supported endpoint",
-      "i" = "Run {.run gptstudio::get_available_endpoints()} to get a list of supported endpoints"
-    ))
+get_available_models <- function(service) {
+  if (service == "openai") {
+    check_api()
+    models <-
+      request_base("models") %>%
+      httr2::req_perform() %>%
+      httr2::resp_body_json() %>%
+      purrr::pluck("data") %>%
+      purrr::map_chr("root")
+    models <- models[stringr::str_detect(models, "gpt-3.5|gpt-4")]
+    idx <- which(models == "gpt-3.5-turbo")
+    models <- c(models[idx], models[-idx])
+  } else if (service == "huggingface") {
+    c("gpt2", "tiiuae/falcon-7b-instruct", "bigcode/starcoderplus")
+  } else if (service == "anthropic") {
+    c("claude-1", "claude-1-100k", "claude-instant-1", "claude-instant-1-100k")
   }
-
-  httr2::request("https://api.openai.com/v1") %>%
-    httr2::req_url_path_append(task) %>%
-    httr2::req_auth_bearer_token(token = token)
 }
 
 

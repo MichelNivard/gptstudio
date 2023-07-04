@@ -8,7 +8,6 @@
 #'
 mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
   ns <- NS(id)
-
   translator <- create_translator(language = getOption("gptstudio.language"))
 
   bslib::page_fluid(
@@ -26,8 +25,6 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
     )
   )
 }
-
-
 
 #' App Server
 #'
@@ -111,7 +108,7 @@ get_ide_theme_info <- function() {
 html_dependencies <- function() {
   htmltools::htmlDependency(
     name = "gptstudio-assets", version = "0.2.0",
-    package = methods::getPackageName(),
+    package = "gptstudio",
     src = "assets",
     script = c("js/copyToClipboard.js", "js/shiftEnter.js"),
     stylesheet = c("css/mod_app.css")

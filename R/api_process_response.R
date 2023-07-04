@@ -1,0 +1,89 @@
+#' Call API
+#'
+#' This function provides a generic interface for calling different APIs
+#' (e.g., OpenAI, HuggingFace, PALM (MakerSuite)). It dispatches the actual API
+#' calls to the relevant method based on the `class` of the `skeleton` argument.
+#'
+#' @param skeleton A `gptstudio_response_skeleton` object
+#' @param ... Extra arguments, not currently used
+#'
+#' @return A `gptstudio_request_skeleton` with updated history and prompt removed
+#'
+#' @examples
+#' \dontrun{
+#' gptstudio_response_process(gptstudio_skeleton)
+#' }
+#' @export
+gptstudio_response_process <- function(skeleton, ...) {
+  UseMethod("gptstudio_response_process")
+}
+
+#' @export
+gptstudio_response_process.gptstudio_response_openai <-
+  function(skeleton, ...) {
+    response <- skeleton$response
+    skeleton <- skeleton$skeleton
+
+    if (skeleton$stream == TRUE) {
+      last_response = response
+    } else {
+      last_response <- response$choices[[1]]$message$content
+    }
+
+    new_history <- c(
+      skeleton$history,
+      list(
+        list(role = "user", content = skeleton$prompt),
+        list(role = "assistant", content = last_response)
+      )
+    )
+
+    skeleton$history <- new_history
+    skeleton$prompt <- NULL # remove the last prompt
+    class(skeleton) <- c("gptstudio_request_skeleton",
+                         "gptstudio_request_openai")
+    skeleton
+  }
+
+#' @export
+gptstudio_response_process.gptstudio_response_huggingface <-
+  function(skeleton, ...) {
+    response <- skeleton$response
+    skeleton <- skeleton$skeleton
+    last_response <- response[[1]]$generated_text
+
+    new_history <- c(
+      skeleton$history,
+      list(
+        list(role = "user", content = skeleton$prompt),
+        list(role = "assistant", content = last_response)
+      )
+    )
+
+    skeleton$history <- new_history
+    skeleton$prompt <- NULL # remove the last prompt
+    class(skeleton) <- c("gptstudio_request_skeleton",
+                         "gptstudio_request_huggingface")
+    skeleton
+  }
+
+#' @export
+gptstudio_response_process.gptstudio_response_anthropic <-
+  function(skeleton, ...) {
+    response <- skeleton$response
+    skeleton <- skeleton$skeleton
+
+    new_history <- c(
+      skeleton$history,
+      list(
+        list(role = "user", content = skeleton$prompt),
+        list(role = "assistant", content = response)
+      )
+    )
+
+    skeleton$history <- new_history
+    skeleton$prompt <- NULL # remove the last prompt
+    class(skeleton) <- c("gptstudio_request_skeleton",
+                         "gptstudio_request_anthropic")
+    skeleton
+  }

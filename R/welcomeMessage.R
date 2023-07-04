@@ -97,9 +97,9 @@ chat_message_default <- function(translator = create_translator()) {
   ) %>%
     purrr::map_chr(~ translator$t(.x))
 
-  paperplane <- fontawesome::fa("fas fa-paper-plane") %>% as.character()
-  eraser <- fontawesome::fa("eraser")
-  gear <- fontawesome::fa("gear")
+  paperplane <- icon("fas fa-paper-plane") %>% as.character()
+  eraser <- icon("eraser")
+  gear <- icon("gear")
 
   explain_btns <- c(
     "In this chat you can:\n\n",

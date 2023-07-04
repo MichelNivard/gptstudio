@@ -47,7 +47,6 @@ function addCopyBtn() {
 
     // Create a div element with the copy button and language text
     // The svg icon was generated using FontAwesome library via R
-    // fontawesome::fa("far fa-clipboard", margin_right = "0.2em")
     var div = $(`
     <div class="d-flex justify-content-between bg-dark" style="border-radius: 5px 5px 0 0">
       <p class="px-2 py-1 m-0 text-muted small">${language}</p>

@@ -66,30 +66,36 @@ The R package is designed to share only the text or code that you specifically h
 
 3.  Set the API key up in Rstudio
 
-### Setting OpenAI API Key
+### Configuring OpenAI API Key
 
-By default, API calls will look for `OPENAI_API_KEY` environment variable. If you want to set a global environment variable, you can use the following command, where `"<APIKEY>"` should be replaced with your actual key:
+To interact with the OpenAI API, it's required to have a valid `OPENAI_API_KEY` environment variable. Here are the steps to configure it.
+
+You can establish this environment variable globally by including it in your project's .Renviron file. This approach ensures that the environment variable persists across all sessions as the Shiny app runs in the background. 
+
+Here is a set of commands to open the .Renviron file for modification:
+
+```{r}
+#| eval: false
+require(usethis)
+edit_r_environ()
+```
+
+If you wish to set the variable temporarily for a single session, use this command, substituting `"<APIKEY>"` with your actual OpenAI API key:
 
 ```{r}
 #| eval: false
 Sys.setenv(OPENAI_API_KEY = "<APIKEY>")
 ```
 
-Otherwise, you can add the key to the .Renviron file of the project. The following commands will open .Renviron for editing:
-
-```{r}
-#| eval: false
-require(usethis)
-edit_r_environ(scope = "project")
-```
-
-You can add the following line to .Renviron (again, replace `"<APIKEY>"` with your actual key):
+For a persistent setting that loads every time you launch this project, add the following line to .Renviron, replacing `"<APIKEY>"` with your actual API key:
 
 ``` bash
-OPENAI_API_KEY= "<APIKEY>")
+OPENAI_API_KEY="<APIKEY>"
 ```
 
-This now set the API key every time you start up this particular project. Note: If you are using GitHub/Gitlab, do not forget to add .Renviron to .gitignore!
+**Caution:** If you're using version control systems like GitHub or GitLab, remember to include .Renviron in your .gitignore file to prevent exposing your API key!
+
+**Important Note:** OpenAI API will not function without valid payment details entered into your OpenAI account. This is a restriction imposed by OpenAI and is unrelated to this package.
 
 ## Usage
 

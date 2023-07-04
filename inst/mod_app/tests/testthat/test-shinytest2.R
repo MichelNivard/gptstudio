@@ -11,12 +11,6 @@ test_that("{shinytest2} recording: mod_app", {
   app$set_inputs(`app-chat-prompt-chat_input` = input_text)
   app$expect_values()
   app$click("app-chat-prompt-chat")
-  app$set_inputs(waiter_shown = TRUE,
-                 allow_no_input_binding_ = TRUE,
-                 priority_ = "event")
-  app$set_inputs(waiter_hidden = TRUE,
-                 allow_no_input_binding_ = TRUE,
-                 priority_ = "event")
   app$click("app-chat-prompt-clear_history")
   app$expect_values()
   app$set_inputs(`app-chat-prompt-style` = "no preference")
