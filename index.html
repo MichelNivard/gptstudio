@@ -122,18 +122,21 @@
 <li><p>Set the API key up in Rstudio</p></li>
 </ol>
 <div class="section level3">
-<h3 id="setting-openai-api-key">Setting OpenAI API Key<a class="anchor" aria-label="anchor" href="#setting-openai-api-key"></a>
+<h3 id="configuring-openai-api-key">Configuring OpenAI API Key<a class="anchor" aria-label="anchor" href="#configuring-openai-api-key"></a>
 </h3>
-<p>By default, API calls will look for <code>OPENAI_API_KEY</code> environment variable. If you want to set a global environment variable, you can use the following command, where <code>"&lt;APIKEY&gt;"</code> should be replaced with your actual key:</p>
+<p>To interact with the OpenAI API, it’s required to have a valid <code>OPENAI_API_KEY</code> environment variable. Here are the steps to configure it.</p>
+<p>You can establish this environment variable globally by including it in your project’s .Renviron file. This approach ensures that the environment variable persists across all sessions as the Shiny app runs in the background.</p>
+<p>Here is a set of commands to open the .Renviron file for modification:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>OPENAI_API_KEY <span class="op">=</span> <span class="st">"&lt;APIKEY&gt;"</span><span class="op">)</span></span></code></pre></div>
-<p>Otherwise, you can add the key to the .Renviron file of the project. The following commands will open .Renviron for editing:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://usethis.r-lib.org" class="external-link">usethis</a></span><span class="op">)</span></span>
-<span><span class="fu">edit_r_environ</span><span class="op">(</span>scope <span class="op">=</span> <span class="st">"project"</span><span class="op">)</span></span></code></pre></div>
-<p>You can add the following line to .Renviron (again, replace <code>"&lt;APIKEY&gt;"</code> with your actual key):</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">OPENAI_API_KEY</span><span class="op">=</span> <span class="st">"&lt;APIKEY&gt;"</span><span class="er">)</span></span></code></pre></div>
-<p>This now set the API key every time you start up this particular project. Note: If you are using GitHub/Gitlab, do not forget to add .Renviron to .gitignore!</p>
+<span><span class="fu">edit_r_environ</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>If you wish to set the variable temporarily for a single session, use this command, substituting <code>"&lt;APIKEY&gt;"</code> with your actual OpenAI API key:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>OPENAI_API_KEY <span class="op">=</span> <span class="st">"&lt;APIKEY&gt;"</span><span class="op">)</span></span></code></pre></div>
+<p>For a persistent setting that loads every time you launch this project, add the following line to .Renviron, replacing <code>"&lt;APIKEY&gt;"</code> with your actual API key:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">OPENAI_API_KEY</span><span class="op">=</span><span class="st">"&lt;APIKEY&gt;"</span></span></code></pre></div>
+<p><strong>Caution:</strong> If you’re using version control systems like GitHub or GitLab, remember to include .Renviron in your .gitignore file to prevent exposing your API key!</p>
+<p><strong>Important Note:</strong> OpenAI API will not function without valid payment details entered into your OpenAI account. This is a restriction imposed by OpenAI and is unrelated to this package.</p>
 </div>
 </div>
 <div class="section level2">

@@ -28,9 +28,6 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/StreamHandler.html</loc>
-  </url>
-  <url>
     <loc>/reference/addin_chatgpt.html</loc>
   </url>
   <url>
@@ -67,6 +64,15 @@
     <loc>/reference/create_chat_app_theme.html</loc>
   </url>
   <url>
+    <loc>/reference/create_completion_anthropic.html</loc>
+  </url>
+  <url>
+    <loc>/reference/create_completion_huggingface.html</loc>
+  </url>
+  <url>
+    <loc>/reference/create_completion_palm.html</loc>
+  </url>
+  <url>
     <loc>/reference/create_ide_matching_colors.html</loc>
   </url>
   <url>
@@ -91,13 +97,16 @@
     <loc>/reference/gpt_chat_in_source.html</loc>
   </url>
   <url>
-    <loc>/reference/gpt_create.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gpt_edit.html</loc>
-  </url>
-  <url>
     <loc>/reference/gptstudio-package.html</loc>
+  </url>
+  <url>
+    <loc>/reference/gptstudio_request_perform.html</loc>
+  </url>
+  <url>
+    <loc>/reference/gptstudio_response_process.html</loc>
+  </url>
+  <url>
+    <loc>/reference/gptstudio_skeleton_build.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
@@ -115,25 +124,28 @@
     <loc>/reference/mod_chat_ui.html</loc>
   </url>
   <url>
-    <loc>/reference/mod_prompt_server.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mod_prompt_ui.html</loc>
-  </url>
-  <url>
     <loc>/reference/open_bg_shinyapp.html</loc>
   </url>
   <url>
     <loc>/reference/openai_create_chat_completion.html</loc>
   </url>
   <url>
-    <loc>/reference/openai_create_completion.html</loc>
-  </url>
-  <url>
-    <loc>/reference/openai_create_edit.html</loc>
+    <loc>/reference/openai_stream_parse.html</loc>
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>/reference/prepare_chat_history.html</loc>
+  </url>
+  <url>
+    <loc>/reference/query_api_anthropic.html</loc>
+  </url>
+  <url>
+    <loc>/reference/query_api_huggingface.html</loc>
+  </url>
+  <url>
+    <loc>/reference/query_api_palm.html</loc>
   </url>
   <url>
     <loc>/reference/query_openai_api.html</loc>
@@ -143,6 +155,15 @@
   </url>
   <url>
     <loc>/reference/request_base.html</loc>
+  </url>
+  <url>
+    <loc>/reference/request_base_anthropic.html</loc>
+  </url>
+  <url>
+    <loc>/reference/request_base_huggingface.html</loc>
+  </url>
+  <url>
+    <loc>/reference/request_base_palm.html</loc>
   </url>
   <url>
     <loc>/reference/rgb_str_to_hex.html</loc>

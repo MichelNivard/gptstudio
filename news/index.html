@@ -47,6 +47,21 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="gptstudio-development-version">gptstudio (development version)<a class="anchor" aria-label="anchor" href="#gptstudio-development-version"></a></h2>
 <div class="section level3">
+<h3 id="more-api-services-development-version">More API services<a class="anchor" aria-label="anchor" href="#more-api-services-development-version"></a></h3>
+<p>Models from other API services are now included include:</p>
+<ul><li>HuggingFace inference API: gpt2, tiiuae/falcon-7b-instruct, bigcode/starcoderplus</li>
+<li>Anthropic’s claude models: claude-1, claude-1-100k, claude-instant-1, claude-instant-1-100k</li>
+<li>Google’s MakerSuite: PALM</li>
+</ul></div>
+<div class="section level3">
+<h3 id="s3-class-for-api-services-development-version">S3 Class for API Services<a class="anchor" aria-label="anchor" href="#s3-class-for-api-services-development-version"></a></h3>
+<p>API calls now use S3 classes that will make it easier to incorporate additional APIs in the future.</p>
+</div>
+<div class="section level3">
+<h3 id="streaming-updates-development-version">Streaming Updates<a class="anchor" aria-label="anchor" href="#streaming-updates-development-version"></a></h3>
+<ul><li>Implement streaming without dependency on R6 inspired by Edgar Ruiz’s work on <a href="https://github.com/mlverse/chatter" class="external-link">chattr</a>.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li>Fixed a bug that prevented the “Spelling and Grammar” and the “Comment your code” addins to actually insert text in source. Fixes <a href="https://github.com/MichelNivard/gptstudio/issues/101" class="external-link">#101</a></li>
 <li>Fixed a bug that prevented installation when <a href="https://stringr.tidyverse.org" class="external-link">stringr</a> was previously installed with a version lower than 1.5.0 . Fixes <a href="https://github.com/MichelNivard/gptstudio/issues/110" class="external-link">#110</a></li>
