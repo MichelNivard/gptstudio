@@ -19,8 +19,8 @@ mod_chat_ui <- function(id, translator = create_translator()) {
         div(
           class = "p-2 mh-100 overflow-auto",
           welcomeMessageOutput(ns("welcome")),
-          shiny::uiOutput(ns("history")),
-          shiny::uiOutput(ns("streaming"))
+          uiOutput(ns("history")),
+          uiOutput(ns("streaming"))
         ),
         div(
           class = "mt-auto",
@@ -41,7 +41,7 @@ mod_chat_ui <- function(id, translator = create_translator()) {
             ),
             div(
               style = htmltools::css(width = "50px"),
-              shiny::actionButton(
+              actionButton(
                 inputId = ns("chat"),
                 label = icon("fas fa-paper-plane"),
                 class = "w-100 btn-primary p-1 chat-send-btn"
@@ -55,30 +55,25 @@ mod_chat_ui <- function(id, translator = create_translator()) {
                 label = icon("gear"),
                 id = "dropd_settings",
                 class = "w-100 btn-primary mt-2 p-1",
-                shiny::selectInput(
-                  inputId = ns("style"),
-                  label = translator$t("Programming Style"),
-                  choices = c("tidyverse", "base", "no preference"),
-                  width = "100%"
+                selectInput(
+                  inputId = ns("task"),
+                  label = translator$t("Task"),
+                  choices = c("coding", "general", "advanced developer", "custom")
                 ),
-                shiny::selectInput(
-                  inputId = ns("skill"),
-                  label = translator$t("Programming Proficiency"),
-                  choices = c("beginner", "intermediate", "advanced", "genius"),
-                  width = "100%"
-                ),
-                shiny::selectInput(
+                uiOutput(ns("about_you_ui")),
+                uiOutput(ns("custom_prompt")),
+                selectInput(
                   inputId = ns("service"),
                   label = "Select API Service",
                   choices = api_services,
                   selected = "openai"
                 ),
-                shiny::selectInput(
+                selectInput(
                   inputId = ns("chat_model"),
                   label = translator$t("Chat Model"),
                   choices = NULL
                 ),
-                shiny::radioButtons(
+                radioButtons(
                   inputId = ns("stream"),
                   label = "Stream Response",
                   choiceNames = c("Yes", "No"),
@@ -98,8 +93,11 @@ mod_chat_ui <- function(id, translator = create_translator()) {
 #' @param id id of the module
 #' @inheritParams run_chatgpt_app
 #'
-mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
+mod_chat_server <- function(id,
+                            ide_colors = get_ide_theme_info(),
+                            translator = create_translator()) {
   moduleServer(id, function(input, output, session) {
+    ns <- NS(id)
     rv <- reactiveValues()
 
     onStop(function() delete_skeleton())
@@ -109,17 +107,41 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
       get_available_models(input$service)
     })
 
+    output$about_you_ui <- renderUI({
+      req(input$task == "coding")
+      list(
+        selectInput(
+          inputId = ns("style"),
+          label = translator$t("Programming Style"),
+          choices = c("tidyverse", "base", "no preference"),
+          width = "100%"
+        ),
+        selectInput(
+          inputId = ns("skill"),
+          label = translator$t("Programming Proficiency"),
+          choices = c("beginner", "intermediate", "advanced", "genius"),
+          width = "100%"
+        )
+      )
+    })
+
+    output$custom_prompt <- renderUI({
+      req(input$task == "custom")
+      textAreaInput(ns("custom_prompt"), "Custom Prompt",
+                    value = getOption("gptstudio.custom_prompt"))
+    })
+
     observe(updateSelectInput(session,
                               inputId = "chat_model",
                               choices = chat_models()))
 
     observe({
       rv$skeleton <-
-          gptstudio_create_skeleton(service = input$service,
-                                    prompt  = input$chat_input,
-                                    model   = input$chat_model,
-                                    stream  = as.logical(input$stream),
-                                    history = rv$chat_history)
+        gptstudio_create_skeleton(service = input$service,
+                                  prompt  = input$chat_input,
+                                  model   = input$chat_model,
+                                  stream  = as.logical(input$stream),
+                                  history = rv$chat_history)
 
       rv$chat_history <- chat_history_append(history = rv$chat_history,
                                              role = "user",
@@ -138,7 +160,7 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
     }) %>%
       bindEvent(input$clear_history, ignoreNULL = FALSE)
 
-    auto_invalidate <- reactiveTimer(100)
+    auto_invalidate <- reactiveTimer(10)
 
     output$streaming <- renderUI({
       auto_invalidate()
@@ -157,7 +179,7 @@ mod_chat_server <- function(id, ide_colors = get_ide_theme_info()) {
     observe({
       auto_invalidate()
       if (file.exists(skeleton_file())) {
-        Sys.sleep(0.05)
+        Sys.sleep(0.01)
         rv$skeleton <- get_skeleton()
         rv$chat_history <- rv$skeleton$history
         file.remove(skeleton_file())

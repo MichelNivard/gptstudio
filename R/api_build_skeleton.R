@@ -8,7 +8,7 @@
 #' @return An updated GPT Studio request skeleton.
 #'
 #' @export
-gptstudio_skeleton_build <- function(skeleton, skill, style, ...) {
+gptstudio_skeleton_build <- function(skeleton, skill, style, custom_prompt, ...) {
   UseMethod("gptstudio_skeleton_build")
 }
 
@@ -19,7 +19,7 @@ gptstudio_skeleton_build.gptstudio_request_openai <-
     history     <- skeleton$history
     model       <- skeleton$model
     stream      <- skeleton$stream
-    new_history <- prepare_chat_history(history, style, skill)
+    new_history <- prepare_chat_history(history, style, skill, custom_prompt)
 
     new_gptstudio_request_skeleton_openai(model   = model,
                                           prompt  = prompt,
@@ -30,12 +30,12 @@ gptstudio_skeleton_build.gptstudio_request_openai <-
 
 #' @export
 gptstudio_skeleton_build.gptstudio_request_huggingface <-
-  function(skeleton, skill, style, ...) {
+  function(skeleton, skill, style, custom_prompt, ...) {
     prompt         <- skeleton$prompt
     history        <- skeleton$history
     model          <- skeleton$model
     stream         <- skeleton$stream
-    new_history <- prepare_chat_history(history, style, skill)
+    new_history <- prepare_chat_history(history, style, skill, custom_prompt)
 
     new_gptstudio_request_skeleton_huggingface(model   = model,
                                                prompt  = prompt,
@@ -45,15 +45,31 @@ gptstudio_skeleton_build.gptstudio_request_huggingface <-
 
 #' @export
 gptstudio_skeleton_build.gptstudio_request_anthropic <-
-  function(skeleton, skill, style, ...) {
+  function(skeleton, skill, style, custom_prompt, ...) {
     prompt         <- skeleton$prompt
     history        <- skeleton$history
     model          <- skeleton$model
     stream         <- skeleton$stream
-    new_history <- prepare_chat_history(history, style, skill)
+    new_history <- prepare_chat_history(history, style, skill, custom_prompt)
 
     new_gptstudio_request_skeleton_anthropic(model   = model,
                                              prompt  = prompt,
                                              history = new_history,
                                              stream  = stream)
+  }
+
+
+#' @export
+gptstudio_skeleton_build.gptstudio_request_palm <-
+  function(skeleton, skill, style, custom_prompt, ...) {
+    prompt         <- skeleton$prompt
+    history        <- skeleton$history
+    model          <- skeleton$model
+    stream         <- skeleton$stream
+    new_history <- prepare_chat_history(history, style, skill, custom_prompt)
+
+    new_gptstudio_request_skeleton_palm(model   = model,
+                                        prompt  = prompt,
+                                        history = new_history,
+                                        stream  = stream)
   }
