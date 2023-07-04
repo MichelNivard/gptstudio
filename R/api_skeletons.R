@@ -111,6 +111,29 @@ new_gptstudio_request_skeleton_anthropic <- function(
                                 class = "gptstudio_request_anthropic")
 }
 
+new_gptstudi_request_skeleton_palm <- function(
+    url = "https://generativelanguage.googleapis.com/v1beta2/models/",
+    api_key = Sys.getenv("PALM_API_KEY"),
+    model = ":generateText?key=",
+    prompt = "What is a ggplot?",
+    history = list(
+      list(
+        role = "system",
+        content = "You are an R chat assistant"
+      )
+    ),
+    stream = FALSE
+) {
+  new_gpstudio_request_skeleton(url,
+                                api_key,
+                                model,
+                                prompt,
+                                history,
+                                stream,
+                                class = "gptstudio_request_palm")
+}
+
+
 gptstudio_create_skeleton <- function(service = "openai",
                                       prompt = "What is a ggplot?",
                                       history = list(
@@ -134,6 +157,11 @@ gptstudio_create_skeleton <- function(service = "openai",
            history = history,
            stream = stream),
          "anthropic" = new_gptstudio_request_skeleton_anthropic(
+           model = model,
+           prompt = prompt,
+           history = history,
+           stream = stream),
+         "palm" = new_gptstudio_request_skeleton_palm(
            model = model,
            prompt = prompt,
            history = history,
