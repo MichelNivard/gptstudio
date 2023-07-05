@@ -4,12 +4,18 @@
 \alias{mod_chat_server}
 \title{Chat server}
 \usage{
-mod_chat_server(id, ide_colors = get_ide_theme_info())
+mod_chat_server(
+  id,
+  ide_colors = get_ide_theme_info(),
+  translator = create_translator()
+)
 }
 \arguments{
 \item{id}{id of the module}
 
 \item{ide_colors}{List containing the colors of the IDE theme.}
+
+\item{translator}{Translator from \code{shiny.i18n::Translator}}
 }
 \description{
 Chat server

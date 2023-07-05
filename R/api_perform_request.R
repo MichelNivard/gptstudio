@@ -21,7 +21,6 @@ gptstudio_request_perform <- function(skeleton, ...) {
   UseMethod("gptstudio_request_perform")
 }
 
-
 #' @export
 gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...) {
 
@@ -34,7 +33,6 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...) {
   max_tokens <- skeleton$extras$max_tokens
   n          <- skeleton$extra$n
 
-  args <- list(...)
   # Translate request
   messages <- c(
     skeleton$history,
@@ -94,7 +92,14 @@ gptstudio_request_perform.gptstudio_request_huggingface <-
 #' @export
 gptstudio_request_perform.gptstudio_request_palm <-
   function(skeleton, ...) {
-    create_completion_palm(prompt = skeleton$prompt)
+    response <- create_completion_palm(prompt = skeleton$prompt)
+    structure(
+      list(
+        skeleton = skeleton,
+        response = response
+      ),
+      class = "gptstudio_response_palm"
+    )
   }
 
 #' @export

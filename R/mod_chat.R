@@ -91,13 +91,14 @@ mod_chat_ui <- function(id, translator = create_translator()) {
 #' Chat server
 #'
 #' @param id id of the module
+#' @param translator Translator from `shiny.i18n::Translator`
 #' @inheritParams run_chatgpt_app
 #'
 mod_chat_server <- function(id,
                             ide_colors = get_ide_theme_info(),
                             translator = create_translator()) {
   moduleServer(id, function(input, output, session) {
-    ns <- NS(id)
+    ns <- session$ns
     rv <- reactiveValues()
 
     onStop(function() delete_skeleton())
@@ -114,13 +115,15 @@ mod_chat_server <- function(id,
           inputId = ns("style"),
           label = translator$t("Programming Style"),
           choices = c("tidyverse", "base", "no preference"),
-          width = "100%"
+          width = "100%",
+          selected = getOption("gptstudio.style")
         ),
         selectInput(
           inputId = ns("skill"),
           label = translator$t("Programming Proficiency"),
           choices = c("beginner", "intermediate", "advanced", "genius"),
-          width = "100%"
+          width = "100%",
+          selected = getOption("gptstudio.skill")
         )
       )
     })
@@ -193,9 +196,14 @@ mod_chat_server <- function(id,
 
     observe({
       cli_inform("Submitting job.")
-      gptstudio_submit_job(rv$skeleton,
-                           skill = input$skill,
-                           style = input$style)
+      skill <-
+        ifelse(is.null(input$skill), getOption("gptstudio.skill"), input$skill)
+      style <-
+        ifelse(is.null(input$style), getOption("gptstudio.code_style"), input$style)
+      task <-
+        ifelse(is.null(input$task), getOption("gptstudio.task"), input$task)
+      custom_prompt <- input$custom_prompt
+      gptstudio_submit_job(rv$skeleton, skill, style, task, custom_prompt)
     }) %>%
       bindEvent(input$chat)
   })
@@ -211,28 +219,40 @@ app_server_file_stream <- function() {
 }
 
 gptstudio_submit_job <- function(skeleton,
-                                 skill = "beginner",
-                                 style = "tidyverse") {
+                                 skill,
+                                 style,
+                                 task,
+                                 custom_prompt) {
   rs <- r_session_start()
   if (rs$get_state() != "idle") {
     cli_inform("Background session status: {rs$read()}")
     rs$finalize()
   }
   rs$call(
-    function(skeleton, skill, style) {
-      gptstudio:::delete_skeleton()
-      skeleton <- gptstudio::gptstudio_skeleton_build(skeleton, skill, style)
-      skeleton <- gptstudio::gptstudio_request_perform(skeleton)
-      skeleton <- gptstudio::gptstudio_response_process(skeleton)
-      gptstudio:::save_skeleton(skeleton)
-      cli::cli_alert_success("Done!")
+    function(skeleton, skill, style, task, custom_prompt) {
+      gptstudio:::gptstudio_job(skeleton, skill, style, task, custom_prompt)
     },
     args = list(
-      skeleton = skeleton,
-      skill    = skill,
-      style    = style
+      custom_prompt = custom_prompt,
+      skeleton      = skeleton,
+      skill         = skill,
+      style         = style,
+      task          = task
     )
   )
+  rs$read_output()
+}
+
+gptstudio_job <- function(skeleton = gptstudio_create_skeleton(),
+                          skill = "beginner",
+                          style = "tidyverse",
+                          task = "custom",
+                          custom_prompt = "Respond in French") {
+  delete_skeleton()
+  gptstudio_skeleton_build(skeleton, skill, style, task, custom_prompt) %>%
+    gptstudio_request_perform() %>%
+    gptstudio_response_process() %>%
+    save_skeleton()
 }
 
 r_session_start <- function() {

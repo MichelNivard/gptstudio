@@ -111,7 +111,7 @@ new_gptstudio_request_skeleton_anthropic <- function(
                                 class = "gptstudio_request_anthropic")
 }
 
-new_gptstudi_request_skeleton_palm <- function(
+new_gptstudio_request_skeleton_palm <- function(
     url = "https://generativelanguage.googleapis.com/v1beta2/models/",
     api_key = Sys.getenv("PALM_API_KEY"),
     model = ":generateText?key=",
@@ -142,7 +142,7 @@ gptstudio_create_skeleton <- function(service = "openai",
                                           content = "You are an R chat assistant"
                                         )
                                       ),
-                                      stream,
+                                      stream = TRUE,
                                       model = "gpt-3.5-turbo",
                                       ...) {
   switch(service,

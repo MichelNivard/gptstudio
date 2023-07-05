@@ -118,7 +118,11 @@ gpt_chat_in_source <- function(history = NULL,
   instructions <- list(
     list(
       role = "system",
-      content = chat_create_system_prompt(style, skill, in_source = TRUE)
+      content = chat_create_system_prompt(style,
+                                          skill,
+                                          task = "coding",
+                                          custom_prompt = NULL,
+                                          in_source = TRUE)
     ),
     task,
     list(

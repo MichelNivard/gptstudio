@@ -1,5 +1,9 @@
 # gptstudio (development version)
 
+## Custom Prompt
+
+- Add "task" option in app that allows users to pick from "coding", "general", "advanced developer", and "custom". These options change the system prompt. The custom prompt completely replaces the system prompt instructions.
+
 ## More API services
 
 Models from other API services are now included include:

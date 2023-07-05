@@ -42,6 +42,7 @@ stream_chat_completion <- function(prompt,
     "messages" = prompt,
     "stream" = TRUE
   )
+  cli::cat_print(body)
   gptstudio_env$stream <- list()
   gptstudio_env$stream$raw <- NULL
   gptstudio_env$current_stream <- TRUE
