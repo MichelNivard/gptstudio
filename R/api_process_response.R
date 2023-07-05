@@ -87,3 +87,24 @@ gptstudio_response_process.gptstudio_response_anthropic <-
                          "gptstudio_request_anthropic")
     skeleton
   }
+
+#' @export
+gptstudio_response_process.gptstudio_response_palm <-
+  function(skeleton, ...) {
+    response <- skeleton$response
+    skeleton <- skeleton$skeleton
+
+    new_history <- c(
+      skeleton$history,
+      list(
+        list(role = "user", content = skeleton$prompt),
+        list(role = "assistant", content = response)
+      )
+    )
+
+    skeleton$history <- new_history
+    skeleton$prompt <- NULL # remove the last prompt
+    class(skeleton) <- c("gptstudio_request_skeleton",
+                         "gptstudio_request_palm")
+    skeleton
+  }

@@ -1,25 +1,41 @@
 #' Construct a GPT Studio request skeleton.
 #'
 #' @param skeleton A GPT Studio request skeleton object.
-#' @param skill A parameter that affects the style of the chat conversation.
-#' @param style A parameter that affects the style of the chat conversation.
+#' @param style The style of code to use. Applicable styles can be retrieved
+#'   from the "gptstudio.code_style" option. Default is the
+#'   "gptstudio.code_style" option. Options are "base", "tidyverse", or "no
+#'   preference".
+#' @param skill The skill level of the user for the chat conversation. This can
+#'   be set through the "gptstudio.skill" option. Default is the
+#'   "gptstudio.skill" option. Options are "beginner", "intermediate",
+#'   "advanced", and "genius".
+#' @param task Specifies the task that the assistant will help with. Default is
+#'   "coding". Others are "general", "advanced developer", and "custom".
+#' @param custom_prompt This is a custom prompt that may be used to guide the AI
+#'   in its responses. Default is NULL. It will be the only content provided to
+#'   the system prompt.
 #' @param ... Additional arguments.
 #'
 #' @return An updated GPT Studio request skeleton.
 #'
 #' @export
-gptstudio_skeleton_build <- function(skeleton, skill, style, ...) {
+gptstudio_skeleton_build <- function(skeleton, skill, style, task, custom_prompt, ...) {
   UseMethod("gptstudio_skeleton_build")
 }
 
 #' @export
 gptstudio_skeleton_build.gptstudio_request_openai <-
-  function(skeleton, skill, style, ...) {
+  function(skeleton = gptstudio_create_skeleton(),
+           skill    = getOption("gptstudio.skill") ,
+           style    = getOption("gptstudio.code_style"),
+           task     = "coding",
+           custom_prompt = NULL,
+           ...) {
     prompt      <- skeleton$prompt
     history     <- skeleton$history
     model       <- skeleton$model
     stream      <- skeleton$stream
-    new_history <- prepare_chat_history(history, style, skill)
+    new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
 
     new_gptstudio_request_skeleton_openai(model   = model,
                                           prompt  = prompt,
@@ -27,15 +43,19 @@ gptstudio_skeleton_build.gptstudio_request_openai <-
                                           stream  = stream)
   }
 
-
 #' @export
 gptstudio_skeleton_build.gptstudio_request_huggingface <-
-  function(skeleton, skill, style, ...) {
+  function(skeleton = gptstudio_create_skeleton("huggingface"),
+           skill    = getOption("gptstudio.skill") ,
+           style    = getOption("gptstudio.code_style"),
+           task     = "coding",
+           custom_prompt = NULL,
+           ...) {
     prompt         <- skeleton$prompt
     history        <- skeleton$history
     model          <- skeleton$model
     stream         <- skeleton$stream
-    new_history <- prepare_chat_history(history, style, skill)
+    new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
 
     new_gptstudio_request_skeleton_huggingface(model   = model,
                                                prompt  = prompt,
@@ -45,15 +65,40 @@ gptstudio_skeleton_build.gptstudio_request_huggingface <-
 
 #' @export
 gptstudio_skeleton_build.gptstudio_request_anthropic <-
-  function(skeleton, skill, style, ...) {
+  function(skeleton = gptstudio_create_skeleton("anthropic"),
+           skill    = getOption("gptstudio.skill") ,
+           style    = getOption("gptstudio.code_style"),
+           task     = "coding",
+           custom_prompt = NULL,
+           ...) {
     prompt         <- skeleton$prompt
     history        <- skeleton$history
     model          <- skeleton$model
     stream         <- skeleton$stream
-    new_history <- prepare_chat_history(history, style, skill)
+    new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
 
     new_gptstudio_request_skeleton_anthropic(model   = model,
                                              prompt  = prompt,
                                              history = new_history,
                                              stream  = stream)
+  }
+
+#' @export
+gptstudio_skeleton_build.gptstudio_request_palm <-
+  function(skeleton = gptstudio_create_skeleton("palm"),
+           skill    = getOption("gptstudio.skill") ,
+           style    = getOption("gptstudio.code_style"),
+           task     = "coding",
+           custom_prompt = NULL,
+           ...) {
+    prompt         <- skeleton$prompt
+    history        <- skeleton$history
+    model          <- skeleton$model
+    stream         <- skeleton$stream
+    new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
+
+    new_gptstudio_request_skeleton_palm(model   = model,
+                                        prompt  = prompt,
+                                        history = new_history,
+                                        stream  = stream)
   }

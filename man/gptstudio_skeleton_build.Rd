@@ -4,14 +4,27 @@
 \alias{gptstudio_skeleton_build}
 \title{Construct a GPT Studio request skeleton.}
 \usage{
-gptstudio_skeleton_build(skeleton, skill, style, ...)
+gptstudio_skeleton_build(skeleton, skill, style, task, custom_prompt, ...)
 }
 \arguments{
 \item{skeleton}{A GPT Studio request skeleton object.}
 
-\item{skill}{A parameter that affects the style of the chat conversation.}
+\item{skill}{The skill level of the user for the chat conversation. This can
+be set through the "gptstudio.skill" option. Default is the
+"gptstudio.skill" option. Options are "beginner", "intermediate",
+"advanced", and "genius".}
 
-\item{style}{A parameter that affects the style of the chat conversation.}
+\item{style}{The style of code to use. Applicable styles can be retrieved
+from the "gptstudio.code_style" option. Default is the
+"gptstudio.code_style" option. Options are "base", "tidyverse", or "no
+preference".}
+
+\item{task}{Specifies the task that the assistant will help with. Default is
+"coding". Others are "general", "advanced developer", and "custom".}
+
+\item{custom_prompt}{This is a custom prompt that may be used to guide the AI
+in its responses. Default is NULL. It will be the only content provided to
+the system prompt.}
 
 \item{...}{Additional arguments.}
 }

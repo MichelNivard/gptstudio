@@ -30,8 +30,12 @@ query_api_huggingface <- function(task,
   response <- request_base_huggingface(task, token) %>%
     httr2::req_body_json(data = request_body) %>%
     httr2::req_retry(max_tries = 3) %>%
-    httr2::req_error(is_error = function(resp) FALSE) %>%
-    httr2::req_perform()
+    httr2::req_error(is_error = function(resp) FALSE)
+
+
+  response %>% httr2::req_dry_run()
+
+  response <- response %>% httr2::req_perform()
 
   # error handling
   if (httr2::resp_is_error(response)) {
@@ -88,8 +92,6 @@ create_completion_huggingface <- function(prompt,
   }
 
   prompt <- glue::glue("{prepped_history}\nUser:\n{prompt}")
-
-  cat_print(prompt)
 
   request_body <- list(inputs = prompt,
                        parameters = list(max_new_tokens	= max_new_tokens,

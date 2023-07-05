@@ -22,6 +22,16 @@
         "de": "Chat-Modell"
       },
       {
+        "en": "Task",
+        "es": "Tarea",
+        "de": "Aufgabe"
+      },
+      {
+        "en": "Custom Prompt",
+        "es": "Sugerencia personalizada",
+        "de": "Benutzerdefinierter Aufforderungstext"
+      },
+      {
         "en": "Welcome to the R programming language! I'm here to assist you in your journey, no matter your skill level.",
         "es": "¡Bienvenido al lenguaje de programación R! Estoy aquí para ayudarte en tu camino, sin importar tu nivel de habilidad.",
         "de": "Willkommen in der Programmiersprache R! Ich bin hier, um Sie auf Ihrer Reise zu unterstützen, unabhängig von Ihrem Kenntnisstand."
