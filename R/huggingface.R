@@ -93,8 +93,6 @@ create_completion_huggingface <- function(prompt,
 
   prompt <- glue::glue("{prepped_history}\nUser:\n{prompt}")
 
-  cat_print(prompt)
-
   request_body <- list(inputs = prompt,
                        parameters = list(max_new_tokens	= max_new_tokens,
                                          return_full_text = FALSE))

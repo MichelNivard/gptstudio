@@ -105,6 +105,6 @@ gptstudio_response_process.gptstudio_response_palm <-
     skeleton$history <- new_history
     skeleton$prompt <- NULL # remove the last prompt
     class(skeleton) <- c("gptstudio_request_skeleton",
-                         "gptstudio_request_anthropic")
+                         "gptstudio_request_palm")
     skeleton
   }
