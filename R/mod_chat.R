@@ -222,7 +222,7 @@ mod_chat_server <- function(id,
             )
           )
         ))
-    }) |> bindEvent(input$settings)
+    }) %>% bindEvent(input$settings)
   })
 }
 
