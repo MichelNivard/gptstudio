@@ -6,10 +6,6 @@
 mod_chat_ui <- function(id, translator = create_translator()) {
   ns <- NS(id)
 
-  api_services <- utils::methods("gptstudio_request_perform") %>%
-    stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
-    purrr::discard(~ .x == "gptstudio_request_perform.default")
-
   bslib::card(
     class = "h-100",
     bslib::card_body(
@@ -51,35 +47,11 @@ mod_chat_ui <- function(id, translator = create_translator()) {
                 label = icon("eraser"),
                 class = "w-100 btn-primary mt-2 p-1"
               ),
-              bs_dropdown(
+              # bs_dropdown(
+              actionButton(
+                inputId = ns("settings"),
                 label = icon("gear"),
-                id = "dropd_settings",
-                class = "w-100 btn-primary mt-2 p-1",
-                selectInput(
-                  inputId = ns("task"),
-                  label = translator$t("Task"),
-                  choices = c("coding", "general", "advanced developer", "custom")
-                ),
-                uiOutput(ns("about_you_ui")),
-                uiOutput(ns("custom_prompt")),
-                selectInput(
-                  inputId = ns("service"),
-                  label = "Select API Service",
-                  choices = api_services,
-                  selected = "openai"
-                ),
-                selectInput(
-                  inputId = ns("chat_model"),
-                  label = translator$t("Chat Model"),
-                  choices = NULL
-                ),
-                radioButtons(
-                  inputId = ns("stream"),
-                  label = "Stream Response",
-                  choiceNames = c("Yes", "No"),
-                  choiceValues = c(TRUE, FALSE)
-                )
-              )
+                class = "w-100 btn-primary mt-2 p-1")
             )
           )
         )
@@ -101,37 +73,15 @@ mod_chat_server <- function(id,
     ns <- session$ns
     rv <- reactiveValues()
 
+    api_services <- utils::methods("gptstudio_request_perform") %>%
+      stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
+      purrr::discard(~ .x == "gptstudio_request_perform.default")
+
     onStop(function() delete_skeleton())
 
     chat_models <- reactive({
       req(!is.null(input$service))
       get_available_models(input$service)
-    })
-
-    output$about_you_ui <- renderUI({
-      req(input$task == "coding")
-      list(
-        selectInput(
-          inputId = ns("style"),
-          label = translator$t("Programming Style"),
-          choices = c("tidyverse", "base", "no preference"),
-          width = "100%",
-          selected = getOption("gptstudio.style")
-        ),
-        selectInput(
-          inputId = ns("skill"),
-          label = translator$t("Programming Proficiency"),
-          choices = c("beginner", "intermediate", "advanced", "genius"),
-          width = "100%",
-          selected = getOption("gptstudio.skill")
-        )
-      )
-    })
-
-    output$custom_prompt <- renderUI({
-      req(input$task == "custom")
-      textAreaInput(ns("custom_prompt"), "Custom Prompt",
-                    value = getOption("gptstudio.custom_prompt"))
     })
 
     observe(updateSelectInput(session,
@@ -206,6 +156,73 @@ mod_chat_server <- function(id,
       gptstudio_submit_job(rv$skeleton, skill, style, task, custom_prompt)
     }) %>%
       bindEvent(input$chat)
+
+    output$about_you_ui <- renderUI({
+      req(input$task == "coding")
+      list(
+        fluidRow(
+          selectInput(
+            inputId = ns("style"),
+            label = translator$t("Programming Style"),
+            choices = c("tidyverse", "base", "no preference"),
+            selected = getOption("gptstudio.style"),
+            width = "200px"
+          ),
+          selectInput(
+            inputId = ns("skill"),
+            label = translator$t("Programming Skill"),
+            choices = c("beginner", "intermediate", "advanced", "genius"),
+            selected = getOption("gptstudio.skill"),
+            width = "200px"
+          )
+        )
+      )
+    })
+
+    output$custom_prompt <- renderUI({
+      req(input$task == "custom")
+      textAreaInput(ns("custom_prompt"), "Custom Prompt",
+                    value = getOption("gptstudio.custom_prompt"))
+    })
+    observe({
+      showModal(
+        modalDialog(
+          title = "Settings",
+          easyClose = TRUE,
+          footer = modalButton("Save"),
+          size = "l",
+          fluidRow(
+            selectInput(
+              inputId = ns("task"),
+              label = translator$t("Task"),
+              choices = c("coding", "general", "advanced developer", "custom"),
+              width = "200px",
+            ),
+            uiOutput(ns("about_you_ui")),
+            uiOutput(ns("custom_prompt")),
+            selectInput(
+              inputId = ns("service"),
+              label = "Select API Service",
+              choices = api_services,
+              selected = "openai",
+              width = "200px",
+            ),
+            selectInput(
+              inputId = ns("chat_model"),
+              label = translator$t("Chat Model"),
+              choices = NULL,
+              width = "200px",
+            ),
+            radioButtons(
+              inputId = ns("stream"),
+              label = "Stream Response",
+              choiceNames = c("Yes", "No"),
+              choiceValues = c(TRUE, FALSE),
+              inline = TRUE
+            )
+          )
+        ))
+    }) |> bindEvent(input$settings)
   })
 }
 
