@@ -51,7 +51,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gptstudio_skeleton_build</span><span class="op">(</span><span class="va">skeleton</span>, <span class="va">skill</span>, <span class="va">style</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gptstudio_skeleton_build</span><span class="op">(</span><span class="va">skeleton</span>, <span class="va">skill</span>, <span class="va">style</span>, <span class="va">task</span>, <span class="va">custom_prompt</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -61,11 +61,28 @@
 
 
 <dt>skill</dt>
-<dd><p>A parameter that affects the style of the chat conversation.</p></dd>
+<dd><p>The skill level of the user for the chat conversation. This can
+be set through the "gptstudio.skill" option. Default is the
+"gptstudio.skill" option. Options are "beginner", "intermediate",
+"advanced", and "genius".</p></dd>
 
 
 <dt>style</dt>
-<dd><p>A parameter that affects the style of the chat conversation.</p></dd>
+<dd><p>The style of code to use. Applicable styles can be retrieved
+from the "gptstudio.code_style" option. Default is the
+"gptstudio.code_style" option. Options are "base", "tidyverse", or "no
+preference".</p></dd>
+
+
+<dt>task</dt>
+<dd><p>Specifies the task that the assistant will help with. Default is
+"coding". Others are "general", "advanced developer", and "custom".</p></dd>
+
+
+<dt>custom_prompt</dt>
+<dd><p>This is a custom prompt that may be used to guide the AI
+in its responses. Default is NULL. It will be the only content provided to
+the system prompt.</p></dd>
 
 
 <dt>...</dt>

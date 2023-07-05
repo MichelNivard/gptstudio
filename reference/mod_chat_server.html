@@ -51,7 +51,11 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mod_chat_server</span><span class="op">(</span><span class="va">id</span>, ide_colors <span class="op">=</span> <span class="fu"><a href="get_ide_theme_info.html">get_ide_theme_info</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mod_chat_server</span><span class="op">(</span></span>
+<span>  <span class="va">id</span>,</span>
+<span>  ide_colors <span class="op">=</span> <span class="fu"><a href="get_ide_theme_info.html">get_ide_theme_info</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  translator <span class="op">=</span> <span class="fu"><a href="create_translator.html">create_translator</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -62,6 +66,10 @@
 
 <dt>ide_colors</dt>
 <dd><p>List containing the colors of the IDE theme.</p></dd>
+
+
+<dt>translator</dt>
+<dd><p>Translator from <code><a href="https://appsilon.github.io/shiny.i18n/reference/Translator.html" class="external-link">shiny.i18n::Translator</a></code></p></dd>
 
 </dl></div>
 
