@@ -73,7 +73,8 @@ mod_chat_server <- function(id,
     ns <- session$ns
     rv <- reactiveValues()
 
-    api_services <- utils::methods("gptstudio_request_perform") %>%
+    api_services <-
+      utils::methods("gptstudio_request_perform") %>%
       stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
       purrr::discard(~ .x == "gptstudio_request_perform.default")
 
@@ -152,14 +153,16 @@ mod_chat_server <- function(id,
     })
 
     observe({
-      cli_inform("Submitting job.")
-      skill <-
-        ifelse(is.null(input$skill), getOption("gptstudio.skill"), input$skill)
-      style <-
-        ifelse(is.null(input$style), getOption("gptstudio.code_style"), input$style)
-      task <-
-        ifelse(is.null(input$task), getOption("gptstudio.task"), input$task)
+      skill         <- input$skill
+      style         <- input$style
+      task          <- input$task
       custom_prompt <- input$custom_prompt
+      if (is.null(skill)) skill <- getOption("gptstudio.skill")
+      if (is.null(style)) style <- getOption("gptstudio.code_style")
+      if (is.null(task))  task  <- getOption("gptstudio.task")
+      if (is.null(custom_prompt)) {
+        custom_prompt  <- getOption("gptstudio.custom_prompt")
+      }
       gptstudio_submit_job(rv$skeleton, skill, style, task, custom_prompt)
     }) %>%
       bindEvent(input$chat)
