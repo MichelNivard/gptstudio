@@ -47,7 +47,6 @@ mod_chat_ui <- function(id, translator = create_translator()) {
                 label = icon("eraser"),
                 class = "w-100 btn-primary mt-2 p-1"
               ),
-              # bs_dropdown(
               actionButton(
                 inputId = ns("settings"),
                 label = icon("gear"),
