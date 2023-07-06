@@ -8,7 +8,7 @@ gpt_chat(
   history,
   style = getOption("gptstudio.code_style"),
   skill = getOption("gptstudio.skill"),
-  model = getOption("gptstudio.chat_model")
+  model = getOption("gptstudio.model")
 )
 }
 \arguments{

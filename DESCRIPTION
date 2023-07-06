@@ -37,7 +37,8 @@ Imports:
     shiny,
     shiny.i18n,
     stringr (>= 1.5.0),
-    utils
+    utils,
+    yaml
 Suggests: 
     mockr,
     shinytest2,

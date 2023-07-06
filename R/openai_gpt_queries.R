@@ -47,7 +47,7 @@
 gpt_chat <- function(history,
                      style = getOption("gptstudio.code_style"),
                      skill = getOption("gptstudio.skill"),
-                     model = getOption("gptstudio.chat_model")) {
+                     model = getOption("gptstudio.model")) {
 
   history <- purrr::discard(history, ~ .x$role == "system")
 
