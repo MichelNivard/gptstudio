@@ -39,7 +39,7 @@ request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
 #' @export
 openai_create_chat_completion <-
   function(prompt = "<|endoftext|>",
-           model = getOption("gptstudio.chat_model"),
+           model = getOption("gptstudio.model"),
            openai_api_key = Sys.getenv("OPENAI_API_KEY"),
            task = "chat/completions") {
     assert_that(

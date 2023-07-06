@@ -1,0 +1,8 @@
+code_style: "no preference"
+skill: "beginner"
+task: "coding"
+language: "en"
+service: "openai"
+model: "gpt-3.5-turbo"
+custom_prompt: "You are a helpful assistant."
+stream: true

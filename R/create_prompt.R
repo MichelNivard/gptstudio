@@ -21,7 +21,7 @@ chat_create_system_prompt <-
     assert_that(is.logical(in_source),
                 msg = "chat system prompt creation needs logical `in_source`")
 
-    if (!is.null(custom_prompt)) {
+    if (!is.null(custom_prompt) && task == "custom") {
       return(custom_prompt)
     }
 

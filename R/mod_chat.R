@@ -47,7 +47,6 @@ mod_chat_ui <- function(id, translator = create_translator()) {
                 label = icon("eraser"),
                 class = "w-100 btn-primary mt-2 p-1"
               ),
-              # bs_dropdown(
               actionButton(
                 inputId = ns("settings"),
                 label = icon("gear"),
@@ -73,27 +72,35 @@ mod_chat_server <- function(id,
     ns <- session$ns
     rv <- reactiveValues()
 
-    api_services <- utils::methods("gptstudio_request_perform") %>%
+    api_services <-
+      utils::methods("gptstudio_request_perform") %>%
       stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
       purrr::discard(~ .x == "gptstudio_request_perform.default")
 
     onStop(function() delete_skeleton())
 
-    chat_models <- reactive({
+    models <- reactive({
       req(!is.null(input$service))
       get_available_models(input$service)
     })
 
     observe(updateSelectInput(session,
-                              inputId = "chat_model",
-                              choices = chat_models()))
+                              inputId = "model",
+                              choices = models(),
+                              selected = getOption("gptstudio.model")))
 
     observe({
+      model   <- input$model
+      service <- input$service
+      stream  <- input$stream
+      if (is.null(model)) model <- getOption("gptstudio.model")
+      if (is.null(service)) service <- getOption("gptstudio.service")
+      if (is.null(stream)) stream <- getOption("gptstudio.stream")
       rv$skeleton <-
-        gptstudio_create_skeleton(service = input$service,
+        gptstudio_create_skeleton(service = service,
                                   prompt  = input$chat_input,
-                                  model   = input$chat_model,
-                                  stream  = as.logical(input$stream),
+                                  model   = model,
+                                  stream  = as.logical(stream),
                                   history = rv$chat_history)
 
       rv$chat_history <- chat_history_append(history = rv$chat_history,
@@ -145,14 +152,16 @@ mod_chat_server <- function(id,
     })
 
     observe({
-      cli_inform("Submitting job.")
-      skill <-
-        ifelse(is.null(input$skill), getOption("gptstudio.skill"), input$skill)
-      style <-
-        ifelse(is.null(input$style), getOption("gptstudio.code_style"), input$style)
-      task <-
-        ifelse(is.null(input$task), getOption("gptstudio.task"), input$task)
+      skill         <- input$skill
+      style         <- input$style
+      task          <- input$task
       custom_prompt <- input$custom_prompt
+      if (is.null(skill)) skill <- getOption("gptstudio.skill")
+      if (is.null(style)) style <- getOption("gptstudio.code_style")
+      if (is.null(task))  task  <- getOption("gptstudio.task")
+      if (is.null(custom_prompt)) {
+        custom_prompt  <- getOption("gptstudio.custom_prompt")
+      }
       gptstudio_submit_job(rv$skeleton, skill, style, task, custom_prompt)
     }) %>%
       bindEvent(input$chat)
@@ -197,6 +206,14 @@ mod_chat_server <- function(id,
               label = translator$t("Task"),
               choices = c("coding", "general", "advanced developer", "custom"),
               width = "200px",
+              selected = getOption("gptstudio.task")
+            ),
+            selectInput(
+              inputId = ns("language"),
+              label = translator$t("Language"),
+              choices = c("en", "es", "de"),
+              width = "200px",
+              selected = getOption("gptstudio.language")
             ),
             uiOutput(ns("about_you_ui")),
             uiOutput(ns("custom_prompt")),
@@ -204,25 +221,45 @@ mod_chat_server <- function(id,
               inputId = ns("service"),
               label = "Select API Service",
               choices = api_services,
-              selected = "openai",
-              width = "200px",
+              selected = getOption("gptstudio.service"),
+              width = "200px"
             ),
             selectInput(
-              inputId = ns("chat_model"),
+              inputId = ns("model"),
               label = translator$t("Chat Model"),
               choices = NULL,
               width = "200px",
+              selected = getOption("gptstudio.model")
             ),
             radioButtons(
               inputId = ns("stream"),
               label = "Stream Response",
               choiceNames = c("Yes", "No"),
               choiceValues = c(TRUE, FALSE),
-              inline = TRUE
+              inline = TRUE,
+              width = "200px",
             )
+          ),
+          column(width = 12, align = "right",
+                 actionButton(ns("save_default"), "Save as Default",
+                              icon = icon("save"),
+                              width = "200px")
           )
         ))
     }) %>% bindEvent(input$settings)
+
+    observe({
+      save_user_config(
+        code_style = input$style,
+        skill = input$skill,
+        task = input$task,
+        language = input$language,
+        service = input$service,
+        model = input$model,
+        custom_prompt = input$custom_prompt,
+        stream = input$stream
+      )
+    }) %>% bindEvent(input$save_default)
   })
 }
 
@@ -307,4 +344,49 @@ get_skeleton <- function() {
 get_current_history <- function() {
   history <- get_skeleton() %>% purrr::pluck("history")
   gptstudio_env$current_history <- history
+}
+
+save_user_config <- function(code_style,
+                             skill, task,
+                             language,
+                             service,
+                             model,
+                             custom_prompt,
+                             stream) {
+  config <-
+    data.frame(
+      code_style,
+      skill,
+      task,
+      language,
+      service,
+      model,
+      custom_prompt,
+      stream
+    )
+  print(config)
+  user_config_path <- tools::R_user_dir("gptstudio", which = "config")
+  user_config <- file.path(user_config_path, "config.yml")
+  if (!dir.exists(user_config_path)) {
+    dir.create(user_config_path, recursive = TRUE)
+  }
+  yaml::write_yaml(config, user_config)
+  set_user_options(config)
+}
+
+set_user_options <- function(config) {
+  op <- options()
+
+  op_gptstudio <- list(
+    gptstudio.code_style    = config$code_style,
+    gptstudio.skill         = config$skill,
+    gptstudio.task          = config$task,
+    gptstudio.language      = config$language,
+    gptstudio.service       = config$service,
+    gptstudio.model    = config$model,
+    gptstudio.custom_prompt = config$custom_prompt,
+    gptstudio.stream        = config$stream
+  )
+  options(op_gptstudio)
+  invisible()
 }
