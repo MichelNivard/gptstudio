@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gptstudio</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9003</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,6 +46,10 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="gptstudio-development-version">gptstudio (development version)<a class="anchor" aria-label="anchor" href="#gptstudio-development-version"></a></h2>
+<div class="section level3">
+<h3 id="config-file-development-version">Config File<a class="anchor" aria-label="anchor" href="#config-file-development-version"></a></h3>
+<ul><li>Create a config file to be stored use tools::R_user_dir that allows for setting to persist across sessions. This way users can save their app settings as default, and those settitngs will load when the package loads (e.g., when the app is launched).</li>
+</ul></div>
 <div class="section level3">
 <h3 id="custom-prompt-development-version">Custom Prompt<a class="anchor" aria-label="anchor" href="#custom-prompt-development-version"></a></h3>
 <ul><li>Add “task” option in app that allows users to pick from “coding”, “general”, “advanced developer”, and “custom”. These options change the system prompt. The custom prompt completely replaces the system prompt instructions.</li>
