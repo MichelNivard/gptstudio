@@ -1,5 +1,9 @@
 # gptstudio (development version)
 
+## Config File
+
+- Create a config file to be stored use tools::R_user_dir that allows for setting to persist across sessions. This way users can save their app settings as default, and those settitngs will load when the package loads (e.g., when the app is launched).
+
 ## Custom Prompt
 
 - Add "task" option in app that allows users to pick from "coding", "general", "advanced developer", and "custom". These options change the system prompt. The custom prompt completely replaces the system prompt instructions.
