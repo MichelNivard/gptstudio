@@ -86,14 +86,21 @@ mod_chat_server <- function(id,
 
     observe(updateSelectInput(session,
                               inputId = "chat_model",
-                              choices = chat_models()))
+                              choices = chat_models(),
+                              selected = getOption("gptstudio.chat_model")))
 
     observe({
+      model   <- input$chat_model
+      service <- input$service
+      stream  <- input$stream
+      if (is.null(model)) model <- getOption("gptstudio.chat_model")
+      if (is.null(service)) service <- getOption("gptstudio.service")
+      if (is.null(stream)) stream <- getOption("gptstudio.stream")
       rv$skeleton <-
-        gptstudio_create_skeleton(service = input$service,
+        gptstudio_create_skeleton(service = service,
                                   prompt  = input$chat_input,
-                                  model   = input$chat_model,
-                                  stream  = as.logical(input$stream),
+                                  model   = model,
+                                  stream  = as.logical(stream),
                                   history = rv$chat_history)
 
       rv$chat_history <- chat_history_append(history = rv$chat_history,
