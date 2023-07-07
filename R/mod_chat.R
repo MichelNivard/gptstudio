@@ -131,7 +131,6 @@ mod_chat_server <- function(id,
 
     output$streaming <- renderUI({
       if (reactive_stream() != "No stream file found") {
-        cli_inform("made it")
         list(
           list(
             role = "assistant",
