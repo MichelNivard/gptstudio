@@ -53,7 +53,7 @@ stream_chat_completion <- function(prompt,
     httr2::req_body_json(body) %>%
     httr2::req_auth_bearer_token(openai_api_key) %>%
     httr2::req_headers("Content-Type" = "application/json") %>%
-    httr2::req_method("POST") |>
+    httr2::req_method("POST") %>%
     httr2::req_stream(callback = function(x) {openai_stream_parse(x); TRUE},
                       buffer_kb = 0.05)
   chat_response <- readRDS(streaming_file())
@@ -83,8 +83,8 @@ openai_stream_parse <- function(x) {
   )
   res <- gptstudio_env$stream$raw %>%
     paste0(collapse = "") %>%
-    strsplit("data: ") |>
-    unlist() |>
+    strsplit("data: ") %>%
+    unlist() %>%
     purrr::discard(~ .x == "")
   if (length(res) > 1) {
     gptstudio_env$stream$raw <- res[2]
