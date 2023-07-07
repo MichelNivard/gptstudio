@@ -6,7 +6,7 @@ Provide an option for users to specify a different base url for the OpenAI API. 
 
 ## Config File
 
-Create a config file to be stored use tools::R_user_dir that allows for setting to persist across sessions. This way users can save their app settings as default, and those settings will load when the package loads (e.g., when the app is launched).
+Create a config file to be stored use tools::R_user_dir that allows for setting to persist across sessions. This way users can save their app settings as default, and those settitngs will load when the package loads (e.g., when the app is launched).
 
 ## Custom Prompt
 
