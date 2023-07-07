@@ -284,7 +284,7 @@ gptstudio_submit_job <- function(skeleton,
   }
   rs$call(
     function(skeleton, skill, style, task, custom_prompt) {
-      gptstudio:::gptstudio_job(skeleton, skill, style, task, custom_prompt)
+      gptstudio::gptstudio_job(skeleton, skill, style, task, custom_prompt)
     },
     args = list(
       custom_prompt = custom_prompt,
@@ -297,11 +297,33 @@ gptstudio_submit_job <- function(skeleton,
   rs$read_output()
 }
 
-gptstudio_job <- function(skeleton = gptstudio_create_skeleton(),
-                          skill = "beginner",
-                          style = "tidyverse",
-                          task = "custom",
-                          custom_prompt = "Respond in French") {
+#' Perform Job
+#'
+#' Combined job to build the skeleton, perform the api request, and process
+#' the response
+#'
+#' @param skeleton A GPT Studio request skeleton object.
+#' @param style The style of code to use. Applicable styles can be retrieved
+#'   from the "gptstudio.code_style" option. Default is the
+#'   "gptstudio.code_style" option. Options are "base", "tidyverse", or "no
+#'   preference".
+#' @param skill The skill level of the user for the chat conversation. This can
+#'   be set through the "gptstudio.skill" option. Default is the
+#'   "gptstudio.skill" option. Options are "beginner", "intermediate",
+#'   "advanced", and "genius".
+#' @param task Specifies the task that the assistant will help with. Default is
+#'   "coding". Others are "general", "advanced developer", and "custom".
+#' @param custom_prompt This is a custom prompt that may be used to guide the AI
+#'   in its responses. Default is NULL. It will be the only content provided to
+#'   the system prompt.
+#'
+#' @export
+gptstudio_job <- function(skeleton      = gptstudio_create_skeleton(),
+                          skill         = getOption("gptstudio.skill"),
+                          style         = getOption("gptstudio.code_style"),
+                          task          = getOption("gptstudio.task"),
+                          custom_prompt = getOption("gptstudio.custom_prompt"))
+{
   delete_skeleton()
   gptstudio_skeleton_build(skeleton, skill, style, task, custom_prompt) %>%
     gptstudio_request_perform() %>%

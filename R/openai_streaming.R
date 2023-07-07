@@ -36,7 +36,7 @@
 stream_chat_completion <- function(prompt,
                                    model = "gpt-3.5-turbo",
                                    openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
-  url <- "https://api.openai.com/v1/chat/completions"
+  base_url <- getOption("gptstudio.openai_url")
   body <- list(
     "model" = model,
     "messages" = prompt,
@@ -47,7 +47,8 @@ stream_chat_completion <- function(prompt,
   gptstudio_env$current_stream <- TRUE
 
   response <-
-    httr2::request(base_url = url) %>%
+    httr2::request(base_url) %>%
+    httr2::req_url_path_append("chat/completions") %>%
     httr2::req_body_json(body) %>%
     httr2::req_auth_bearer_token(openai_api_key) %>%
     httr2::req_headers("Content-Type" = "application/json") %>%
