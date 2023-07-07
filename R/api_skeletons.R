@@ -43,7 +43,7 @@ validate_skeleton <- function(url, api_key, model, prompt, history, stream) {
 }
 
 new_gptstudio_request_skeleton_openai <- function(
-    url = "https://api.openai.com/v1/chat/completions",
+    url = glue("{getOption(\"gptstudio.openai_url\")}/chat/completions"),
     api_key = Sys.getenv("OPENAI_API_KEY"),
     model = "gpt-3.5-turbo",
     prompt = "What is a ggplot?",

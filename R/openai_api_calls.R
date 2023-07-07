@@ -13,7 +13,7 @@ request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
       "i" = "Run {.run gptstudio::get_available_endpoints()} to get a list of supported endpoints"
     ))
   }
-  httr2::request("https://api.openai.com/v1") %>%
+  httr2::request(getOption("gptstudio.openai_url")) %>%
     httr2::req_url_path_append(task) %>%
     httr2::req_auth_bearer_token(token = token)
 }
