@@ -120,16 +120,22 @@ mod_chat_server <- function(id,
     }) %>%
       bindEvent(input$clear_history, ignoreNULL = FALSE)
 
-    auto_invalidate <- reactiveTimer(10)
+    reactive_stream <- reactiveFileReader(intervalMillis = 10,
+                                          session = session,
+                                          filePath = streaming_file(),
+                                          readFunc = app_server_file_stream)
+    reactive_skeleton <- reactiveFileReader(intervalMillis = 10,
+                                            session = session,
+                                            filePath = skeleton_file(),
+                                            readFunc = get_skeleton)
 
     output$streaming <- renderUI({
-      auto_invalidate()
-      if (file.exists(streaming_file())) {
-        app_server_file_stream()
+      if (reactive_stream() != "No stream file found") {
+        cli_inform("made it")
         list(
           list(
             role = "assistant",
-            content = gptstudio_env$current_stream
+            content = reactive_stream()
           )
         ) %>%
           style_chat_history(ide_colors = ide_colors)
@@ -137,13 +143,10 @@ mod_chat_server <- function(id,
     })
 
     observe({
-      auto_invalidate()
-      if (file.exists(skeleton_file())) {
-        Sys.sleep(0.01)
-        rv$skeleton <- get_skeleton()
-        rv$chat_history <- rv$skeleton$history
-        file.remove(skeleton_file())
-      }
+      req(!is.null(reactive_skeleton()))
+      rv$skeleton <- reactive_skeleton()
+      rv$chat_history <- rv$skeleton$history
+      file.remove(skeleton_file())
     })
 
     output$history <- renderUI({
@@ -264,12 +267,8 @@ mod_chat_server <- function(id,
 }
 
 
-app_server_file_stream <- function() {
-  current_stream <- streaming_file() %>% readRDS() %>% try(silent = TRUE)
-  if (!inherits(current_stream, "try-error")) {
-    gptstudio_env$current_stream <- current_stream
-  }
-  invisible()
+app_server_file_stream <- function(path) {
+  ifelse(file.exists(path), readRDS(path), "No stream file found")
 }
 
 gptstudio_submit_job <- function(skeleton,
@@ -277,6 +276,7 @@ gptstudio_submit_job <- function(skeleton,
                                  style,
                                  task,
                                  custom_prompt) {
+  cat_print(skeleton)
   rs <- r_session_start()
   if (rs$get_state() != "idle") {
     cli_inform("Background session status: {rs$read()}")
@@ -329,6 +329,7 @@ gptstudio_job <- function(skeleton      = gptstudio_create_skeleton(),
     gptstudio_request_perform() %>%
     gptstudio_response_process() %>%
     save_skeleton()
+  file.remove(streaming_file())
 }
 
 r_session_start <- function() {
@@ -355,60 +356,16 @@ delete_skeleton <- function() {
   if (file.exists(skeleton_file())) file.remove(skeleton_file())
 }
 
-get_skeleton <- function() {
-  if (!file.exists(skeleton_file())) {
+get_skeleton <- function(path = skeleton_file()) {
+  if (!file.exists(path)) {
     cli_inform("Not chat history found.")
+    NULL
   } else {
-    readRDS(skeleton_file())
+    readRDS(path)
   }
 }
 
 get_current_history <- function() {
   history <- get_skeleton() %>% purrr::pluck("history")
   gptstudio_env$current_history <- history
-}
-
-save_user_config <- function(code_style,
-                             skill, task,
-                             language,
-                             service,
-                             model,
-                             custom_prompt,
-                             stream) {
-  config <-
-    data.frame(
-      code_style,
-      skill,
-      task,
-      language,
-      service,
-      model,
-      custom_prompt,
-      stream
-    )
-  print(config)
-  user_config_path <- tools::R_user_dir("gptstudio", which = "config")
-  user_config <- file.path(user_config_path, "config.yml")
-  if (!dir.exists(user_config_path)) {
-    dir.create(user_config_path, recursive = TRUE)
-  }
-  yaml::write_yaml(config, user_config)
-  set_user_options(config)
-}
-
-set_user_options <- function(config) {
-  op <- options()
-
-  op_gptstudio <- list(
-    gptstudio.code_style    = config$code_style,
-    gptstudio.skill         = config$skill,
-    gptstudio.task          = config$task,
-    gptstudio.language      = config$language,
-    gptstudio.service       = config$service,
-    gptstudio.model    = config$model,
-    gptstudio.custom_prompt = config$custom_prompt,
-    gptstudio.stream        = config$stream
-  )
-  options(op_gptstudio)
-  invisible()
 }

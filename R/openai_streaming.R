@@ -36,6 +36,8 @@
 stream_chat_completion <- function(prompt,
                                    model = "gpt-3.5-turbo",
                                    openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
+  if (file.exists(streaming_file())) file.remove(streaming_file())
+
   base_url <- getOption("gptstudio.openai_url")
   body <- list(
     "model" = model,
@@ -46,22 +48,17 @@ stream_chat_completion <- function(prompt,
   gptstudio_env$stream$raw <- NULL
   gptstudio_env$current_stream <- TRUE
 
-  response <-
-    httr2::request(base_url) %>%
+  httr2::request(base_url) %>%
     httr2::req_url_path_append("chat/completions") %>%
     httr2::req_body_json(body) %>%
     httr2::req_auth_bearer_token(openai_api_key) %>%
     httr2::req_headers("Content-Type" = "application/json") %>%
-    httr2::req_method("POST")
-
-  httr2::req_stream(response, callback = function(x) {
-    openai_stream_parse(x)
-    TRUE
-  }, buffer_kb = 0.05)
-
+    httr2::req_method("POST") |>
+    httr2::req_stream(callback = function(x) {openai_stream_parse(x); TRUE},
+                      buffer_kb = 0.05)
   chat_response <- readRDS(streaming_file())
-  gptstudio_env$current_stream <- NULL
   file.remove(streaming_file())
+  cli_inform("File exists: {file.exists(streaming_file())}")
   chat_response
 }
 
@@ -86,19 +83,28 @@ openai_stream_parse <- function(x) {
   )
   res <- gptstudio_env$stream$raw %>%
     paste0(collapse = "") %>%
-    strsplit("data: ") %>%
-    unlist() %>%
-    purrr::discard(~ .x == "") %>%
+    strsplit("data: ") |>
+    unlist() |>
+    purrr::discard(~ .x == "")
+  if (length(res) > 1) {
+    gptstudio_env$stream$raw <- res[2]
+    set_to_null <- FALSE
+  } else {
+    set_to_null <- TRUE
+  }
+  res <- res %>%
     purrr::keep(~ substr(.x, (nchar(.x) - 2), nchar(.x)) == "}\n\n")
 
   if (length(res) > 0) {
-    res <- purrr::map(res, jsonlite::fromJSON) %>%
-      purrr::map(~ .x$choices$delta$content) %>%
-      purrr::reduce(paste0)
-    if (length(res) > 0) {
-      saveRDS(res, file = streaming_file())
-      return(res)
-    }
+    new_response <- jsonlite::fromJSON(res)
+    new_response <- new_response$choices$delta$content
+    gptstudio_env$stream$parsed <- paste0(
+      gptstudio_env$stream$parsed,
+      new_response,
+      collapse = ""
+    )
+    if (set_to_null) gptstudio_env$stream$raw <- NULL
+    saveRDS(gptstudio_env$stream$parsed, file = streaming_file())
   } else {
     json_res <- try(jsonlite::fromJSON(x), silent = TRUE)
     if (!inherits(json_res, "try-error")) {

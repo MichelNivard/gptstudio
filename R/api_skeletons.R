@@ -134,7 +134,7 @@ new_gptstudio_request_skeleton_palm <- function(
 
 
 gptstudio_create_skeleton <- function(service = "openai",
-                                      prompt = "What is a ggplot?",
+                                      prompt = "Name the top 5 packages in R.",
                                       history = list(
                                         list(
                                           role = "system",
