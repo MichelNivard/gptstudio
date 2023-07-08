@@ -84,6 +84,11 @@ mod_chat_server <- function(id,
       get_available_models(input$service)
     })
 
+    observeEvent(input$code_to_console, {
+      shiny::showNotification("It might have worked!")
+      # rstudioapi::sendToConsole(input$code_to_console)
+    })
+
     observe(updateSelectInput(session,
                               inputId = "model",
                               choices = models(),
