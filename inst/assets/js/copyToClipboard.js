@@ -1,9 +1,7 @@
-// listener for clipboard button click
-// gpt-created
 $(document).on('click', '.btn-clipboard', function(event) {
 
-  // get the parent div and next pre tag
-  const parentDiv = $(this).closest('div');
+  // get the parent div of the parent div and next pre tag
+  const parentDiv = $(this).closest('div').parent();
   const preTag = parentDiv.next('pre');
 
   // find code inside pre tag
@@ -29,7 +27,7 @@ $(document).on('click', '.btn-clipboard', function(event) {
 });
 
 // gpt-created
-function addCodeBtns() {
+function addCopyBtn() {
   // Get all the pre tags in the document that don't already have a copy button
   var preTags = $('pre:not(".hasCopyButton")');
 
@@ -54,12 +52,8 @@ function addCodeBtns() {
         <button type="button" class="btn action-button btn-secondary btn-sm btn-clipboard shiny-bound-input ml-auto">
             <i class="fas fa-copy"></i> Copy
         </button>
-        <button type="button" class="btn action-button btn-secondary btn-sm btn-console shiny-bound-input ml-auto">
-            <i class="fas fa-terminal"></i> Console
-        </button>
     </div>
-</div>
-
+    </div>
     `);
 
     // Insert the div with the copy button and language text before the pre tag
@@ -69,5 +63,5 @@ function addCodeBtns() {
 
 
 $(document).on('shiny:inputchanged', function(event) {
-  addCodeBtns();
+  addCopyBtn();
 });
