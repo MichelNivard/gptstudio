@@ -3,12 +3,12 @@ Addin
 Addins
 Anthropic
 Anthropic's
-Boostrap
 CMD
 ChatGPT
 Codecov
+Config
 GPT
-Gitlab
+GitLab
 HuggingFace
 HuggingFace's
 IPv
@@ -37,7 +37,6 @@ bslib
 chatgpt
 chattr
 claude
-dropdown
 github
 gitignore
 gpt
@@ -57,10 +56,10 @@ scrollbar
 spanish
 str
 streamingMessage
+stringr
 tempfile
 textAreaInput
 textarea
 textareas
 tidyverse
-ubuntu
 welcomeMessage

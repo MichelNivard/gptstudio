@@ -1,50 +1,46 @@
-# gptstudio (development version)
+# What's New in Version 0.3.0
 
-## Custom OpenAI Base Url
+## Persistent Config File
 
-Provide an option for users to specify a different base url for the OpenAI API. Closes #119
+We've introduced a configuration file that persists across sessions. Now, your preferred app settings will be loaded each time you launch the app, making it even more user-friendly.
 
-## Config File
+## Custom Prompt Selection
 
-Create a config file to be stored use tools::R_user_dir that allows for setting to persist across sessions. This way users can save their app settings as default, and those settitngs will load when the package loads (e.g., when the app is launched).
+Further enhancing customization, we've added a "task" option that lets you choose the system prompt from options such as "coding", "general", "advanced developer", and "custom". The "custom" option allows you to replace the system prompt instructions entirely.
 
-## Custom Prompt
+## Expanded API Services
 
-Add "task" option in app that allows users to pick from "coding", "general", "advanced developer", and "custom". These options change the system prompt. The custom prompt completely replaces the system prompt instructions.
-
-## More API services
-
-Models from other API services are now included include:
-
-- HuggingFace inference API: gpt2, tiiuae/falcon-7b-instruct, bigcode/starcoderplus
-- Anthropic's claude models: claude-1, claude-1-100k, claude-instant-1, claude-instant-1-100k
-- Google's MakerSuite: PALM
+We're excited to announce that our service now includes models from HuggingFace's inference API, Anthropic's claude models, and Google's MakerSuite, broadening the range of AI solutions you can utilize.
 
 ## S3 Class for API Services
 
-API calls now use S3 classes that will make it easier to incorporate additional APIs in the future. 
+In an effort to make future API additions easier, API calls now use S3 classes.
 
-## Streaming Updates
+## Real-time Streaming Updates
 
-- Implement streaming without dependency on R6 inspired by Edgar Ruiz's work on [chattr](https://github.com/mlverse/chatter).
+Inspired by Edgar Ruiz's work on [chattr](https://github.com/mlverse/chattr), we've implemented real-time streaming without relying on R6, but this will receive more attention in the 0.4.0 release.
 
-## Bug fixes
+## Model Selection Feature
 
-- Fixed a bug that prevented the "Spelling and Grammar" and the "Comment your code" addins to actually insert text in source. Fixes #101
-- Fixed a bug that prevented installation when `{stringr}` was previously installed with a version lower than 1.5.0 . Fixes #110
-- Fixed a bug that prevented installation on versions of R previous to 4.1. Fixes #114, closes #115
+The ChatGPT add-in now comes with an integrated model selection feature, enabling you to choose any chat completion model that matches either gpt-3.5 or gpt-4 in the model name.
 
-## Notes
+## Upgraded Add-ins
 
-- We now use github actions to check on more R versions in ubuntu. At the time of writing, gptstudio will start running checks on R versions `3.6.3`, `4.0.5`, `4.1.3`, `4.2.3`, `4.3.1` (current), and the development version. This should ensure that users can install the package in all those versions. Users can still try and maybe achieve installing on older versions, but we won't actively check compatibility of new features on them.
+The add-ins for code commenting and spelling & grammar checking have been upgraded to use the chat/completions endpoint and now default to the gpt-3.5-turbo model. You can modify this default setting as needed.
 
-## Model selection
+## Custom OpenAI Base Url
 
-- The ChatGPT addin now comes with an integrated model selection feature. This allows users to choose any chat completion model that matches to either `gpt-3.5` or `gpt-4` in the model name. The default model is `gpt-3.5-turbo`, which can be customized via the `gptstudio.chat_model` option.
+You now have the option to specify a different base url for the OpenAI API. A much-requested feature by our users, this addition helps in tailoring the API access to suit your needs.
 
-## Addins converted to chat/completions
+## Bug Fixes
 
-- The addins for code commenting and spelling & grammar checking have been upgraded to utilize the chat/completions endpoint. They default to the `gpt-3.5-turbo` model. To change this default setting, users can adjust the `gptstudio.chat_model` option.
+We've addressed several issues in this update. Now, the "Spelling and Grammar" and "Comment your code" add-ins can successfully insert text in source. Also, installation issues related to the {stringr} package and compatibility with earlier versions of R have been resolved.
+
+## Improved Compatibility Checks
+
+To ensure optimal user experience, we're now using GitHub Actions to check compatibility with a wider range of R versions on Ubuntu.
+
+We hope you enjoy the enhanced features and improved performance in this latest version. As always, your feedback is invaluable to us, so please keep it coming!
 
 # gptstudio 0.2.0
 
