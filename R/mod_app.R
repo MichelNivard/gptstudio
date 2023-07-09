@@ -118,7 +118,7 @@ html_dependencies <- function() {
 #' Internationalization for the ChatGPT addin
 #'
 #' The language can be set via `options("gptstudio.language" = "<language>")`
-#' (defaults to "en") or the "GPTSTUDIO_LANGUAGE" environment variable.
+#' (defaults to "en").
 #'
 #' @param language The language to be found in the translation JSON file.
 #'

@@ -72,7 +72,6 @@ style_chat_message <- function(message,
 #' @param role The role of the message author
 #' @inheritParams run_chatgpt_app
 #' @return list
-#'
 create_ide_matching_colors <- function(role,
                                        ide_colors = get_ide_theme_info()) {
   assert_that(role %in% c("user", "assistant"))
@@ -104,7 +103,6 @@ create_ide_matching_colors <- function(role,
 #' @param textarea_class Class to be applied to the textarea element
 #'
 #' @return A modified textAreaInput
-#'
 text_area_input_wrapper <-
   function(inputId,
            label,

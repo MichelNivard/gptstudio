@@ -14,5 +14,5 @@ A Translator from \code{shiny.i18n::Translator}
 }
 \description{
 The language can be set via \code{options("gptstudio.language" = "<language>")}
-(defaults to "en") or the "GPTSTUDIO_LANGUAGE" environment variable.
+(defaults to "en").
 }
