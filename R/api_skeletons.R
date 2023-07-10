@@ -132,6 +132,29 @@ new_gptstudio_request_skeleton_palm <- function(
                                 class = "gptstudio_request_palm")
 }
 
+new_gptstudio_request_skeleton_azure_openai <- function(
+    url = "user provided with environmental variables",
+    api_key = Sys.getenv("AZURE_OPENAI_KEY"),
+    model = "gpt-3.5-turbo",
+    prompt = "What is a ggplot?",
+    history = list(
+      list(
+        role = "system",
+        content = "You are an R chat assistant"
+      )
+    ),
+    stream = FALSE,
+    n = 1
+) {
+  new_gpstudio_request_skeleton(url,
+                                api_key,
+                                model,
+                                prompt,
+                                history,
+                                stream,
+                                class = "gptstudio_request_azure_openai")
+}
+
 
 gptstudio_create_skeleton <- function(service = "openai",
                                       prompt = "Name the top 5 packages in R.",
@@ -166,5 +189,12 @@ gptstudio_create_skeleton <- function(service = "openai",
            prompt = prompt,
            history = history,
            # forcing false until streaming implemented for palm
+           stream = FALSE),
+         "azure_openai" = new_gptstudio_request_skeleton_azure_openai(
+           model = model,
+           prompt = prompt,
+           history = history,
+           # forcing false until streaming implemented for palm
            stream = FALSE))
 }
+
