@@ -9,18 +9,20 @@
 mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
   ns <- NS(id)
   translator <- create_translator(language = getOption("gptstudio.language"))
-
-  bslib::page_fluid(
-    theme = create_chat_app_theme(ide_colors),
-    title = "ChatGPT from gptstudio",
-    class = "vh-100 p-3 m-0",
-    html_dependencies(),
-    div(
-      class = "row justify-content-center h-100",
+  tagList(
+    waiter::use_waiter(),
+    bslib::page_fluid(
+      theme = create_chat_app_theme(ide_colors),
+      title = "ChatGPT from gptstudio",
+      class = "vh-100 p-3 m-0",
+      html_dependencies(),
       div(
-        class = "col h-100",
-        style = htmltools::css(`max-width` = "800px"),
-        mod_chat_ui(ns("chat"), translator)
+        class = "row justify-content-center h-100",
+        div(
+          class = "col h-100",
+          style = htmltools::css(`max-width` = "800px"),
+          mod_chat_ui(ns("chat"), translator)
+        )
       )
     )
   )

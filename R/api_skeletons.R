@@ -154,15 +154,17 @@ gptstudio_create_skeleton <- function(service = "openai",
            model = model,
            prompt = prompt,
            history = history,
-           stream = stream),
+           # forcing false until streaming implemented for hf
+           stream = FALSE),
          "anthropic" = new_gptstudio_request_skeleton_anthropic(
            model = model,
            prompt = prompt,
-           history = history,
-           stream = stream),
+           # forcing false until streaming implemented for anthropic
+           stream = FALSE),
          "palm" = new_gptstudio_request_skeleton_palm(
            model = model,
            prompt = prompt,
            history = history,
-           stream = stream))
+           # forcing false until streaming implemented for palm
+           stream = FALSE))
 }

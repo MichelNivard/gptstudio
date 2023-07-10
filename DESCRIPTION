@@ -38,6 +38,7 @@ Imports:
     shiny.i18n,
     stringr (>= 1.5.0),
     utils,
+    waiter,
     yaml
 Suggests: 
     mockr,
