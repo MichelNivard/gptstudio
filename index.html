@@ -179,6 +179,34 @@ add comments to code
 </div>
 </div>
 <div class="section level2">
+<h2 id="azure-openai-service">Azure OpenAI Service<a class="anchor" aria-label="anchor" href="#azure-openai-service"></a>
+</h2>
+<p>To configure gptstudio to work using Azure OpenAI service, you need to provide some configuration details in your .Renviron file. Specifically, gptstudio looks for five environment variables:</p>
+<ul>
+<li>AZURE_OPENAI_TASK</li>
+<li>AZURE_OPENAI_ENDPOINT</li>
+<li>AZURE_OPENAI_DEPLOYMENT_NAME</li>
+<li>AZURE_OPENAI_KEY</li>
+<li>AZURE_OPENAI_API_VERSION</li>
+</ul>
+<p>Here’s how you can add these details to your .Renviron file:</p>
+<ol style="list-style-type: decimal">
+<li>Locate your .Renviron file with <code>usethis::edit_r_environ()</code>.</li>
+<li>Add environment variable details: Add a new line for each variable you need to set in the following format: VARIABLE_NAME=“YOUR_VALUE”. Replace VARIABLE_NAME with the name of the environment variable and YOUR_VALUE with the actual value that you want to set. For example, to set the API key you would have a line like this:</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="va">AZURE_OPENAI_KEY</span><span class="op">=</span><span class="st">"your_actual_key_goes_here"</span></span></code></pre></div>
+<p>You need to do this for each of the environment variables expected by the function. Your .Renviron file should look something like this:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">AZURE_OPENAI_TASK</span><span class="op">=</span><span class="st">"your_task_code"</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="va">AZURE_OPENAI_ENDPOINT</span><span class="op">=</span><span class="st">"your_endpoint_url"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="va">AZURE_OPENAI_DEPLOYMENT_NAME</span><span class="op">=</span><span class="st">"your_deployment_name"</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="va">AZURE_OPENAI_KEY</span><span class="op">=</span><span class="st">"your_api_key"</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="va">AZURE_OPENAI_API_VERSION</span><span class="op">=</span><span class="st">"your_api_version"</span></span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>Save and Close .Renviron: After adding your environment variables, save your .Renviron file and close it. You will need to restart your R session to make sure the new environment variables are loaded properly.</li>
+</ol>
+<p>Remember to replace your_task_code, your_endpoint_url, your_deployment_name, your_api_key, and your_api_version with your actual Azure OpenAI details. You can retrieve these details from your Azure OpenAI service account. For more information about Azure OpenAI configuration, refer to the <a href="https://learn.microsoft.com/en-us/azure/cognitive-services/openai/quickstart?tabs=command-line&amp;pivots=rest-api" class="external-link">Microsoft quickstart guide</a>.</p>
+</div>
+<div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
 <p>Please note that the gptstudio project is released with a <a href="https://github.com/MichelNivard/gptstudio/blob/main/.github/CODE_OF_CONDUCT.md" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
