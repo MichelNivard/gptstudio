@@ -122,6 +122,31 @@ gptstudio_request_perform.gptstudio_request_anthropic <-
   }
 
 #' @export
+gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton, ...) {
+
+  messages <- c(
+    skeleton$history,
+    list(
+      list(role = "user", content = skeleton$prompt)
+    )
+  )
+
+  body <- list("messages"   = messages)
+
+  cat_print(body)
+
+  response <- create_completion_azure_openai(prompt = body)
+  structure(
+    list(
+      skeleton = skeleton,
+      response = response
+    ),
+    class = "gptstudio_response_azure_openai"
+  )
+}
+
+
+#' @export
 gptstudio_request_perform.default <- function(skeleton, ...) {
   cli_abort(
     c("x" = "This API service is not implemented or is missing.",

@@ -108,3 +108,30 @@ gptstudio_response_process.gptstudio_response_palm <-
                          "gptstudio_request_palm")
     skeleton
   }
+
+#' @export
+gptstudio_response_process.gptstudio_response_azure_openai <-
+  function(skeleton, ...) {
+    response <- skeleton$response
+    skeleton <- skeleton$skeleton
+
+    if (skeleton$stream == TRUE) {
+      last_response = response
+    } else {
+      last_response <- response$choices[[1]]$message$content
+    }
+
+    new_history <- c(
+      skeleton$history,
+      list(
+        list(role = "user", content = skeleton$prompt),
+        list(role = "assistant", content = last_response)
+      )
+    )
+
+    skeleton$history <- new_history
+    skeleton$prompt <- NULL # remove the last prompt
+    class(skeleton) <- c("gptstudio_request_skeleton",
+                         "gptstudio_request_azure_openai")
+    skeleton
+  }

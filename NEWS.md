@@ -10,7 +10,7 @@ Further enhancing customization, we've added a "task" option that lets you choos
 
 ## Expanded API Services
 
-We're excited to announce that our service now includes models from HuggingFace's inference API, Anthropic's claude models, and Google's MakerSuite, broadening the range of AI solutions you can utilize.
+We're excited to announce that our service now includes models from HuggingFace's inference API, Anthropic's claude models, and Google's MakerSuite, and Azure OpenAI service broadening the range of AI solutions you can use.
 
 ## S3 Class for API Services
 
