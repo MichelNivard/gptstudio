@@ -6,7 +6,6 @@ save_user_config <- function(code_style,
                              model,
                              custom_prompt,
                              stream) {
-
   if (is.null(custom_prompt)) custom_prompt <- ""
   config <-
     data.frame(

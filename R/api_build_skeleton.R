@@ -54,7 +54,8 @@ gptstudio_skeleton_build.gptstudio_request_huggingface <-
     prompt         <- skeleton$prompt
     history        <- skeleton$history
     model          <- skeleton$model
-    stream         <- skeleton$stream
+    # set to false until streaming code is implemented for HF models
+    stream         <- FALSE
     new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
 
     new_gptstudio_request_skeleton_huggingface(model   = model,
@@ -74,7 +75,8 @@ gptstudio_skeleton_build.gptstudio_request_anthropic <-
     prompt         <- skeleton$prompt
     history        <- skeleton$history
     model          <- skeleton$model
-    stream         <- skeleton$stream
+    # set to false until streaming code is implemented for anthropic models
+    stream         <- FALSE
     new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
 
     new_gptstudio_request_skeleton_anthropic(model   = model,
@@ -94,7 +96,8 @@ gptstudio_skeleton_build.gptstudio_request_palm <-
     prompt         <- skeleton$prompt
     history        <- skeleton$history
     model          <- skeleton$model
-    stream         <- skeleton$stream
+    # set to false until streaming code is implemented for palm models
+    stream         <- FALSE
     new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
 
     new_gptstudio_request_skeleton_palm(model   = model,

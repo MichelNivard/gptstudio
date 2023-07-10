@@ -83,11 +83,6 @@ mod_chat_server <- function(id,
       get_available_models(input$service)
     })
 
-    observeEvent(input$code_to_console, {
-      shiny::showNotification("It might have worked!")
-      # rstudioapi::sendToConsole(input$code_to_console)
-    })
-
     observe(updateSelectInput(session,
                               inputId = "model",
                               choices = models(),
@@ -268,24 +263,33 @@ gptstudio_submit_job <- function(skeleton,
                                  style,
                                  task,
                                  custom_prompt) {
-  rs <- r_session_start()
-  if (rs$get_state() != "idle") {
-    cli_inform("Background session status: {rs$read()}")
-    rs$finalize()
-  }
-  rs$call(
-    function(skeleton, skill, style, task, custom_prompt) {
-      gptstudio::gptstudio_job(skeleton, skill, style, task, custom_prompt)
-    },
-    args = list(
-      custom_prompt = custom_prompt,
-      skeleton      = skeleton,
-      skill         = skill,
-      style         = style,
-      task          = task
+  if (rlang::is_true(skeleton$stream)) {
+    rs <- r_session_start()
+    if (rs$get_state() != "idle") {
+      cli_inform("Background session status: {rs$read()}")
+      rs$finalize()
+    }
+    rs$call(
+      function(skeleton, skill, style, task, custom_prompt) {
+        gptstudio::gptstudio_job(skeleton, skill, style, task, custom_prompt)
+      },
+      args = list(
+        custom_prompt = custom_prompt,
+        skeleton      = skeleton,
+        skill         = skill,
+        style         = style,
+        task          = task
+      )
     )
-  )
-  rs$read_output()
+    rs$read_output()
+  } else {
+    waiter::waiter_show(
+      html = tagList(waiter::spin_pong(),
+                     br(), br(),
+                     h4(glue("Busy chatting with {skeleton$model}"))))
+    gptstudio_job(skeleton, skill, style, task, custom_prompt)
+    waiter::waiter_hide()
+  }
 }
 
 #' Perform Job
