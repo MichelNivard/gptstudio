@@ -1,4 +1,4 @@
-# What's New in Version 0.3.0
+# gptstudio 0.3.0
 
 ## Persistent Config File
 
