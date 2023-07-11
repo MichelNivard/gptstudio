@@ -42,6 +42,10 @@ To ensure optimal user experience, we're now using GitHub Actions to check compa
 
 We hope you enjoy the enhanced features and improved performance in this latest version. As always, your feedback is invaluable to us, so please keep it coming!
 
+## Traslations
+
+The ChatGPT addin can now speak German! Thanks to [Mark Colley](https://github.com/M-Colley) #107
+
 # gptstudio 0.2.0
 
 ## Translations
