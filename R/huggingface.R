@@ -6,7 +6,6 @@
 #' @param task character string specifying a HuggingFace API endpoint task
 #' @param token String containing a HuggingFace API key. Defaults to the
 #'   HF_API_KEY environmental variable if not specified.
-#' @keywords huggingface, api, authentication
 #' @return An httr2 request object
 request_base_huggingface <- function(task, token = Sys.getenv("HF_API_KEY")) {
   httr2::request("https://api-inference.huggingface.co/models") %>%

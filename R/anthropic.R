@@ -5,7 +5,6 @@
 #'
 #' @param key String containing an Anthropic API key. Defaults to the
 #'   ANTHROPIC_API_KEY environmental variable if not specified.
-#' @keywords anthropic, api, authentication
 #' @return An httr2 request object
 request_base_anthropic <- function(key = Sys.getenv("ANTHROPIC_API_KEY")) {
   httr2::request("https://api.anthropic.com/v1/complete") %>%

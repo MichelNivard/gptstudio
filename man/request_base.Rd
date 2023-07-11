@@ -17,6 +17,3 @@ An httr2 request object
 \description{
 This function sends a request to a specific OpenAI API \code{task} endpoint at the base URL \code{https://api.openai.com/v1}, and authenticates with an API key using a Bearer token.
 }
-\keyword{api,}
-\keyword{authentication}
-\keyword{openai,}

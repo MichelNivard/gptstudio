@@ -1,8 +1,52 @@
-# gptstudio 0.3.1
+# What's New in Version 0.3.0
+
+## Persistent Config File
+
+We've introduced a configuration file that persists across sessions. Now, your preferred app settings will be loaded each time you launch the app, making it even more user-friendly.
+
+## Custom Prompt Selection
+
+Further enhancing customization, we've added a "task" option that lets you choose the system prompt from options such as "coding", "general", "advanced developer", and "custom". The "custom" option allows you to replace the system prompt instructions entirely.
+
+## Expanded API Services
+
+We're excited to announce that our service now includes models from HuggingFace's inference API, Anthropic's claude models, and Google's MakerSuite, and Azure OpenAI service broadening the range of AI solutions you can use.
+
+## S3 Class for API Services
+
+In an effort to make future API additions easier, API calls now use S3 classes.
+
+## Real-time Streaming Updates
+
+Inspired by Edgar Ruiz's work on [chattr](https://github.com/mlverse/chattr), we've implemented real-time streaming without relying on R6, but this will receive more attention in the 0.4.0 release.
+
+## Model Selection Feature
+
+The ChatGPT add-in now comes with an integrated model selection feature, enabling you to choose any chat completion model that matches either gpt-3.5 or gpt-4 in the model name.
+
+## Upgraded Add-ins
+
+The add-ins for code commenting and spelling & grammar checking have been upgraded to use the chat/completions endpoint and now default to the gpt-3.5-turbo model. You can modify this default setting as needed.
+
+## Custom OpenAI Base Url
+
+You now have the option to specify a different base url for the OpenAI API. A much-requested feature by our users, this addition helps in tailoring the API access to suit your needs.
+
+## Bug Fixes
+
+We've addressed several issues in this update. Now, the "Spelling and Grammar" and "Comment your code" add-ins can successfully insert text in source. Also, installation issues related to the {stringr} package and compatibility with earlier versions of R have been resolved.
+
+## Improved Compatibility Checks
+
+To ensure optimal user experience, we're now using GitHub Actions to check compatibility with a wider range of R versions on Ubuntu.
+
+We hope you enjoy the enhanced features and improved performance in this latest version. As always, your feedback is invaluable to us, so please keep it coming!
+
+# gptstudio 0.2.0
+
+## Translations
 
 The ChatGPT addin can now receive translations. If anyone wants to contribute with a new translation only needs to edit the translation file ("inst/translations/translation.json"). Currently supported languages are English and Spanish. 
-
-# gptstudio 0.3.0
 
 ## `{httr2}`
 
@@ -16,16 +60,9 @@ Instead of waiting for the full response to be received before showing it to the
 
 - The welcome message is no longer consumed by the chat history.
 - Errors in requests now point to the OpenAI documentation.
-
-# gptstudio 0.2.1
-
-## Bug fixes
-
 -   In the chat app, removed unnecessary whitespace in the first line of code chunks.
 -   In the chat app, the Enter key can now be used to send the user instruction as an alternative to clicking the "Send" button.
 -   In the chat app, the copy button is now added via JS instead of a previous fragile R implementation. (by @idavydov)
-
-# gptstudio 0.2.0
 
 ## New look of the message history
 

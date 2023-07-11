@@ -19,6 +19,3 @@ An httr2 request object
 This function sends a request to a specific HuggingFace API endpoint and
 authenticates with an API key using a Bearer token.
 }
-\keyword{api,}
-\keyword{authentication}
-\keyword{huggingface,}

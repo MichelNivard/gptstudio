@@ -6,7 +6,6 @@
 #' @param model character string specifying a PALM (MakerSuite) API model
 #' @param key String containing a PALM (MakerSuite) API key. Defaults to the
 #'   PALM_API_KEY environmental variable if not specified.
-#' @keywords palm, api, authentication
 #' @return An httr2 request object
 request_base_palm <- function(model, key = Sys.getenv("PALM_API_KEY")) {
   # Append the model and API key to the base URL

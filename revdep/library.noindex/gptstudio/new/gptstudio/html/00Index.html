@@ -14,7 +14,7 @@ Environment
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;gptstudio&rsquo; version 0.3.1</h2>
+</div><h2>Documentation for package &lsquo;gptstudio&rsquo; version 0.2.0.9005</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../NEWS">Package NEWS</a>.</li>
@@ -32,8 +32,6 @@ Environment
 <td>Comment Code Addin</td></tr>
 <tr><td style="width: 25%;"><a href="addin_spelling_grammar.html">addin_spelling_grammar</a></td>
 <td>Spelling and Grammar Addin</td></tr>
-<tr><td style="width: 25%;"><a href="bs_dropdown.html">bs_dropdown</a></td>
-<td>Boostrap 5 dropdown</td></tr>
 <tr><td style="width: 25%;"><a href="chat_create_system_prompt.html">chat_create_system_prompt</a></td>
 <td>Create system prompt</td></tr>
 <tr><td style="width: 25%;"><a href="chat_history_append.html">chat_history_append</a></td>
@@ -48,6 +46,14 @@ Environment
 <td>Check API key</td></tr>
 <tr><td style="width: 25%;"><a href="create_chat_app_theme.html">create_chat_app_theme</a></td>
 <td>Chat App Theme</td></tr>
+<tr><td style="width: 25%;"><a href="create_completion_anthropic.html">create_completion_anthropic</a></td>
+<td>Generate text completions using Anthropic's API</td></tr>
+<tr><td style="width: 25%;"><a href="create_completion_azure_openai.html">create_completion_azure_openai</a></td>
+<td>Generate text using Azure OpenAI's API</td></tr>
+<tr><td style="width: 25%;"><a href="create_completion_huggingface.html">create_completion_huggingface</a></td>
+<td>Generate text completions using HuggingFace's API</td></tr>
+<tr><td style="width: 25%;"><a href="create_completion_palm.html">create_completion_palm</a></td>
+<td>Generate text completions using PALM (MakerSuite)'s API</td></tr>
 <tr><td style="width: 25%;"><a href="create_ide_matching_colors.html">create_ide_matching_colors</a></td>
 <td>Chat message colors in RStudio</td></tr>
 <tr><td style="width: 25%;"><a href="create_tmp_job_script.html">create_tmp_job_script</a></td>
@@ -60,14 +66,18 @@ Environment
 <td>List supported models</td></tr>
 <tr><td style="width: 25%;"><a href="get_ide_theme_info.html">get_ide_theme_info</a></td>
 <td>Get IDE theme information.</td></tr>
+<tr><td style="width: 25%;"><a href="gptstudio_job.html">gptstudio_job</a></td>
+<td>Perform Job</td></tr>
+<tr><td style="width: 25%;"><a href="gptstudio_request_perform.html">gptstudio_request_perform</a></td>
+<td>Perform API Request</td></tr>
+<tr><td style="width: 25%;"><a href="gptstudio_response_process.html">gptstudio_response_process</a></td>
+<td>Call API</td></tr>
+<tr><td style="width: 25%;"><a href="gptstudio_skeleton_build.html">gptstudio_skeleton_build</a></td>
+<td>Construct a GPT Studio request skeleton.</td></tr>
 <tr><td style="width: 25%;"><a href="gpt_chat.html">gpt_chat</a></td>
 <td>ChatGPT in RStudio</td></tr>
 <tr><td style="width: 25%;"><a href="gpt_chat_in_source.html">gpt_chat_in_source</a></td>
 <td>ChatGPT in Source</td></tr>
-<tr><td style="width: 25%;"><a href="gpt_create.html">gpt_create</a></td>
-<td>Use GPT to improve text</td></tr>
-<tr><td style="width: 25%;"><a href="gpt_edit.html">gpt_edit</a></td>
-<td>Use GPT to improve text</td></tr>
 <tr><td style="width: 25%;"><a href="mod_app_server.html">mod_app_server</a></td>
 <td>App Server</td></tr>
 <tr><td style="width: 25%;"><a href="mod_app_ui.html">mod_app_ui</a></td>
@@ -76,18 +86,20 @@ Environment
 <td>Chat server</td></tr>
 <tr><td style="width: 25%;"><a href="mod_chat_ui.html">mod_chat_ui</a></td>
 <td>Chat UI</td></tr>
-<tr><td style="width: 25%;"><a href="mod_prompt_server.html">mod_prompt_server</a></td>
-<td>Prompt Server</td></tr>
-<tr><td style="width: 25%;"><a href="mod_prompt_ui.html">mod_prompt_ui</a></td>
-<td>Prompt of the chat</td></tr>
 <tr><td style="width: 25%;"><a href="openai_create_chat_completion.html">openai_create_chat_completion</a></td>
 <td>Generate text completions using OpenAI's API for Chat</td></tr>
-<tr><td style="width: 25%;"><a href="openai_create_completion.html">openai_create_completion</a></td>
-<td>Generate text completions using OpenAI's API</td></tr>
-<tr><td style="width: 25%;"><a href="openai_create_edit.html">openai_create_edit</a></td>
-<td>Create and edit text using OpenAI's API</td></tr>
+<tr><td style="width: 25%;"><a href="openai_stream_parse.html">openai_stream_parse</a></td>
+<td>OpenAI Stream Parse</td></tr>
 <tr><td style="width: 25%;"><a href="open_bg_shinyapp.html">open_bg_shinyapp</a></td>
 <td>Open browser to local Shiny app</td></tr>
+<tr><td style="width: 25%;"><a href="prepare_chat_history.html">prepare_chat_history</a></td>
+<td>Prepare chat completion prompt</td></tr>
+<tr><td style="width: 25%;"><a href="query_api_anthropic.html">query_api_anthropic</a></td>
+<td>A function that sends a request to the Anthropic API and returns the response.</td></tr>
+<tr><td style="width: 25%;"><a href="query_api_huggingface.html">query_api_huggingface</a></td>
+<td>A function that sends a request to the HuggingFace API and returns the response.</td></tr>
+<tr><td style="width: 25%;"><a href="query_api_palm.html">query_api_palm</a></td>
+<td>A function that sends a request to the PALM (MakerSuite) API and returns the response.</td></tr>
 <tr><td style="width: 25%;"><a href="query_openai_api.html">query_openai_api</a></td>
 <td>A function that sends a request to the OpenAI API and returns the response.</td></tr>
 <tr><td style="width: 25%;"><a href="random_port.html">random_port</a></td>
@@ -98,14 +110,18 @@ Environment
 <td>Shiny bindings for welcomeMessage</td></tr>
 <tr><td style="width: 25%;"><a href="request_base.html">request_base</a></td>
 <td>Base for a request to the OPENAI API</td></tr>
+<tr><td style="width: 25%;"><a href="request_base_anthropic.html">request_base_anthropic</a></td>
+<td>Base for a request to the Anthropic API</td></tr>
+<tr><td style="width: 25%;"><a href="request_base_huggingface.html">request_base_huggingface</a></td>
+<td>Base for a request to the HuggingFace API</td></tr>
+<tr><td style="width: 25%;"><a href="request_base_palm.html">request_base_palm</a></td>
+<td>Base for a request to the PALM (MakerSuite) API</td></tr>
 <tr><td style="width: 25%;"><a href="rgb_str_to_hex.html">rgb_str_to_hex</a></td>
 <td>RGB str to hex</td></tr>
 <tr><td style="width: 25%;"><a href="run_app_as_bg_job.html">run_app_as_bg_job</a></td>
 <td>Run an R Shiny app in the background</td></tr>
 <tr><td style="width: 25%;"><a href="run_chatgpt_app.html">run_chatgpt_app</a></td>
 <td>Run the ChatGPT app</td></tr>
-<tr><td style="width: 25%;"><a href="StreamHandler.html">StreamHandler</a></td>
-<td>Stream handler for chat completions</td></tr>
 <tr><td style="width: 25%;"><a href="streamingMessage.html">streamingMessage</a></td>
 <td>Streaming message</td></tr>
 <tr><td style="width: 25%;"><a href="streamingMessage-shiny.html">streamingMessage-shiny</a></td>

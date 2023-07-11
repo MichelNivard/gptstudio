@@ -17,6 +17,3 @@ An httr2 request object
 This function sends a request to the Anthropic API endpoint and
 authenticates with an API key.
 }
-\keyword{anthropic,}
-\keyword{api,}
-\keyword{authentication}

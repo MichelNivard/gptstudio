@@ -19,6 +19,3 @@ An httr2 request object
 This function sends a request to a specific PALM (MakerSuite) API endpoint and
 authenticates with an API key.
 }
-\keyword{api,}
-\keyword{authentication}
-\keyword{palm,}
