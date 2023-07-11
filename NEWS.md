@@ -1,5 +1,3 @@
-# gptstudio (development version)
-
 # gptstudio 0.3.0
 
 ## Persistent Config File
