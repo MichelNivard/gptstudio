@@ -128,7 +128,7 @@ get_available_models <- function(service) {
   } else if (service == "huggingface") {
     c("gpt2", "tiiuae/falcon-7b-instruct", "bigcode/starcoderplus")
   } else if (service == "anthropic") {
-    c("claude-1", "claude-1-100k", "claude-instant-1", "claude-instant-1-100k")
+    c("claude-2", "claude-instant-1")
   }
 }
 
