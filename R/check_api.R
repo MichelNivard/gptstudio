@@ -4,25 +4,13 @@
 #' environment variable is valid.
 #'
 #' @param api_key An API key.
-#' @param update_api Whether to attempt to update api if invalid
 #' @param verbose Whether to provide information about the API connection
 #'
 #' @return Nothing is returned. If the API key is valid, a success message is
 #' printed. If the API key is invalid, an error message is printed and the
 #' function is aborted.
-#' @export
-#'
-#' @examples
-#' # Call the function with an API key
-#' \dontrun{
-#' check_api_connection("my_api_key")
-#' }
-#' # Call the function with an API key and avoid updating the API key
-#' \dontrun{
-#' check_api_connection("my_api_key", update_api = FALSE)
-#' }
-check_api_connection <- function(api_key, update_api = TRUE, verbose = FALSE) {
-  if (!check_api_key(api_key, update_api)) {
+check_api_connection <- function(api_key, verbose = FALSE) {
+  if (!check_api_key(api_key)) {
     invisible()
   } else {
     status_code <- simple_api_check(api_key)
@@ -43,9 +31,8 @@ check_api_connection <- function(api_key, update_api = TRUE, verbose = FALSE) {
     } else {
       cli_alert_danger("API key found but call was unsuccessful.")
       cli_alert_info("Attempted to use API key: {obscure_key(api_key)}")
-      if (interactive() && update_api) {
+      if (interactive()) {
         cli_inform("Satus code: {status_code}")
-        ask_to_set_api()
       } else {
         invisible(FALSE)
       }
@@ -59,44 +46,29 @@ check_api_connection <- function(api_key, update_api = TRUE, verbose = FALSE) {
 #' correct format.
 #'
 #' @param api_key An API key.
-#' @param update_api Whether to attempt to update api if invalid
 #'
 #' @return Nothing is returned. If the API key is in the correct format, a
 #' success message is printed. If the API key is not in the correct format,
 #' an error message is printed and the function aborts.
-#' @export
-#'
-#' @examples
-#' # Call the function with an API key
-#' \dontrun{
-#' check_api_key("my_api_key")
-#' }
-#' # Call the function with an API key and avoid updating the API key
-#' \dontrun{
-#' check_api_key("my_api_key", update_api = FALSE)
-#' }
-check_api_key <- function(api_key, update_api = TRUE) {
-  if (api_key == "") {
-    cli_alert_warning("OPENAI_API_KEY is not set.")
-    ask_to_set_api()
-    invisible(FALSE)
-  } else {
-    regex <- "^[a-zA-Z0-9-]{30,60}$"
-    if (grepl(regex, api_key)) {
-      invisible(TRUE)
-    } else {
-      cli_alert_danger(
-        c(
-          "!" = "API key not found or is not formatted correctly.",
-          "i" = "Attempted to validate key: {obscure_key(api_key)}",
-          "i" = "Generate a key at {.url
-        https://platform.openai.com/account/api-keys}"
-        )
+check_api_key <- function(api_key) {
+  set_key_instructions <-
+    cli_inform(
+      c(
+        "!" = "OPENAI_API_KEY is not valid.",
+        "i" = "Generate a key at {.url https://platform.openai.com/account/api-keys}",
+        "i" = "Set the key in your .Renviron file {.run usethis::edit_r_environ()}"
       )
-      if (update_api) {
-        ask_to_set_api()
-      }
-    }
+    )
+  if (is.null(api_key)) {
+    set_key_instructions
+    invisible(FALSE)
+  }
+
+  if (stringr::str_detect(api_key, "^[a-zA-Z0-9-]{30,60}$")) {
+    invisible(TRUE)
+  } else {
+    set_key_instructions
+    invisible(FALSE)
   }
 }
 
@@ -137,50 +109,6 @@ simple_api_check <- function(api_key = Sys.getenv("OPENAI_API_KEY")) {
     httr2::resp_status()
 }
 
-set_openai_api_key <- function() {
-  new_api_key <- readline_wrapper("Copy and paste your API key here: ")
-  Sys.setenv(OPENAI_API_KEY = new_api_key)
-  if (check_api()) {
-    cli_alert_success(
-      c(
-        "v" = "API key is valid.",
-        "i" = "Setting OPENAI_API_KEY environment variable.",
-        "i" = "You can set this variable in your .Renviron file."
-      )
-    )
-    invisible(TRUE)
-  } else {
-    cli_alert_danger(
-      c(
-        "!" = "API key is invalid.",
-        "i" = "Get key from {.url https://platform.openai.com/account/api-keys}"
-      )
-    )
-    if (interactive()) {
-      try_again <- ui_yeah_wrapper("Woud you like to try again?")
-      ifelse(try_again, set_openai_api_key(), FALSE)
-    } else {
-      invisible(FALSE)
-    }
-  }
-}
-
-ask_to_set_api <- function() {
-  if (interactive()) {
-    set_api <- ui_yeah_wrapper(
-      "Do you want to set the OPENAI_API_KEY for this session?"
-    )
-    if (set_api) {
-      set_openai_api_key()
-    } else {
-      cli_warn("Not setting OPENAI_API_KEY environment variable.")
-      invisible(FALSE)
-    }
-  } else {
-    invisible(FALSE)
-  }
-}
-
 obscure_key <- function(api_key) {
   if (nchar(api_key) == 0) {
     "no key provided"
@@ -193,40 +121,3 @@ obscure_key <- function(api_key) {
     "<hidden> (too short to obscure)"
   }
 }
-
-# Based on ui_yeah function from usethis package.
-# Source: https://github.com/r-lib/usethis
-ui_yeah_wrapper <- function(x,
-                            yes = c("Yes", "Definitely", "For sure", "Yup",
-                                    "Yeah", "I agree", "Absolutely"),
-                            no = c("No way", "Not now", "Negative", "No",
-                                   "Nope", "Absolutely not"),
-                            n_yes = 1,
-                            n_no = 2,
-                            shuffle = TRUE,
-                            .envir = parent.frame()) {
-  x <- glue::glue_collapse(x, "\n")
-  x <- glue::glue(x, .envir = .envir)
-
-  if (!interactive()) {
-    cli_abort(c(
-      "!" = "User input required, but session is not interactive.",
-      "i" = glue::glue("Query: {x}")
-    ))
-  }
-
-  n_yes <- min(n_yes, length(yes))
-  n_no <- min(n_no, length(no))
-
-  qs <- c(sample(yes, n_yes), sample(no, n_no))
-
-  if (shuffle) {
-    qs <- sample(qs)
-  }
-
-  cli_inform(x)
-  out <- utils::menu(qs)
-  out != 0L && qs[[out]] %in% yes
-}
-
-readline_wrapper <- function(prompt) readline(prompt)

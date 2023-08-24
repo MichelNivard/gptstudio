@@ -1,5 +1,7 @@
 # gptstudio (development version)
 
+* Better API checking to direct users to .Renviron to set API key to be persistent across sessions
+
 # gptstudio 0.3.0
 
 ## Persistent Config File

@@ -4,12 +4,10 @@
 \alias{check_api_key}
 \title{Check API key}
 \usage{
-check_api_key(api_key, update_api = TRUE)
+check_api_key(api_key)
 }
 \arguments{
 \item{api_key}{An API key.}
-
-\item{update_api}{Whether to attempt to update api if invalid}
 }
 \value{
 Nothing is returned. If the API key is in the correct format, a
@@ -19,14 +17,4 @@ an error message is printed and the function aborts.
 \description{
 This function checks whether the API key provided as an argument is in the
 correct format.
-}
-\examples{
-# Call the function with an API key
-\dontrun{
-check_api_key("my_api_key")
-}
-# Call the function with an API key and avoid updating the API key
-\dontrun{
-check_api_key("my_api_key", update_api = FALSE)
-}
 }
