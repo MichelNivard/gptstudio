@@ -347,17 +347,11 @@ save_skeleton <- function(skeleton) {
 }
 
 delete_skeleton <- function() {
-  cli_inform("Deleting chat history from this session.")
   if (file.exists(skeleton_file())) file.remove(skeleton_file())
 }
 
 get_skeleton <- function(path = skeleton_file()) {
-  if (!file.exists(path)) {
-    cli_inform("Not chat history found.")
-    NULL
-  } else {
-    readRDS(path)
-  }
+  if (!file.exists(path))  NULL else  readRDS(path)
 }
 
 get_current_history <- function() {
