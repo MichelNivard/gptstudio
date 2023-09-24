@@ -56,6 +56,7 @@ stream_chat_completion <- function(prompt,
     httr2::req_method("POST") %>%
     httr2::req_stream(callback = function(x) {openai_stream_parse(x); TRUE},
                       buffer_kb = 0.05)
+  Sys.sleep(0.01)
   chat_response <- readRDS(streaming_file())
   file.remove(streaming_file())
   cli_inform("File exists: {file.exists(streaming_file())}")

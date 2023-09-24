@@ -255,7 +255,12 @@ mod_chat_server <- function(id,
 
 
 app_server_file_stream <- function(path) {
-  ifelse(file.exists(path), readRDS(path), "No stream file found")
+  if (file.exists(path)) {
+    Sys.sleep(0.01)
+    readRDS(path)
+  } else {
+    "No stream file found"
+  }
 }
 
 gptstudio_submit_job <- function(skeleton,
@@ -343,6 +348,7 @@ skeleton_file <- function() {
 }
 
 save_skeleton <- function(skeleton) {
+  Sys.sleep(0.01)
   saveRDS(skeleton, skeleton_file())
 }
 
