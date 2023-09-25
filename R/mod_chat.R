@@ -256,7 +256,7 @@ mod_chat_server <- function(id,
 
 app_server_file_stream <- function(path) {
   if (file.exists(path)) {
-    Sys.sleep(0.01)
+    Sys.sleep(0.03)
     readRDS(path)
   } else {
     "No stream file found"
@@ -348,7 +348,6 @@ skeleton_file <- function() {
 }
 
 save_skeleton <- function(skeleton) {
-  Sys.sleep(0.01)
   saveRDS(skeleton, skeleton_file())
 }
 
@@ -357,7 +356,10 @@ delete_skeleton <- function() {
 }
 
 get_skeleton <- function(path = skeleton_file()) {
-  if (!file.exists(path))  NULL else  readRDS(path)
+  if (!file.exists(path))  NULL else {
+    Sys.sleep(0.03)
+    readRDS(path)
+  }
 }
 
 get_current_history <- function() {
