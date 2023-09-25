@@ -1,3 +1,5 @@
+# gptstudio (development version)
+
 # gptstudio 0.3.1
 
 * Better API checking to direct users to .Renviron to set API key to be persistent across sessions

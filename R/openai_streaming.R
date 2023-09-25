@@ -59,7 +59,6 @@ stream_chat_completion <- function(prompt,
   Sys.sleep(0.03)
   chat_response <- readRDS(streaming_file())
   file.remove(streaming_file())
-  cli_inform("File exists: {file.exists(streaming_file())}")
   chat_response
 }
 
