@@ -119,11 +119,11 @@ mod_chat_server <- function(id,
     }) %>%
       bindEvent(input$clear_history, ignoreNULL = FALSE)
 
-    reactive_stream <- reactiveFileReader(intervalMillis = 10,
+    reactive_stream <- reactiveFileReader(intervalMillis = 30,
                                           session = session,
                                           filePath = streaming_file(),
                                           readFunc = app_server_file_stream)
-    reactive_skeleton <- reactiveFileReader(intervalMillis = 10,
+    reactive_skeleton <- reactiveFileReader(intervalMillis = 30,
                                             session = session,
                                             filePath = skeleton_file(),
                                             readFunc = get_skeleton)
