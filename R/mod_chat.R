@@ -68,6 +68,7 @@ mod_chat_ui <- function(id, translator = create_translator()) {
 mod_chat_server <- function(id,
                             ide_colors = get_ide_theme_info(),
                             translator = create_translator()) {
+  # This is where changes will focus
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     rv <- reactiveValues()
