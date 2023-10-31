@@ -16,7 +16,8 @@ mod_chat_ui <- function(id, translator = create_translator()) {
           class = "p-2 mh-100 overflow-auto",
           welcomeMessageOutput(ns("welcome")),
           uiOutput(ns("history")),
-          uiOutput(ns("streaming"))
+          streamingMessageOutput(ns("streaming")),
+          # uiOutput(ns("streaming"))
         ),
         div(
           class = "mt-auto",
@@ -128,6 +129,17 @@ mod_chat_server <- function(id,
                                             session = session,
                                             filePath = skeleton_file(),
                                             readFunc = get_skeleton)
+
+
+    output$streaming <- renderStreamingMessage({
+      # This has display: none by default. It is inly shown when receiving an stream
+      # After the stream is completed it will reset.
+      streamingMessage(ide_colors)
+    }) %>%
+      bindEvent(rv$stream_ended)
+
+
+
 
     output$streaming <- renderUI({
       if (reactive_stream() != "No stream file found") {
