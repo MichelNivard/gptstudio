@@ -71,15 +71,64 @@ mod_chat_server <- function(id,
                             translator = create_translator()) {
   # This is where changes will focus
   moduleServer(id, function(input, output, session) {
+
+    # Session data ----
+
     ns <- session$ns
 
     rv <- reactiveValues()
     rv$chat_history <- list()
     rv$reset_welcome_message <- 0L
+    rv$perform_request <- 0L
 
     settings <- mod_settings_server("settings")
 
     onStop(function() delete_skeleton())
+
+
+    # UI outputs ----
+
+    output$welcome <- renderWelcomeMessage({
+      welcomeMessage(ide_colors)
+    }) %>%
+      bindEvent(rv$reset_welcome_message)
+
+
+    output$history <- renderUI({
+      # req(!is.null(rv$chat_history))
+      rv$chat_history %>%
+        style_chat_history(ide_colors = ide_colors)
+    })
+
+
+    output$streaming <- renderStreamingMessage({
+      # This has display: none by default. It is inly shown when receiving an stream
+      # After the stream is completed it will reset.
+      streamingMessage(ide_colors)
+    }) %>%
+      bindEvent(rv$stream_ended)
+
+
+    output$streaming <- renderUI({
+      if (reactive_stream() != "No stream file found") {
+        list(
+          list(
+            role = "assistant",
+            content = reactive_stream()
+          )
+        ) %>%
+          style_chat_history(ide_colors = ide_colors)
+      }
+    })
+
+
+    # Observers ----
+
+    observe({
+      rv$chat_history <- list()
+      rv$reset_welcome_message <- rv$reset_welcome_message + 1L
+    }) %>%
+      bindEvent(input$clear_history)
 
 
     observe({
@@ -104,20 +153,6 @@ mod_chat_server <- function(id,
       bindEvent(input$chat)
 
 
-    observe({
-      rv$chat_history <- list()
-      rv$reset_welcome_message <- rv$reset_welcome_message + 1L
-    }) %>%
-      bindEvent(input$clear_history)
-
-
-    output$welcome <- renderWelcomeMessage({
-      welcomeMessage(ide_colors)
-    }) %>%
-      bindEvent(rv$reset_welcome_message)
-
-
-
     reactive_stream <- reactiveFileReader(intervalMillis = 30,
                                           session = session,
                                           filePath = streaming_file(),
@@ -128,38 +163,11 @@ mod_chat_server <- function(id,
                                             readFunc = get_skeleton)
 
 
-    output$streaming <- renderStreamingMessage({
-      # This has display: none by default. It is inly shown when receiving an stream
-      # After the stream is completed it will reset.
-      streamingMessage(ide_colors)
-    }) %>%
-      bindEvent(rv$stream_ended)
-
-
-
-
-    output$streaming <- renderUI({
-      if (reactive_stream() != "No stream file found") {
-        list(
-          list(
-            role = "assistant",
-            content = reactive_stream()
-          )
-        ) %>%
-          style_chat_history(ide_colors = ide_colors)
-      }
-    })
-
     observe({
       req(!is.null(reactive_skeleton()))
       rv$skeleton <- reactive_skeleton()
       rv$chat_history <- rv$skeleton$history
       file.remove(skeleton_file())
-    })
-
-    output$history <- renderUI({
-      req(!is.null(rv$chat_history))
-      rv$chat_history %>% style_chat_history(ide_colors = ide_colors)
     })
 
     observe({
