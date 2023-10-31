@@ -1,5 +1,10 @@
-mod_settings_ui <- function(id) {
+mod_settings_ui <- function(id, translator = create_translator()) {
   ns <- NS(id)
+
+  api_services <- utils::methods("gptstudio_request_perform") %>%
+    stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
+    purrr::discard(~ .x == "gptstudio_request_perform.default")
+
   tagList(
     fluidRow(
       selectInput(
@@ -72,19 +77,17 @@ mod_settings_server <- function(id) {
       stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
       purrr::discard(~ .x == "gptstudio_request_perform.default")
 
-    models <- reactive({
-      req(!is.null(input$service))
-      get_available_models(input$service)
-    })
-
     observe({
+      models <- get_available_models(input$service)
+
       updateSelectInput(
         session = session,
         inputId = "model",
-        choices = models(),
+        choices = models,
         selected = getOption("gptstudio.model")
       )
-    })
+    }) %>%
+      bindEvent(input$service)
 
     observe({
       save_user_config(
@@ -99,26 +102,24 @@ mod_settings_server <- function(id) {
       )
     }) %>% bindEvent(input$save_default)
 
-    ## Module output
+    ## Module output ----
 
-    out_task <- reactive(input$task %||% getOption("gptstudio.task"))
-    out_skill <- reactive(input$skill %||% getOption("gptstudio.skill"))
-    out_style <- reactive(input$style %||% getOption("gptstudio.code_style"))
-    out_model <- reactive(input$model %||% getOption("gptstudio.model"))
-    out_service <- reactive(input$service %||% getOption("gptstudio.service"))
-    out_stream <- reactive(input$stream %||% getOption("gptstudio.stream"))
-    out_prompt <- reactive(input$custom_prompt %||% getOption("gptstudio.custom_prompt"))
+    module_output <- reactiveValues()
 
-    reactiveValues(
-      task = out_task,
-      language = input$language,
-      style = out_style,
-      skill = out_skill,
-      service = out_service,
-      model = out_model,
-      stream = out_stream,
-      custom_prompt = out_prompt
-    )
+    observe({
+      module_output$task <- input$task %||% getOption("gptstudio.task")
+      module_output$skill <- input$skill %||% getOption("gptstudio.skill")
+      module_output$style <- input$style %||% getOption("gptstudio.style")
+      module_output$model <- input$model %||% getOption("gptstudio.model")
+      module_output$service <- input$service %||% getOption("gptstudio.service")
+      module_output$stream <- input$stream %||% getOption("gptstudio.stream")
+      module_output$prompt <- input$stream %||% getOption("gptstudio.custom_prompt")
+    }) %>%
+      bindEvent(input$task, input$skill, input$style, input$model,
+                input$service, input$stream, input$prompt)
+
+
+    module_output
 
   })
 }

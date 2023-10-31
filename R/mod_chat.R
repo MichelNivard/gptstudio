@@ -79,6 +79,7 @@ mod_chat_server <- function(id,
     rv <- reactiveValues()
     rv$chat_history <- list()
     rv$reset_welcome_message <- 0L
+    rv$reset_streaming_message <- 0L
     rv$perform_request <- 0L
 
     settings <- mod_settings_server("settings")
@@ -106,20 +107,7 @@ mod_chat_server <- function(id,
       # After the stream is completed it will reset.
       streamingMessage(ide_colors)
     }) %>%
-      bindEvent(rv$stream_ended)
-
-
-    output$streaming <- renderUI({
-      if (reactive_stream() != "No stream file found") {
-        list(
-          list(
-            role = "assistant",
-            content = reactive_stream()
-          )
-        ) %>%
-          style_chat_history(ide_colors = ide_colors)
-      }
-    })
+      bindEvent(rv$reset_streaming_message)
 
 
     # Observers ----
@@ -133,53 +121,50 @@ mod_chat_server <- function(id,
 
     observe({
 
-      rv$skeleton <- gptstudio_create_skeleton(
-        service = settings$service,
-        prompt  = input$chat_input,
-        model   = settings$model,
-        stream  = as.logical(settings$stream),
-        history = rv$chat_history
-      )
-
       rv$chat_history <- chat_history_append(
         history = rv$chat_history,
         role = "user",
         content = input$chat_input
       )
 
+      if (settings$stream) {
+        stream_handler <- StreamHandler$new(
+          session = session,
+          user_prompt = input$chat_input
+        )
+
+        stream_chat_completion(
+          prompt = input$chat_input,
+          history = rv$chat_history,
+          style = settings$style,
+          skill = settings$skill,
+          element_callback = stream_handler$handle_streamed_element
+        )
+
+        rv$chat_history <- chat_history_append(
+          history = rv$chat_history,
+          role = "assistant",
+          content = stream_handler$current_value
+        )
+
+        rv$reset_streaming_message <- rv$reset_streaming_message + 1L
+
+      }
+
+
+      # rv$skeleton <- gptstudio_create_skeleton(
+      #   service = settings$service,
+      #   prompt  = input$chat_input,
+      #   model   = settings$model,
+      #   stream  = as.logical(settings$stream),
+      #   history = rv$chat_history
+      # )
+
       updateTextAreaInput(session, "chat_input", value = "")
 
     }) %>%
       bindEvent(input$chat)
 
-
-    reactive_stream <- reactiveFileReader(intervalMillis = 30,
-                                          session = session,
-                                          filePath = streaming_file(),
-                                          readFunc = app_server_file_stream)
-    reactive_skeleton <- reactiveFileReader(intervalMillis = 30,
-                                            session = session,
-                                            filePath = skeleton_file(),
-                                            readFunc = get_skeleton)
-
-
-    observe({
-      req(!is.null(reactive_skeleton()))
-      rv$skeleton <- reactive_skeleton()
-      rv$chat_history <- rv$skeleton$history
-      file.remove(skeleton_file())
-    })
-
-    observe({
-      gptstudio_submit_job(
-        skeleton = rv$skeleton,
-        skill = settings$skill,
-        style = settings$style,
-        task = settings$task,
-        custom_prompt = settings$custom_prompt
-      )
-    }) %>%
-      bindEvent(input$chat)
 
     observe({
       showModal(
@@ -189,7 +174,7 @@ mod_chat_server <- function(id,
           footer = modalButton("Save"),
           size = "l",
 
-          mod_settings_ui(ns("settings"))
+          mod_settings_ui(ns("settings"), translator = translator)
 
         ))
     }) %>% bindEvent(input$settings)

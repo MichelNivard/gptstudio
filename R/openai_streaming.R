@@ -33,100 +33,60 @@
 #' print(result)
 #' }
 #' @export
-stream_chat_completion <- function(prompt,
-                                   model = "gpt-3.5-turbo",
-                                   openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
-  if (file.exists(streaming_file())) file.remove(streaming_file())
+stream_chat_completion <-
+  function(prompt,
+           history = NULL,
+           element_callback = cat,
+           style = getOption("gptstudio.code_style"),
+           skill = getOption("gptstudio.skill"),
+           task = getOption("gptstudio.task"),
+           model = "gpt-3.5-turbo",
+           openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
+    # Set the API endpoint URL
+    url <- "https://api.openai.com/v1/chat/completions"
 
-  base_url <- getOption("gptstudio.openai_url")
-  body <- list(
-    "model" = model,
-    "messages" = prompt,
-    "stream" = TRUE
-  )
-  gptstudio_env$stream <- list()
-  gptstudio_env$stream$raw <- NULL
-  gptstudio_env$current_stream <- TRUE
-
-  httr2::request(base_url) %>%
-    httr2::req_url_path_append("chat/completions") %>%
-    httr2::req_body_json(body) %>%
-    httr2::req_auth_bearer_token(openai_api_key) %>%
-    httr2::req_headers("Content-Type" = "application/json") %>%
-    httr2::req_method("POST") %>%
-    httr2::req_stream(callback = function(x) {openai_stream_parse(x); TRUE},
-                      buffer_kb = 0.05)
-  Sys.sleep(0.03)
-  chat_response <- readRDS(streaming_file())
-  file.remove(streaming_file())
-  chat_response
-}
-
-
-#' OpenAI Stream Parse
-#'
-#' This function handles the streaming data from the OpenAI API.
-#' It concatenates the raw data chunks, attempts to parse JSON and
-#' handles any error messages.
-#'
-#' This function was inspired by the `{chattr}` R package
-#' (https://github.com/mlverse/chattr).
-#'
-#' @param x A raw vector representing a chunk of data from the API stream.
-#' @return If parsing is successful, a character string of the API response is
-#' returned. In case of an error, an error message is returned instead.
-openai_stream_parse <- function(x) {
-  gptstudio_env$stream$raw <- paste0(
-    gptstudio_env$stream$raw,
-    rawToChar(x),
-    collapse = ""
-  )
-  res <- gptstudio_env$stream$raw %>%
-    paste0(collapse = "") %>%
-    strsplit("data: ") %>%
-    unlist() %>%
-    purrr::discard(~ .x == "")
-  if (length(res) > 1) {
-    gptstudio_env$stream$raw <- res[2]
-    set_to_null <- FALSE
-  } else {
-    set_to_null <- TRUE
-  }
-  res <- res %>%
-    purrr::keep(~ substr(.x, (nchar(.x) - 2), nchar(.x)) == "}\n\n")
-
-  if (length(res) > 0) {
-    new_response <- jsonlite::fromJSON(res)
-    new_response <- new_response$choices$delta$content
-    gptstudio_env$stream$parsed <- paste0(
-      gptstudio_env$stream$parsed,
-      new_response,
-      collapse = ""
+    # Set the request headers
+    headers <- list(
+      "Content-Type" = "application/json",
+      "Authorization" = paste0("Bearer ", openai_api_key)
     )
-    if (set_to_null) gptstudio_env$stream$raw <- NULL
-    saveRDS(gptstudio_env$stream$parsed, file = streaming_file())
-  } else {
-    json_res <- try(jsonlite::fromJSON(x), silent = TRUE)
-    if (!inherits(json_res, "try-error")) {
-      if ("error" %in% names(json_res)) {
-        json_error <- json_res$error
-        return(
-          paste0(
-            "{{error}}Type:",
-            json_error$type,
-            "\nMessage: ",
-            json_error$message
-          )
-        )
-      }
-    }
-  }
-}
 
-streaming_file <- function() {
-  dir <- tools::R_user_dir(package = "gptstudio", which = "data")
-  if (!dir.exists(dir)) {
-    dir.create(dir, recursive = TRUE)
+    # Set the new chat history so the system prompt depends
+    # on the current parameters and not in previous ones
+    instructions <- list(
+      list(
+        role = "system",
+        content = chat_create_system_prompt(style, skill, task, in_source = FALSE)
+      ),
+      list(
+        role = "user",
+        content = prompt
+      )
+    )
+
+    history <- purrr::discard(history, ~ .x$role == "system")
+
+    messages <- c(history, instructions)
+
+    # Set the request body
+    body <- list(
+      "model" = model,
+      "stream" = TRUE,
+      "messages" = messages
+    )
+
+    # Create a new curl handle object
+    handle <- curl::new_handle() %>%
+      curl::handle_setheaders(.list = headers) %>%
+      curl::handle_setopt(postfields = jsonlite::toJSON(body, auto_unbox = TRUE)) # request body
+
+    # Make the streaming request using curl_fetch_stream()
+    curl::curl_fetch_stream(
+      url = url,
+      fun = \(x) {
+        element <- rawToChar(x)
+        element_callback(element) # Do whatever element_callback does
+      },
+      handle = handle
+    )
   }
-  file.path(dir, "chat_stream.RDS")
-}
