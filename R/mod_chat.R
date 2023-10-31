@@ -73,35 +73,19 @@ mod_chat_server <- function(id,
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     rv <- reactiveValues()
-    api_services <-
-      utils::methods("gptstudio_request_perform") %>%
-      stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
-      purrr::discard(~ .x == "gptstudio_request_perform.default")
+
+    settings <- mod_settings_server("settings")
 
     onStop(function() delete_skeleton())
 
-    models <- reactive({
-      req(!is.null(input$service))
-      get_available_models(input$service)
-    })
-
-    observe(updateSelectInput(session,
-                              inputId = "model",
-                              choices = models(),
-                              selected = getOption("gptstudio.model")))
 
     observe({
-      model   <- input$model
-      service <- input$service
-      stream  <- input$stream
-      if (is.null(model)) model <- getOption("gptstudio.model")
-      if (is.null(service)) service <- getOption("gptstudio.service")
-      if (is.null(stream)) stream <- getOption("gptstudio.stream")
+
       rv$skeleton <-
-        gptstudio_create_skeleton(service = service,
+        gptstudio_create_skeleton(service = settings$service,
                                   prompt  = input$chat_input,
-                                  model   = model,
-                                  stream  = as.logical(stream),
+                                  model   = settings$model,
+                                  stream  = as.logical(settings$stream),
                                   history = rv$chat_history)
 
       rv$chat_history <- chat_history_append(history = rv$chat_history,
@@ -166,17 +150,13 @@ mod_chat_server <- function(id,
     })
 
     observe({
-      skill         <- input$skill
-      style         <- input$style
-      task          <- input$task
-      custom_prompt <- input$custom_prompt
-      if (is.null(skill)) skill <- getOption("gptstudio.skill")
-      if (is.null(style)) style <- getOption("gptstudio.code_style")
-      if (is.null(task))  task  <- getOption("gptstudio.task")
-      if (is.null(custom_prompt)) {
-        custom_prompt  <- getOption("gptstudio.custom_prompt")
-      }
-      gptstudio_submit_job(rv$skeleton, skill, style, task, custom_prompt)
+      gptstudio_submit_job(
+        skeleton = rv$skeleton,
+        skill = settings$skill,
+        style = settings$style,
+        task = settings$task,
+        custom_prompt = settings$custom_prompt
+      )
     }) %>%
       bindEvent(input$chat)
 
@@ -187,82 +167,12 @@ mod_chat_server <- function(id,
           easyClose = TRUE,
           footer = modalButton("Save"),
           size = "l",
-          fluidRow(
-            selectInput(
-              inputId = ns("task"),
-              label = translator$t("Task"),
-              choices = c("coding", "general", "advanced developer", "custom"),
-              width = "200px",
-              selected = getOption("gptstudio.task")
-            ),
-            selectInput(
-              inputId = ns("language"),
-              label = translator$t("Language"),
-              choices = c("en", "es", "de"),
-              width = "200px",
-              selected = getOption("gptstudio.language")
-            ),
-            selectInput(
-              inputId = ns("style"),
-              label = translator$t("Programming Style"),
-              choices = c("tidyverse", "base", "no preference"),
-              selected = getOption("gptstudio.style"),
-              width = "200px"
-            ),
-            selectInput(
-              inputId = ns("skill"),
-              label = translator$t("Programming Skill"),
-              choices = c("beginner", "intermediate", "advanced", "genius"),
-              selected = getOption("gptstudio.skill"),
-              width = "200px"
-            ),
-            selectInput(
-              inputId = ns("service"),
-              label = translator$t("Select API Service"),
-              choices = api_services,
-              selected = getOption("gptstudio.service"),
-              width = "200px"
-            ),
-            selectInput(
-              inputId = ns("model"),
-              label = translator$t("Chat Model"),
-              choices = NULL,
-              width = "200px",
-              selected = getOption("gptstudio.model")
-            ),
-            radioButtons(
-              inputId = ns("stream"),
-              label = "Stream Response",
-              choiceNames = c("Yes", "No"),
-              choiceValues = c(TRUE, FALSE),
-              inline = TRUE,
-              width = "200px",
-            ),
-            textAreaInput(
-              inputId = ns("custom_prompt"),
-              label = translator$t("Custom Prompt"),
-              value = getOption("gptstudio.custom_prompt"))
-          ),
-          column(width = 12, align = "right",
-                 actionButton(ns("save_default"), "Save as Default",
-                              icon = icon("save"),
-                              width = "200px")
-          )
+
+          mod_settings_ui(ns("settings"))
+
         ))
     }) %>% bindEvent(input$settings)
 
-    observe({
-      save_user_config(
-        code_style = input$style,
-        skill = input$skill,
-        task = input$task,
-        language = input$language,
-        service = input$service,
-        model = input$model,
-        custom_prompt = input$custom_prompt,
-        stream = input$stream
-      )
-    }) %>% bindEvent(input$save_default)
   })
 }
 
