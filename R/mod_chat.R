@@ -72,7 +72,10 @@ mod_chat_server <- function(id,
   # This is where changes will focus
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
+
     rv <- reactiveValues()
+    rv$chat_history <- list()
+    rv$reset_welcome_message <- 0L
 
     settings <- mod_settings_server("settings")
 
@@ -81,29 +84,39 @@ mod_chat_server <- function(id,
 
     observe({
 
-      rv$skeleton <-
-        gptstudio_create_skeleton(service = settings$service,
-                                  prompt  = input$chat_input,
-                                  model   = settings$model,
-                                  stream  = as.logical(settings$stream),
-                                  history = rv$chat_history)
+      rv$skeleton <- gptstudio_create_skeleton(
+        service = settings$service,
+        prompt  = input$chat_input,
+        model   = settings$model,
+        stream  = as.logical(settings$stream),
+        history = rv$chat_history
+      )
 
-      rv$chat_history <- chat_history_append(history = rv$chat_history,
-                                             role = "user",
-                                             content = input$chat_input)
+      rv$chat_history <- chat_history_append(
+        history = rv$chat_history,
+        role = "user",
+        content = input$chat_input
+      )
 
       updateTextAreaInput(session, "chat_input", value = "")
+
     }) %>%
       bindEvent(input$chat)
 
 
     observe({
       rv$chat_history <- list()
-      output$welcome <- renderWelcomeMessage({
-        welcomeMessage(ide_colors)
-      })
+      rv$reset_welcome_message <- rv$reset_welcome_message + 1L
     }) %>%
-      bindEvent(input$clear_history, ignoreNULL = FALSE)
+      bindEvent(input$clear_history)
+
+
+    output$welcome <- renderWelcomeMessage({
+      welcomeMessage(ide_colors)
+    }) %>%
+      bindEvent(rv$reset_welcome_message)
+
+
 
     reactive_stream <- reactiveFileReader(intervalMillis = 30,
                                           session = session,
