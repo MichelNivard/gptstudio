@@ -37,9 +37,6 @@ stream_chat_completion <-
   function(prompt,
            history = NULL,
            element_callback = cat,
-           style = getOption("gptstudio.code_style"),
-           skill = getOption("gptstudio.skill"),
-           task = getOption("gptstudio.task"),
            model = "gpt-3.5-turbo",
            openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
     # Set the API endpoint URL
@@ -53,20 +50,26 @@ stream_chat_completion <-
 
     # Set the new chat history so the system prompt depends
     # on the current parameters and not in previous ones
-    instructions <- list(
-      list(
-        role = "system",
-        content = chat_create_system_prompt(style, skill, task, in_source = FALSE)
-      ),
-      list(
-        role = "user",
-        content = prompt
-      )
+    # instructions <- list(
+    #   list(
+    #     role = "system",
+    #     content = chat_create_system_prompt(style, skill, task, in_source = FALSE)
+    #   ),
+    #   list(
+    #     role = "user",
+    #     content = prompt
+    #   )
+    # )
+
+    # history <- purrr::discard(history, ~ .x$role == "system")
+
+    # messages <- c(history, instructions)
+
+    messages <- chat_history_append(
+      history = history,
+      role = "user",
+      content = prompt
     )
-
-    history <- purrr::discard(history, ~ .x$role == "system")
-
-    messages <- c(history, instructions)
 
     # Set the request body
     body <- list(
