@@ -112,11 +112,11 @@ mod_settings_server <- function(id) {
       module_output$style <- input$style %||% getOption("gptstudio.style")
       module_output$model <- input$model %||% getOption("gptstudio.model")
       module_output$service <- input$service %||% getOption("gptstudio.service")
-      module_output$stream <- input$stream %||% getOption("gptstudio.stream")
-      module_output$prompt <- input$stream %||% getOption("gptstudio.custom_prompt")
+      module_output$stream <- as.logical(input$stream %||% getOption("gptstudio.stream"))
+      module_output$custom_prompt <- input$custom_prompt %||% getOption("gptstudio.custom_prompt")
     }) %>%
       bindEvent(input$task, input$skill, input$style, input$model,
-                input$service, input$stream, input$prompt)
+                input$service, input$stream, input$custom_prompt, ignoreNULL = FALSE)
 
 
     module_output
