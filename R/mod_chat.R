@@ -96,7 +96,6 @@ mod_chat_server <- function(id,
 
 
     output$history <- renderUI({
-      # req(!is.null(rv$chat_history))
       rv$chat_history %>%
         style_chat_history(ide_colors = ide_colors)
     })
@@ -127,25 +126,50 @@ mod_chat_server <- function(id,
         content = input$chat_input
       )
 
-      if (settings$stream) {
-        stream_handler <- StreamHandler$new(
-          session = session,
-          user_prompt = input$chat_input
-        )
-
-        stream_chat_completion(
-          prompt = input$chat_input,
-          history = rv$chat_history,
-          style = settings$style,
+      skeleton <- gptstudio_create_skeleton(
+        service = settings$service,
+        model = settings$model,
+        prompt = input$chat_input,
+        history = rv$chat_history,
+        stream = settings$stream
+      ) %>%
+        gptstudio_skeleton_build(
           skill = settings$skill,
-          element_callback = stream_handler$handle_streamed_element
+          style = settings$style,
+          task = settings$task,
+          custom_prompt = settings$custom_prompt
         )
 
-        rv$chat_history <- chat_history_append(
-          history = rv$chat_history,
-          role = "assistant",
-          content = stream_handler$current_value
-        )
+      response <- gptstudio_request_perform(
+        skeleton = skeleton,
+        shinySession = session
+      ) %>%
+        gptstudio_response_process()
+
+      rv$chat_history <- response$history
+
+      cli::cli_h3("Skeleton")
+      print(skeleton)
+      cli::cli_h3("Response")
+      print(response)
+
+      if (settings$stream) {
+        # stream_handler <- StreamHandler$new(
+        #   session = session,
+        #   user_prompt = input$chat_input
+        # )
+        #
+        # stream_chat_completion(
+        #   prompt = input$chat_input,
+        #   history = rv$chat_history,
+        #   element_callback = stream_handler$handle_streamed_element
+        # )
+        #
+        # rv$chat_history <- chat_history_append(
+        #   history = rv$chat_history,
+        #   role = "assistant",
+        #   content = stream_handler$current_value
+        # )
 
         rv$reset_streaming_message <- rv$reset_streaming_message + 1L
 
