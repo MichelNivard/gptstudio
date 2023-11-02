@@ -109,7 +109,7 @@ mod_settings_server <- function(id) {
     observe({
       module_output$task <- input$task %||% getOption("gptstudio.task")
       module_output$skill <- input$skill %||% getOption("gptstudio.skill")
-      module_output$style <- input$style %||% getOption("gptstudio.style")
+      module_output$style <- input$style %||% getOption("gptstudio.code_style")
       module_output$model <- input$model %||% getOption("gptstudio.model")
       module_output$service <- input$service %||% getOption("gptstudio.service")
       module_output$stream <- as.logical(input$stream %||% getOption("gptstudio.stream"))

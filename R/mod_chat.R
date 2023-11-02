@@ -140,15 +140,8 @@ mod_chat_server <- function(id,
 
       rv$chat_history <- response$history
 
-      cli::cli_h3("Skeleton")
-      print(skeleton)
-      cli::cli_h3("Response")
-      print(response)
-
       if (settings$stream) {
-
         rv$reset_streaming_message <- rv$reset_streaming_message + 1L
-
       }
 
       updateTextAreaInput(session, "chat_input", value = "")
