@@ -80,12 +80,10 @@ mod_chat_server <- function(id,
     rv$chat_history <- list()
     rv$reset_welcome_message <- 0L
     rv$reset_streaming_message <- 0L
-    rv$perform_request <- 0L
 
     settings <- mod_settings_server("settings")
 
     onStop(function() delete_skeleton())
-
 
     # UI outputs ----
 
@@ -102,8 +100,8 @@ mod_chat_server <- function(id,
 
 
     output$streaming <- renderStreamingMessage({
-      # This has display: none by default. It is inly shown when receiving an stream
-      # After the stream is completed it will reset.
+      # This has display: none by default. It is only shown when receiving a stream
+      # After the stream is completed, it will reset.
       streamingMessage(ide_colors)
     }) %>%
       bindEvent(rv$reset_streaming_message)
@@ -119,12 +117,6 @@ mod_chat_server <- function(id,
 
 
     observe({
-
-      rv$chat_history <- chat_history_append(
-        history = rv$chat_history,
-        role = "user",
-        content = input$chat_input
-      )
 
       skeleton <- gptstudio_create_skeleton(
         service = settings$service,
@@ -154,35 +146,10 @@ mod_chat_server <- function(id,
       print(response)
 
       if (settings$stream) {
-        # stream_handler <- StreamHandler$new(
-        #   session = session,
-        #   user_prompt = input$chat_input
-        # )
-        #
-        # stream_chat_completion(
-        #   prompt = input$chat_input,
-        #   history = rv$chat_history,
-        #   element_callback = stream_handler$handle_streamed_element
-        # )
-        #
-        # rv$chat_history <- chat_history_append(
-        #   history = rv$chat_history,
-        #   role = "assistant",
-        #   content = stream_handler$current_value
-        # )
 
         rv$reset_streaming_message <- rv$reset_streaming_message + 1L
 
       }
-
-
-      # rv$skeleton <- gptstudio_create_skeleton(
-      #   service = settings$service,
-      #   prompt  = input$chat_input,
-      #   model   = settings$model,
-      #   stream  = as.logical(settings$stream),
-      #   history = rv$chat_history
-      # )
 
       updateTextAreaInput(session, "chat_input", value = "")
 
