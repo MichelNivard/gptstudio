@@ -1,12 +1,20 @@
 sample_key <- "38a5603f-85b0-4d2e-ae43-3d0778272d60"
 sample_key2 <- "4a0eafd5-bcfc-426b-a1fa-5193b161d7d3"
 
-test_that("API checking fails with missing, inactive, or badly formatted key", {
+test_that("API checking fails with inactive key", {
   withr::local_options(gptstudio.valid_api = FALSE)
   withr::local_envvar("OPENAI_API_KEY" = sample_key)
   expect_snapshot(check_api())
+})
+
+test_that("API checking fails with missing key", {
+  withr::local_options(gptstudio.valid_api = FALSE)
   withr::local_envvar("OPENAI_API_KEY" = "")
   expect_snapshot(check_api())
+})
+
+test_that("API checking fails with badly formatted key", {
+  withr::local_options(gptstudio.valid_api = FALSE)
   withr::local_envvar("OPENAI_API_KEY" = "1234")
   expect_snapshot(check_api())
 })

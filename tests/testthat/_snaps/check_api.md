@@ -1,4 +1,4 @@
-# API checking fails with missing, inactive, or badly formatted key
+# API checking fails with inactive key
 
     Code
       check_api()
@@ -10,7 +10,7 @@
       x API key found but call was unsuccessful.
       i Attempted to use API key: 38a5****************************2d60
 
----
+# API checking fails with missing key
 
     Code
       check_api()
@@ -19,7 +19,7 @@
       i Generate a key at <https://platform.openai.com/account/api-keys>
       i Set the key in your .Renviron file `usethis::edit_r_environ()`
 
----
+# API checking fails with badly formatted key
 
     Code
       check_api()
