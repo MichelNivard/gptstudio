@@ -6,14 +6,18 @@
 \usage{
 stream_chat_completion(
   prompt,
+  history = NULL,
+  element_callback = cat,
   model = "gpt-3.5-turbo",
   openai_api_key = Sys.getenv("OPENAI_API_KEY")
 )
 }
 \arguments{
-\item{prompt}{A list of messages. Each message is a list that includes a
-"role" and "content". The "role" can be "system", "user", or "assistant".
-The "content" is the text of the message from the role.}
+\item{prompt}{The user's message or prompt.}
+
+\item{history}{A list of previous messages in the conversation (optional).}
+
+\item{element_callback}{A callback function to handle each element of the streamed response (optional).}
 
 \item{model}{A character string specifying the model to use for chat completion.
 The default model is "gpt-3.5-turbo".}
@@ -24,29 +28,9 @@ Please note that the OpenAI API key is sensitive information and should be
 treated accordingly.}
 }
 \value{
-A character string specifying the path to the tempfile that contains the
-full response from the OpenAI API.
+The same as \code{curl::curl_fetch_stream}
 }
 \description{
 \code{stream_chat_completion} sends the prepared chat completion request to the
-OpenAI API and retrieves the streamed response. The results are then stored
-in a temporary file.
-}
-\examples{
-\dontrun{
-# Get API key from your environment variables
-openai_api_key <- Sys.getenv("OPENAI_API_KEY")
-
-# Define the prompt
-prompt <- list(
-  list(role = "system", content = "You are a helpful assistant."),
-  list(role = "user", content = "Who won the world series in 2020?")
-)
-
-# Call the function
-result <- stream_chat_completion(prompt = prompt, openai_api_key = openai_api_key)
-
-# Print the result
-print(result)
-}
+OpenAI API and retrieves the streamed response.
 }
