@@ -49,7 +49,7 @@ stream_chat_completion <-
     # Make the streaming request using curl_fetch_stream()
     curl::curl_fetch_stream(
       url = url,
-      fun = \(x) {
+      fun = function(x) {
         element <- rawToChar(x)
         element_callback(element) # Do whatever element_callback does
       },
