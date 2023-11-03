@@ -5,21 +5,20 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
     purrr::discard(~ .x == "gptstudio_request_perform.default")
 
-  tagList(
-    fluidRow(
+  preferences <- bslib::accordion(
+    open = FALSE,
+    multiple = FALSE,
+
+    bslib::accordion_panel(
+      title = "Assistant behavior",
+      icon = fontawesome::fa("robot"),
+
       selectInput(
         inputId = ns("task"),
         label = translator$t("Task"),
         choices = c("coding", "general", "advanced developer", "custom"),
         width = "200px",
         selected = getOption("gptstudio.task")
-      ),
-      selectInput(
-        inputId = ns("language"),
-        label = translator$t("Language"),
-        choices = c("en", "es", "de"),
-        width = "200px",
-        selected = getOption("gptstudio.language")
       ),
       selectInput(
         inputId = ns("style"),
@@ -35,6 +34,16 @@ mod_settings_ui <- function(id, translator = create_translator()) {
         selected = getOption("gptstudio.skill"),
         width = "200px"
       ),
+      textAreaInput(
+        inputId = ns("custom_prompt"),
+        label = translator$t("Custom Prompt"),
+        value = getOption("gptstudio.custom_prompt"))
+    ),
+
+    bslib::accordion_panel(
+      title = "API service",
+      icon = fontawesome::fa("server"),
+
       selectInput(
         inputId = ns("service"),
         label = translator$t("Select API Service"),
@@ -56,16 +65,32 @@ mod_settings_ui <- function(id, translator = create_translator()) {
         choiceValues = c(TRUE, FALSE),
         inline = TRUE,
         width = "200px",
-      ),
-      textAreaInput(
-        inputId = ns("custom_prompt"),
-        label = translator$t("Custom Prompt"),
-        value = getOption("gptstudio.custom_prompt"))
+      )
     ),
-    column(width = 12, align = "right",
-           actionButton(ns("save_default"), "Save as Default",
-                        icon = icon("save"),
-                        width = "200px")
+
+    bslib::accordion_panel(
+      title = "Other settings",
+      icon = fontawesome::fa("sliders"),
+
+      selectInput(
+        inputId = ns("language"),
+        label = translator$t("Language"),
+        choices = c("en", "es", "de"),
+        width = "200px",
+        selected = getOption("gptstudio.language")
+      )
+    )
+  )
+
+  tagList(
+    tags$h2("Settings"),
+
+    preferences,
+
+    actionButton(
+      inputId = ns("save_default"),
+      label = "Save as Default",
+      icon = icon("save")
     )
   )
 }
