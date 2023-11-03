@@ -37,7 +37,7 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
               title = "Settings",
               value = "settings",
               class = "px-0 py-2",
-              mod_settings_ui(id = ns(id), translator = translator)
+              mod_settings_ui(id = ns("settings"), translator = translator)
             )
           )
         ),
