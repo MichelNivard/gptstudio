@@ -64,7 +64,7 @@ check_api_key <- function(api_key) {
     invisible(FALSE)
   }
 
-  if (stringr::str_detect(api_key, "^[a-zA-Z0-9-]{30,60}$")) {
+  if (stringr::str_detect(api_key, "^([a-zA-Z0-9]|-){30,60}$")) {
     invisible(TRUE)
   } else {
     set_key_instructions
