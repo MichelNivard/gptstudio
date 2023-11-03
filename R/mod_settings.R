@@ -109,14 +109,26 @@ mod_settings_server <- function(id) {
 
       models <- get_available_models(input$service)
 
-      showNotification(ui = "Got models!", type = "message", session = session)
+      if (length(models) > 0) {
+        showNotification(ui = "Got models!", type = "message", session = session)
 
-      updateSelectInput(
-        session = session,
-        inputId = "model",
-        choices = models,
-        selected = models[1]
-      )
+        updateSelectInput(
+          session = session,
+          inputId = "model",
+          choices = models,
+          selected = models[1]
+        )
+
+      } else {
+        showNotification(ui = "No models available", type = "error", session = session)
+
+        updateSelectInput(
+          session = session,
+          inputId = "model",
+          choices = character(),
+          selected = NULL
+        )
+      }
     }) %>%
       bindEvent(input$service)
 
