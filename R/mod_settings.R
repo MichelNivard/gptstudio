@@ -105,12 +105,12 @@ mod_settings_server <- function(id) {
 
     observe({
       msg <- glue::glue("Fetching models for {input$service} service...")
-      showNotification(ui = msg, type = "message", session = session)
+      showNotification(ui = msg, type = "message",duration = 3, session = session)
 
       models <- get_available_models(input$service)
 
       if (length(models) > 0) {
-        showNotification(ui = "Got models!", type = "message", session = session)
+        showNotification(ui = "Got models!", duration = 3, type = "message", session = session)
 
         updateSelectInput(
           session = session,
@@ -120,7 +120,7 @@ mod_settings_server <- function(id) {
         )
 
       } else {
-        showNotification(ui = "No models available", type = "error", session = session)
+        showNotification(ui = "No models available", duration = 3, type = "error", session = session)
 
         updateSelectInput(
           session = session,
@@ -143,6 +143,8 @@ mod_settings_server <- function(id) {
         custom_prompt = input$custom_prompt,
         stream = input$stream
       )
+
+      showNotification("Defaults updated", duration = 3, type = "message", session = session)
     }) %>% bindEvent(input$save_default)
 
     ## Module output ----
