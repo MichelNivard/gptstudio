@@ -68,8 +68,10 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       )
     ),
 
+
+
     bslib::accordion_panel(
-      title = "Other settings",
+      title = "UI options",
       icon = fontawesome::fa("sliders"),
 
       selectInput(
@@ -83,14 +85,13 @@ mod_settings_ui <- function(id, translator = create_translator()) {
   )
 
   tagList(
-    tags$h2("Settings"),
-
     preferences,
 
     actionButton(
       inputId = ns("save_default"),
       label = "Save as Default",
-      icon = icon("save")
+      icon = icon("save"),
+      class = "mt-3"
     )
   )
 }
@@ -103,13 +104,18 @@ mod_settings_server <- function(id) {
       purrr::discard(~ .x == "gptstudio_request_perform.default")
 
     observe({
+      msg <- glue::glue("Fetching models for {input$service} service...")
+      showNotification(ui = msg, type = "message", session = session)
+
       models <- get_available_models(input$service)
+
+      showNotification(ui = "Got models!", type = "message", session = session)
 
       updateSelectInput(
         session = session,
         inputId = "model",
         choices = models,
-        selected = getOption("gptstudio.model")
+        selected = models[1]
       )
     }) %>%
       bindEvent(input$service)
