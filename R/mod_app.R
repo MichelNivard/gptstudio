@@ -14,14 +14,24 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
     bslib::page_fluid(
       theme = create_chat_app_theme(ide_colors),
       title = "ChatGPT from gptstudio",
-      class = "vh-100 p-3 m-0",
+      class = "vh-100 p-0 m-0",
       html_dependencies(),
-      div(
-        class = "row justify-content-center h-100",
+
+      bslib::layout_sidebar(
+        class = "vh-100",
+        sidebar = bslib::sidebar(
+          open = "closed",
+          width = 300,
+
+          mod_settings_ui(id = ns(id), translator = translator)
+        ),
         div(
-          class = "col h-100",
-          style = htmltools::css(`max-width` = "800px"),
-          mod_chat_ui(ns("chat"), translator)
+          class = "row justify-content-center h-100",
+          div(
+            class = "col h-100",
+            style = htmltools::css(`max-width` = "800px"),
+            mod_chat_ui(ns("chat"), translator)
+          )
         )
       )
     )
@@ -69,7 +79,7 @@ create_chat_app_theme <- function(ide_colors = get_ide_theme_info()) {
     version = 5,
     bg = ide_colors$bg,
     fg = ide_colors$fg,
-    font_scale = 0.9
+    font_scale = 0.9,
   )
 }
 
