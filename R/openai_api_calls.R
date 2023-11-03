@@ -125,6 +125,7 @@ get_available_models <- function(service) {
     models <- models[stringr::str_detect(models, "gpt-3.5|gpt-4")]
     idx <- which(models == "gpt-3.5-turbo")
     models <- c(models[idx], models[-idx])
+    return(models)
   } else if (service == "huggingface") {
     c("gpt2", "tiiuae/falcon-7b-instruct", "bigcode/starcoderplus")
   } else if (service == "anthropic") {
