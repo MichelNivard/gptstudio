@@ -22,8 +22,24 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
         sidebar = bslib::sidebar(
           open = "closed",
           width = 300,
+          class = "p-0",
+          padding = "0.5rem",
 
-          mod_settings_ui(id = ns(id), translator = translator)
+          bslib::navset_pill(
+            selected = "settings",
+
+            bslib::nav_panel(
+              title = "History",
+              value = "history",
+
+            ),
+            bslib::nav_panel(
+              title = "Settings",
+              value = "settings",
+              class = "px-0 py-2",
+              mod_settings_ui(id = ns(id), translator = translator)
+            )
+          )
         ),
         div(
           class = "row justify-content-center h-100",
