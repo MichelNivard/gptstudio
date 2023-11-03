@@ -68,7 +68,8 @@ mod_chat_ui <- function(id, translator = create_translator()) {
 #'
 mod_chat_server <- function(id,
                             ide_colors = get_ide_theme_info(),
-                            translator = create_translator()) {
+                            translator = create_translator(),
+                            settings) {
   # This is where changes will focus
   moduleServer(id, function(input, output, session) {
 
@@ -80,8 +81,6 @@ mod_chat_server <- function(id,
     rv$chat_history <- list()
     rv$reset_welcome_message <- 0L
     rv$reset_streaming_message <- 0L
-
-    settings <- mod_settings_server("settings")
 
     # UI outputs ----
 
@@ -149,16 +148,7 @@ mod_chat_server <- function(id,
 
 
     observe({
-      showModal(
-        modalDialog(
-          title = "Settings",
-          easyClose = TRUE,
-          footer = modalButton("Save"),
-          size = "l",
-
-          mod_settings_ui(ns("settings"), translator = translator)
-
-        ))
+      showNotification("Settings are now on the sidebar panel!")
     }) %>% bindEvent(input$settings)
 
   })
