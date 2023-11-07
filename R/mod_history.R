@@ -1,17 +1,49 @@
 mod_history_ui <- function(id) {
   ns <- NS(id)
+
+  btn_new_chat <- actionButton(
+    inputId = ns("new"),
+    label = "New chat",
+    icon = shiny::icon("plus"),
+    class = "flex-grow-1 me-2"
+  )
+
+  btn_delete_all <- actionButton(
+    inputId = ns("delete_all"),
+    label = fontawesome::fa("trash"),
+    class = "me-2"
+  ) %>%
+    bslib::tooltip("Delete all chats")
+
+  btn_settings <-  actionButton(
+    inputId = ns("settings"),
+    label = fontawesome::fa("gear")
+  ) %>%
+    bslib::tooltip("Settings")
+
   tagList(
-    actionButton(ns("new"), "New chat", icon = shiny::icon("plus")),
-    actionButton(ns("delete_all"), "Delete All", icon = shiny::icon("trash")),
-    1:6 |> lapply(chat_element)
+    tags$div(
+      class = "d-flex mb-1",
+      btn_new_chat,
+      btn_delete_all,
+      btn_settings,
+    ),
+    1:40 |> lapply(chat_element)
   )
 }
 
 mod_history_server <- function(id) {
-  moduleServer(
-    id,
-    function(input, output, session) {
+  moduleServer(id, function(input, output, session) {
+      rv <- reactiveValues()
+      rv$selected_settings <- 0L
 
+      observe({
+        rv$selected_settings <- rv$selected_settings + 1L
+      }) %>%
+        bindEvent(input$settings)
+
+      # return value
+      rv
     }
   )
 }
@@ -52,7 +84,7 @@ chat_element <- function(id = ids::random_id(), label = "This is the title. Some
 
   tags$div(
     id = id,
-    class = "p-2 d-flex align-items-center",
+    class = "px-2 py-1 mt-2 d-flex align-items-center",
 
     chat_title,
     edit_btn,

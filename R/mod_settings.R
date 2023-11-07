@@ -84,20 +84,42 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     )
   )
 
-  tagList(
-    preferences,
+  btn_to_history <- actionButton(
+    inputId = ns("to_history"),
+    label = fontawesome::fa("arrow-left-long"),
+    class = "mb-3"
+  ) %>%
+    bslib::tooltip("Back to history")
 
-    actionButton(
-      inputId = ns("save_default"),
-      label = "Save as Default",
-      icon = icon("save"),
-      class = "mt-3"
-    )
+  btn_save_as_default <- actionButton(
+    inputId = ns("save_default"),
+    label = fontawesome::fa("floppy-disk"),
+    class = "mb-3"
+  ) %>%
+    bslib::tooltip("Save as default")
+
+  btn_save_in_session <- actionButton(
+    inputId = ns("save_session"),
+    label = fontawesome::fa("bookmark"),
+    class = "mb-3"
+  ) %>%
+    bslib::tooltip("Save for this session")
+
+  tagList(
+    btn_to_history,
+    btn_save_in_session,
+    btn_save_as_default,
+
+    preferences
+
   )
 }
 
 mod_settings_server <- function(id) {
   moduleServer(id, function(input, output, session) {
+
+    rv <- reactiveValues()
+    rv$selected_history <- 0L
 
     api_services <- utils::methods("gptstudio_request_perform") %>%
       stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
@@ -147,24 +169,26 @@ mod_settings_server <- function(id) {
       showNotification("Defaults updated", duration = 3, type = "message", session = session)
     }) %>% bindEvent(input$save_default)
 
-    ## Module output ----
+    observe({
+      rv$selected_history <- rv$selected_history + 1L
+    }) %>%
+      bindEvent(input$to_history)
 
-    module_output <- reactiveValues()
 
     observe({
-      module_output$task <- input$task %||% getOption("gptstudio.task")
-      module_output$skill <- input$skill %||% getOption("gptstudio.skill")
-      module_output$style <- input$style %||% getOption("gptstudio.code_style")
-      module_output$model <- input$model %||% getOption("gptstudio.model")
-      module_output$service <- input$service %||% getOption("gptstudio.service")
-      module_output$stream <- as.logical(input$stream %||% getOption("gptstudio.stream"))
-      module_output$custom_prompt <- input$custom_prompt %||% getOption("gptstudio.custom_prompt")
+      rv$task <- input$task %||% getOption("gptstudio.task")
+      rv$skill <- input$skill %||% getOption("gptstudio.skill")
+      rv$style <- input$style %||% getOption("gptstudio.code_style")
+      rv$model <- input$model %||% getOption("gptstudio.model")
+      rv$service <- input$service %||% getOption("gptstudio.service")
+      rv$stream <- as.logical(input$stream %||% getOption("gptstudio.stream"))
+      rv$custom_prompt <- input$custom_prompt %||% getOption("gptstudio.custom_prompt")
     }) %>%
-      bindEvent(input$task, input$skill, input$style, input$model,
-                input$service, input$stream, input$custom_prompt, ignoreNULL = FALSE)
+      bindEvent(input$save_session, ignoreNULL = FALSE)
 
 
-    module_output
+    ## Module output ----
+    rv
 
   })
 }

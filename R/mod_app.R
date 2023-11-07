@@ -20,28 +20,12 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
       bslib::layout_sidebar(
         class = "vh-100",
         sidebar = bslib::sidebar(
-          open = "closed",
+          open = "open",
           width = 300,
           class = "p-0",
           padding = "0.5rem",
 
-          bslib::navset_pill(
-            selected = "history",
-
-            bslib::nav_panel(
-              title = "History",
-              value = "history",
-              class = "px-0 py-2",
-              mod_history_ui(id = ns("history"))
-
-            ),
-            bslib::nav_panel(
-              title = "Settings",
-              value = "settings",
-              class = "px-0 py-2",
-              mod_settings_ui(id = ns("settings"), translator = translator)
-            )
-          )
+          mod_sidebar_ui(ns("sidebar"), translator)
         ),
         div(
           class = "row justify-content-center h-100",
@@ -63,9 +47,8 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
 #'
 mod_app_server <- function(id, ide_colors = get_ide_theme_info()) {
   moduleServer(id, function(input, output, session) {
-    settings <- mod_settings_server("settings")
-    mod_history_server("history")
-    mod_chat_server("chat", ide_colors, translator = NULL, settings = settings)
+    sidebar <- mod_sidebar_server("sidebar")
+    mod_chat_server("chat", ide_colors, translator = NULL, settings = sidebar$settings)
   })
 }
 
