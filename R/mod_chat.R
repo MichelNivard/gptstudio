@@ -22,22 +22,25 @@ mod_chat_ui <- function(id, translator = create_translator()) {
         div(
           class = "mt-auto",
           htmltools::div(
-            class = "d-flex p-3",
+            # class = "d-flex p-3",
+            class = "position-relative",
             div(
-              class = "flex-grow-1 pe-3",
+              # class = "flex-grow-1 pe-3",
+              # class = "position-absolute",
               text_area_input_wrapper(
                 inputId = ns("chat_input"),
                 label = NULL,
                 width = "100%",
                 placeholder = translator$t("Write your prompt here"),
                 value = "",
-                resize = "vertical",
-                rows = 5,
+                resize = "none",
+                # rows = 1,
                 textarea_class = "chat-prompt"
               )
             ),
             div(
-              style = htmltools::css(width = "50px"),
+              # style = htmltools::css(width = "50px"),
+              class = "position-absolute",
               actionButton(
                 inputId = ns("chat"),
                 label = icon("fas fa-paper-plane"),
