@@ -31,6 +31,8 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
             bslib::nav_panel(
               title = "History",
               value = "history",
+              class = "px-0 py-2",
+              mod_history_ui(id = ns("history"))
 
             ),
             bslib::nav_panel(
@@ -62,6 +64,7 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
 mod_app_server <- function(id, ide_colors = get_ide_theme_info()) {
   moduleServer(id, function(input, output, session) {
     settings <- mod_settings_server("settings")
+    mod_history_server("history")
     mod_chat_server("chat", ide_colors, translator = NULL, settings = settings)
   })
 }
