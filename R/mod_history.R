@@ -2,7 +2,7 @@ mod_history_ui <- function(id) {
   ns <- NS(id)
 
   btn_new_chat <- actionButton(
-    inputId = ns("new"),
+    inputId = ns("new_chat"),
     label = "New chat",
     icon = shiny::icon("plus"),
     class = "flex-grow-1 me-2"
@@ -36,11 +36,17 @@ mod_history_server <- function(id) {
   moduleServer(id, function(input, output, session) {
       rv <- reactiveValues()
       rv$selected_settings <- 0L
+      rv$create_new_chat <- 0L
 
       observe({
         rv$selected_settings <- rv$selected_settings + 1L
       }) %>%
         bindEvent(input$settings)
+
+      observe({
+        rv$create_new_chat <- rv$create_new_chat + 1L
+      }) %>%
+        bindEvent(input$new_chat)
 
       # return value
       rv

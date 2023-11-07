@@ -120,6 +120,8 @@ mod_settings_server <- function(id) {
 
     rv <- reactiveValues()
     rv$selected_history <- 0L
+    rv$modify_session_settings <- 0L
+    rv$create_new_chat <- 0L
 
     api_services <- utils::methods("gptstudio_request_perform") %>%
       stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
@@ -166,6 +168,8 @@ mod_settings_server <- function(id) {
         stream = input$stream
       )
 
+      rv$modify_session_settings <- rv$modify_session_settings + 1L
+
       showNotification("Defaults updated", duration = 3, type = "message", session = session)
     }) %>% bindEvent(input$save_default)
 
@@ -173,6 +177,11 @@ mod_settings_server <- function(id) {
       rv$selected_history <- rv$selected_history + 1L
     }) %>%
       bindEvent(input$to_history)
+
+    observe({
+      rv$modify_session_settings <- rv$modify_session_settings + 1L
+    }) %>%
+      bindEvent(input$save_session, ignoreNULL = FALSE)
 
 
     observe({
@@ -183,8 +192,10 @@ mod_settings_server <- function(id) {
       rv$service <- input$service %||% getOption("gptstudio.service")
       rv$stream <- as.logical(input$stream %||% getOption("gptstudio.stream"))
       rv$custom_prompt <- input$custom_prompt %||% getOption("gptstudio.custom_prompt")
+
+      rv$create_new_chat <- rv$create_new_chat + 1L
     }) %>%
-      bindEvent(input$save_session, ignoreNULL = FALSE)
+      bindEvent(rv$modify_session_settings)
 
 
     ## Module output ----

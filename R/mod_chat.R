@@ -42,16 +42,7 @@ mod_chat_ui <- function(id, translator = create_translator()) {
                 inputId = ns("chat"),
                 label = icon("fas fa-paper-plane"),
                 class = "w-100 btn-primary p-1 chat-send-btn"
-              ),
-              actionButton(
-                inputId = ns("clear_history"),
-                label = icon("eraser"),
-                class = "w-100 btn-primary mt-2 p-1"
-              ),
-              actionButton(
-                inputId = ns("settings"),
-                label = icon("gear"),
-                class = "w-100 btn-primary mt-2 p-1")
+              )
             )
           )
         )
@@ -69,7 +60,8 @@ mod_chat_ui <- function(id, translator = create_translator()) {
 mod_chat_server <- function(id,
                             ide_colors = get_ide_theme_info(),
                             translator = create_translator(),
-                            settings) {
+                            settings,
+                            history) {
   # This is where changes will focus
   moduleServer(id, function(input, output, session) {
 
@@ -110,7 +102,7 @@ mod_chat_server <- function(id,
       rv$chat_history <- list()
       rv$reset_welcome_message <- rv$reset_welcome_message + 1L
     }) %>%
-      bindEvent(input$clear_history)
+      bindEvent(history$create_new_chat, settings$create_new_chat)
 
 
     observe({
@@ -145,11 +137,6 @@ mod_chat_server <- function(id,
 
     }) %>%
       bindEvent(input$chat)
-
-
-    observe({
-      showNotification("Settings are now on the sidebar panel!")
-    }) %>% bindEvent(input$settings)
 
   })
 }

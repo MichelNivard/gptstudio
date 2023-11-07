@@ -48,7 +48,13 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
 mod_app_server <- function(id, ide_colors = get_ide_theme_info()) {
   moduleServer(id, function(input, output, session) {
     sidebar <- mod_sidebar_server("sidebar")
-    mod_chat_server("chat", ide_colors, translator = NULL, settings = sidebar$settings)
+    mod_chat_server(
+      id = "chat",
+      ide_colors = ide_colors,
+      translator = NULL,
+      settings = sidebar$settings,
+      history = sidebar$history
+    )
   })
 }
 
