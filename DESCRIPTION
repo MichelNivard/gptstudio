@@ -18,12 +18,14 @@ License: MIT + file LICENSE
 URL: https://github.com/MichelNivard/gptstudio,
     https://michelnivard.github.io/gptstudio/
 BugReports: https://github.com/MichelNivard/gptstudio/issues
+Depends:
+    R (>= 4.0)
 Imports: 
     assertthat,
     bslib (>= 0.4.2),
-    callr,
     cli,
     colorspace,
+    curl,
     glue,
     grDevices,
     htmltools,
@@ -32,6 +34,7 @@ Imports:
     jsonlite,
     magrittr,
     purrr,
+    R6,
     rlang,
     rstudioapi (>= 0.12),
     shiny,
@@ -47,8 +50,6 @@ Suggests:
     testthat (>= 3.0.0),
     uuid,
     withr
-Depends:
-    R (>= 4.0)
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Encoding: UTF-8

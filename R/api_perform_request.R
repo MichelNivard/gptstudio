@@ -22,7 +22,7 @@ gptstudio_request_perform <- function(skeleton, ...) {
 }
 
 #' @export
-gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...) {
+gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySession = NULL, ...) {
 
   url        <- skeleton$url
   api_key    <- skeleton$api_key
@@ -34,6 +34,7 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...) {
   n          <- skeleton$extra$n
 
   # Translate request
+
   messages <- c(
     skeleton$history,
     list(
@@ -52,9 +53,21 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...) {
   # Perform request
   response <- NULL
 
-  if (!is.null(skeleton$stream)) {
-    response <- stream_chat_completion(prompt = messages,
-                                       model = model)
+  if (isTRUE(skeleton$stream)) {
+    if (is.null(shinySession)) stop("Stream requires a shiny session object")
+
+    stream_handler <- StreamHandler$new(
+      session = shinySession,
+      user_prompt = skeleton$prompt
+    )
+
+    stream_chat_completion(
+      prompt = skeleton$prompt,
+      history = skeleton$history,
+      element_callback = stream_handler$handle_streamed_element
+    )
+
+    response <- stream_handler$current_value
   } else {
     response <- httr2::request(url) %>%
       httr2::req_auth_bearer_token(api_key) %>%

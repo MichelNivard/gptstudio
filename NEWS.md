@@ -1,5 +1,7 @@
 # gptstudio (development version)
 
+- Reverted back to use an R6 class for OpenAI streaming. This doesn't affect how the users interact with the addins.
+
 # gptstudio 0.3.1
 
 * Better API checking to direct users to .Renviron to set API key to be persistent across sessions
