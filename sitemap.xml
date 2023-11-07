@@ -28,6 +28,9 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/StreamHandler.html</loc>
+  </url>
+  <url>
     <loc>/reference/addin_chatgpt.html</loc>
   </url>
   <url>
@@ -100,9 +103,6 @@
     <loc>/reference/gptstudio-package.html</loc>
   </url>
   <url>
-    <loc>/reference/gptstudio_job.html</loc>
-  </url>
-  <url>
     <loc>/reference/gptstudio_request_perform.html</loc>
   </url>
   <url>
@@ -131,9 +131,6 @@
   </url>
   <url>
     <loc>/reference/openai_create_chat_completion.html</loc>
-  </url>
-  <url>
-    <loc>/reference/openai_stream_parse.html</loc>
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
