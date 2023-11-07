@@ -118,6 +118,8 @@ mod_settings_ui <- function(id, translator = create_translator()) {
 mod_settings_server <- function(id) {
   moduleServer(id, function(input, output, session) {
 
+    ns <- session$ns
+
     rv <- reactiveValues()
     rv$selected_history <- 0L
     rv$modify_session_settings <- 0L
@@ -156,6 +158,27 @@ mod_settings_server <- function(id) {
     }) %>%
       bindEvent(input$service)
 
+
+    observe({
+      rv$selected_history <- rv$selected_history + 1L
+    }) %>%
+      bindEvent(input$to_history)
+
+
+    observe({
+      showModal(modalDialog(
+        tags$p("These settings will persist for all your future chat sessions."),
+        tags$p("After changing the settings a new chat will be created."),
+
+        footer = tagList(
+          modalButton("Cancel"),
+          actionButton(ns("confirm_default"), "Ok")
+        )
+      ))
+    }) %>%
+      bindEvent(input$save_default)
+
+
     observe({
       save_user_config(
         code_style = input$style,
@@ -170,18 +193,30 @@ mod_settings_server <- function(id) {
 
       rv$modify_session_settings <- rv$modify_session_settings + 1L
 
+      removeModal(session)
+
       showNotification("Defaults updated", duration = 3, type = "message", session = session)
-    }) %>% bindEvent(input$save_default)
+    }) %>% bindEvent(input$confirm_default)
+
 
     observe({
-      rv$selected_history <- rv$selected_history + 1L
+      showModal(modalDialog(
+
+        tags$p("After changing the settings a new chat will be created."),
+
+        footer = tagList(
+          modalButton("Cancel"),
+          actionButton(ns("confirm_session"), "Ok")
+        )
+      ))
     }) %>%
-      bindEvent(input$to_history)
+      bindEvent(input$save_session)
 
     observe({
       rv$modify_session_settings <- rv$modify_session_settings + 1L
+      removeModal(session)
     }) %>%
-      bindEvent(input$save_session, ignoreNULL = FALSE)
+      bindEvent(input$confirm_session, ignoreNULL = FALSE)
 
 
     observe({
