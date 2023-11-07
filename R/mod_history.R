@@ -1,9 +1,9 @@
 mod_history_ui <- function(id) {
   ns <- NS(id)
   tagList(
-    tags$div(
-      style = htmltools::css("background-color" = "#C8C8C8", width = "100px", height = "100px")
-    )
+    actionButton(ns("new"), "New chat", icon = shiny::icon("plus")),
+    actionButton(ns("delete_all"), "Delete All", icon = shiny::icon("trash")),
+    1:6 |> lapply(chat_element)
   )
 }
 
@@ -34,4 +34,28 @@ read_chat_history <- function() {
 
   if(!file.exists(file_path)) return(list())
   jsonlite::read_json(file_path)
+}
+
+chat_element <- function(id = ids::random_id(), label = "This is the title. Sometimes the title can be very  very long") {
+  chat_title <- tags$div(
+    class = "flex-grow-1 text-truncate",
+    fontawesome::fa("message"),
+    label
+  ) %>%
+    bslib::tooltip(label, placement = "right")
+
+  edit_btn <- fontawesome::fa("pen-to-square", margin_left = "0.4em") %>%
+    bslib::tooltip("Edit title", placement = "left")
+
+  delete_btn <- fontawesome::fa("trash-can", margin_left = "0.4em") %>%
+    bslib::tooltip("Delete this chat", placement = "right")
+
+  tags$div(
+    id = id,
+    class = "p-2 d-flex align-items-center",
+
+    chat_title,
+    edit_btn,
+    delete_btn
+  )
 }

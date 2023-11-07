@@ -26,7 +26,7 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
           padding = "0.5rem",
 
           bslib::navset_pill(
-            selected = "settings",
+            selected = "history",
 
             bslib::nav_panel(
               title = "History",
