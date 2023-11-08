@@ -104,6 +104,18 @@ mod_chat_server <- function(id,
     # Observers ----
 
     observe({
+      all_chats <- read_chat_history()
+
+      chat_to_append <- list(
+        id = ids::random_id(),
+        title = "Some random title while we figure out how to automate it",
+        time_written = Sys.time(),
+        messages = rv$chat_history
+      )
+
+      all_chats <- c(all_chats, list(chat_to_append))
+      write_chat_history(all_chats)
+
       rv$chat_history <- list()
       rv$reset_welcome_message <- rv$reset_welcome_message + 1L
     }) %>%

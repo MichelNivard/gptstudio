@@ -1,5 +1,8 @@
 mod_history_ui <- function(id) {
   ns <- NS(id)
+  chat_history_messages <- read_chat_history()
+
+  print(chat_history_messages)
 
   btn_new_chat <- actionButton(
     inputId = ns("new_chat"),
@@ -28,7 +31,8 @@ mod_history_ui <- function(id) {
       btn_delete_all,
       btn_settings,
     ),
-    1:40 |> lapply(chat_element)
+    chat_history_messages %>%
+      purrr::map(~chat_element(id = .x$id, title = .x$title))
   )
 }
 
@@ -57,30 +61,38 @@ mod_history_server <- function(id) {
 
 
 
+chat_history_path <- function() {
+  dir <- tools::R_user_dir("gptstudio", which = "data")
+  file <- file.path(dir, "history.json")
+
+  list(dir = dir, file = file)
+}
 
 write_chat_history <- function(chat_history) {
-  dir_path <- tools::R_user_dir("gptstudio", which = "history")
-  if (!dir.exists(dir_path)) dir.create(dir_path)
+  history_path <- chat_history_path()
+  if (!dir.exists(history_path$dir)) dir.create(history_path$dir)
 
-  file_path <- file.path(dir_path, "history.json")
-  jsonlite::write_json(x = chat_history, path = file_path)
+  chat_history %>%
+    purrr::keep(~!rlang::is_empty(.x$messages)) %>%
+    jsonlite::write_json(path = history_path$file, auto_unbox = TRUE)
 }
 
 read_chat_history <- function() {
-  dir_path <- tools::R_user_dir("gptstudio", which = "history")
-  file_path <- file.path(dir_path, "history.json")
+  history_path <- chat_history_path()
 
-  if(!file.exists(file_path)) return(list())
-  jsonlite::read_json(file_path)
+  if(!file.exists(history_path$file)) return(list())
+  jsonlite::read_json(history_path$file)
 }
 
-chat_element <- function(id = ids::random_id(), label = "This is the title. Sometimes the title can be very  very long") {
+chat_element <- function(
+    id = ids::random_id(),
+    title = "This is the title. Sometimes the title can be very  very long") {
   chat_title <- tags$div(
     class = "flex-grow-1 text-truncate",
     fontawesome::fa("message"),
-    label
+    title
   ) %>%
-    bslib::tooltip(label, placement = "right")
+    bslib::tooltip(title, placement = "right")
 
   edit_btn <- fontawesome::fa("pen-to-square", margin_left = "0.4em") %>%
     bslib::tooltip("Edit title", placement = "left")
