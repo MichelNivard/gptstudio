@@ -19,3 +19,22 @@
 pre code {
   display: block;
 }
+
+
+/* Change sidebar icon styles  */
+.bslib-sidebar-layout>.collapse-toggle {
+  top: 10px;
+  bottom: auto !important;
+  background-color: transparent !important;
+  border: none !important;
+  right: -1.6rem !important;
+}
+
+.bslib-sidebar-layout.sidebar-collapsed>.collapse-toggle {
+  right: -1.6rem !important;
+}
+
+.bslib-sidebar-layout > .collapse-toggle > .collapse-icon {
+    width: 2rem !important;
+    height: 2rem !important;
+}
