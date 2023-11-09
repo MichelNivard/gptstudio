@@ -180,6 +180,8 @@ mod_settings_server <- function(id) {
 
 
     observe({
+      if (!isTRUE(input$confirm_default)) return()
+
       save_user_config(
         code_style = input$style,
         skill = input$skill,
@@ -213,6 +215,8 @@ mod_settings_server <- function(id) {
       bindEvent(input$save_session)
 
     observe({
+      if (!isTRUE(input$confirm_session)) return()
+
       rv$modify_session_settings <- rv$modify_session_settings + 1L
       removeModal(session)
     }) %>%
