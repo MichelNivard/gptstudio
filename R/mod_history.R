@@ -58,7 +58,7 @@ mod_history_server <- function(id, settings) {
           messages = rv$chat_history
         )
 
-        all_chats <- c(all_chats, list(chat_to_append))
+        all_chats <- c(list(chat_to_append), all_chats)
         write_chat_history(all_chats)
 
         rv$chat_history <- list()
