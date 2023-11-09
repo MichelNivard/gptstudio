@@ -119,7 +119,7 @@ mod_chat_server <- function(id,
       rv$chat_history <- list()
       rv$reset_welcome_message <- rv$reset_welcome_message + 1L
     }) %>%
-      bindEvent(history$create_new_chat, settings$create_new_chat)
+      bindEvent(history$create_new_chat)
 
 
     observe({

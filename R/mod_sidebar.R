@@ -25,7 +25,7 @@ mod_sidebar_server <- function(id) {
     id,
     function(input, output, session) {
       settings <- mod_settings_server("settings")
-      history <- mod_history_server("history")
+      history <- mod_history_server("history", settings)
 
       observe({
         bslib::nav_select("panel", selected = "settings", session = session)

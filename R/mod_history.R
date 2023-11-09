@@ -32,15 +32,16 @@ mod_history_ui <- function(id) {
       btn_settings,
     ),
     chat_history_messages %>%
-      purrr::map(~chat_element(id = .x$id, title = .x$title))
+      purrr::map(~conversation(id = .x$id, title = .x$title, ns = ns))
   )
 }
 
-mod_history_server <- function(id) {
+mod_history_server <- function(id, settings) {
   moduleServer(id, function(input, output, session) {
       rv <- reactiveValues()
       rv$selected_settings <- 0L
       rv$create_new_chat <- 0L
+      rv$chat_history <- list()
 
       observe({
         rv$selected_settings <- rv$selected_settings + 1L
@@ -50,7 +51,17 @@ mod_history_server <- function(id) {
       observe({
         rv$create_new_chat <- rv$create_new_chat + 1L
       }) %>%
-        bindEvent(input$new_chat)
+        bindEvent(input$new_chat, settings$create_new_chat)
+
+      observe({
+        all_chats <- read_chat_history()
+        rv$chat_history <- all_chats %>%
+          purrr::keep(~.x$id == input$conversation_id) %>%
+          purrr::pluck(1L, "messages")
+
+        str(rv$chat_history)
+      }) %>%
+        bindEvent(input$conversation_id)
 
       # return value
       rv
@@ -84,11 +95,17 @@ read_chat_history <- function() {
   jsonlite::read_json(history_path$file)
 }
 
-chat_element <- function(
+ns_safe <- function(id, ns = NULL) if (is.null(ns)) id else ns(id)
+
+conversation <- function(
     id = ids::random_id(),
-    title = "This is the title. Sometimes the title can be very  very long") {
-  chat_title <- tags$div(
-    class = "flex-grow-1 text-truncate",
+    title = "This is the title. Sometimes the title can be very  very long",
+    ns = NULL) {
+
+  conversation_title <- tags$div(
+    class = "multi-click-input flex-grow-1 text-truncate",
+    `shiny-input-id` = ns_safe("conversation_id", ns),
+    value = id,
     fontawesome::fa("message"),
     title
   ) %>%
@@ -104,7 +121,7 @@ chat_element <- function(
     id = id,
     class = "px-2 py-1 mt-2 d-flex align-items-center",
 
-    chat_title,
+    conversation_title,
     edit_btn,
     delete_btn
   )

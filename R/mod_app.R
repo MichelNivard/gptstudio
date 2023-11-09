@@ -128,10 +128,10 @@ get_ide_theme_info <- function() {
 
 html_dependencies <- function() {
   htmltools::htmlDependency(
-    name = "gptstudio-assets", version = "0.2.0",
+    name = "gptstudio-assets", version = "0.4.0",
     package = "gptstudio",
     src = "assets",
-    script = c("js/copyToClipboard.js", "js/shiftEnter.js"),
+    script = c("js/copyToClipboard.js", "js/shiftEnter.js", "js/conversation.js"),
     stylesheet = c("css/mod_app.css")
   )
 }
