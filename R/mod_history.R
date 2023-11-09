@@ -49,6 +49,20 @@ mod_history_server <- function(id, settings) {
         bindEvent(input$settings)
 
       observe({
+        all_chats <- read_chat_history()
+
+        chat_to_append <- list(
+          id = ids::random_id(),
+          title = "Some random title while we figure out how to automate it",
+          last_modified = Sys.time(),
+          messages = rv$chat_history
+        )
+
+        all_chats <- c(all_chats, list(chat_to_append))
+        write_chat_history(all_chats)
+
+        rv$chat_history <- list()
+
         rv$create_new_chat <- rv$create_new_chat + 1L
       }) %>%
         bindEvent(input$new_chat, settings$create_new_chat)
@@ -58,8 +72,6 @@ mod_history_server <- function(id, settings) {
         rv$chat_history <- all_chats %>%
           purrr::keep(~.x$id == input$conversation_id) %>%
           purrr::pluck(1L, "messages")
-
-        str(rv$chat_history)
       }) %>%
         bindEvent(input$conversation_id)
 

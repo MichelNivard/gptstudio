@@ -75,7 +75,6 @@ mod_chat_server <- function(id,
     ns <- session$ns
 
     rv <- reactiveValues()
-    rv$chat_history <- list()
     rv$reset_welcome_message <- 0L
     rv$reset_streaming_message <- 0L
 
@@ -88,7 +87,7 @@ mod_chat_server <- function(id,
 
 
     output$history <- renderUI({
-      rv$chat_history %>%
+      history$chat_history %>%
         style_chat_history(ide_colors = ide_colors)
     })
 
@@ -104,19 +103,6 @@ mod_chat_server <- function(id,
     # Observers ----
 
     observe({
-      all_chats <- read_chat_history()
-
-      chat_to_append <- list(
-        id = ids::random_id(),
-        title = "Some random title while we figure out how to automate it",
-        time_written = Sys.time(),
-        messages = rv$chat_history
-      )
-
-      all_chats <- c(all_chats, list(chat_to_append))
-      write_chat_history(all_chats)
-
-      rv$chat_history <- list()
       rv$reset_welcome_message <- rv$reset_welcome_message + 1L
     }) %>%
       bindEvent(history$create_new_chat)
@@ -128,7 +114,7 @@ mod_chat_server <- function(id,
         service = settings$service,
         model = settings$model,
         prompt = input$chat_input,
-        history = rv$chat_history,
+        history = history$chat_history,
         stream = settings$stream
       ) %>%
         gptstudio_skeleton_build(
@@ -144,7 +130,7 @@ mod_chat_server <- function(id,
       ) %>%
         gptstudio_response_process()
 
-      rv$chat_history <- response$history
+      history$chat_history <- response$history
 
       if (settings$stream) {
         rv$reset_streaming_message <- rv$reset_streaming_message + 1L
