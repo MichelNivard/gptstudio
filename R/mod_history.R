@@ -1,8 +1,6 @@
 mod_history_ui <- function(id) {
   ns <- NS(id)
-  chat_history_messages <- read_chat_history()
-
-  print(chat_history_messages)
+  conversation_history <- read_conversation_history()
 
   btn_new_chat <- actionButton(
     inputId = ns("new_chat"),
@@ -31,7 +29,7 @@ mod_history_ui <- function(id) {
       btn_delete_all,
       btn_settings,
     ),
-    chat_history_messages %>%
+    conversation_history %>%
       purrr::map(~conversation(id = .x$id, title = .x$title, ns = ns))
   )
 }
@@ -49,7 +47,7 @@ mod_history_server <- function(id, settings) {
         bindEvent(input$settings)
 
       observe({
-        all_chats <- read_chat_history()
+        conversation_history <- read_conversation_history()
 
         chat_to_append <- list(
           id = ids::random_id(),
@@ -58,8 +56,8 @@ mod_history_server <- function(id, settings) {
           messages = rv$chat_history
         )
 
-        all_chats <- c(list(chat_to_append), all_chats)
-        write_chat_history(all_chats)
+        conversation_history <- c(list(chat_to_append), conversation_history)
+        write_conversation_history(conversation_history)
 
         rv$chat_history <- list()
 
@@ -68,8 +66,8 @@ mod_history_server <- function(id, settings) {
         bindEvent(input$new_chat, settings$create_new_chat)
 
       observe({
-        all_chats <- read_chat_history()
-        rv$chat_history <- all_chats %>%
+        conversation_history <- read_conversation_history()
+        rv$chat_history <- conversation_history %>%
           purrr::keep(~.x$id == input$conversation_id) %>%
           purrr::pluck(1L, "messages")
       }) %>%
@@ -84,27 +82,27 @@ mod_history_server <- function(id, settings) {
 
 
 
-chat_history_path <- function() {
+conversation_history_path <- function() {
   dir <- tools::R_user_dir("gptstudio", which = "data")
-  file <- file.path(dir, "history.json")
+  file <- file.path(dir, "conversation_history.json")
 
   list(dir = dir, file = file)
 }
 
-write_chat_history <- function(chat_history) {
-  history_path <- chat_history_path()
-  if (!dir.exists(history_path$dir)) dir.create(history_path$dir, recursive = TRUE)
+write_conversation_history <- function(conversation_history) {
+  path <- conversation_history_path()
+  if (!dir.exists(path$dir)) dir.create(path$dir, recursive = TRUE)
 
-  chat_history %>%
+  conversation_history %>%
     purrr::keep(~!rlang::is_empty(.x$messages)) %>%
-    jsonlite::write_json(path = history_path$file, auto_unbox = TRUE)
+    jsonlite::write_json(path = path$file, auto_unbox = TRUE)
 }
 
-read_chat_history <- function() {
-  history_path <- chat_history_path()
+read_conversation_history <- function() {
+  path <- conversation_history_path()
 
-  if(!file.exists(history_path$file)) return(list())
-  jsonlite::read_json(history_path$file)
+  if(!file.exists(path$file)) return(list())
+  jsonlite::read_json(path$file)
 }
 
 ns_safe <- function(id, ns = NULL) if (is.null(ns)) id else ns(id)
