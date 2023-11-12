@@ -29,17 +29,25 @@ mod_history_ui <- function(id) {
       btn_delete_all,
       btn_settings,
     ),
-    conversation_history %>%
-      purrr::map(~conversation(id = .x$id, title = .x$title, ns = ns))
+    uiOutput(ns("conversation_history"))
   )
 }
 
 mod_history_server <- function(id, settings) {
   moduleServer(id, function(input, output, session) {
+      ns <- session$ns
+
       rv <- reactiveValues()
       rv$selected_settings <- 0L
       rv$create_new_chat <- 0L
+      rv$reload_conversation_history <- 0L
       rv$chat_history <- list()
+
+      output$conversation_history <- renderUI({
+        read_conversation_history() %>%
+          purrr::map(~conversation(id = .x$id, title = .x$title, ns = ns))
+      }) %>%
+        bindEvent(rv$reload_conversation_history)
 
       observe({
         rv$selected_settings <- rv$selected_settings + 1L
@@ -47,21 +55,14 @@ mod_history_server <- function(id, settings) {
         bindEvent(input$settings)
 
       observe({
-        conversation_history <- read_conversation_history()
-
-        chat_to_append <- list(
-          id = ids::random_id(),
+        append_to_conversation_history(
           title = "Some random title while we figure out how to automate it",
-          last_modified = Sys.time(),
           messages = rv$chat_history
         )
 
-        conversation_history <- c(list(chat_to_append), conversation_history)
-        write_conversation_history(conversation_history)
-
         rv$chat_history <- list()
 
-        rv$create_new_chat <- rv$create_new_chat + 1L
+        rv$reload_conversation_history <- rv$reload_conversation_history + 1L
       }) %>%
         bindEvent(input$new_chat, settings$create_new_chat)
 
@@ -72,6 +73,14 @@ mod_history_server <- function(id, settings) {
           purrr::pluck(1L, "messages")
       }) %>%
         bindEvent(input$conversation_id)
+
+      observe({
+        conversation_history_file <- conversation_history_path()$file
+        file.remove(conversation_history_file)
+        showNotification("Deleted all conversations", type = "warning", duration = 3, session = session)
+        rv$reload_conversation_history <- rv$reload_conversation_history + 1L
+      }) %>%
+        bindEvent(input$delete_all)
 
       # return value
       rv
@@ -103,6 +112,20 @@ read_conversation_history <- function() {
 
   if(!file.exists(path$file)) return(list())
   jsonlite::read_json(path$file)
+}
+
+append_to_conversation_history <- function(title = "Some title", messages = list()) {
+  conversation_history <- read_conversation_history()
+
+  chat_to_append <- list(
+    id = ids::random_id(),
+    title = title,
+    last_modified = Sys.time(),
+    messages = messages
+  )
+
+  conversation_history <- c(list(chat_to_append), conversation_history)
+  write_conversation_history(conversation_history)
 }
 
 ns_safe <- function(id, ns = NULL) if (is.null(ns)) id else ns(id)
