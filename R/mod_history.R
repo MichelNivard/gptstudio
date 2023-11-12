@@ -93,7 +93,7 @@ chat_history_path <- function() {
 
 write_chat_history <- function(chat_history) {
   history_path <- chat_history_path()
-  if (!dir.exists(history_path$dir)) dir.create(history_path$dir)
+  if (!dir.exists(history_path$dir)) dir.create(history_path$dir, recursive = TRUE)
 
   chat_history %>%
     purrr::keep(~!rlang::is_empty(.x$messages)) %>%
