@@ -41,6 +41,7 @@ mod_history_server <- function(id, settings) {
       rv$selected_settings <- 0L
       rv$create_new_chat <- 0L
       rv$reload_conversation_history <- 0L
+      rv$conversation_id <- ids::random_id()
       rv$chat_history <- list()
 
       output$conversation_history <- renderUI({
@@ -56,11 +57,13 @@ mod_history_server <- function(id, settings) {
 
       observe({
         append_to_conversation_history(
+          id = rv$conversation_id,
           title = "Some random title while we figure out how to automate it",
           messages = rv$chat_history
         )
 
         rv$chat_history <- list()
+        rv$conversation_id <- ids::random_id()
 
         rv$reload_conversation_history <- rv$reload_conversation_history + 1L
       }) %>%
@@ -68,9 +71,12 @@ mod_history_server <- function(id, settings) {
 
       observe({
         conversation_history <- read_conversation_history()
-        rv$chat_history <- conversation_history %>%
+        selected_conversation <- conversation_history %>%
           purrr::keep(~.x$id == input$conversation_id) %>%
-          purrr::pluck(1L, "messages")
+          purrr::pluck(1L)
+
+        rv$chat_history <- selected_conversation$messages
+        rv$conversation_id <- selected_conversation$id
       }) %>%
         bindEvent(input$conversation_id)
 
@@ -114,11 +120,15 @@ read_conversation_history <- function() {
   jsonlite::read_json(path$file)
 }
 
-append_to_conversation_history <- function(title = "Some title", messages = list()) {
-  conversation_history <- read_conversation_history()
+append_to_conversation_history <- function(id = ids::random_id(),
+                                           title = "Some title",
+                                           messages = list()) {
+
+  conversation_history <- read_conversation_history() %>%
+    purrr::discard(~.x$id == id)
 
   chat_to_append <- list(
-    id = ids::random_id(),
+    id = id,
     title = title,
     last_modified = Sys.time(),
     messages = messages
