@@ -152,13 +152,17 @@ conversation <- function(
     fontawesome::fa("message"),
     title
   ) %>%
-    bslib::tooltip(title, placement = "right")
+    tooltip_on_hover(title, placement = "right")
 
-  edit_btn <- fontawesome::fa("pen-to-square", margin_left = "0.4em") %>%
-    bslib::tooltip("Edit title", placement = "left")
+  edit_btn <- tags$span(
+    fontawesome::fa("pen-to-square", margin_left = "0.4em")
+  ) %>%
+    tooltip_on_hover("Edit title", placement = "left")
 
-  delete_btn <- fontawesome::fa("trash-can", margin_left = "0.4em") %>%
-    bslib::tooltip("Delete this chat", placement = "right")
+  delete_btn <- tags$span(
+    fontawesome::fa("trash-can", margin_left = "0.4em")
+  ) %>%
+    tooltip_on_hover("Delete this chat", placement = "right")
 
   tags$div(
     id = id,
@@ -169,3 +173,5 @@ conversation <- function(
     delete_btn
   )
 }
+
+tooltip_on_hover <- purrr::partial(bslib::tooltip, options = list(trigger = "hover"))
