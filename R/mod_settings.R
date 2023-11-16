@@ -29,7 +29,8 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       ),
       selectInput(
         inputId = ns("skill"),
-        label = translator$t("Programming Skill"),
+        label = "Programming Skill", # TODO: update translator
+        # label = translator$t("Programming Skill"),
         choices = c("beginner", "intermediate", "advanced", "genius"),
         selected = getOption("gptstudio.skill"),
         width = "200px"
@@ -76,7 +77,8 @@ mod_settings_ui <- function(id, translator = create_translator()) {
 
       selectInput(
         inputId = ns("language"),
-        label = translator$t("Language"),
+        # label = translator$t("Language"), # TODO: update translator
+        label = "Language",
         choices = c("en", "es", "de"),
         width = "200px",
         selected = getOption("gptstudio.language")
@@ -180,7 +182,7 @@ mod_settings_server <- function(id) {
 
 
     observe({
-      if (!isTRUE(input$confirm_default)) return()
+      if (!isTruthy(input$confirm_default)) return()
 
       save_user_config(
         code_style = input$style,
@@ -215,12 +217,12 @@ mod_settings_server <- function(id) {
       bindEvent(input$save_session)
 
     observe({
-      if (!isTRUE(input$confirm_session)) return()
+      if (!isTruthy(input$confirm_session)) return()
 
       rv$modify_session_settings <- rv$modify_session_settings + 1L
       removeModal(session)
     }) %>%
-      bindEvent(input$confirm_session, ignoreNULL = FALSE)
+      bindEvent(input$confirm_session)
 
 
     observe({
