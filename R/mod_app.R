@@ -20,7 +20,7 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
       bslib::layout_sidebar(
         class = "vh-100",
         sidebar = bslib::sidebar(
-          open = "open",
+          open = "closed",
           width = 300,
           class = "p-0",
           padding = "0.5rem",

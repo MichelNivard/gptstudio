@@ -47,7 +47,8 @@ mod_chat_ui <- function(id, translator = create_translator()) {
                 inputId = ns("chat"),
                 label = icon("fas fa-paper-plane"),
                 class = "w-100 btn-primary p-1 chat-send-btn"
-              )
+              ) %>%
+                bslib::tooltip("Send (click or Enter)")
             )
           )
         )
