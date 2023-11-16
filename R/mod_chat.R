@@ -60,6 +60,7 @@ mod_chat_ui <- function(id, translator = create_translator()) {
 #'
 #' @param id id of the module
 #' @param translator Translator from `shiny.i18n::Translator`
+#' @param settings,history Reactive values from the settings and history module
 #' @inheritParams run_chatgpt_app
 #'
 mod_chat_server <- function(id,

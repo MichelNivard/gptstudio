@@ -7,7 +7,9 @@
 mod_chat_server(
   id,
   ide_colors = get_ide_theme_info(),
-  translator = create_translator()
+  translator = create_translator(),
+  settings,
+  history
 )
 }
 \arguments{
@@ -16,6 +18,8 @@ mod_chat_server(
 \item{ide_colors}{List containing the colors of the IDE theme.}
 
 \item{translator}{Translator from \code{shiny.i18n::Translator}}
+
+\item{settings, history}{Reactive values from the settings and history module}
 }
 \description{
 Chat server
