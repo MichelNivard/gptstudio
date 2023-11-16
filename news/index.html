@@ -46,8 +46,18 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="gptstudio-development-version">gptstudio (development version)<a class="anchor" aria-label="anchor" href="#gptstudio-development-version"></a></h2>
-<ul><li>Reverted back to use an R6 class for OpenAI streaming. This doesn’t affect how the users interact with the addins.</li>
+<div class="section level3">
+<h3 id="ui-updates-development-version">UI updates<a class="anchor" aria-label="anchor" href="#ui-updates-development-version"></a></h3>
+<ul><li>The chat app has now a sidebar where users can see their conversation history, start new chats and change the settings. Because of this, the chat interface has more room for showing messages.</li>
+<li>All saved chats are created with a placeholder title that the user can edit later.</li>
+<li>We have a shorter welcome message, but we have added lots of tooltips to help with navigation.</li>
 </ul></div>
+<div class="section level3">
+<h3 id="internal-development-version">Internal<a class="anchor" aria-label="anchor" href="#internal-development-version"></a></h3>
+<ul><li>Reverted back to use an R6 class for OpenAI streaming. This doesn’t affect how the users interact with the addins.</li>
+<li>Fixed a bug in retrieval of OpenAI models</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.1" id="gptstudio-031">gptstudio 0.3.1<a class="anchor" aria-label="anchor" href="#gptstudio-031"></a></h2>
 <ul><li>Better API checking to direct users to .Renviron to set API key to be persistent across sessions</li>

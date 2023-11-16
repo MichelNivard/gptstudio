@@ -54,7 +54,9 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mod_chat_server</span><span class="op">(</span></span>
 <span>  <span class="va">id</span>,</span>
 <span>  ide_colors <span class="op">=</span> <span class="fu"><a href="get_ide_theme_info.html">get_ide_theme_info</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  translator <span class="op">=</span> <span class="fu"><a href="create_translator.html">create_translator</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  translator <span class="op">=</span> <span class="fu"><a href="create_translator.html">create_translator</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="va">settings</span>,</span>
+<span>  <span class="va">history</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -70,6 +72,10 @@
 
 <dt>translator</dt>
 <dd><p>Translator from <code><a href="https://appsilon.github.io/shiny.i18n/reference/Translator.html" class="external-link">shiny.i18n::Translator</a></code></p></dd>
+
+
+<dt>settings, history</dt>
+<dd><p>Reactive values from the settings and history module</p></dd>
 
 </dl></div>
 
