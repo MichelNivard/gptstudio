@@ -21,37 +21,34 @@ mod_chat_ui <- function(id, translator = create_translator()) {
         ),
         div(
           class = "mt-auto",
+          style = css(
+            "margin-left" = "40px",
+            "margin-right" = "40px"
+          ),
           htmltools::div(
-            class = "d-flex p-3",
+            class = "position-relative",
+            style = css(
+              "width" = "100%"
+            ),
             div(
-              class = "flex-grow-1 pe-3",
               text_area_input_wrapper(
                 inputId = ns("chat_input"),
                 label = NULL,
                 width = "100%",
                 placeholder = translator$t("Write your prompt here"),
                 value = "",
-                resize = "vertical",
-                rows = 5,
+                resize = "none",
                 textarea_class = "chat-prompt"
               )
             ),
             div(
-              style = htmltools::css(width = "50px"),
+              class = "position-absolute top-50 end-0 translate-middle",
               actionButton(
                 inputId = ns("chat"),
                 label = icon("fas fa-paper-plane"),
                 class = "w-100 btn-primary p-1 chat-send-btn"
-              ),
-              actionButton(
-                inputId = ns("clear_history"),
-                label = icon("eraser"),
-                class = "w-100 btn-primary mt-2 p-1"
-              ),
-              actionButton(
-                inputId = ns("settings"),
-                label = icon("gear"),
-                class = "w-100 btn-primary mt-2 p-1")
+              ) %>%
+                bslib::tooltip("Send (click or Enter)")
             )
           )
         )
@@ -64,11 +61,14 @@ mod_chat_ui <- function(id, translator = create_translator()) {
 #'
 #' @param id id of the module
 #' @param translator Translator from `shiny.i18n::Translator`
+#' @param settings,history Reactive values from the settings and history module
 #' @inheritParams run_chatgpt_app
 #'
 mod_chat_server <- function(id,
                             ide_colors = get_ide_theme_info(),
-                            translator = create_translator()) {
+                            translator = create_translator(),
+                            settings,
+                            history) {
   # This is where changes will focus
   moduleServer(id, function(input, output, session) {
 
@@ -77,11 +77,8 @@ mod_chat_server <- function(id,
     ns <- session$ns
 
     rv <- reactiveValues()
-    rv$chat_history <- list()
     rv$reset_welcome_message <- 0L
     rv$reset_streaming_message <- 0L
-
-    settings <- mod_settings_server("settings")
 
     # UI outputs ----
 
@@ -92,7 +89,7 @@ mod_chat_server <- function(id,
 
 
     output$history <- renderUI({
-      rv$chat_history %>%
+      history$chat_history %>%
         style_chat_history(ide_colors = ide_colors)
     })
 
@@ -108,10 +105,9 @@ mod_chat_server <- function(id,
     # Observers ----
 
     observe({
-      rv$chat_history <- list()
       rv$reset_welcome_message <- rv$reset_welcome_message + 1L
     }) %>%
-      bindEvent(input$clear_history)
+      bindEvent(history$create_new_chat)
 
 
     observe({
@@ -120,7 +116,7 @@ mod_chat_server <- function(id,
         service = settings$service,
         model = settings$model,
         prompt = input$chat_input,
-        history = rv$chat_history,
+        history = history$chat_history,
         stream = settings$stream
       ) %>%
         gptstudio_skeleton_build(
@@ -136,7 +132,7 @@ mod_chat_server <- function(id,
       ) %>%
         gptstudio_response_process()
 
-      rv$chat_history <- response$history
+      history$chat_history <- response$history
 
       if (settings$stream) {
         rv$reset_streaming_message <- rv$reset_streaming_message + 1L
@@ -146,20 +142,6 @@ mod_chat_server <- function(id,
 
     }) %>%
       bindEvent(input$chat)
-
-
-    observe({
-      showModal(
-        modalDialog(
-          title = "Settings",
-          easyClose = TRUE,
-          footer = modalButton("Save"),
-          size = "l",
-
-          mod_settings_ui(ns("settings"), translator = translator)
-
-        ))
-    }) %>% bindEvent(input$settings)
 
   })
 }

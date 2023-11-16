@@ -24,7 +24,6 @@ test_that("API checking works on CI", {
   withr::local_options(gptstudio.valid_api = FALSE)
   withr::local_envvar("OPENAI_API_KEY" = sample_key)
   expect_snapshot(check_api())
-  expect_snapshot(check_api())
   withr::local_envvar("OPENAI_API_KEY" = sample_key2)
   expect_snapshot(check_api())
 })

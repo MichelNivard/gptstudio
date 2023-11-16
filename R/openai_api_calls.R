@@ -121,10 +121,17 @@ get_available_models <- function(service) {
       httr2::req_perform() %>%
       httr2::resp_body_json() %>%
       purrr::pluck("data") %>%
-      purrr::map_chr("root")
-    models <- models[stringr::str_detect(models, "gpt-3.5|gpt-4")]
+      purrr::map_chr("id")
+
+    models <- models %>%
+      stringr::str_subset("^gpt") %>%
+      stringr::str_subset("instruct", negate = TRUE) %>%
+      stringr::str_subset("vision", negate = TRUE) %>%
+      sort()
+
     idx <- which(models == "gpt-3.5-turbo")
     models <- c(models[idx], models[-idx])
+    return(models)
   } else if (service == "huggingface") {
     c("gpt2", "tiiuae/falcon-7b-instruct", "bigcode/starcoderplus")
   } else if (service == "anthropic") {

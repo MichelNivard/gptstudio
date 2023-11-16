@@ -97,25 +97,10 @@ chat_message_default <- function(translator = create_translator()) {
   ) %>%
     purrr::map_chr(~ translator$t(.x))
 
-  paperplane <- icon("fas fa-paper-plane") %>% as.character()
-  eraser <- icon("eraser")
-  gear <- icon("gear")
-
-  explain_btns <- c(
-    "In this chat you can:\n\n",
-    "- Send me a prompt ({paperplane} or Enter key)\n",
-    "- Clear the current chat history ({eraser})\n",
-    "- Change the settings ({gear})\n"
-  ) %>%
-    purrr::map_chr(~ translator$t(.x)) %>%
-    glue::glue_collapse() %>%
-    glue::glue()
-
   # nolint end
 
   content <- c(
     "{sample(welcome_messages, 1)}\n\n",
-    "{explain_btns}\n\n",
     translator$t("Type anything to start our conversation.")
   ) %>%
     glue::glue_collapse() %>%

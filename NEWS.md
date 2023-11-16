@@ -1,6 +1,15 @@
 # gptstudio (development version)
 
+## UI updates
+
+- The chat app has now a sidebar where users can see their conversation history, start new chats and change the settings. Because of this, the chat interface has more room for showing messages.
+- All saved chats are created with a placeholder title that the user can edit later.
+- We have a shorter welcome message, but we have added lots of tooltips to help with navigation.
+
+## Internal
+
 - Reverted back to use an R6 class for OpenAI streaming. This doesn't affect how the users interact with the addins.
+- Fixed a bug in retrieval of OpenAI models
 
 # gptstudio 0.3.1
 

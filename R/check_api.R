@@ -51,23 +51,22 @@ check_api_connection <- function(api_key, verbose = FALSE) {
 #' success message is printed. If the API key is not in the correct format,
 #' an error message is printed and the function aborts.
 check_api_key <- function(api_key) {
-  set_key_instructions <-
-    cli_inform(
-      c(
-        "!" = "OPENAI_API_KEY is not valid.",
-        "i" = "Generate a key at {.url https://platform.openai.com/account/api-keys}",
-        "i" = "Set the key in your .Renviron file {.run usethis::edit_r_environ()}"
-      )
+  key_instructions <-
+    c(
+      "!" = "OPENAI_API_KEY is not valid.",
+      "i" = "Generate a key at {.url https://platform.openai.com/account/api-keys}",
+      "i" = "Set the key in your .Renviron file {.run usethis::edit_r_environ()}"
     )
+
   if (is.null(api_key)) {
-    set_key_instructions
+    cli::cli_inform(key_instructions)
     invisible(FALSE)
   }
 
-  if (stringr::str_detect(api_key, "^[a-zA-Z0-9-]{30,60}$")) {
+  if (stringr::str_detect(api_key, "^([a-zA-Z0-9]|-){30,60}$")) {
     invisible(TRUE)
   } else {
-    set_key_instructions
+    cli::cli_inform(key_instructions)
     invisible(FALSE)
   }
 }

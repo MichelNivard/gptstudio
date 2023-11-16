@@ -5,21 +5,20 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
     purrr::discard(~ .x == "gptstudio_request_perform.default")
 
-  tagList(
-    fluidRow(
+  preferences <- bslib::accordion(
+    open = FALSE,
+    multiple = FALSE,
+
+    bslib::accordion_panel(
+      title = "Assistant behavior",
+      icon = fontawesome::fa("robot"),
+
       selectInput(
         inputId = ns("task"),
         label = translator$t("Task"),
         choices = c("coding", "general", "advanced developer", "custom"),
         width = "200px",
         selected = getOption("gptstudio.task")
-      ),
-      selectInput(
-        inputId = ns("language"),
-        label = translator$t("Language"),
-        choices = c("en", "es", "de"),
-        width = "200px",
-        selected = getOption("gptstudio.language")
       ),
       selectInput(
         inputId = ns("style"),
@@ -30,11 +29,22 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       ),
       selectInput(
         inputId = ns("skill"),
-        label = translator$t("Programming Skill"),
+        label = "Programming Skill", # TODO: update translator
+        # label = translator$t("Programming Skill"),
         choices = c("beginner", "intermediate", "advanced", "genius"),
         selected = getOption("gptstudio.skill"),
         width = "200px"
       ),
+      textAreaInput(
+        inputId = ns("custom_prompt"),
+        label = translator$t("Custom Prompt"),
+        value = getOption("gptstudio.custom_prompt"))
+    ),
+
+    bslib::accordion_panel(
+      title = "API service",
+      icon = fontawesome::fa("server"),
+
       selectInput(
         inputId = ns("service"),
         label = translator$t("Select API Service"),
@@ -56,40 +66,124 @@ mod_settings_ui <- function(id, translator = create_translator()) {
         choiceValues = c(TRUE, FALSE),
         inline = TRUE,
         width = "200px",
-      ),
-      textAreaInput(
-        inputId = ns("custom_prompt"),
-        label = translator$t("Custom Prompt"),
-        value = getOption("gptstudio.custom_prompt"))
+      )
     ),
-    column(width = 12, align = "right",
-           actionButton(ns("save_default"), "Save as Default",
-                        icon = icon("save"),
-                        width = "200px")
+
+
+
+    bslib::accordion_panel(
+      title = "UI options",
+      icon = fontawesome::fa("sliders"),
+
+      selectInput(
+        inputId = ns("language"),
+        # label = translator$t("Language"), # TODO: update translator
+        label = "Language",
+        choices = c("en", "es", "de"),
+        width = "200px",
+        selected = getOption("gptstudio.language")
+      )
     )
+  )
+
+  btn_to_history <- actionButton(
+    inputId = ns("to_history"),
+    label = fontawesome::fa("arrow-left-long"),
+    class = "mb-3"
+  ) %>%
+    bslib::tooltip("Back to history")
+
+  btn_save_as_default <- actionButton(
+    inputId = ns("save_default"),
+    label = fontawesome::fa("floppy-disk"),
+    class = "mb-3"
+  ) %>%
+    bslib::tooltip("Save as default")
+
+  btn_save_in_session <- actionButton(
+    inputId = ns("save_session"),
+    label = fontawesome::fa("bookmark"),
+    class = "mb-3"
+  ) %>%
+    bslib::tooltip("Save for this session")
+
+  tagList(
+    btn_to_history,
+    btn_save_in_session,
+    btn_save_as_default,
+
+    preferences
+
   )
 }
 
 mod_settings_server <- function(id) {
   moduleServer(id, function(input, output, session) {
 
+    ns <- session$ns
+
+    rv <- reactiveValues()
+    rv$selected_history <- 0L
+    rv$modify_session_settings <- 0L
+    rv$create_new_chat <- 0L
+
     api_services <- utils::methods("gptstudio_request_perform") %>%
       stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
       purrr::discard(~ .x == "gptstudio_request_perform.default")
 
     observe({
+      msg <- glue::glue("Fetching models for {input$service} service...")
+      showNotification(ui = msg, type = "message",duration = 3, session = session)
+
       models <- get_available_models(input$service)
 
-      updateSelectInput(
-        session = session,
-        inputId = "model",
-        choices = models,
-        selected = getOption("gptstudio.model")
-      )
+      if (length(models) > 0) {
+        showNotification(ui = "Got models!", duration = 3, type = "message", session = session)
+
+        updateSelectInput(
+          session = session,
+          inputId = "model",
+          choices = models,
+          selected = models[1]
+        )
+
+      } else {
+        showNotification(ui = "No models available", duration = 3, type = "error", session = session)
+
+        updateSelectInput(
+          session = session,
+          inputId = "model",
+          choices = character(),
+          selected = NULL
+        )
+      }
     }) %>%
       bindEvent(input$service)
 
+
     observe({
+      rv$selected_history <- rv$selected_history + 1L
+    }) %>%
+      bindEvent(input$to_history)
+
+
+    observe({
+      showModal(modalDialog(
+        tags$p("These settings will persist for all your future chat sessions."),
+        tags$p("After changing the settings a new chat will be created."),
+
+        footer = tagList(
+          modalButton("Cancel"),
+          actionButton(ns("confirm_default"), "Ok")
+        )
+      ))
+    }) %>%
+      bindEvent(input$save_default)
+
+
+    observe({
+      if (!isTruthy(input$confirm_default)) return()
+
       save_user_config(
         code_style = input$style,
         skill = input$skill,
@@ -100,26 +194,53 @@ mod_settings_server <- function(id) {
         custom_prompt = input$custom_prompt,
         stream = input$stream
       )
-    }) %>% bindEvent(input$save_default)
 
-    ## Module output ----
+      rv$modify_session_settings <- rv$modify_session_settings + 1L
 
-    module_output <- reactiveValues()
+      removeModal(session)
+
+      showNotification("Defaults updated", duration = 3, type = "message", session = session)
+    }) %>% bindEvent(input$confirm_default)
+
 
     observe({
-      module_output$task <- input$task %||% getOption("gptstudio.task")
-      module_output$skill <- input$skill %||% getOption("gptstudio.skill")
-      module_output$style <- input$style %||% getOption("gptstudio.code_style")
-      module_output$model <- input$model %||% getOption("gptstudio.model")
-      module_output$service <- input$service %||% getOption("gptstudio.service")
-      module_output$stream <- as.logical(input$stream %||% getOption("gptstudio.stream"))
-      module_output$custom_prompt <- input$custom_prompt %||% getOption("gptstudio.custom_prompt")
+      showModal(modalDialog(
+
+        tags$p("After changing the settings a new chat will be created."),
+
+        footer = tagList(
+          modalButton("Cancel"),
+          actionButton(ns("confirm_session"), "Ok")
+        )
+      ))
     }) %>%
-      bindEvent(input$task, input$skill, input$style, input$model,
-                input$service, input$stream, input$custom_prompt, ignoreNULL = FALSE)
+      bindEvent(input$save_session)
+
+    observe({
+      if (!isTruthy(input$confirm_session)) return()
+
+      rv$modify_session_settings <- rv$modify_session_settings + 1L
+      removeModal(session)
+    }) %>%
+      bindEvent(input$confirm_session)
 
 
-    module_output
+    observe({
+      rv$task <- input$task %||% getOption("gptstudio.task")
+      rv$skill <- input$skill %||% getOption("gptstudio.skill")
+      rv$style <- input$style %||% getOption("gptstudio.code_style")
+      rv$model <- input$model %||% getOption("gptstudio.model")
+      rv$service <- input$service %||% getOption("gptstudio.service")
+      rv$stream <- as.logical(input$stream %||% getOption("gptstudio.stream"))
+      rv$custom_prompt <- input$custom_prompt %||% getOption("gptstudio.custom_prompt")
+
+      rv$create_new_chat <- rv$create_new_chat + 1L
+    }) %>%
+      bindEvent(rv$modify_session_settings)
+
+
+    ## Module output ----
+    rv
 
   })
 }
