@@ -39,16 +39,17 @@ mod_history_server <- function(id, settings) {
 
       rv <- reactiveValues()
       rv$selected_settings <- 0L
-      rv$create_new_chat <- 0L
       rv$reload_conversation_history <- 0L
-      rv$conversation_id <- ids::random_id()
+      rv$selected_conversation <- NULL # list
       rv$chat_history <- list()
 
-      output$conversation_history <- renderUI({
-        read_conversation_history() %>%
-          purrr::map(~conversation(id = .x$id, title = .x$title, ns = ns))
-      }) %>%
+      conversation_history <- reactive(read_conversation_history()) %>%
         bindEvent(rv$reload_conversation_history)
+
+      output$conversation_history <- renderUI({
+        conversation_history() %>%
+          purrr::map(~conversation(id = .x$id, title = .x$title, ns = ns))
+      })
 
       observe({
         rv$selected_settings <- rv$selected_settings + 1L
@@ -57,13 +58,13 @@ mod_history_server <- function(id, settings) {
 
       observe({
         append_to_conversation_history(
-          id = rv$conversation_id,
-          title = "Some random title while we figure out how to automate it",
+          id = rv$selected_conversation$id %||% ids::random_id(),
+          title = rv$selected_conversation$title %||% "Placeholder title",
           messages = rv$chat_history
         )
 
         rv$chat_history <- list()
-        rv$conversation_id <- ids::random_id()
+        rv$selected_conversation <- NULL
 
         rv$reload_conversation_history <- rv$reload_conversation_history + 1L
       }) %>%
@@ -71,22 +72,111 @@ mod_history_server <- function(id, settings) {
 
       observe({
         conversation_history <- read_conversation_history()
-        selected_conversation <- conversation_history %>%
+        rv$selected_conversation <- conversation_history() %>%
           purrr::keep(~.x$id == input$conversation_id) %>%
           purrr::pluck(1L)
 
-        rv$chat_history <- selected_conversation$messages
-        rv$conversation_id <- selected_conversation$id
+        rv$chat_history <- rv$selected_conversation$messages
       }) %>%
         bindEvent(input$conversation_id)
 
       observe({
+        showModal(modalDialog(
+          tags$p("Are you sure?"),
+          footer = tagList(
+            modalButton("Cancel"),
+            actionButton(ns("confirm_delete_all"), "Ok")
+          )
+        ))
+      }) %>%
+        bindEvent(input$delete_all)
+
+      observe({
         conversation_history_file <- conversation_history_path()$file
         file.remove(conversation_history_file)
+        removeModal(session)
+
         showNotification("Deleted all conversations", type = "warning", duration = 3, session = session)
         rv$reload_conversation_history <- rv$reload_conversation_history + 1L
       }) %>%
-        bindEvent(input$delete_all)
+        bindEvent(input$confirm_delete_all)
+
+      observe({
+        rv$selected_conversation <- conversation_history() %>%
+          purrr::keep(~.x$id == input$conversation_to_edit) %>%
+          purrr::pluck(1L)
+
+        showModal(modalDialog(
+          textAreaInput(
+            inputId = ns("new_title"),
+            label = "New title",
+            value = rv$selected_conversation$title,
+            width = "100%"
+          ),
+
+          footer = tagList(
+            modalButton("Cancel"),
+            actionButton(ns("confirm_new_title"), "Ok")
+          )
+        ))
+      }) %>%
+        bindEvent(input$conversation_to_edit)
+
+      observe({
+        if(!isTruthy(input$confirm_new_title)) return()
+
+        append_to_conversation_history(
+          id = rv$selected_conversation$id,
+          title = input$new_title,
+          messages = rv$selected_conversation$messages
+        )
+
+        rv$selected_conversation <- NULL
+
+        rv$reload_conversation_history <- rv$reload_conversation_history + 1L
+
+        removeModal(session)
+
+      }) %>%
+        bindEvent(input$confirm_new_title)
+
+      observe({
+        rv$selected_conversation <- conversation_history() %>%
+          purrr::keep(~.x$id == input$conversation_to_delete) %>%
+          purrr::pluck(1L)
+
+        msg <- glue::glue("Confirm deletion of conversation: {rv$selected_conversation$title}")
+
+        showModal(modalDialog(
+          tags$p(msg),
+          footer = tagList(
+            modalButton("Cancel"),
+            actionButton(ns("confirm_single_delete"), "Ok")
+          )
+        ))
+      }) %>%
+        bindEvent(input$conversation_to_delete)
+
+      observe({
+        if(!isTruthy(input$confirm_single_delete)) return()
+
+        conversation_history() %>%
+          purrr::discard(~.x$id == rv$selected_conversation$id) %>%
+          write_conversation_history()
+
+
+
+        rv$selected_conversation <- NULL
+
+        rv$reload_conversation_history <- rv$reload_conversation_history + 1L
+
+        removeModal(session)
+        showNotification("Deleted!", duration = 3, type = "message", session = session)
+
+      }) %>%
+        bindEvent(input$confirm_single_delete)
+
+
 
       # return value
       rv
@@ -155,12 +245,19 @@ conversation <- function(
     tooltip_on_hover(title, placement = "right")
 
   edit_btn <- tags$span(
-    fontawesome::fa("pen-to-square", margin_left = "0.4em")
+    fontawesome::fa("pen-to-square", margin_left = "0.4em"),
+    class = "multi-click-input",
+    `shiny-input-id` = ns_safe("conversation_to_edit", ns),
+    value = id
+
   ) %>%
     tooltip_on_hover("Edit title", placement = "left")
 
   delete_btn <- tags$span(
-    fontawesome::fa("trash-can", margin_left = "0.4em")
+    fontawesome::fa("trash-can", margin_left = "0.4em"),
+    class = "multi-click-input",
+    `shiny-input-id` = ns_safe("conversation_to_delete", ns),
+    value = id
   ) %>%
     tooltip_on_hover("Delete this chat", placement = "right")
 
