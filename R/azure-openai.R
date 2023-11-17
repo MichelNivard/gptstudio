@@ -5,7 +5,7 @@
 #'
 #' @param prompt a list to use as the prompt for generating
 #'   completions
-#' @param task a character string for the API task. Defaults to the Azure OpenAI
+#' @param task a character string for the API task (e.g. "completions"). Defaults to the Azure OpenAI
 #'   task from environment variables if not specified.
 #' @param base_url a character string for the base url. It defaults to the Azure
 #'   OpenAI endpoint from environment variables if not specified.
@@ -48,7 +48,7 @@ request_base_azure_openai <-
       httr2::req_url_path_append("openai/deployments") %>%
       httr2::req_url_path_append(deployment_name) %>%
       httr2::req_url_path_append(task) %>%
-      httr2::req_url_path_append(api_version) %>%
+      httr2::req_url_query("api-version" = api_version) %>%
       httr2::req_headers("api-key" = token,
                          "Content-Type" = "application/json") %>%
       httr2::req_method("POST")
