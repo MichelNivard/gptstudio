@@ -1,7 +1,7 @@
 read_docs <- function(user_prompt) {
   calls <- locate_double_colon_calls(user_prompt)
 
-  if (length(calls) == 0) return(list())
+  if (length(calls) == 0) return()
 
   documentation <- calls %>%
     purrr::map(function(x) read_html_docs(x$pkg_ref, x$topic))
@@ -18,7 +18,7 @@ read_html_docs <- function(pkg_ref, topic_name) {
   file_location <- help(topic = (topic_name), package = (pkg_ref), help_type = "html") %>%
     as.character()
 
-  if (rlang::is_empty(file_location)) return(NULL)
+  if (rlang::is_empty(file_location)) return()
 
   env <- rlang::new_environment()
 
