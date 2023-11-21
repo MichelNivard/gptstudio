@@ -74,6 +74,7 @@ docs_get_inner_text <- function(x) {
     usage = sections[["Usage"]], # all
     arguments = sections[["Arguments"]], # only functions
     examples = sections[["Examples"]], # only functions
+    value = sections[["Value"]], # only functions
     format = sections[["Format"]] # only data
   )
 
