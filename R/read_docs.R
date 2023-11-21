@@ -15,7 +15,7 @@ read_docs <- function(user_prompt) {
 
 read_html_docs <- function(pkg_ref, topic_name) {
   # This should output a scalar character
-  file_location <- help(topic = (topic_name), package = (pkg_ref), help_type = "html") %>%
+  file_location <- utils::help(topic = (topic_name), package = (pkg_ref), help_type = "html") %>%
     as.character()
 
   if (rlang::is_empty(file_location)) return()
@@ -37,7 +37,7 @@ read_html_docs <- function(pkg_ref, topic_name) {
 
   env[[topic_name]] %>%
     tools::Rd2HTML() %>%
-    capture.output() %>%
+    utils::capture.output() %>%
     paste0(collapse = "\n") %>%
     rvest::read_html()
 }
