@@ -5,11 +5,11 @@ test_that("read_docs() returns NULL when there is no namespace::object match in 
 
 test_that("read_docs() matches all expected case types", {
   # meaning snake_case, camelCase, etc
-  read_docs("tidyr::pivot_longer") %>% expect_type("list")
+  read_docs("purrr::as_vector") %>% expect_type("list")
   read_docs("base::as.data.frame") %>% expect_type("list")
   read_docs("base::data.frame") %>% expect_type("list")
   read_docs("base::isTrue") %>% expect_type("list")
-  read_docs("ggplot2::geom_text") %>% expect_type("list")
+  read_docs("stringr::str_view") %>% expect_type("list")
 })
 
 test_that("read_docs() works in operators", {
@@ -24,14 +24,16 @@ test_that("read_docs() works when functions share docs", {
 
   # Right now this errors for some reason
   read_docs("stringr::str_split_1") %>% expect_type("list")
+  read_docs("htmltools::tags") %>% expect_type("list")
+  read_docs("rlang::is_atomic") %>% expect_type("list")
 
   # but this works ?
   read_docs("stringr::str_split") %>% expect_type("list")
 })
 
 test_that("read_docs() returns expected lengths and types", {
-  test_prompt_single <- "Check dplyr::filter for info"
-  test_prompt_multiple <- "Check tidyr::nest and ggplot2::geom_text for examples"
+  test_prompt_single <- "Check purrr::map for info"
+  test_prompt_multiple <- "Check rlang::abort and cli::cli for examples"
 
   read_docs(test_prompt_single) %>%
     expect_type("list") %>%
@@ -43,7 +45,7 @@ test_that("read_docs() returns expected lengths and types", {
 })
 
 test_that("read_docs() returns expected structure when documentation exists", {
-  test_prompt <- "See tibble::tibble for more" %>%
+  test_prompt <- "See glue::glue for more" %>%
     read_docs()
 
   test_prompt %>%
