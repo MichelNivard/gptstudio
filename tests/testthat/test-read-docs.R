@@ -14,12 +14,19 @@ test_that("read_docs() matches all expected case types", {
 
 test_that("read_docs() works in operators", {
   skip("To be implemented: work in operators")
+
+  # Right now this returns NULL, as in no match
   read_docs("magrittr::%>%") %>% expect_type("list")
 })
 
-test_that("read_docs() works in when functions share docs", {
+test_that("read_docs() works when functions share docs", {
   skip("To be implemented: functions share docs")
+
+  # Right now this errors for some reason
   read_docs("stringr::str_split_1") %>% expect_type("list")
+
+  # but this works ?
+  read_docs("stringr::str_split") %>% expect_type("list")
 })
 
 test_that("read_docs() returns expected lengths and types", {
