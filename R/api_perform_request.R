@@ -24,30 +24,20 @@ gptstudio_request_perform <- function(skeleton, ...) {
 #' @export
 gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySession = NULL, ...) {
 
-  url        <- skeleton$url
-  api_key    <- skeleton$api_key
-  prompt     <- skeleton$prompt
-  history    <- skeleton$history
-  stream     <- skeleton$stream
-  model      <- skeleton$model
-  max_tokens <- skeleton$extras$max_tokens
-  n          <- skeleton$extra$n
-
   # Translate request
 
-  messages <- c(
-    skeleton$history,
-    list(
-      list(role = "user", content = skeleton$prompt)
-    )
+  messages <- chat_history_append(
+    history = skeleton$history,
+    role = "user",
+    content = skeleton$prompt
   )
 
   body <- list(
-    "model"      = model,
-    "stream"     = stream,
+    "model"      = skeleton$model,
+    "stream"     = skeleton$stream,
     "messages"   = messages,
-    "max_tokens" = max_tokens,
-    "n"          = n
+    "max_tokens" = skeleton$extras$max_tokens,
+    "n"          = skeleton$extra$n
   )
 
   # Perform request
@@ -62,15 +52,16 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
     )
 
     stream_chat_completion(
-      prompt = skeleton$prompt,
-      history = skeleton$history,
-      element_callback = stream_handler$handle_streamed_element
+      messages = skeleton$history,
+      element_callback = stream_handler$handle_streamed_element,
+      model = skeleton$model,
+      openai_api_key = skeleton$api_key
     )
 
     response <- stream_handler$current_value
   } else {
-    response <- httr2::request(url) %>%
-      httr2::req_auth_bearer_token(api_key) %>%
+    response <- httr2::request(skeleton$url) %>%
+      httr2::req_auth_bearer_token(skeleton$api_key) %>%
       httr2::req_body_json(body) %>%
       httr2::req_perform() %>%
       httr2::resp_body_json()

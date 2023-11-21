@@ -55,7 +55,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       selectInput(
         inputId = ns("model"),
         label = translator$t("Chat Model"),
-        choices = NULL,
+        choices = getOption("gptstudio.model"),
         width = "200px",
         selected = getOption("gptstudio.model")
       ),

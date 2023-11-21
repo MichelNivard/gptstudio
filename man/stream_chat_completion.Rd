@@ -5,17 +5,14 @@
 \title{Stream Chat Completion}
 \usage{
 stream_chat_completion(
-  prompt,
-  history = NULL,
+  messages = NULL,
   element_callback = cat,
   model = "gpt-3.5-turbo",
   openai_api_key = Sys.getenv("OPENAI_API_KEY")
 )
 }
 \arguments{
-\item{prompt}{The user's message or prompt.}
-
-\item{history}{A list of previous messages in the conversation (optional).}
+\item{messages}{A list of messages in the conversation, including the current user prompt (optional).}
 
 \item{element_callback}{A callback function to handle each element of the streamed response (optional).}
 
