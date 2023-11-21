@@ -150,8 +150,13 @@ text_area_input_wrapper <-
 #'
 #' @return list of chat messages
 #'
-chat_history_append <- function(history, role, content) {
-  c(history, list(
-    list(role = role, content = content)
-  ))
+chat_history_append <- function(history, role, content, name = NULL) {
+  new_message <- list(
+    role = role,
+    content = content,
+    name = name
+  ) %>%
+    purrr::compact()
+
+  c(history, list(new_message))
 }

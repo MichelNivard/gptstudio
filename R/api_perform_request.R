@@ -29,8 +29,28 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
   messages <- chat_history_append(
     history = skeleton$history,
     role = "user",
+    name = "user_message",
     content = skeleton$prompt
   )
+
+  docs <- read_docs(skeleton$prompt)
+
+  if (!is.null(docs)) {
+    purrr::walk(docs, ~{
+      if (is.null(.x$inner_text)) return(NULL)
+      messages <<- chat_history_append(
+        history = messages,
+        role = "user",
+        content = docs_to_message(.x$inner_text),
+        name = "docs"
+      )
+    })
+  }
+
+  skeleton$history <- messages
+
+  cli::cli_h3("Messages")
+  str(messages)
 
   body <- list(
     "model"      = skeleton$model,
@@ -52,7 +72,7 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
     )
 
     stream_chat_completion(
-      messages = skeleton$history,
+      messages = messages,
       element_callback = stream_handler$handle_streamed_element,
       model = skeleton$model,
       openai_api_key = skeleton$api_key

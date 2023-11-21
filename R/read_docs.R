@@ -117,3 +117,13 @@ locate_double_colon_calls <- function(x) {
     stringr::str_split("::") %>%
     purrr::map(~list(pkg_ref = .x[1], topic = .x[2]))
 }
+
+docs_to_message <- function(x) {
+  glue::glue(
+    "# {x$title}
+
+    ## Description
+
+    {x$description}"
+  )
+}
