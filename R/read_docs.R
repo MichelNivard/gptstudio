@@ -119,11 +119,16 @@ locate_double_colon_calls <- function(x) {
 }
 
 docs_to_message <- function(x) {
-  glue::glue(
-    "# {x$title}
+  x %>%
+    purrr::compact() %>%
+    purrr::imap_chr(function(.x, i) {
+      if (i == "title") return(glue::glue("# {.x}"))
 
-    ## Description
+      section_title <- stringr::str_to_title(i)
+      section_body <- if(i=="examples") glue::glue("<pre>{.x}</pre>") else .x
+      glue::glue("## {section_title}\n\n{section_body}")
+    }) %>%
+    paste0(collapse = "\n\n")
 
-    {x$description}"
-  )
+
 }
