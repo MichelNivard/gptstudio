@@ -60,6 +60,11 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
     "n"          = skeleton$extra$n
   )
 
+  # Create request
+  request <- httr2::request(skeleton$url) %>%
+    httr2::req_auth_bearer_token(skeleton$api_key) %>%
+    httr2::req_body_json(body)
+
   # Perform request
   response <- NULL
 
@@ -71,6 +76,19 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
       user_prompt = skeleton$prompt
     )
 
+    # This should work exactly the same as stream_chat_completion
+    # but it uses curl::curl_connection(partial=FALSE), which makes it
+    # somehow different. `partial` has no documentation and can't be be changed
+
+    # request %>%
+    #  httr2::req_perform_stream(
+    #    buffer_kb = 32,
+    #    callback = function(x) {
+    #      rawToChar(x) %>% stream_handler$handle_streamed_element()
+    #      TRUE
+    #    }
+    #  )
+
     stream_chat_completion(
       messages = messages,
       element_callback = stream_handler$handle_streamed_element,
@@ -80,9 +98,7 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
 
     response <- stream_handler$current_value
   } else {
-    response <- httr2::request(skeleton$url) %>%
-      httr2::req_auth_bearer_token(skeleton$api_key) %>%
-      httr2::req_body_json(body) %>%
+    response <- request %>%
       httr2::req_perform() %>%
       httr2::resp_body_json()
   }
