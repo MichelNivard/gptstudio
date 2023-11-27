@@ -18,7 +18,7 @@ stream_chat_completion <-
            model = "gpt-3.5-turbo",
            openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
     # Set the API endpoint URL
-    url <- "https://api.openai.com/v1/chat/completions"
+    url <- paste0(getOption("gptstudio.openai_url"), "/chat/completions")
 
     # Set the request headers
     headers <- list(
