@@ -26,36 +26,36 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
 
   # Translate request
 
-  messages <- chat_history_append(
+  # messages <- skeleton$history
+
+  skeleton$history <- chat_history_append(
     history = skeleton$history,
     role = "user",
     name = "user_message",
     content = skeleton$prompt
   )
 
-  docs <- read_docs(skeleton$prompt)
-
-  if (!is.null(docs)) {
-    purrr::walk(docs, ~{
-      if (is.null(.x$inner_text)) return(NULL)
-      messages <<- chat_history_append(
-        history = messages,
-        role = "user",
-        content = docs_to_message(.x$inner_text),
-        name = "docs"
-      )
-    })
-  }
-
-  skeleton$history <- messages
+  # docs <- read_docs(skeleton$prompt)
+  #
+  # if (!is.null(docs)) {
+  #   purrr::walk(docs, ~{
+  #     if (is.null(.x$inner_text)) return(NULL)
+  #     messages <<- chat_history_append(
+  #       history = messages,
+  #       role = "user",
+  #       content = docs_to_message(.x$inner_text),
+  #       name = "docs"
+  #     )
+  #   })
+  # }
 
   cli::cli_h3("Messages")
-  str(messages)
+  str(skeleton$history)
 
   body <- list(
     "model"      = skeleton$model,
     "stream"     = skeleton$stream,
-    "messages"   = messages,
+    "messages"   = skeleton$history,
     "max_tokens" = skeleton$extras$max_tokens,
     "n"          = skeleton$extra$n
   )
@@ -90,7 +90,7 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
     #  )
 
     stream_chat_completion(
-      messages = messages,
+      messages = skeleton$history,
       element_callback = stream_handler$handle_streamed_element,
       model = skeleton$model,
       openai_api_key = skeleton$api_key
@@ -100,7 +100,8 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
   } else {
     response <- request %>%
       httr2::req_perform() %>%
-      httr2::resp_body_json()
+      httr2::resp_body_json() %>%
+      {.$choices[[1]]$message$content}
   }
   # return value
   structure(

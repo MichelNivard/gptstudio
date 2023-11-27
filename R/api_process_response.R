@@ -21,21 +21,14 @@ gptstudio_response_process <- function(skeleton, ...) {
 #' @export
 gptstudio_response_process.gptstudio_response_openai <-
   function(skeleton, ...) {
-    response <- skeleton$response
+    last_response <- skeleton$response
     skeleton <- skeleton$skeleton
 
-    if (skeleton$stream == TRUE) {
-      last_response = response
-    } else {
-      last_response <- response$choices[[1]]$message$content
-    }
-
-    new_history <- c(
-      skeleton$history,
-      list(
-        list(role = "user", content = skeleton$prompt),
-        list(role = "assistant", content = last_response)
-      )
+    new_history <- chat_history_append(
+      history = skeleton$history,
+      role = "assistant",
+      name = "assistant",
+      content = last_response
     )
 
     skeleton$history <- new_history
