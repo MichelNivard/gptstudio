@@ -35,19 +35,19 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
     content = skeleton$prompt
   )
 
-  # docs <- read_docs(skeleton$prompt)
-  #
-  # if (!is.null(docs)) {
-  #   purrr::walk(docs, ~{
-  #     if (is.null(.x$inner_text)) return(NULL)
-  #     messages <<- chat_history_append(
-  #       history = messages,
-  #       role = "user",
-  #       content = docs_to_message(.x$inner_text),
-  #       name = "docs"
-  #     )
-  #   })
-  # }
+  docs <- read_docs(skeleton$prompt)
+
+  if (!is.null(docs)) {
+    purrr::walk(docs, ~{
+      if (is.null(.x$inner_text)) return(NULL)
+      skeleton$history <<- chat_history_append(
+        history = skeleton$history,
+        role = "user",
+        content = docs_to_message(.x),
+        name = "docs"
+      )
+    })
+  }
 
   cli::cli_h3("Messages")
   str(skeleton$history)

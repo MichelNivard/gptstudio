@@ -46,6 +46,13 @@ style_chat_message <- function(message,
                            "assistant" = "justify-content-start"
   )
 
+
+  if (!is.null(message$name) && message$name == "docs") {
+    message_content <- render_docs_message_content(message$content)
+  } else {
+    message_content <- shiny::markdown(message$content)
+  }
+
   htmltools::div(
     class = glue("row m-0 p-0 {position_class}"),
     htmltools::tags$div(
@@ -58,7 +65,7 @@ style_chat_message <- function(message,
       htmltools::tags$div(
         class = glue("{message$role}-message-wrapper"),
         htmltools::tagList(
-          shiny::markdown(message$content)
+          message_content
         )
       )
     )
@@ -91,6 +98,27 @@ create_ide_matching_colors <- function(role,
   list(
     bg_color = bg_colors[[role]],
     fg_color = ide_colors$fg
+  )
+}
+
+render_docs_message_content <- function(x) {
+  docs_info <- x %>%
+    stringr::str_extract("gptstudio-metadata-docs-start.*gptstudio-metadata-docs-end") %>%
+    stringr::str_remove("gptstudio-metadata-docs-start-") %>%
+    stringr::str_remove("-gptstudio-metadata-docs-end") %>%
+    stringr::str_split_1(pattern = "-")
+
+  pkg_ref <- docs_info[1]
+  topic <- docs_info[2]
+
+  message_content <- x %>%
+    stringr::str_remove("gptstudio-metadata-docs-start.*gptstudio-metadata-docs-end") %>%
+    shiny::markdown()
+
+  message_content <- tags$div(
+    "R documentation:",
+    tags$code(glue::glue("{pkg_ref}::{topic}")) %>%
+      bslib::tooltip(message_content)
   )
 }
 

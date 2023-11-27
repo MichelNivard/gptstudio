@@ -73,9 +73,9 @@ docs_get_inner_text <- function(x) {
     description = sections[["Description"]], # all
     usage = sections[["Usage"]], # all
     arguments = sections[["Arguments"]], # only functions
-    examples = sections[["Examples"]], # only functions
+    format = sections[["Format"]], # only data
     value = sections[["Value"]], # only functions
-    format = sections[["Format"]] # only data
+    examples = sections[["Examples"]] # only functions
   )
 
 }
@@ -119,7 +119,7 @@ locate_double_colon_calls <- function(x) {
 }
 
 docs_to_message <- function(x) {
-  x %>%
+  inner_content <- x$inner_text %>%
     purrr::compact() %>%
     purrr::imap_chr(function(.x, i) {
       if (i == "title") return(glue::glue("# {.x}"))
@@ -130,5 +130,5 @@ docs_to_message <- function(x) {
     }) %>%
     paste0(collapse = "\n\n")
 
-
+  glue::glue("gptstudio-metadata-docs-start-{x$pkg_ref}-{x$topic}-gptstudio-metadata-docs-end{inner_content}")
 }
