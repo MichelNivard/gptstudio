@@ -175,6 +175,7 @@ text_area_input_wrapper <-
 #' @param role Author of the message. One of `c("user", "assistant")`
 #' @param content Content of the message. If it is from the user most probably
 #' comes from an interactive input.
+#' @param name Name for the author of the message. Currently used to support rendering of help pages
 #'
 #' @return list of chat messages
 #'

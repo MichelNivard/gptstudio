@@ -49,9 +49,6 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
     })
   }
 
-  cli::cli_h3("Messages")
-  str(skeleton$history)
-
   body <- list(
     "model"      = skeleton$model,
     "stream"     = skeleton$stream,
@@ -98,10 +95,11 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
 
     response <- stream_handler$current_value
   } else {
-    response <- request %>%
+    response_json <- request %>%
       httr2::req_perform() %>%
-      httr2::resp_body_json() %>%
-      {.$choices[[1]]$message$content}
+      httr2::resp_body_json()
+
+    response <- response_json$choices[[1]]$message$content
   }
   # return value
   structure(
