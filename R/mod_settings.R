@@ -38,7 +38,13 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       textAreaInput(
         inputId = ns("custom_prompt"),
         label = translator$t("Custom Prompt"),
-        value = getOption("gptstudio.custom_prompt"))
+        value = getOption("gptstudio.custom_prompt")
+      ),
+      bslib::input_switch(
+        id = ns("read_docs"),
+        label = "Read help pages",
+        value = getOption("gptstudio.read_docs")
+      )
     ),
 
     bslib::accordion_panel(
@@ -192,7 +198,8 @@ mod_settings_server <- function(id) {
         service = input$service,
         model = input$model,
         custom_prompt = input$custom_prompt,
-        stream = input$stream
+        stream = input$stream,
+        read_docs = input$read_docs
       )
 
       rv$modify_session_settings <- rv$modify_session_settings + 1L
