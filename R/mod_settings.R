@@ -5,6 +5,16 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
     purrr::discard(~ .x == "gptstudio_request_perform.default")
 
+  read_docs_label <- tags$span(
+    "Read R help pages",
+    bslib::tooltip(
+      shiny::icon("info-circle"),
+      "Add help pages of 'package::object' matches for context.
+      Potentially expensive.
+      Save as default to effectively change"
+    )
+  )
+
   preferences <- bslib::accordion(
     open = FALSE,
     multiple = FALSE,
@@ -42,7 +52,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       ),
       bslib::input_switch(
         id = ns("read_docs"),
-        label = "Read help pages",
+        label = read_docs_label,
         value = getOption("gptstudio.read_docs")
       )
     ),
