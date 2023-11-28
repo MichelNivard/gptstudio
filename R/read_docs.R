@@ -132,3 +132,21 @@ docs_to_message <- function(x) {
 
   glue::glue("gptstudio-metadata-docs-start-{x$pkg_ref}-{x$topic}-gptstudio-metadata-docs-end{inner_content}")
 }
+
+add_docs_messages_to_history <- function(skeleton_history) {
+  last_user_message <- skeleton_history[[length(skeleton_history)]]$content
+  docs <- read_docs(last_user_message)
+
+  if(is.null(docs)) return(skeleton_history)
+
+  purrr::walk(docs, ~{
+    if (is.null(.x$inner_text)) return(NULL)
+    skeleton_history <<- chat_history_append(
+      history = skeleton_history,
+      role = "user",
+      content = docs_to_message(.x),
+      name = "docs"
+    )
+  })
+  skeleton_history
+}

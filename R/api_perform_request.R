@@ -26,8 +26,6 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
 
   # Translate request
 
-  # messages <- skeleton$history
-
   skeleton$history <- chat_history_append(
     history = skeleton$history,
     role = "user",
@@ -35,18 +33,8 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
     content = skeleton$prompt
   )
 
-  docs <- read_docs(skeleton$prompt)
-
-  if (!is.null(docs)) {
-    purrr::walk(docs, ~{
-      if (is.null(.x$inner_text)) return(NULL)
-      skeleton$history <<- chat_history_append(
-        history = skeleton$history,
-        role = "user",
-        content = docs_to_message(.x),
-        name = "docs"
-      )
-    })
+  if (getOption("gptstudio.read_docs")) {
+    skeleton$history <- add_docs_messages_to_history(skeleton$history)
   }
 
   body <- list(
