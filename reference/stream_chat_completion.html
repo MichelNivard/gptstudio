@@ -55,8 +55,7 @@ OpenAI API and retrieves the streamed response.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">stream_chat_completion</span><span class="op">(</span></span>
-<span>  <span class="va">prompt</span>,</span>
-<span>  history <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  messages <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  element_callback <span class="op">=</span> <span class="va">cat</span>,</span>
 <span>  model <span class="op">=</span> <span class="st">"gpt-3.5-turbo"</span>,</span>
 <span>  openai_api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"OPENAI_API_KEY"</span><span class="op">)</span></span>
@@ -65,12 +64,8 @@ OpenAI API and retrieves the streamed response.</p>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>prompt</dt>
-<dd><p>The user's message or prompt.</p></dd>
-
-
-<dt>history</dt>
-<dd><p>A list of previous messages in the conversation (optional).</p></dd>
+    <dl><dt>messages</dt>
+<dd><p>A list of messages in the conversation, including the current user prompt (optional).</p></dd>
 
 
 <dt>element_callback</dt>

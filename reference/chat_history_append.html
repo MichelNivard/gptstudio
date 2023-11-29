@@ -51,7 +51,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">chat_history_append</span><span class="op">(</span><span class="va">history</span>, <span class="va">role</span>, <span class="va">content</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">chat_history_append</span><span class="op">(</span><span class="va">history</span>, <span class="va">role</span>, <span class="va">content</span>, name <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -67,6 +67,10 @@
 <dt>content</dt>
 <dd><p>Content of the message. If it is from the user most probably
 comes from an interactive input.</p></dd>
+
+
+<dt>name</dt>
+<dd><p>Name for the author of the message. Currently used to support rendering of help pages</p></dd>
 
 </dl></div>
     <div class="section level2">
