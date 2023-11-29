@@ -24,31 +24,31 @@ gptstudio_request_perform <- function(skeleton, ...) {
 #' @export
 gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySession = NULL, ...) {
 
-  url        <- skeleton$url
-  api_key    <- skeleton$api_key
-  prompt     <- skeleton$prompt
-  history    <- skeleton$history
-  stream     <- skeleton$stream
-  model      <- skeleton$model
-  max_tokens <- skeleton$extras$max_tokens
-  n          <- skeleton$extra$n
-
   # Translate request
 
-  messages <- c(
-    skeleton$history,
-    list(
-      list(role = "user", content = skeleton$prompt)
-    )
+  skeleton$history <- chat_history_append(
+    history = skeleton$history,
+    role = "user",
+    name = "user_message",
+    content = skeleton$prompt
   )
 
+  if (getOption("gptstudio.read_docs")) {
+    skeleton$history <- add_docs_messages_to_history(skeleton$history)
+  }
+
   body <- list(
-    "model"      = model,
-    "stream"     = stream,
-    "messages"   = messages,
-    "max_tokens" = max_tokens,
-    "n"          = n
+    "model"      = skeleton$model,
+    "stream"     = skeleton$stream,
+    "messages"   = skeleton$history,
+    "max_tokens" = skeleton$extras$max_tokens,
+    "n"          = skeleton$extra$n
   )
+
+  # Create request
+  request <- httr2::request(skeleton$url) %>%
+    httr2::req_auth_bearer_token(skeleton$api_key) %>%
+    httr2::req_body_json(body)
 
   # Perform request
   response <- NULL
@@ -61,19 +61,33 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
       user_prompt = skeleton$prompt
     )
 
+    # This should work exactly the same as stream_chat_completion
+    # but it uses curl::curl_connection(partial=FALSE), which makes it
+    # somehow different. `partial` has no documentation and can't be be changed
+
+    # request %>%
+    #  httr2::req_perform_stream(
+    #    buffer_kb = 32,
+    #    callback = function(x) {
+    #      rawToChar(x) %>% stream_handler$handle_streamed_element()
+    #      TRUE
+    #    }
+    #  )
+
     stream_chat_completion(
-      prompt = skeleton$prompt,
-      history = skeleton$history,
-      element_callback = stream_handler$handle_streamed_element
+      messages = skeleton$history,
+      element_callback = stream_handler$handle_streamed_element,
+      model = skeleton$model,
+      openai_api_key = skeleton$api_key
     )
 
     response <- stream_handler$current_value
   } else {
-    response <- httr2::request(url) %>%
-      httr2::req_auth_bearer_token(api_key) %>%
-      httr2::req_body_json(body) %>%
+    response_json <- request %>%
       httr2::req_perform() %>%
       httr2::resp_body_json()
+
+    response <- response_json$choices[[1]]$message$content
   }
   # return value
   structure(

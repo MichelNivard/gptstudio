@@ -6,3 +6,4 @@ service: "openai"
 model: "gpt-3.5-turbo"
 custom_prompt: "You are a helpful assistant."
 stream: true
+read_docs: false

@@ -25,7 +25,7 @@ validate_skeleton <- function(url, api_key, model, prompt, history, stream) {
     msg = "API key is not valid"
   )
   assert_that(
-    rlang::is_scalar_character(model),
+    rlang::is_scalar_character(model) && model != "",
     msg = "Model name is not a valid character scalar"
   )
   assert_that(

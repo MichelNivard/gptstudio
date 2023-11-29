@@ -4,7 +4,7 @@
 \alias{chat_history_append}
 \title{Append to chat history}
 \usage{
-chat_history_append(history, role, content)
+chat_history_append(history, role, content, name = NULL)
 }
 \arguments{
 \item{history}{List containing previous responses.}
@@ -13,6 +13,8 @@ chat_history_append(history, role, content)
 
 \item{content}{Content of the message. If it is from the user most probably
 comes from an interactive input.}
+
+\item{name}{Name for the author of the message. Currently used to support rendering of help pages}
 }
 \value{
 list of chat messages

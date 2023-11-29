@@ -39,6 +39,7 @@ Imports:
     R6,
     rlang,
     rstudioapi (>= 0.12),
+    rvest,
     shiny,
     shiny.i18n,
     stringr (>= 1.5.0),

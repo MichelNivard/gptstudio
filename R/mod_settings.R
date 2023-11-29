@@ -5,6 +5,16 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
     purrr::discard(~ .x == "gptstudio_request_perform.default")
 
+  read_docs_label <- tags$span(
+    "Read R help pages",
+    bslib::tooltip(
+      shiny::icon("info-circle"),
+      "Add help pages of 'package::object' matches for context.
+      Potentially expensive.
+      Save as default to effectively change"
+    )
+  )
+
   preferences <- bslib::accordion(
     open = FALSE,
     multiple = FALSE,
@@ -38,7 +48,13 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       textAreaInput(
         inputId = ns("custom_prompt"),
         label = translator$t("Custom Prompt"),
-        value = getOption("gptstudio.custom_prompt"))
+        value = getOption("gptstudio.custom_prompt")
+      ),
+      bslib::input_switch(
+        id = ns("read_docs"),
+        label = read_docs_label,
+        value = getOption("gptstudio.read_docs")
+      )
     ),
 
     bslib::accordion_panel(
@@ -55,7 +71,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       selectInput(
         inputId = ns("model"),
         label = translator$t("Chat Model"),
-        choices = NULL,
+        choices = getOption("gptstudio.model"),
         width = "200px",
         selected = getOption("gptstudio.model")
       ),
@@ -192,7 +208,8 @@ mod_settings_server <- function(id) {
         service = input$service,
         model = input$model,
         custom_prompt = input$custom_prompt,
-        stream = input$stream
+        stream = input$stream,
+        read_docs = input$read_docs
       )
 
       rv$modify_session_settings <- rv$modify_session_settings + 1L
