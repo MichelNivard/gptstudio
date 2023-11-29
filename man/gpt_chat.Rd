@@ -23,8 +23,7 @@ default is "beginner"}
 \item{model}{The name of the GPT model to use.}
 }
 \value{
-A list containing the instructions for answering the question, the
-context in which the question was asked, and the suggested answer.
+The suggested answer.
 }
 \description{
 This function uses the ChatGPT API tailored to a user-provided style and

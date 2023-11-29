@@ -2,7 +2,10 @@
 #'
 #' This creates a system prompt based on the user defined parameters.
 #'
-#' @inheritParams gpt_chat
+#' @param style A character string indicating the preferred coding style, the
+#' default is "tidyverse".
+#' @param skill The self-described skill level of the programmer,
+#' default is "beginner"
 #' @param task The task to be performed: "coding", "general", or "advanced developer".
 #' @param custom_prompt An optional custom prompt to be displayed.
 #' @param in_source Whether to add instructions to act as in a source script.

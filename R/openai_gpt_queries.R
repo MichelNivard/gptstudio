@@ -98,8 +98,26 @@ gpt_chat_in_source <- function(task = NULL,
                                style = getOption("gptstudio.code_style"),
                                skill = getOption("gptstudio.skill")) {
 
-  if(is.null(task)) cli::cli_abort("{.code task} can't be NULL")
   check_api()
+
+  if (is.null(task)) {
+    gptstudio_chat_in_source_file_ext <- character(1L)
+
+    tryCatch(expr = {
+      doc_path <- rstudioapi::documentPath()
+      gptstudio_chat_in_source_file_ext <<- tools::file_ext(doc_path)
+    }, error = function(e) {
+      cli::cli_alert_info("Current document is not saved. Assuming .R file extension")
+      gptstudio_chat_in_source_file_ext <<- "R"
+    })
+
+    task <- glue::glue(
+      "You are an expert on following instructions without making conversation.",
+      "Do the task specified after the colon,",
+      "formatting your response to go directly into a .{gptstudio_chat_in_source_file_ext} file without any post processing",
+      .sep = " "
+    )
+  }
 
   selection_query <- get_selection()
 
