@@ -11,6 +11,7 @@
 - Reverted back to use an R6 class for OpenAI streaming. This doesn't affect how the users interact with the addins.
 - Fixed a bug in retrieval of OpenAI models
 - Fixed a bug in Azure OpenAI request formation.
+- Fixed a bug in "in source" calls for addins.
 
 # gptstudio 0.3.1
 
