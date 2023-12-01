@@ -10,10 +10,7 @@
 #' default is "beginner"
 #' @param model The name of the GPT model to use.
 #'
-#' @return A list containing the instructions for answering the question, the
-#'   context in which the question was asked, and the suggested answer.
-#'
-#' @export
+#' @return The suggested answer.
 #'
 #' @examples
 #' \dontrun{
@@ -71,10 +68,7 @@ gpt_chat <- function(history,
 #' @inheritParams gpt_chat
 #' @param task Specific instructions to provide to the model as a system prompt
 #'
-#' @return A list containing the instructions for answering the question, the
-#'   context in which the question was asked, and the suggested answer.
-#'
-#' @export
+#' @return No return value. Replaces the selected text with new text provided by the request.
 #'
 #' @examples
 #' \dontrun{
@@ -100,43 +94,43 @@ gpt_chat <- function(history,
 #' )
 #' }
 #'
-gpt_chat_in_source <- function(history = NULL,
-                               task = NULL,
+gpt_chat_in_source <- function(task = NULL,
                                style = getOption("gptstudio.code_style"),
                                skill = getOption("gptstudio.skill")) {
 
   check_api()
-  query <- get_selection()
 
-  if (!is.null(task)) {
-    task <- list(
-      role = "system",
-      content = task
+  if (is.null(task)) {
+    gptstudio_chat_in_source_file_ext <- character(1L)
+
+    tryCatch(expr = {
+      doc_path <- rstudioapi::documentPath()
+      gptstudio_chat_in_source_file_ext <<- tools::file_ext(doc_path)
+    }, error = function(e) {
+      cli::cli_alert_info("Current document is not saved. Assuming .R file extension")
+      gptstudio_chat_in_source_file_ext <<- "R"
+    })
+
+    task <- glue::glue(
+      "You are an expert on following instructions without making conversation.",
+      "Do the task specified after the colon,",
+      "formatting your response to go directly into a .{gptstudio_chat_in_source_file_ext} file without any post processing",
+      .sep = " "
     )
   }
 
-  instructions <- list(
-    list(
-      role = "system",
-      content = chat_create_system_prompt(style,
-                                          skill,
-                                          task = "coding",
-                                          custom_prompt = NULL,
-                                          in_source = TRUE)
-    ),
-    task,
-    list(
-      role = "user",
-      content = query$value
-    )
-  ) %>% purrr::compact()
+  selection_query <- get_selection()
 
-  history <- purrr::discard(history, ~ .x$role == "system")
-  prompt <- c(history, instructions)
+  user_instruction <- list(
+    role = "user",
+    content = glue::glue("{task}: {selection_query$value}")
+  )
+
+  instructions <- list(user_instruction)
 
   cli::cli_progress_step("Sending query to ChatGPT...", msg_done = "ChatGPT responded")
 
-  answer <- openai_create_chat_completion(prompt)
-  text_to_insert <- as.character(answer$choices[[1]]$message$content)
+  response <- openai_create_chat_completion(instructions)
+  text_to_insert <- as.character(response$choices[[1]]$message$content)
   insert_text(text_to_insert)
 }
