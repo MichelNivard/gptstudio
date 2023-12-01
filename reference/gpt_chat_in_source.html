@@ -55,7 +55,6 @@ give more useful output in a source (i.e., *.R) file.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gpt_chat_in_source</span><span class="op">(</span></span>
-<span>  history <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  task <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"gptstudio.code_style"</span><span class="op">)</span>,</span>
 <span>  skill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"gptstudio.skill"</span><span class="op">)</span></span>
@@ -64,11 +63,7 @@ give more useful output in a source (i.e., *.R) file.</p>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>history</dt>
-<dd><p>A list of the previous chat responses</p></dd>
-
-
-<dt>task</dt>
+    <dl><dt>task</dt>
 <dd><p>Specific instructions to provide to the model as a system prompt</p></dd>
 
 
@@ -86,8 +81,7 @@ default is "beginner"</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A list containing the instructions for answering the question, the
-context in which the question was asked, and the suggested answer.</p>
+<p>No return value. Replaces the selected text with new text provided by the request.</p>
     </div>
 
     <div class="section level2">
