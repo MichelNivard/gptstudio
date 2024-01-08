@@ -2,7 +2,7 @@
 
     Code
       check_api()
-    Message
+    Message <cliMessage>
       x API key found but call was unsuccessful.
       i Attempted to use API key: 38a5****************************2d60
 
@@ -10,7 +10,7 @@
 
     Code
       check_api()
-    Message
+    Message <rlang_message>
       ! OPENAI_API_KEY is not valid.
       i Generate a key at <https://platform.openai.com/account/api-keys>
       i Set the key in your .Renviron file `usethis::edit_r_environ()`
@@ -19,7 +19,7 @@
 
     Code
       check_api()
-    Message
+    Message <rlang_message>
       ! OPENAI_API_KEY is not valid.
       i Generate a key at <https://platform.openai.com/account/api-keys>
       i Set the key in your .Renviron file `usethis::edit_r_environ()`
@@ -48,7 +48,7 @@
 
     Code
       check_api()
-    Message
+    Message <cliMessage>
       x API key found but call was unsuccessful.
       i Attempted to use API key: 38a5****************************2d60
 
@@ -61,7 +61,7 @@
 
     Code
       check_api_key("1234")
-    Message
+    Message <rlang_message>
       ! OPENAI_API_KEY is not valid.
       i Generate a key at <https://platform.openai.com/account/api-keys>
       i Set the key in your .Renviron file `usethis::edit_r_environ()`
@@ -70,7 +70,7 @@
 
     Code
       check_api_key("")
-    Message
+    Message <rlang_message>
       ! OPENAI_API_KEY is not valid.
       i Generate a key at <https://platform.openai.com/account/api-keys>
       i Set the key in your .Renviron file `usethis::edit_r_environ()`
@@ -79,7 +79,7 @@
 
     Code
       check_api_connection(sample_key)
-    Message
+    Message <cliMessage>
       x API key found but call was unsuccessful.
       i Attempted to use API key: 38a5****************************2d60
 
@@ -87,7 +87,7 @@
 
     Code
       check_api_connection("")
-    Message
+    Message <rlang_message>
       ! OPENAI_API_KEY is not valid.
       i Generate a key at <https://platform.openai.com/account/api-keys>
       i Set the key in your .Renviron file `usethis::edit_r_environ()`
