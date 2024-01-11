@@ -1,52 +1,20 @@
-#' ChatGPT in Source
-#'
-#' Provides the same functionality as `gpt_chat()` with minor modifications to
-#' give more useful output in a source (i.e., *.R) file.
-#'
-#' @inheritParams gpt_chat
-#' @param task Specific instructions to provide to the model as a system prompt
-#'
-#' @return No return value. Replaces the selected text with new text provided by the request.
-#'
-#' @examples
-#' \dontrun{
-#' # Example 1: Get help with a tidyverse question in a source file
-#' # Select the following code comment in RStudio and run gpt_chat_in_source()
-#' # How can I filter rows of a data frame?
-#' tidyverse_response <- gpt_chat_in_source(
-#'   style = "tidyverse",
-#'   skill = "beginner"
-#' )
-#'
-#' # Example 2: Get help with a base R question in a source file
-#' # Select the following code comment in RStudio and run gpt_chat_in_source()
-#' # How can I merge two data frames?
-#' base_r_response <- gpt_chat_in_source(style = "base", skill = "intermediate")
-#'
-#' # Example 3: No style preference in a source file
-#' # Select the following code comment in RStudio and run gpt_chat_in_source()
-#' # What is the best way to handle missing values in R?
-#' no_preference_response <- gpt_chat_in_source(
-#'   style = "no preference",
-#'   skill = "advanced"
-#' )
-#' }
-#'
-gpt_chat_in_source <- function(task = NULL,
-                               style = getOption("gptstudio.code_style"),
-                               skill = getOption("gptstudio.skill")) {
+#' Chat in Source
+gptstudio_chat_in_source <- function(task = NULL) {
+  # TODO make better api check across services
+  # check_api()
 
-  check_api()
+  selection <- get_selection()
 
   if (is.null(task)) {
     gptstudio_chat_in_source_file_ext <- character(1L)
 
     tryCatch(expr = {
       doc_path <- rstudioapi::documentPath()
-      gptstudio_chat_in_source_file_ext <<- tools::file_ext(doc_path)
+      gptstudio_chat_in_source_file_ext <- tools::file_ext(doc_path)
     }, error = function(e) {
-      cli::cli_alert_info("Current document is not saved. Assuming .R file extension")
-      gptstudio_chat_in_source_file_ext <<- "R"
+      cli::cli_alert_info("Current document is not saved.
+                          Assuming .R file extension")
+      gptstudio_chat_in_source_file_ext <- "R"
     })
 
     task <- glue::glue(
@@ -57,18 +25,26 @@ gpt_chat_in_source <- function(task = NULL,
     )
   }
 
-  selection_query <- get_selection()
+  instructions <- glue::glue("{task}: {selection$value}")
 
-  user_instruction <- list(
-    role = "user",
-    content = glue::glue("{task}: {selection_query$value}")
-  )
+  cli::cli_inform(instructions)
 
-  instructions <- list(user_instruction)
+  cli::cli_progress_step("Sending query to ChatGPT...",
+                         msg_done = "ChatGPT responded",
+                         spinner = TRUE)
 
-  cli::cli_progress_step("Sending query to ChatGPT...", msg_done = "ChatGPT responded")
+  cli::cli_progress_update()
 
-  response <- openai_create_chat_completion(instructions)
-  text_to_insert <- as.character(response$choices[[1]]$message$content)
-  insert_text(text_to_insert)
+  response <-
+    gptstudio_create_skeleton(
+      service = getOption("gptstudio.service"),
+      prompt  = instructions,
+      history = list(),
+      stream  = FALSE,
+      model   = getOption("gptstudio.model")
+    ) %>%
+    gptstudio_request_perform()
+
+  text_to_insert <- as.character(response$response)
+  insert_text(c(selection$value, text_to_insert))
 }

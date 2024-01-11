@@ -15,10 +15,8 @@
 #' }
 addin_spelling_grammar <- function() {
   cli_process_start("Sending query to ChatGPT")
-  gpt_chat_in_source(
-    task = "Improve spelling and grammar of the text",
-    style = getOption("gptstudio.code_style"),
-    skill = getOption("gptstudio.skill")
+  gptstudio_chat_in_source(
+    task = "Improve spelling and grammar of the text"
   )
   cli_process_done()
 }

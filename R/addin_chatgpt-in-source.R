@@ -14,10 +14,6 @@
 #' addin_chatgpt_in_source()
 #' }
 addin_chatgpt_in_source <- function() {
-  cli_process_start("Sending query to ChatGPT")
-  gpt_chat_in_source(
-    style = getOption("gptstudio.code_style"),
-    skill = getOption("gptstudio.skill")
-  )
+  gptstudio_chat_in_source()
   cli_process_done()
 }
