@@ -136,6 +136,8 @@ get_available_models <- function(service) {
     c("gpt2", "tiiuae/falcon-7b-instruct", "bigcode/starcoderplus")
   } else if (service == "anthropic") {
     c("claude-2", "claude-instant-1")
+  } else if (service == "azure_openai") {
+    "Using ENV variables"
   }
 }
 

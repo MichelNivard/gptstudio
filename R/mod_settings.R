@@ -151,7 +151,17 @@ mod_settings_server <- function(id) {
       msg <- glue::glue("Fetching models for {input$service} service...")
       showNotification(ui = msg, type = "message",duration = 3, session = session)
 
-      models <- get_available_models(input$service)
+      models <- tryCatch({
+        get_available_models(input$service)
+      }, error = function(e) {
+        showNotification(
+          ui = cli::ansi_strip(e$message),
+          duration = 3,
+          type = "error",
+          session = session
+        )
+        return(NULL)
+      })
 
       if (length(models) > 0) {
         showNotification(ui = "Got models!", duration = 3, type = "message", session = session)
