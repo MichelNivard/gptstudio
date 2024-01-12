@@ -38,11 +38,19 @@
 
     Code
       check_api()
+    Message <rlang_message>
+      ! OPENAI_API_KEY is not valid.
+      i Generate a key at <https://platform.openai.com/account/api-keys>
+      i Set the key in your .Renviron file `usethis::edit_r_environ()`
 
 ---
 
     Code
       check_api()
+    Message <rlang_message>
+      ! OPENAI_API_KEY is not valid.
+      i Generate a key at <https://platform.openai.com/account/api-keys>
+      i Set the key in your .Renviron file `usethis::edit_r_environ()`
 
 ---
 
@@ -96,4 +104,8 @@
 
     Code
       check_api_connection(Sys.getenv("OPENAI_API_KEY"))
+    Message <rlang_message>
+      ! OPENAI_API_KEY is not valid.
+      i Generate a key at <https://platform.openai.com/account/api-keys>
+      i Set the key in your .Renviron file `usethis::edit_r_environ()`
 
