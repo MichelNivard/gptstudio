@@ -16,6 +16,7 @@ coverage](https://codecov.io/gh/MichelNivard/gptstudio/branch/main/graph/badge.s
 downloads](http://cranlogs.r-pkg.org/badges/gptstudio)](https://www.r-pkg.org:443/pkg/gptstudio)
 [![CRAN RStudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/grand-total/gptstudio)](https://www.r-pkg.org:443/gptstudio)
+
 <!-- badges: end -->
 
 The goal of gptstudio is for R programmers to easily incorporate use of

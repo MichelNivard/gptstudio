@@ -13,6 +13,8 @@ navbar:
     menu:
     - text: OpenAI
       href: articles/openai.html
+    - text: Local Models with Ollama
+      href: articles/ollama.html
     - text: HuggingFace
       href: articles/huggingface.html
     - text: Anthropic

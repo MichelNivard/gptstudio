@@ -23,6 +23,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/MichelNivard/gptstudio/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MichelNivard/gptstudio/actions/workflows/R-CMD-check.yaml)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/gptstudio)](https://www.r-pkg.org:443/pkg/gptstudio)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/gptstudio)](https://www.r-pkg.org:443/gptstudio)
+
 <!-- badges: end -->
 
 The goal of gptstudio is for R programmers to easily incorporate use of large language models (LLMs) into their project workflows. These models appear to be a step change in our use of text for knowledge work, but you should carefully consider ethical implications of using these models. Ethics of LLMs (also called [Foundation Models](https://arxiv.org/abs/2108.07258)) is an area of very active discussion.
@@ -45,19 +46,22 @@ pak::pak("MichelNivard/gptstudio")
 ```
 
 ## Privacy Notice for gptstudio
+
 This privacy notice is applicable to the R package that utilizes the GPT-3 and GPT-3.5 API provided by OpenAI. By using this package, you agree to adhere to the privacy terms and conditions set by OpenAI.
 
 ### Data Sharing with OpenAI
+
 When using this R package, the text or code that you highlight/select with your cursor, or the prompt you enter within the built-in applications, will be sent to OpenAI as part of an API request. This data sharing is governed by the privacy notice, rules, and exceptions that you agreed to with OpenAI when creating an account.
 
 ### Security and Data Usage by OpenAI
+
 We cannot guarantee the security of the data you send to OpenAI via the API, nor can we provide details on how OpenAI processes or uses your data. However, OpenAI has stated that they utilize prompts and results to enhance their AI models, as outlined in their terms of use. You can opt-out of this data usage by contacting OpenAI directly and making an explicit request.
 
 ### Limiting Data Sharing
+
 The R package is designed to share only the text or code that you specifically highlight/select or include in a prompt through our built-in applications. No other elements of your R environment will be shared. It is your responsibility to ensure that you do not accidentally share sensitive data with OpenAI.
 
 **IMPORTANT: To maintain the privacy of your data, do not highlight, include in a prompt, or otherwise upload any sensitive data, code, or text that should remain confidential.**
-
 
 ## Prerequisites
 
@@ -71,7 +75,7 @@ The R package is designed to share only the text or code that you specifically h
 
 To interact with the OpenAI API, it's required to have a valid `OPENAI_API_KEY` environment variable. Here are the steps to configure it.
 
-You can establish this environment variable globally by including it in your project's .Renviron file. This approach ensures that the environment variable persists across all sessions as the Shiny app runs in the background. 
+You can establish this environment variable globally by including it in your project's .Renviron file. This approach ensures that the environment variable persists across all sessions as the Shiny app runs in the background.
 
 Here is a set of commands to open the .Renviron file for modification:
 
@@ -110,27 +114,35 @@ Some examples of use.
 4.  Ask more questions
 5.  Copy and try code
 
-<video src="https://user-images.githubusercontent.com/6314313/252512856-7f677852-f2c8-4d7c-a2b6-ca909caaa142.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512856-7f677852-f2c8-4d7c-a2b6-ca909caaa142.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px"></video>
+<video src="https://user-images.githubusercontent.com/6314313/252512856-7f677852-f2c8-4d7c-a2b6-ca909caaa142.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512856-7f677852-f2c8-4d7c-a2b6-ca909caaa142.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px">
+
+</video>
 
 The ChatGPT addin supports internationalization. You can set the "GPTSTUDIO_LANGUAGE" environmental variable to the language of your preference (i.e. `GPTSTUDIO_LANGUAGE="es"` for spanish). See the full list of supported languages in the translation file (`"inst/translations/translation.json"`).
 
-#### Using Other Models 
+#### Using Other Models
 
 We're excited to announce that our service now includes models from HuggingFace's inference API, Anthropic's claude models, and Google's MakerSuite, and Azure OpenAI service broadening the range of AI solutions you can use. You can set the model using the setting (gear) button in the ChatGPT addin app.
 
-<video src="https://user-images.githubusercontent.com/6314313/252512899-c45e4711-2197-4849-a5c1-4925355a1369.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512899-c45e4711-2197-4849-a5c1-4925355a1369.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px"></video>
+<video src="https://user-images.githubusercontent.com/6314313/252512899-c45e4711-2197-4849-a5c1-4925355a1369.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512899-c45e4711-2197-4849-a5c1-4925355a1369.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px">
+
+</video>
 
 #### Persistent User Settings & Custom Prompt
 
 You can now save your app settings across sessions. These are saved in a user config file. The easiest way to change these settings is the "Save as Default" button in the add-in app. This also allows you to specify your own custom prompt to pass to the model as instructions.
 
-<video src="https://user-images.githubusercontent.com/6314313/252512933-5965b70c-4d58-4b82-aa67-7e2baf10660c.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512933-5965b70c-4d58-4b82-aa67-7e2baf10660c.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px"></video>
+<video src="https://user-images.githubusercontent.com/6314313/252512933-5965b70c-4d58-4b82-aa67-7e2baf10660c.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512933-5965b70c-4d58-4b82-aa67-7e2baf10660c.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px">
+
+</video>
 
 ### Provide your own instructions in R, R Markdown, or Quarto files
 
 **Addins \> GPTSTUDIO \> ChatGPT in Source:** Apply any edit what YOU desire or can dream up to a selection of code or text.
 
-<video src="https://user-images.githubusercontent.com/6314313/225774578-72e4e966-a740-4afc-beca-1ac25abb504c.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px"></video>
+<video src="https://user-images.githubusercontent.com/6314313/225774578-72e4e966-a740-4afc-beca-1ac25abb504c.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px">
+
+</video>
 
 ### Spelling ang grammar check
 

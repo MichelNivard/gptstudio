@@ -6,6 +6,10 @@
 - All saved chats are created with a placeholder title that the user can edit later.
 - We have a shorter welcome message, but we have added lots of tooltips to help with navigation.
 
+### Local models
+
+We are happy to announce that we now support local models with [ollama](https://github.com/jmorganca/ollama). By default we look for the ollama host in `http://localhost:11434` but this can be customized by setting up the `OLLAMA_HOST` environmental variable. Be aware that you are in charge of maintaining your own ollama installation and models.
+
 ### Internal
 
 - Reverted back to use an R6 class for OpenAI streaming. This doesn't affect how the users interact with the addins.
