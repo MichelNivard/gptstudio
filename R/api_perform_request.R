@@ -189,7 +189,9 @@ gptstudio_request_perform.gptstudio_request_ollama <- function(skeleton, shinySe
   response <- ollama_chat(
     model = skeleton$model,
     messages = skeleton$history,
-    stream = skeleton$stream
+    stream = skeleton$stream,
+    shinySession = shinySession,
+    user_prompt = skeleton$prompt
   )
 
   # return value

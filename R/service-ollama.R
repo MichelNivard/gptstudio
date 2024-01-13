@@ -70,7 +70,7 @@ ollama_perform_stream <- function(request, parser) {
   )
 }
 
-ollama_chat <- function(model, messages, stream = TRUE, shinySession = NULL) {
+ollama_chat <- function(model, messages, stream = TRUE, shinySession = NULL, user_prompt = NULL) {
   body <- list(
     model = model,
     messages = messages,
@@ -82,7 +82,10 @@ ollama_chat <- function(model, messages, stream = TRUE, shinySession = NULL) {
 
 
   if (stream) {
-    parser <- OllamaStreamParser$new()
+    parser <- OllamaStreamParser$new(
+      session = shinySession,
+      user_prompt = user_prompt
+    )
 
     ollama_perform_stream(
       request = request,
@@ -96,11 +99,13 @@ ollama_chat <- function(model, messages, stream = TRUE, shinySession = NULL) {
       content = parser$value
     )
 
-    httr2::response_json(
-      url = request$url,
-      method = "POST",
-      body = last_line
-    )
+    # httr2::response_json(
+    #   url = request$url,
+    #   method = "POST",
+    #   body = last_line
+    # )
+
+    last_line
   } else {
     request %>%
       httr2::req_perform() %>%
@@ -114,10 +119,24 @@ OllamaStreamParser <- R6::R6Class(
   public = list(
 
     lines = NULL,
+    value = NULL,
+    shinySession = NULL,
+    user_message = NULL,
 
     append_parsed_line = function(line) {
       self$value <- paste0(self$value, line$message$content)
       self$lines <- c(self$lines, list(line))
+
+      if (!is.null(self$shinySession)) {
+        # any communication with JS should be handled here!!
+        self$shinySession$sendCustomMessage(
+          type = "render-stream",
+          message = list(
+            user = self$user_message,
+            assistant = shiny::markdown(self$value)
+          )
+        )
+      }
 
       invisible(self)
     },
