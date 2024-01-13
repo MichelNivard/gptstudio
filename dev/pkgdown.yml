@@ -1,0 +1,15 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  anthropic: anthropic.html
+  azure: azure.html
+  google: google.html
+  huggingface: huggingface.html
+  ollama: ollama.html
+  openai: openai.html
+last_built: 2024-01-13T21:22Z
+urls:
+  reference: https://michelnivard.github.io/gptstudio/reference
+  article: https://michelnivard.github.io/gptstudio/articles
+
