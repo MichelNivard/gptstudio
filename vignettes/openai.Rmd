@@ -1,0 +1,50 @@
+---
+title: "OpenAI API Service"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{API Services}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Creating an OpenAI Account
+
+- Visit [OpenAI's website](https://openai.com/) and sign up for an account.
+- Follow the instructions to verify your account.
+
+## Creating an OpenAI API Key
+
+- Once logged in, navigate to the API section in your account settings.
+- Follow the instructions to create a new API key. More detailed steps can be found in OpenAI's [API documentation](https://beta.openai.com/docs/).
+
+## Setting the OpenAI API Key in .Renviron
+
+To modify the `.Renviron` file:
+
+rCopy code
+
+```{r}
+#| eval: false
+require(usethis) 
+edit_r_environ()
+```
+
+For a persistent setting, add the following line to `.Renviron`, replacing `"<APIKEY>"` with your actual API key:
+
+```bash
+OPENAI_API_KEY="<APIKEY>"
+```
+
+Save the file and restart your R session for the changes to take effect.
+
+**Caution:** Ensure `.Renviron` is included in your `.gitignore` file to avoid exposing your API key with version control systems like GitHub or GitLab.
+
+**Important Note:** OpenAI API requires valid payment details in your OpenAI account to function. This is a restriction imposed by OpenAI and is unrelated to this package.

@@ -1,0 +1,47 @@
+---
+title: "Azure OpenAI API Service"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Azure OpenAI API Service}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Azure OpenAI Service
+
+To configure gptstudio to work using Azure OpenAI service, you need to provide some configuration details in your .Renviron file. Specifically, gptstudio looks for five environment variables:
+
+- AZURE_OPENAI_TASK
+- AZURE_OPENAI_ENDPOINT
+- AZURE_OPENAI_DEPLOYMENT_NAME
+- AZURE_OPENAI_KEY
+- AZURE_OPENAI_API_VERSION
+
+Here's how you can add these details to your .Renviron file:
+
+1. Locate your .Renviron file with `usethis::edit_r_environ()`.
+2. Add environment variable details: Add a new line for each variable you need to set in the following format: VARIABLE_NAME="YOUR_VALUE". Replace VARIABLE_NAME with the name of the environment variable and YOUR_VALUE with the actual value that you want to set. For example, to set the API key you would have a line like this:
+
+```bash
+AZURE_OPENAI_KEY="your_actual_key_goes_here"
+```
+You need to do this for each of the environment variables expected by the function. Your .Renviron file should look something like this:
+
+```bash
+AZURE_OPENAI_TASK="your_task_code"
+AZURE_OPENAI_ENDPOINT="your_endpoint_url"
+AZURE_OPENAI_DEPLOYMENT_NAME="your_deployment_name"
+AZURE_OPENAI_KEY="your_api_key"
+AZURE_OPENAI_API_VERSION="your_api_version"
+```
+
+3. Save and Close .Renviron: After adding your environment variables, save your .Renviron file and close it. You will need to restart your R session to make sure the new environment variables are loaded properly.
+
+Remember to replace your_task_code, your_endpoint_url, your_deployment_name, your_api_key, and your_api_version with your actual Azure OpenAI details. You can retrieve these details from your Azure OpenAI service account. For more information about Azure OpenAI configuration, refer to the [Microsoft quickstart guide](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/quickstart?tabs=command-line&pivots=rest-api).

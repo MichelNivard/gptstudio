@@ -5,3 +5,19 @@ template:
 
 development:
   mode: auto
+
+navbar:
+ components:
+   articles:
+    text: Services
+    menu:
+    - text: OpenAI
+      href: articles/openai.html
+    - text: HuggingFace
+      href: articles/huggingface.html
+    - text: Anthropic
+      href: articles/anthropic.html
+    - text: Azure OpenAI
+      href: articles/azure.html
+    - text: Google AI Studio
+      href: articles/google.html
