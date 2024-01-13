@@ -155,6 +155,18 @@ new_gptstudio_request_skeleton_azure_openai <- function(
                                 class = "gptstudio_request_azure_openai")
 }
 
+new_gptstudio_request_skeleton_ollama <- function(model, prompt, history, stream) {
+  new_gpstudio_request_skeleton(
+    url = Sys.getenv("OLLAMA_HOST"),
+    api_key = "JUST A PLACESHOLDER",
+    model = model,
+    prompt = prompt,
+    history = history,
+    stream = stream,
+    class = "gptstudio_request_ollama"
+  )
+}
+
 
 gptstudio_create_skeleton <- function(service = "openai",
                                       prompt = "Name the top 5 packages in R.",
@@ -195,6 +207,12 @@ gptstudio_create_skeleton <- function(service = "openai",
            prompt = prompt,
            history = history,
            # forcing false until streaming implemented for palm
-           stream = FALSE))
+           stream = FALSE),
+         "ollama" = new_gptstudio_request_skeleton_ollama(
+           model = model,
+           prompt = prompt,
+           history = history,
+           stream = stream
+         ))
 }
 

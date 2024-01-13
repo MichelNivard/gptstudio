@@ -172,6 +172,39 @@ gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton, .
   )
 }
 
+#' @export
+gptstudio_request_perform.gptstudio_request_ollama <- function(skeleton, shinySession = NULL, ...) {
+  # Translate request
+
+  skeleton$history <- chat_history_append(
+    history = skeleton$history,
+    role = "user",
+    name = "user_message",
+    content = skeleton$prompt
+  )
+
+  if (getOption("gptstudio.read_docs")) {
+    skeleton$history <- add_docs_messages_to_history(skeleton$history)
+  }
+
+  response <- ollama_chat(
+    model = skeleton$model,
+    messages = skeleton$history,
+    stream = skeleton$stream,
+    shinySession = shinySession,
+    user_prompt = skeleton$prompt
+  )
+
+  # return value
+  structure(
+    list(
+      skeleton = skeleton,
+      response = response$message$content
+    ),
+    class = "gptstudio_response_ollama"
+  )
+}
+
 
 #' @export
 gptstudio_request_perform.default <- function(skeleton, ...) {
