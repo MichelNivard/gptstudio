@@ -172,6 +172,7 @@ gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton, .
   )
 }
 
+#' @export
 gptstudio_request_perform.gptstudio_request_ollama <- function(skeleton, shinySession = NULL, ...) {
   # Translate request
 

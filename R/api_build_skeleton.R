@@ -123,6 +123,7 @@ gptstudio_skeleton_build.gptstudio_request_azure_openai <-
                                                 stream  = stream)
   }
 
+#' @export
 gptstudio_skeleton_build.gptstudio_request_ollama <-
   function(skeleton = gptstudio_create_skeleton(),
            skill    = getOption("gptstudio.skill") ,

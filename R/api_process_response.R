@@ -129,6 +129,7 @@ gptstudio_response_process.gptstudio_response_azure_openai <-
     skeleton
   }
 
+#' @export
 gptstudio_response_process.gptstudio_response_ollama <- function(skeleton, ...) {
   last_response <- skeleton$response
   skeleton <- skeleton$skeleton
