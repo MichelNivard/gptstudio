@@ -166,11 +166,13 @@ mod_settings_server <- function(id) {
       if (length(models) > 0) {
         showNotification(ui = "Got models!", duration = 3, type = "message", session = session)
 
+        default_model <- getOption("gptstudio.model")
+
         updateSelectInput(
           session = session,
           inputId = "model",
           choices = models,
-          selected = models[1]
+          selected = if (default_model %in% models) default_model else models[1]
         )
 
       } else {
