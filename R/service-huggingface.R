@@ -31,9 +31,6 @@ query_api_huggingface <- function(task,
     httr2::req_retry(max_tries = 3) %>%
     httr2::req_error(is_error = function(resp) FALSE)
 
-
-  response %>% httr2::req_dry_run()
-
   response <- response %>% httr2::req_perform()
 
   # error handling

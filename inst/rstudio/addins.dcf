@@ -1,19 +1,19 @@
 Name: Spelling and Grammar
 Description: Uses OpenAI's GPT to improve spelling and grammar of selected text
-Binding: addin_spelling_grammar
+Binding: gptstudio_spelling_grammar
 Interactive: false
 
 Name: Comment your code
 Description: Uses OpenAI's GPT-3.5 to generate comments for your code
-Binding: addin_comment_code
+Binding: gptstudio_comment_code
 Interactive: false
 
-Name: ChatGPT
+Name: Chat
 Description: Start a chat session
-Binding: addin_chatgpt
+Binding: gptstudio_chat
 Interactive: true
 
-Name: ChatGPT in Source
+Name: Chat in Source
 Description: Use ChatGPT in source instead of in a shiny app
-Binding: addin_chatgpt_in_source
+Binding: gptstudio_chat_in_source_addin
 Interactive: false

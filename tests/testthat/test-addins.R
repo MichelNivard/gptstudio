@@ -1,29 +1,25 @@
 test_that("Spelling and grammer editing works", {
   mockr::local_mock(
-    gpt_chat_in_source = function(
+    gptstudio_chat_in_source = function(
     task = "Add comments to explain this code. Your output will go directly into
-    a source (.R) file. Comment the code line by line",
-    style = getOption("gptstudio.code_style"),
-    skill = getOption("gptstudio.skill")
+    a source (.R) file. Comment the code line by line"
     ) {
       list("text" = "new text")
     }
   )
-  expect_type(addin_spelling_grammar(), "character")
+  expect_type(gptstudio_spelling_grammar(), "character")
 })
 
 test_that("Commenting code works", {
   mockr::local_mock(
-    gpt_chat_in_source = function(
+    gptstudio_chat_in_source = function(
       task = "Add comments to explain this code. Your output will go directly into
-    a source (.R) file. Comment the code line by line",
-    style = getOption("gptstudio.code_style"),
-    skill = getOption("gptstudio.skill")
+    a source (.R) file. Comment the code line by line"
     ) {
       list("text" = "new text")
     }
   )
-  expect_type(addin_comment_code(), "character")
+  expect_type(gptstudio_comment_code(), "character")
 })
 
 test_that("chatgpt_addin runs", {
@@ -33,14 +29,14 @@ test_that("chatgpt_addin runs", {
       TRUE
     }
   )
-  expect_type(addin_chatgpt(), "list")
+  expect_type(gptstudio_chat(), "list")
 })
 
 test_that("chatgpt_addin_in_source runs", {
   mockr::local_mock(
-    gpt_chat_in_source = function(style = "tidyverse", skill = "beginner") {
+    gptstudio_chat_in_source = function() {
       list("text" = "here is some text")
     }
   )
-  expect_type(addin_chatgpt_in_source(), "character")
+  expect_type(gptstudio_chat_in_source_addin(), "character")
 })

@@ -14,6 +14,8 @@ coverage](https://codecov.io/gh/MichelNivard/gptstudio/branch/main/graph/badge.s
 [![R-CMD-check](https://github.com/MichelNivard/gptstudio/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MichelNivard/gptstudio/actions/workflows/R-CMD-check.yaml)
 [![CRAN RStudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/gptstudio)](https://www.r-pkg.org:443/pkg/gptstudio)
+[![CRAN RStudio mirror
+downloads](http://cranlogs.r-pkg.org/badges/grand-total/gptstudio)](https://www.r-pkg.org:443/gptstudio)
 
 <!-- badges: end -->
 
@@ -204,97 +206,6 @@ src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/comment
 alt="add comments to code" />
 <figcaption aria-hidden="true">add comments to code</figcaption>
 </figure>
-
-## Azure OpenAI Service
-
-To configure gptstudio to work using Azure OpenAI service, you need to
-provide some configuration details in your .Renviron file. Specifically,
-gptstudio looks for five environment variables:
-
-- AZURE_OPENAI_TASK
-- AZURE_OPENAI_ENDPOINT
-- AZURE_OPENAI_DEPLOYMENT_NAME
-- AZURE_OPENAI_KEY
-- AZURE_OPENAI_API_VERSION
-
-Here’s how you can add these details to your .Renviron file:
-
-1.  Locate your .Renviron file with `usethis::edit_r_environ()`.
-2.  Add environment variable details: Add a new line for each variable
-    you need to set in the following format: VARIABLE_NAME=“YOUR_VALUE”.
-    Replace VARIABLE_NAME with the name of the environment variable and
-    YOUR_VALUE with the actual value that you want to set. For example,
-    to set the API key you would have a line like this:
-
-``` bash
-AZURE_OPENAI_KEY="your_actual_key_goes_here"
-```
-
-You need to do this for each of the environment variables expected by
-the function. Your .Renviron file should look something like this:
-
-``` bash
-AZURE_OPENAI_TASK="your_task_code"
-AZURE_OPENAI_ENDPOINT="your_endpoint_url"
-AZURE_OPENAI_DEPLOYMENT_NAME="your_deployment_name"
-AZURE_OPENAI_KEY="your_api_key"
-AZURE_OPENAI_API_VERSION="your_api_version"
-```
-
-3.  Save and Close .Renviron: After adding your environment variables,
-    save your .Renviron file and close it. You will need to restart your
-    R session to make sure the new environment variables are loaded
-    properly.
-
-Remember to replace your_task_code, your_endpoint_url,
-your_deployment_name, your_api_key, and your_api_version with your
-actual Azure OpenAI details. You can retrieve these details from your
-Azure OpenAI service account. For more information about Azure OpenAI
-configuration, refer to the [Microsoft quickstart
-guide](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/quickstart?tabs=command-line&pivots=rest-api).
-
-## Local models with Ollama
-
-The [ollama](https://github.com/jmorganca/ollama) service allows you to
-run open source LLMs locally, providing a command line interface and an
-API. By wrapping the later, we can use it within our chat app.
-
-You can run ollama in any platform as a docker container. The following
-code runs the CPU-only version:
-
-``` bash
-docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
-```
-
-This code:
-
-1.  pulls the latest ollama image from the ollama hub (`ollama/ollama`)
-2.  exposes the ollama API in `http://localhost:11434`
-    (`-p 11434:11434`)
-3.  sets up the ollama volume, to be used in the “/root/.ollama” path
-    inside the container. this will allow you to update the container
-    later without losing your already downloaded models.
-    (`-v ollama:/root/.ollama`)
-4.  assigns the name “ollama” to the container (`--name ollama`)
-5.  runs the container in detached mode (`docker run -d`)
-
-You can see more docker options in the [official blog
-post](https://ollama.ai/blog/ollama-is-now-available-as-an-official-docker-image).
-
-Before using the service, you need to pull a model. Run the following
-code inside your container to pull llama2:
-
-``` bash
-ollama pull llama2
-```
-
-Check the [ollama library](https://ollama.ai/library) to see more
-models. For more advanced install options, check the [official
-documentation](https://github.com/jmorganca/ollama).
-
-By default, the chat addin will use `http://localhost:11434` to locate
-the ollama API. You can customize this by setting up the `OLLAMA_HOST`
-environmental variable with `usethis::edit_r_environ()`.
 
 ## Code of Conduct
 

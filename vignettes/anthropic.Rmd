@@ -1,0 +1,45 @@
+---
+title: "Anthropic API Service"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Anthropic API Service}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+### Creating an Anthropic Account
+
+- Go to the [Anthropic website](https://www.anthropic.com/) and sign up.
+- Verify your account as instructed.
+
+### Creating an Anthropic API Key
+
+- Log into your Anthropic account and navigate to the API section.
+- Create an API key following their guidelines. Check Anthropic's API documentation for more details.
+
+### Setting the Anthropic API Key in .Renviron
+
+To modify the `.Renviron` file:
+
+```{r}
+#| eval: false
+require(usethis)
+edit_r_environ()
+```
+
+For a persistent setting, add the following line to `.Renviron`, replacing `"<APIKEY>"` with your actual Anthropic API key:
+
+```bash
+ANTHROPIC_API_KEY="<APIKEY>"
+```
+
+Save the file and restart your R session for the changes to take effect.
+
+**Caution:** Ensure `.Renviron` is not exposed if using version control systems.

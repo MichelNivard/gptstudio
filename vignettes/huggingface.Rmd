@@ -1,0 +1,45 @@
+---
+title: "HuggingFace API Service"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{HuggingFace API Service}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+### Creating a HuggingFace Account
+
+- Visit [HuggingFace's website](https://huggingface.co/) and sign up for an account.
+- Complete the account verification process.
+
+### Creating a HuggingFace API Key
+
+- After logging in, go to your account settings.
+- Find the section for API keys and create a new one. Detailed guidance is available in HuggingFace's API documentation.
+
+### Setting the HuggingFace API Key in .Renviron
+
+To modify the `.Renviron` file:
+
+```{r}
+#| eval: false
+require(usethis)
+edit_r_environ()
+```
+
+For a persistent setting, add the following line to `.Renviron`, replacing `"<APIKEY>"` with your actual HuggingFace API key:
+
+```bash
+HF_API_KEY="<APIKEY>"
+```
+
+Save the file and restart your R session for the changes to take effect.
+
+**Caution:** Remember to include `.Renviron` in your `.gitignore` file to prevent exposing your API key, especially if using version control systems like GitHub or GitLab.

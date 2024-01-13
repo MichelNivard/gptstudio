@@ -115,7 +115,6 @@ value_between <- function(x, lower, upper) {
 #' get_available_endpoints()
 get_available_models <- function(service) {
   if (service == "openai") {
-    check_api()
     models <-
       request_base("models") %>%
       httr2::req_perform() %>%

@@ -15,3 +15,4 @@ DS.Store
 .Rprofile
 .Renviron
 pkgdown
+inst/doc
