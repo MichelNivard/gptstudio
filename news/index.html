@@ -53,6 +53,10 @@
 <li>We have a shorter welcome message, but we have added lots of tooltips to help with navigation.</li>
 </ul></div>
 <div class="section level3">
+<h3 id="local-models-development-version">Local models<a class="anchor" aria-label="anchor" href="#local-models-development-version"></a></h3>
+<p>We are happy to announce that we now support local models with <a href="https://github.com/jmorganca/ollama" class="external-link">ollama</a>. By default we look for the ollama host in <code>http://localhost:11434</code> but this can be customized by setting up the <code>OLLAMA_HOST</code> environmental variable. Be aware that you are in charge of maintaining your own ollama installation and models.</p>
+</div>
+<div class="section level3">
 <h3 id="internal-development-version">Internal<a class="anchor" aria-label="anchor" href="#internal-development-version"></a></h3>
 <ul><li>Reverted back to use an R6 class for OpenAI streaming. This doesn’t affect how the users interact with the addins.</li>
 <li>Fixed a bug in retrieval of OpenAI models</li>

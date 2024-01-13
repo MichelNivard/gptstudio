@@ -80,6 +80,7 @@
 </div>
 <!-- badges: start -->
 
+<!-- badges: end -->
 <p>The goal of gptstudio is for R programmers to easily incorporate use of large language models (LLMs) into their project workflows. These models appear to be a step change in our use of text for knowledge work, but you should carefully consider ethical implications of using these models. Ethics of LLMs (also called <a href="https://arxiv.org/abs/2108.07258" class="external-link">Foundation Models</a>) is an area of very active discussion.</p>
 <p>For further addins, tailored for R developers, also see the sister package: <a href="https://jameshwade.github.io/gpttools/" class="external-link">gpttools</a></p>
 <div class="section level2">
@@ -217,6 +218,26 @@ add comments to code
 <li>Save and Close .Renviron: After adding your environment variables, save your .Renviron file and close it. You will need to restart your R session to make sure the new environment variables are loaded properly.</li>
 </ol>
 <p>Remember to replace your_task_code, your_endpoint_url, your_deployment_name, your_api_key, and your_api_version with your actual Azure OpenAI details. You can retrieve these details from your Azure OpenAI service account. For more information about Azure OpenAI configuration, refer to the <a href="https://learn.microsoft.com/en-us/azure/cognitive-services/openai/quickstart?tabs=command-line&amp;pivots=rest-api" class="external-link">Microsoft quickstart guide</a>.</p>
+</div>
+<div class="section level2">
+<h2 id="local-models-with-ollama">Local models with Ollama<a class="anchor" aria-label="anchor" href="#local-models-with-ollama"></a>
+</h2>
+<p>The <a href="https://github.com/jmorganca/ollama" class="external-link">ollama</a> service allows you to run open source LLMs locally, providing a command line interface and an API. By wrapping the later, we can use it within our chat app.</p>
+<p>You can run ollama in any platform as a docker container. The following code runs the CPU-only version:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">-v</span> ollama:/root/.ollama <span class="at">-p</span> 11434:11434 <span class="at">--name</span> ollama ollama/ollama</span></code></pre></div>
+<p>This code:</p>
+<ol style="list-style-type: decimal">
+<li>pulls the latest ollama image from the ollama hub (<code>ollama/ollama</code>)</li>
+<li>exposes the ollama API in <code>http://localhost:11434</code> (<code>-p 11434:11434</code>)</li>
+<li>sets up the ollama volume, to be used in the “/root/.ollama” path inside the container. this will allow you to update the container later without losing your already downloaded models. (<code>-v ollama:/root/.ollama</code>)</li>
+<li>assigns the name “ollama” to the container (<code>--name ollama</code>)</li>
+<li>runs the container in detached mode (<code>docker run -d</code>)</li>
+</ol>
+<p>You can see more docker options in the <a href="https://ollama.ai/blog/ollama-is-now-available-as-an-official-docker-image" class="external-link">official blog post</a>.</p>
+<p>Before using the service, you need to pull a model. Run the following code inside your container to pull llama2:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull llama2</span></code></pre></div>
+<p>Check the <a href="https://ollama.ai/library" class="external-link">ollama library</a> to see more models. For more advanced install options, check the <a href="https://github.com/jmorganca/ollama" class="external-link">official documentation</a>.</p>
+<p>By default, the chat addin will use <code>http://localhost:11434</code> to locate the ollama API. You can customize this by setting up the <code>OLLAMA_HOST</code> environmental variable with <code>usethis::edit_r_environ()</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
