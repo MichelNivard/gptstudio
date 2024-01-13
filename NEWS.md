@@ -18,6 +18,13 @@ We are happy to announce that we now support local models with [ollama](https://
 - Fixed a bug in "in source" calls for addins.
 - The chat addin no longer closes itself when an OpenAI api key is not detected.
 
+### Quality of Life Improvements and Documentation
+
+- Chat in source now respects the model selection that you set using the Chat addin.
+- A new function `gpstudio_sitrep()` has been added to help with debugging and setup.
+- API checking is now done for each available service, including local models.
+- New vignettes were added to setup each service.
+
 ## gptstudio 0.3.1
 
 * Better API checking to direct users to .Renviron to set API key to be persistent across sessions
