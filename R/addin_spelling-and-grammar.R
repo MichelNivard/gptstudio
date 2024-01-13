@@ -11,9 +11,9 @@
 #' # Select some text in Rstudio
 #' # Then call the function as an RStudio addin
 #' \dontrun{
-#' addin_spelling_grammar()
+#' gptstudio_spelling_grammar()
 #' }
-addin_spelling_grammar <- function() {
+gptstudio_spelling_grammar <- function() {
   cli_process_start("Sending query to ChatGPT")
   gptstudio_chat_in_source(
     task = "Improve spelling and grammar of the text"

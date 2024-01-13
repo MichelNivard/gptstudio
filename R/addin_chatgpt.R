@@ -6,12 +6,13 @@
 #' @return This function has no return value.
 #'
 #' @inheritParams shiny::runApp
+#' @export
 #' @examples
 #' # Call the function as an RStudio addin
 #' \dontrun{
-#' addin_chatgpt()
+#' gptstudio_chat()
 #' }
-addin_chatgpt <- function(host = getOption("shiny.host", "127.0.0.1")) {
+gptstudio_chat <- function(host = getOption("shiny.host", "127.0.0.1")) {
   rstudioapi::verifyAvailable()
   stopifnot(rstudioapi::hasFun("viewer"))
 

@@ -7,7 +7,7 @@ test_that("Spelling and grammer editing works", {
       list("text" = "new text")
     }
   )
-  expect_type(addin_spelling_grammar(), "character")
+  expect_type(gptstudio_spelling_grammar(), "character")
 })
 
 test_that("Commenting code works", {
@@ -19,7 +19,7 @@ test_that("Commenting code works", {
       list("text" = "new text")
     }
   )
-  expect_type(addin_comment_code(), "character")
+  expect_type(gptstudio_comment_code(), "character")
 })
 
 test_that("chatgpt_addin runs", {
@@ -29,7 +29,7 @@ test_that("chatgpt_addin runs", {
       TRUE
     }
   )
-  expect_type(addin_chatgpt(), "list")
+  expect_type(gptstudio_chat(), "list")
 })
 
 test_that("chatgpt_addin_in_source runs", {
@@ -38,5 +38,5 @@ test_that("chatgpt_addin_in_source runs", {
       list("text" = "here is some text")
     }
   )
-  expect_type(addin_chatgpt_in_source(), "character")
+  expect_type(gptstudio_chat_in_source_addin(), "character")
 })

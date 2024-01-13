@@ -1,7 +1,4 @@
 gptstudio_chat_in_source <- function(task = NULL) {
-  # TODO make better api check across services
-  # check_api()
-
   selection <- get_selection()
 
   if (is.null(task)) {

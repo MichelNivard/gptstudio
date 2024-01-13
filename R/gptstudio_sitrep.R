@@ -1,0 +1,145 @@
+#' Check API Connection
+#'
+#' This generic function checks the API connection for a specified service by dispatching to related methods.
+#'
+#' @param service The name of the API service for which the connection is being checked.
+#' @param api_key The API key used for authentication.
+#' @return A logical value indicating whether the connection was successful.
+check_api_connection_openai <- function(service, api_key) {
+  check_api_key(service, api_key)
+  response <-
+    request_base(task = "models") %>%
+    httr2::req_error(is_error = function(resp) FALSE) %>%
+    httr2::req_perform()
+  process_response(response, service)
+}
+
+#' @inheritParams check_api_connection_openai
+check_api_connection_huggingface <- function(service, api_key) {
+  check_api_key(service, api_key)
+  response <- request_base_huggingface(task = "gpt2") %>%
+    httr2::req_error(is_error = function(resp) FALSE) %>%
+    httr2::req_perform()
+
+  process_response(response, service)
+}
+
+#' @inheritParams check_api_connection_openai
+check_api_connection_anthropic <- function(service, api_key) {
+  check_api_key(service, api_key)
+  response <-
+    request_base_anthropic(key = Sys.getenv("ANTHROPIC_API_KEY")) %>%
+    httr2::req_body_json(
+      data = list(
+        prompt = "\n\nHuman: Hello, Claude\n\nAssistant:",
+        model = "claude-2.1",
+        max_tokens_to_sample = 1024
+      )
+    ) %>%
+    httr2::req_error(is_error = function(resp) FALSE) %>%
+    httr2::req_perform()
+
+  process_response(response, service)
+}
+
+#' @inheritParams check_api_connection_openai
+check_api_connection_palm <- function(service, api_key) {
+  check_api_key(service, api_key)
+
+  response <- request_base_palm(model = "text-bison-001", key = api_key) %>%
+    httr2::req_body_json(data = list(prompt = list(text = "Hello."))) %>%
+    httr2::req_error(is_error = function(resp) FALSE) %>%
+    httr2::req_perform()
+
+  process_response(response, service)
+}
+
+#' @inheritParams check_api_connection_openai
+check_api_connection_azure_openai <- function(service, api_key) {
+  check_api_key(service, api_key)
+
+  response <- request_base_azure_openai() %>%
+    httr2::req_body_json(list(list(role = "user", content = "Hello world!"))) %>%
+    httr2::req_error(is_error = function(resp) FALSE) %>%
+    httr2::req_perform()
+
+  process_response(response, service)
+}
+
+#' Current Configuration for gptstudio
+#'
+#' This function prints out the current configuration settings for gptstudio and
+#' checks API connections if verbose is TRUE.
+#'
+#' @param verbose Logical value indicating whether to output additional information,
+#' such as API connection checks. Defaults to TRUE.
+#'
+#' @return Invisibly returns NULL, as the primary purpose of this function is to
+#' print to the console.
+#'
+#' @examples
+#' gptstudio_sitrep(verbose = FALSE)  # Print basic settings, no API checks
+#' gptstudio_sitrep()                 # Print settings and check API connections
+#'
+#' @export
+gptstudio_sitrep <- function(verbose = TRUE) {
+  cli::cli_h1("Configuration for gptstudio")
+
+  user_config <-
+    file.path(tools::R_user_dir("gptstudio", which = "config"), "config.yml")
+
+  if (file.exists(user_config)) {
+    cli::cli_inform("Using user configuration file at {.file {user_config}}")
+  } else {
+    cli::cli_text("No user configuration file found at {.file {user_config}}.
+                  Using default configuration.
+                  Change configuration settings in the chat app.
+                  Lauch the chat app with addins or {.run [gptstudio_chat()](gptstudio::gptstudio_chat())}.")
+  }
+  cli::cli_h2("Current Settings")
+  cli::cli_bullets(c("- Model: {getOption('gptstudio.model')}",
+                     "- Task: {getOption('gptstudio.task')}",
+                     "- Language: {getOption('gptstudio.language')}",
+                     "- Service: {getOption('gptstudio.service')}",
+                     "- Custom prompt: {getOption('gptstudio.custom_prompt')}",
+                     "- Stream: {getOption('gptstudio.stream')}",
+                     "- Code style: {getOption('gptstudio.code_style')}",
+                     "- Skill: {getOption('gptstudio.skill')}"))
+  if (verbose) {
+    cli::cli_h2("Checking API connections")
+    cli::cli_h3("Checking OpenAI API connection")
+    check_api_connection_openai(service = "OpenAI",
+                                api_key = Sys.getenv("OPENAI_API_KEY"))
+    cli::cli_h3("Checking HuggingFace API connection")
+    check_api_connection_huggingface("HuggingFace",
+                                     Sys.getenv("HF_API_KEY"))
+    cli::cli_h3("Checking Anthropic API connection")
+    check_api_connection_anthropic(service = "Anthropic",
+                                   api_key = Sys.getenv("ANTHROPIC_API_KEY"))
+    cli::cli_h3("Checking Google PALM Makersuite API connection")
+    check_api_connection_palm(service = "Google PALM",
+                              api_key = Sys.getenv("PALM_API_KEY"))
+    cli::cli_h3("Checking Azure OpenAI API connection")
+    check_api_connection_palm(service = "Azure OpenAI",
+                              api_key = Sys.getenv("AZURE_OPENAI_KEY"))
+    cli::cli_h2("Getting help")
+    cli::cli_inform("See the {.href [gptstudio homepage](https://michelnivard.github.io/gptstudio/)} for getting started guides and package documentation. File an issue or contribute to the package at the {.href [GitHub repo](https://github.com/MichelNivard/gptstudio)}.")
+    cli::cli_rule()
+  }
+}
+
+# helper functions --------------------------------------------------------
+
+check_api_key <- function(service, api_key) {
+  if (is.null(api_key) || api_key == "") {
+    cli::cli_alert_danger("API key is not set or invalid for {service} service.")
+  }
+}
+
+process_response <- function(response, service) {
+  if (httr2::resp_is_error(response)) {
+    cli::cli_alert_danger("Failed to connect to the {service} API service.")
+  } else {
+    cli::cli_alert_success("Successfully connected to the {service} API service.")
+  }
+}

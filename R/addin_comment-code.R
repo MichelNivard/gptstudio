@@ -9,9 +9,9 @@
 #' # Open a R file in Rstudio
 #' # Then call the function as an RStudio addin
 #' \dontrun{
-#' addin_comment_code()
+#' gptstudio_comment_code()
 #' }
-addin_comment_code <- function() {
+gptstudio_comment_code <- function() {
   gptstudio_chat_in_source(
     task = "Add comments to explain this code. Your output will go directly into
     a source (.R) file. Comment the code line by line"

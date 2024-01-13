@@ -45,8 +45,7 @@ API.
 \examples{
 \dontrun{
 create_completion_azure_openai(
-  prompt = list(list(role = "user", content = "Hello world!"
-)
+  prompt = list(list(role = "user", content = "Hello world!"))
 }
 
 }
