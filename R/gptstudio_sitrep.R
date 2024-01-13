@@ -122,10 +122,14 @@ gptstudio_sitrep <- function(verbose = TRUE) {
     cli::cli_h3("Checking Azure OpenAI API connection")
     check_api_connection_palm(service = "Azure OpenAI",
                               api_key = Sys.getenv("AZURE_OPENAI_KEY"))
+    cli::cli_h3("Check Ollama for Local API connection")
+    ollama_is_available(verbose = TRUE)
     cli::cli_h2("Getting help")
     cli::cli_inform("See the {.href [gptstudio homepage](https://michelnivard.github.io/gptstudio/)} for getting started guides and package documentation. File an issue or contribute to the package at the {.href [GitHub repo](https://github.com/MichelNivard/gptstudio)}.")
-    cli::cli_rule()
+  } else {
+    cli::cli_text("Run {.run [gptstudio_sitrep(verbose = TRUE)](gptstudio::gptstudio_sitrep(verbose = TRUE))} to check API connections.")
   }
+  cli::cli_rule(left = "End of gptstudio configuration")
 }
 
 # helper functions --------------------------------------------------------

@@ -29,8 +29,6 @@ knitr::opts_chunk$set(
 
 To modify the `.Renviron` file:
 
-rCopy code
-
 ```{r}
 #| eval: false
 require(usethis) 
