@@ -3,9 +3,6 @@ template:
   bootstrap: 5
   bootswatch: litera
 
-development:
-  mode: auto
-
 navbar:
  components:
    articles:
