@@ -10,6 +10,10 @@
 
 We are happy to announce that we now support local models with [ollama](https://github.com/jmorganca/ollama). By default we look for the ollama host in `http://localhost:11434` but this can be customized by setting up the `OLLAMA_HOST` environmental variable. Be aware that you are in charge of maintaining your own ollama installation and models.
 
+### Perplexity Service
+
+Perlexity AI is now available as another service. The current version include the following models: pplx-7b-chat, pplx-70b-chat, pplx-7b-online, pplx-70b-online, llama-2-70b-chat, codellama-34b-instruct, mistral-7b-instruct, and mixtral-8x7b-instruct.
+
 ### Internal
 
 - Reverted back to use an R6 class for OpenAI streaming. This doesn't affect how the users interact with the addins.
