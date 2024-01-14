@@ -1,6 +1,13 @@
 pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
-articles: {}
-last_built: 2024-01-13T20:35Z
+articles:
+  anthropic: anthropic.html
+  azure: azure.html
+  google: google.html
+  huggingface: huggingface.html
+  ollama: ollama.html
+  openai: openai.html
+  perplexity: perplexity.html
+last_built: 2024-01-14T19:00Z
 

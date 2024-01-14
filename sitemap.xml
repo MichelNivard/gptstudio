@@ -19,6 +19,30 @@
     <loc>/SUPPORT.html</loc>
   </url>
   <url>
+    <loc>/articles/anthropic.html</loc>
+  </url>
+  <url>
+    <loc>/articles/azure.html</loc>
+  </url>
+  <url>
+    <loc>/articles/google.html</loc>
+  </url>
+  <url>
+    <loc>/articles/huggingface.html</loc>
+  </url>
+  <url>
+    <loc>/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>/articles/ollama.html</loc>
+  </url>
+  <url>
+    <loc>/articles/openai.html</loc>
+  </url>
+  <url>
+    <loc>/articles/perplexity.html</loc>
+  </url>
+  <url>
     <loc>/authors.html</loc>
   </url>
   <url>
@@ -31,18 +55,6 @@
     <loc>/reference/StreamHandler.html</loc>
   </url>
   <url>
-    <loc>/reference/addin_chatgpt.html</loc>
-  </url>
-  <url>
-    <loc>/reference/addin_chatgpt_in_source.html</loc>
-  </url>
-  <url>
-    <loc>/reference/addin_comment_code.html</loc>
-  </url>
-  <url>
-    <loc>/reference/addin_spelling_grammar.html</loc>
-  </url>
-  <url>
     <loc>/reference/chat_create_system_prompt.html</loc>
   </url>
   <url>
@@ -52,13 +64,7 @@
     <loc>/reference/chat_message_default.html</loc>
   </url>
   <url>
-    <loc>/reference/check_api.html</loc>
-  </url>
-  <url>
-    <loc>/reference/check_api_connection.html</loc>
-  </url>
-  <url>
-    <loc>/reference/check_api_key.html</loc>
+    <loc>/reference/check_api_connection_openai.html</loc>
   </url>
   <url>
     <loc>/reference/create_chat_app_theme.html</loc>
@@ -74,6 +80,9 @@
   </url>
   <url>
     <loc>/reference/create_completion_palm.html</loc>
+  </url>
+  <url>
+    <loc>/reference/create_completion_perplexity.html</loc>
   </url>
   <url>
     <loc>/reference/create_ide_matching_colors.html</loc>
@@ -94,13 +103,16 @@
     <loc>/reference/get_ide_theme_info.html</loc>
   </url>
   <url>
-    <loc>/reference/gpt_chat.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gpt_chat_in_source.html</loc>
-  </url>
-  <url>
     <loc>/reference/gptstudio-package.html</loc>
+  </url>
+  <url>
+    <loc>/reference/gptstudio_chat.html</loc>
+  </url>
+  <url>
+    <loc>/reference/gptstudio_chat_in_source_addin.html</loc>
+  </url>
+  <url>
+    <loc>/reference/gptstudio_comment_code.html</loc>
   </url>
   <url>
     <loc>/reference/gptstudio_request_perform.html</loc>
@@ -109,7 +121,13 @@
     <loc>/reference/gptstudio_response_process.html</loc>
   </url>
   <url>
+    <loc>/reference/gptstudio_sitrep.html</loc>
+  </url>
+  <url>
     <loc>/reference/gptstudio_skeleton_build.html</loc>
+  </url>
+  <url>
+    <loc>/reference/gptstudio_spelling_grammar.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
@@ -148,6 +166,9 @@
     <loc>/reference/query_api_palm.html</loc>
   </url>
   <url>
+    <loc>/reference/query_api_perplexity.html</loc>
+  </url>
+  <url>
     <loc>/reference/query_openai_api.html</loc>
   </url>
   <url>
@@ -164,6 +185,9 @@
   </url>
   <url>
     <loc>/reference/request_base_palm.html</loc>
+  </url>
+  <url>
+    <loc>/reference/request_base_perplexity.html</loc>
   </url>
   <url>
     <loc>/reference/rgb_str_to_hex.html</loc>
