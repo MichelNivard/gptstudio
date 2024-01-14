@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# gptstudio <img src="man/figures/logo.png" align="right" height="98"/>
+# gptstudio <img src="man/figures/gptstudio-logo.png" align="right" height="120"/>
 
 <!-- badges: start -->
 
@@ -23,9 +23,7 @@ The goal of gptstudio is for R programmers to easily incorporate use of
 large language models (LLMs) into their project workflows. These models
 appear to be a step change in our use of text for knowledge work, but
 you should carefully consider ethical implications of using these
-models. Ethics of LLMs (also called [Foundation
-Models](https://arxiv.org/abs/2108.07258)) is an area of very active
-discussion.
+models.
 
 For further addins, tailored for R developers, also see the sister
 package: [gpttools](https://jameshwade.github.io/gpttools/)
@@ -46,48 +44,54 @@ pak::pak("MichelNivard/gptstudio")
 
 ## Privacy Notice for gptstudio
 
-This privacy notice is applicable to the R package that utilizes the
-GPT-3 and GPT-3.5 API provided by OpenAI. By using this package, you
-agree to adhere to the privacy terms and conditions set by OpenAI.
+This privacy notice is applicable to the R package that uses popular
+language models like gpt-4 turbo and claude-2.1. By using this package,
+you agree to adhere to the privacy terms and conditions set by the API
+service.
 
-### Data Sharing with OpenAI
+### Data Sharing with AI Services
 
-When using this R package, the text or code that you highlight/select
-with your cursor, or the prompt you enter within the built-in
-applications, will be sent to OpenAI as part of an API request. This
-data sharing is governed by the privacy notice, rules, and exceptions
-that you agreed to with OpenAI when creating an account.
+When using this R package, any text or code you highlight/select with
+your cursor, or the prompt you enter within the built-in applications,
+will be sent to the selected AI service provider (e.g., OpenAI,
+Anthropic, HuggingFace, Google AI Studio, Azure OpenAI) as part of an
+API request. This data sharing is governed by the privacy notice, rules,
+and exceptions that you agreed to with the respective service provider
+when creating an account.
 
-### Security and Data Usage by OpenAI
+### Security and Data Usage by AI Service Providers
 
-We cannot guarantee the security of the data you send to OpenAI via the
-API, nor can we provide details on how OpenAI processes or uses your
-data. However, OpenAI has stated that they utilize prompts and results
-to enhance their AI models, as outlined in their terms of use. You can
-opt-out of this data usage by contacting OpenAI directly and making an
-explicit request.
+We cannot guarantee the security of the data you send via the API to any
+AI service provider, nor can we provide details on how each service
+processes or uses your data. However, these providers often state that
+they use prompts and results to enhance their AI models, as outlined in
+their terms of use. Be sure to review the terms of use of the respective
+AI service provider directly.
 
 ### Limiting Data Sharing
 
 The R package is designed to share only the text or code that you
 specifically highlight/select or include in a prompt through our
 built-in applications. No other elements of your R environment will be
-shared. It is your responsibility to ensure that you do not accidentally
-share sensitive data with OpenAI.
+shared unless you turn those features on. It is your responsibility to
+ensure that you do not accidentally share sensitive data with any AI
+service provider.
 
 **IMPORTANT: To maintain the privacy of your data, do not highlight,
 include in a prompt, or otherwise upload any sensitive data, code, or
 text that should remain confidential.**
 
-## Prerequisites
+## Getting Started with OpenAI
 
-1.  Make an OpenAI account.
+1.  Make an OpenAI account. [Sign up
+    here](https://platform.openai.com/).
 
 2.  [Create an OpenAI API
     key](https://platform.openai.com/account/api-keys) to use with the
     package.
 
-3.  Set the API key up in Rstudio
+3.  Set the API key up in Rstudio. See the section below on configuring
+    the API key.
 
 ### Configuring OpenAI API Key
 
@@ -134,18 +138,18 @@ by OpenAI and is unrelated to this package.
 
 Some examples of use.
 
-### ChatGPT in RStudio
+### Chat in RStudio
 
-1.  **Addins \> gptstudio \> ChatGPT**
+1.  **Addins \> gptstudio \> Chat**
 2.  Type your question.
 3.  Click “Send” button or press “Enter”
 4.  Ask more questions
 5.  Copy and try code
 
-<video src="https://user-images.githubusercontent.com/6314313/252512856-7f677852-f2c8-4d7c-a2b6-ca909caaa142.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512856-7f677852-f2c8-4d7c-a2b6-ca909caaa142.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px">
+<video src="https://user-images.githubusercontent.com/6314313/252512856-7f677852-f2c8-4d7c-a2b6-ca909caaa142.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512856-7f677852-f2c8-4d7c-a2b6-ca909caaa142.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px; max-width:700px">
 </video>
 
-The ChatGPT addin supports internationalization. You can set the
+The Chat addin supports internationalization. You can set the
 “GPTSTUDIO_LANGUAGE” environmental variable to the language of your
 preference (i.e. `GPTSTUDIO_LANGUAGE="es"` for spanish). See the full
 list of supported languages in the translation file
@@ -154,12 +158,12 @@ list of supported languages in the translation file
 #### Using Other Models
 
 We’re excited to announce that our service now includes models from
-HuggingFace’s inference API, Anthropic’s claude models, and Google’s
-MakerSuite, and Azure OpenAI service broadening the range of AI
-solutions you can use. You can set the model using the setting (gear)
-button in the ChatGPT addin app.
+HuggingFace’s inference API, Anthropic’s claude models, and Google’s AI
+Studio, Azure OpenAI, and local models with Ollama broadening the range
+of AI solutions you can use. You can set the model using the setting
+(gear) button in the Chat addin app.
 
-<video src="https://user-images.githubusercontent.com/6314313/252512899-c45e4711-2197-4849-a5c1-4925355a1369.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512899-c45e4711-2197-4849-a5c1-4925355a1369.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px">
+<video src="https://user-images.githubusercontent.com/6314313/252512899-c45e4711-2197-4849-a5c1-4925355a1369.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512899-c45e4711-2197-4849-a5c1-4925355a1369.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px; max-width:700px">
 </video>
 
 #### Persistent User Settings & Custom Prompt
@@ -169,15 +173,15 @@ user config file. The easiest way to change these settings is the “Save
 as Default” button in the add-in app. This also allows you to specify
 your own custom prompt to pass to the model as instructions.
 
-<video src="https://user-images.githubusercontent.com/6314313/252512933-5965b70c-4d58-4b82-aa67-7e2baf10660c.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512933-5965b70c-4d58-4b82-aa67-7e2baf10660c.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px">
+<video src="https://user-images.githubusercontent.com/6314313/252512933-5965b70c-4d58-4b82-aa67-7e2baf10660c.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512933-5965b70c-4d58-4b82-aa67-7e2baf10660c.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px; max-width:700px">
 </video>
 
 ### Provide your own instructions in R, R Markdown, or Quarto files
 
-**Addins \> GPTSTUDIO \> ChatGPT in Source:** Apply any edit what YOU
+**Addins \> GPTSTUDIO \> Chat in Source:** Apply any edit what YOU
 desire or can dream up to a selection of code or text.
 
-<video src="https://user-images.githubusercontent.com/6314313/225774578-72e4e966-a740-4afc-beca-1ac25abb504c.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px">
+<video src="https://user-images.githubusercontent.com/6314313/225774578-72e4e966-a740-4afc-beca-1ac25abb504c.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px; max-width:700px">
 </video>
 
 ### Spelling ang grammar check
