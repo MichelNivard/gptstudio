@@ -66,6 +66,21 @@ check_api_connection_azure_openai <- function(service, api_key) {
   process_response(response, service)
 }
 
+#' @inheritParams check_api_connection_openai
+check_api_connection_perplexity <- function(service, api_key) {
+  check_api_key(service, api_key)
+
+  response <- request_base_perplexity() %>%
+    httr2::req_body_json(data = list(
+      model = "mistral-7b-instruct",
+      messages = list(list(role = "user", content = "Hello world!"))
+    )) %>%
+    httr2::req_error(is_error = function(resp) FALSE) %>%
+    httr2::req_perform()
+
+  process_response(response, service)
+}
+
 #' Current Configuration for gptstudio
 #'
 #' This function prints out the current configuration settings for gptstudio and
@@ -122,6 +137,9 @@ gptstudio_sitrep <- function(verbose = TRUE) {
     cli::cli_h3("Checking Azure OpenAI API connection")
     check_api_connection_palm(service = "Azure OpenAI",
                               api_key = Sys.getenv("AZURE_OPENAI_KEY"))
+    cli::cli_h3("Checking Perplexity API connection")
+    check_api_connection_perplexity(service = "Perplexity",
+                                    api_key = Sys.getenv("PERPLEXITY_API_KEY"))
     cli::cli_h3("Check Ollama for Local API connection")
     ollama_is_available(verbose = TRUE)
     cli::cli_h2("Getting help")

@@ -167,6 +167,28 @@ new_gptstudio_request_skeleton_ollama <- function(model, prompt, history, stream
   )
 }
 
+new_gptstudio_request_skeleton_perplexity <- function(
+    url = "https://api.perplexity.ai/chat/completions",
+    api_key = Sys.getenv("PERPLEXITY_API_KEY"),
+    model = "mistral-7b-instruct",
+    prompt = "What is a ggplot?",
+    history = list(
+      list(
+        role = "system",
+        content = "You are an R chat assistant"
+      )
+    ),
+    stream = FALSE
+) {
+  new_gpstudio_request_skeleton(url,
+                                api_key,
+                                model,
+                                prompt,
+                                history,
+                                stream,
+                                class = "gptstudio_request_perplexity")
+}
+
 
 gptstudio_create_skeleton <- function(service = "openai",
                                       prompt = "Name the top 5 packages in R.",
@@ -213,6 +235,12 @@ gptstudio_create_skeleton <- function(service = "openai",
            prompt = prompt,
            history = history,
            stream = stream
+         ),
+         "perplexity" = new_gptstudio_request_skeleton_perplexity(
+           model = model,
+           prompt = prompt,
+           history = history,
+           stream = FALSE
          ))
 }
 

@@ -1,4 +1,4 @@
-url: https://michelnivard.github.io/gptstudio
+url: ~
 template:
   bootstrap: 5
   bootswatch: litera
@@ -23,3 +23,5 @@ navbar:
       href: articles/azure.html
     - text: Google AI Studio
       href: articles/google.html
+    - text: Perplexity
+      href: articles/perplexity.html

@@ -143,3 +143,23 @@ gptstudio_skeleton_build.gptstudio_request_ollama <-
                                           history = new_history,
                                           stream  = stream)
   }
+
+#' @export
+gptstudio_skeleton_build.gptstudio_request_perplexity <-
+  function(skeleton = gptstudio_create_skeleton("perplexity"),
+           skill    = getOption("gptstudio.skill") ,
+           style    = getOption("gptstudio.code_style"),
+           task     = "coding",
+           custom_prompt = NULL,
+           ...) {
+    prompt         <- skeleton$prompt
+    history        <- skeleton$history
+    model          <- skeleton$model
+    stream         <- skeleton$stream
+    new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
+
+    new_gptstudio_request_skeleton_perplexity(model   = model,
+                                              prompt  = prompt,
+                                              history = new_history,
+                                              stream  = stream)
+  }
