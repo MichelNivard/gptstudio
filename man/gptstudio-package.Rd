@@ -6,8 +6,6 @@
 \alias{gptstudio-package}
 \title{gptstudio: Use Large Language Models Directly in your Development Environment}
 \description{
-\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
-
 Large language models are readily accessible via API. This package lowers the barrier to use the API inside of your development environment. For more on the API, see \url{https://platform.openai.com/docs/introduction}.
 }
 \seealso{

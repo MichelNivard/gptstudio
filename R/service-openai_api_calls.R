@@ -137,6 +137,10 @@ get_available_models <- function(service) {
     c("claude-2", "claude-instant-1")
   } else if (service == "azure_openai") {
     "Using ENV variables"
+  } else if (service == "perplexity") {
+    c("pplx-7b-chat", "pplx-70b-chat", "pplx-7b-online", "pplx-70b-online",
+      "llama-2-70b-chat", "codellama-34b-instruct", "mistral-7b-instruct",
+      "mixtral-8x7b-instruct")
   } else if (service == "ollama") {
     if (!ollama_is_available()) stop("Couldn't find ollama in your system")
     ollama_list() %>%

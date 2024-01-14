@@ -147,3 +147,24 @@ gptstudio_response_process.gptstudio_response_ollama <- function(skeleton, ...) 
                        "gptstudio_request_ollama")
   skeleton
 }
+
+#' @export
+gptstudio_response_process.gptstudio_response_perplexity <-
+  function(skeleton, ...) {
+    response <- skeleton$response
+    skeleton <- skeleton$skeleton
+
+    new_history <- c(
+      skeleton$history,
+      list(
+        list(role = "user", content = skeleton$prompt),
+        list(role = "assistant", content = response)
+      )
+    )
+
+    skeleton$history <- new_history
+    skeleton$prompt <- NULL # remove the last prompt
+    class(skeleton) <- c("gptstudio_request_skeleton",
+                         "gptstudio_request_perplexity")
+    skeleton
+  }

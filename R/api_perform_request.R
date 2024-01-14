@@ -205,6 +205,23 @@ gptstudio_request_perform.gptstudio_request_ollama <- function(skeleton, shinySe
   )
 }
 
+#' @export
+gptstudio_request_perform.gptstudio_request_perplexity <-
+  function(skeleton, ...) {
+    model   <- skeleton$model
+    prompt  <- skeleton$prompt
+    cli_inform(c("i" = "Using Perplexity API with {model} model"))
+    response <- create_completion_perplexity(prompt   = prompt,
+                                             model    = model)
+    structure(
+      list(
+        skeleton = skeleton,
+        response = response$choices[[1]]$message$content
+      ),
+      class = "gptstudio_response_perplexity"
+    )
+  }
+
 
 #' @export
 gptstudio_request_perform.default <- function(skeleton, ...) {
