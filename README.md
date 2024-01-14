@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# gptstudio <img src="man/figures/gptstudio-logo.png" align="right" height="120"/>
+# gptstudio <img src="man/figures/logo.png" align="right" height="90"/>
 
 <!-- badges: start -->
 
