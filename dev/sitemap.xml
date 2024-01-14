@@ -1,210 +1,222 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/CODE_OF_CONDUCT.html</loc>
+    <loc>/dev/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/CONTRIBUTING.html</loc>
+    <loc>/dev/CONTRIBUTING.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/LICENSE-text.html</loc>
+    <loc>/dev/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/LICENSE.html</loc>
+    <loc>/dev/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/SUPPORT.html</loc>
+    <loc>/dev/SUPPORT.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/articles/anthropic.html</loc>
+    <loc>/dev/articles/anthropic.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/articles/azure.html</loc>
+    <loc>/dev/articles/azure.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/articles/google.html</loc>
+    <loc>/dev/articles/google.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/articles/huggingface.html</loc>
+    <loc>/dev/articles/huggingface.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/articles/index.html</loc>
+    <loc>/dev/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/articles/ollama.html</loc>
+    <loc>/dev/articles/ollama.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/articles/openai.html</loc>
+    <loc>/dev/articles/openai.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/authors.html</loc>
+    <loc>/dev/articles/perplexity.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/index.html</loc>
+    <loc>/dev/authors.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/news/index.html</loc>
+    <loc>/dev/index.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/StreamHandler.html</loc>
+    <loc>/dev/news/index.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/chat_create_system_prompt.html</loc>
+    <loc>/dev/reference/StreamHandler.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/chat_history_append.html</loc>
+    <loc>/dev/reference/chat_create_system_prompt.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/chat_message_default.html</loc>
+    <loc>/dev/reference/chat_history_append.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/check_api_connection_openai.html</loc>
+    <loc>/dev/reference/chat_message_default.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/create_chat_app_theme.html</loc>
+    <loc>/dev/reference/check_api_connection_openai.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/create_completion_anthropic.html</loc>
+    <loc>/dev/reference/create_chat_app_theme.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/create_completion_azure_openai.html</loc>
+    <loc>/dev/reference/create_completion_anthropic.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/create_completion_huggingface.html</loc>
+    <loc>/dev/reference/create_completion_azure_openai.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/create_completion_palm.html</loc>
+    <loc>/dev/reference/create_completion_huggingface.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/create_ide_matching_colors.html</loc>
+    <loc>/dev/reference/create_completion_palm.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/create_tmp_job_script.html</loc>
+    <loc>/dev/reference/create_completion_perplexity.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/create_translator.html</loc>
+    <loc>/dev/reference/create_ide_matching_colors.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/get_available_endpoints.html</loc>
+    <loc>/dev/reference/create_tmp_job_script.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/get_available_models.html</loc>
+    <loc>/dev/reference/create_translator.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/get_ide_theme_info.html</loc>
+    <loc>/dev/reference/get_available_endpoints.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/gptstudio-package.html</loc>
+    <loc>/dev/reference/get_available_models.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/gptstudio_chat.html</loc>
+    <loc>/dev/reference/get_ide_theme_info.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/gptstudio_chat_in_source_addin.html</loc>
+    <loc>/dev/reference/gptstudio-package.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/gptstudio_comment_code.html</loc>
+    <loc>/dev/reference/gptstudio_chat.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/gptstudio_request_perform.html</loc>
+    <loc>/dev/reference/gptstudio_chat_in_source_addin.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/gptstudio_response_process.html</loc>
+    <loc>/dev/reference/gptstudio_comment_code.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/gptstudio_sitrep.html</loc>
+    <loc>/dev/reference/gptstudio_request_perform.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/gptstudio_skeleton_build.html</loc>
+    <loc>/dev/reference/gptstudio_response_process.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/gptstudio_spelling_grammar.html</loc>
+    <loc>/dev/reference/gptstudio_sitrep.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/index.html</loc>
+    <loc>/dev/reference/gptstudio_skeleton_build.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/mod_app_server.html</loc>
+    <loc>/dev/reference/gptstudio_spelling_grammar.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/mod_app_ui.html</loc>
+    <loc>/dev/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/mod_chat_server.html</loc>
+    <loc>/dev/reference/mod_app_server.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/mod_chat_ui.html</loc>
+    <loc>/dev/reference/mod_app_ui.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/open_bg_shinyapp.html</loc>
+    <loc>/dev/reference/mod_chat_server.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/openai_create_chat_completion.html</loc>
+    <loc>/dev/reference/mod_chat_ui.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/pipe.html</loc>
+    <loc>/dev/reference/open_bg_shinyapp.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/prepare_chat_history.html</loc>
+    <loc>/dev/reference/openai_create_chat_completion.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/query_api_anthropic.html</loc>
+    <loc>/dev/reference/pipe.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/query_api_huggingface.html</loc>
+    <loc>/dev/reference/prepare_chat_history.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/query_api_palm.html</loc>
+    <loc>/dev/reference/query_api_anthropic.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/query_openai_api.html</loc>
+    <loc>/dev/reference/query_api_huggingface.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/random_port.html</loc>
+    <loc>/dev/reference/query_api_palm.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/request_base.html</loc>
+    <loc>/dev/reference/query_api_perplexity.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/request_base_anthropic.html</loc>
+    <loc>/dev/reference/query_openai_api.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/request_base_huggingface.html</loc>
+    <loc>/dev/reference/random_port.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/request_base_palm.html</loc>
+    <loc>/dev/reference/request_base.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/rgb_str_to_hex.html</loc>
+    <loc>/dev/reference/request_base_anthropic.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/run_app_as_bg_job.html</loc>
+    <loc>/dev/reference/request_base_huggingface.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/run_chatgpt_app.html</loc>
+    <loc>/dev/reference/request_base_palm.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/stream_chat_completion.html</loc>
+    <loc>/dev/reference/request_base_perplexity.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/streamingMessage-shiny.html</loc>
+    <loc>/dev/reference/rgb_str_to_hex.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/streamingMessage.html</loc>
+    <loc>/dev/reference/run_app_as_bg_job.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/style_chat_history.html</loc>
+    <loc>/dev/reference/run_chatgpt_app.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/style_chat_message.html</loc>
+    <loc>/dev/reference/stream_chat_completion.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/text_area_input_wrapper.html</loc>
+    <loc>/dev/reference/streamingMessage-shiny.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/welcomeMessage-shiny.html</loc>
+    <loc>/dev/reference/streamingMessage.html</loc>
   </url>
   <url>
-    <loc>https://michelnivard.github.io/gptstudio/dev/reference/welcomeMessage.html</loc>
+    <loc>/dev/reference/style_chat_history.html</loc>
+  </url>
+  <url>
+    <loc>/dev/reference/style_chat_message.html</loc>
+  </url>
+  <url>
+    <loc>/dev/reference/text_area_input_wrapper.html</loc>
+  </url>
+  <url>
+    <loc>/dev/reference/welcomeMessage-shiny.html</loc>
+  </url>
+  <url>
+    <loc>/dev/reference/welcomeMessage.html</loc>
   </url>
 </urlset>

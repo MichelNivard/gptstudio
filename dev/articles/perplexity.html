@@ -6,12 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="gptstudio">
-<title>Anthropic API Service • gptstudio</title>
+<title>Perplexity • gptstudio</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Anthropic API Service">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Perplexity">
 <meta property="og:description" content="gptstudio">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -78,36 +78,35 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Anthropic API Service</h1>
+      <img src="" class="logo" alt=""><h1>Perplexity</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/MichelNivard/gptstudio/blob/HEAD/vignettes/anthropic.Rmd" class="external-link"><code>vignettes/anthropic.Rmd</code></a></small>
-      <div class="d-none name"><code>anthropic.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/MichelNivard/gptstudio/blob/HEAD/vignettes/perplexity.Rmd" class="external-link"><code>vignettes/perplexity.Rmd</code></a></small>
+      <div class="d-none name"><code>perplexity.Rmd</code></div>
     </div>
 
     
     
 <div class="section level3">
-<h3 id="creating-an-anthropic-account">Creating an Anthropic Account<a class="anchor" aria-label="anchor" href="#creating-an-anthropic-account"></a>
+<h3 id="creating-an-perplexity-account">Creating an Perplexity Account<a class="anchor" aria-label="anchor" href="#creating-an-perplexity-account"></a>
 </h3>
 <ul>
-<li>Go to the <a href="https://www.anthropic.com/" class="external-link">Anthropic website</a>
+<li>Go to the <a href="https://perplexity.ai/" class="external-link">Perplexity website</a>
 and sign up.</li>
 <li>Verify your account as instructed.</li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="creating-an-anthropic-api-key">Creating an Anthropic API Key<a class="anchor" aria-label="anchor" href="#creating-an-anthropic-api-key"></a>
+<h3 id="creating-an-perplexity-api-key">Creating an Perplexity API Key<a class="anchor" aria-label="anchor" href="#creating-an-perplexity-api-key"></a>
 </h3>
 <ul>
-<li>Log into your Anthropic account and navigate to the API
-section.</li>
-<li>Create an API key following their guidelines. Check Anthropic’s API
+<li>Log into your Perplexity account and navigate to the <a href="https://docs.perplexity.ai/" class="external-link">API documentation</a>.</li>
+<li>Create an API key following their guidelines. Check Perplexity’s API
 documentation for more details.</li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="setting-the-anthropic-api-key-in--renviron">Setting the Anthropic API Key in .Renviron<a class="anchor" aria-label="anchor" href="#setting-the-anthropic-api-key-in--renviron"></a>
+<h3 id="setting-the-perplexity-api-key-in--renviron">Setting the Perplexity API Key in .Renviron<a class="anchor" aria-label="anchor" href="#setting-the-perplexity-api-key-in--renviron"></a>
 </h3>
 <p>To modify the <code>.Renviron</code> file:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -115,8 +114,8 @@ documentation for more details.</li>
 <span><span class="fu">edit_r_environ</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>For a persistent setting, add the following line to
 <code>.Renviron</code>, replacing <code>"&lt;APIKEY&gt;"</code> with
-your actual Anthropic API key:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">ANTHROPIC_API_KEY</span><span class="op">=</span><span class="st">"&lt;APIKEY&gt;"</span></span></code></pre></div>
+your actual Perplexity API key:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">PERPLEXITY_API_KEY</span><span class="op">=</span><span class="st">"&lt;APIKEY&gt;"</span></span></code></pre></div>
 <p>Save the file and restart your R session for the changes to take
 effect.</p>
 <p><strong>Caution:</strong> Ensure <code>.Renviron</code> is not

@@ -8,8 +8,6 @@ articles:
   huggingface: huggingface.html
   ollama: ollama.html
   openai: openai.html
-last_built: 2024-01-14T17:59Z
-urls:
-  reference: https://michelnivard.github.io/gptstudio/reference
-  article: https://michelnivard.github.io/gptstudio/articles
+  perplexity: perplexity.html
+last_built: 2024-01-14T18:53Z
 
