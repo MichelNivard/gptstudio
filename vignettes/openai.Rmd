@@ -2,7 +2,7 @@
 title: "OpenAI API Service"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{API Services}
+  %\VignetteIndexEntry{OpenAI API Services}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

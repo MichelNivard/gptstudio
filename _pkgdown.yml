@@ -4,21 +4,31 @@ template:
   bootswatch: litera
 
 navbar:
- components:
-   articles:
-    text: Services
-    menu:
-    - text: OpenAI
-      href: articles/openai.html
-    - text: Local Models with Ollama
-      href: articles/ollama.html
-    - text: HuggingFace
-      href: articles/huggingface.html
-    - text: Anthropic
-      href: articles/anthropic.html
-    - text: Azure OpenAI
-      href: articles/azure.html
-    - text: Google AI Studio
-      href: articles/google.html
-    - text: Perplexity
-      href: articles/perplexity.html
+  structure:
+    left: [addins, services, reference, news]
+    right: [search, github]
+  components:
+    addins:
+      text: Addins
+      menu:
+      - text: Chat
+        href: articles/chat.html
+      - text: Chat in Source
+        href: articles/chat-in-source.html
+    services:
+      text: Services
+      menu:
+      - text: OpenAI
+        href: articles/openai.html
+      - text: Local Models with Ollama
+        href: articles/ollama.html
+      - text: HuggingFace
+        href: articles/huggingface.html
+      - text: Anthropic
+        href: articles/anthropic.html
+      - text: Azure OpenAI
+        href: articles/azure.html
+      - text: Google AI Studio
+        href: articles/google.html
+      - text: Perplexity
+        href: articles/perplexity.html
