@@ -45,6 +45,18 @@ To get a bug fix or to use a feature from the development version, you can insta
 pak::pak("MichelNivard/gptstudio")
 ```
 
+### Available AI Services and Models
+
+| AI Service | Models | Documentation | Setup |
+| ---- | ---- | ---- | ---- |
+| [OpenAI](https://platform.openai.com) | gpt-4-turbo, gpt-4, gpt-3.5-turbo ([latest models](https://platform.openai.com/docs/models)) | [OpenAI API Docs](https://platform.openai.com/docs/api-reference) | [OpenAI Setup](articles/openai.md) |
+| [HuggingFace](https://huggingface.co/) | various | [HF Inference API Docs](https://huggingface.co/docs/hub/models-inference) | [HF Setup](articles/huggingface.md) |
+| [Anthropic](https://docs.anthropic.com/claude/docs/guide-to-anthropics-prompt-engineering-resources) | claude-2.1, claude-instant-1.2 | [Anthropic API Docs](https://docs.anthropic.com/claude/reference/getting-started-with-the-api) | [Anthropic Setup](articles/anthropic.md) |
+| [Ollama](https://ollama.ai/) | mistral, llama2, mixtral, phi ([latest models](https://ollama.ai/library)) | [Ollama API Docs](https://github.com/jmorganca/ollama/blob/main/docs/api.md) | [Ollama Setup](articles/ollama.md) |
+| [Perplexity](https://www.perplexity.ai) | pplx-7b-chat, pplx-70b-chat, pplx-7b-online, pplx-70b-online, llama-2-70b-chat, codellama-34b-instruct, mistral-7b-instruct, and mixtral-8x7b-instruct | [Perplexity API Docs](https://docs.perplexity.ai/reference/post_chat_completions) | [Perplexity Setup](articles/perplexity.md) |
+| [Google AI Studio](https://ai.google.dev/tutorials/ai-studio_quickstart) | Gemini and Palm (legacy) | [Google AI Studio Docs](https://ai.google.dev/docs) | [Google AI Studio Setup](articles/googleai.md) |
+| [Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview) | gpt-4, gpt-3.5-turbo ([latest models](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#gpt-4-and-gpt-4-turbo-preview)) | [Azure OpenAI API Docs](https://learn.microsoft.com/en-us/azure/ai-services/openai/quickstart?tabs=command-line,python&pivots=rest-api) | [Azure OpenAI Setup](articles/azure.md) |
+
 ### Default AI Service: OpenAI
 
 To get started, you must first set up an API service. The package is configured to work with several AI service providers, allowing for flexibility and choice based on your specific needs. The default configuration is set to use OpenAI's services. To use it you need:
