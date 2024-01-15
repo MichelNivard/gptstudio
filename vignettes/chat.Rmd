@@ -54,7 +54,7 @@ Some examples of how to use the package are below.
 4.  Ask more questions
 5.  Copy and try code
 
-![https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/gptstudio-ggplot2-example.gif]{width=700px}
+![](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/gptstudio-ggplot2-example.gif){width=700px}
 
 The Chat addin supports internationalization. You can set the "GPTSTUDIO_LANGUAGE" environmental variable to the language of your preference (i.e. `GPTSTUDIO_LANGUAGE="es"` for spanish). See the full list of supported languages in the translation file (`"inst/translations/translation.json"`).
 
@@ -62,7 +62,7 @@ The Chat addin supports internationalization. You can set the "GPTSTUDIO_LANGUAG
 
 We're excited to announce that our service now includes models from HuggingFace's inference API, Anthropic's claude models, and Google's AI Studio, Azure OpenAI, and local models with Ollama broadening the range of AI solutions you can use. You can set the model using the setting (gear) button in the Chat addin app.
 
-![https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/gptstudio-change-model.gif]{width=700px}
+![](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/gptstudio-change-model.gif){width=700px}
 
 <br>
 
