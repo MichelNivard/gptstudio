@@ -28,7 +28,7 @@ models.
 For further addins, tailored for R developers, also see the sister
 package: [gpttools](https://jameshwade.github.io/gpttools/)
 
-## Install the addins from this package:
+## Getting Started: Installation & AI Service Setup
 
 ``` r
 install.packages("gptstudio")
@@ -42,46 +42,12 @@ can install the development version of this package from GitHub.
 pak::pak("MichelNivard/gptstudio")
 ```
 
-## Privacy Notice for gptstudio
+### Default AI Service: OpenAI
 
-This privacy notice is applicable to the R package that uses popular
-language models like gpt-4 turbo and claude-2.1. By using this package,
-you agree to adhere to the privacy terms and conditions set by the API
-service.
-
-### Data Sharing with AI Services
-
-When using this R package, any text or code you highlight/select with
-your cursor, or the prompt you enter within the built-in applications,
-will be sent to the selected AI service provider (e.g., OpenAI,
-Anthropic, HuggingFace, Google AI Studio, Azure OpenAI) as part of an
-API request. This data sharing is governed by the privacy notice, rules,
-and exceptions that you agreed to with the respective service provider
-when creating an account.
-
-### Security and Data Usage by AI Service Providers
-
-We cannot guarantee the security of the data you send via the API to any
-AI service provider, nor can we provide details on how each service
-processes or uses your data. However, these providers often state that
-they use prompts and results to enhance their AI models, as outlined in
-their terms of use. Be sure to review the terms of use of the respective
-AI service provider directly.
-
-### Limiting Data Sharing
-
-The R package is designed to share only the text or code that you
-specifically highlight/select or include in a prompt through our
-built-in applications. No other elements of your R environment will be
-shared unless you turn those features on. It is your responsibility to
-ensure that you do not accidentally share sensitive data with any AI
-service provider.
-
-**IMPORTANT: To maintain the privacy of your data, do not highlight,
-include in a prompt, or otherwise upload any sensitive data, code, or
-text that should remain confidential.**
-
-## Getting Started with OpenAI
+To get started, you must first set up an API service. The package is
+configured to work with several AI service providers, allowing for
+flexibility and choice based on your specific needs. The default
+configuration is set to use OpenAI’s services. To use it you need:
 
 1.  Make an OpenAI account. [Sign up
     here](https://platform.openai.com/).
@@ -93,7 +59,7 @@ text that should remain confidential.**
 3.  Set the API key up in Rstudio. See the section below on configuring
     the API key.
 
-### Configuring OpenAI API Key
+#### Configuring OpenAI API Key
 
 To interact with the OpenAI API, it’s required to have a valid
 `OPENAI_API_KEY` environment variable. Here are the steps to configure
@@ -134,9 +100,65 @@ exposing your API key!
 details entered into your OpenAI account. This is a restriction imposed
 by OpenAI and is unrelated to this package.
 
+### Alternative AI Service Providers
+
+While OpenAI is the default and currently considered one of the most
+robust options, `gptstudio` is also compatible with other AI service
+providers. These include [Anthropic](articles/anthropic.md),
+[HuggingFace](articles/huggingface.md), [Google AI
+Studio](articles/googleai.md), [Azure OpenAI](articles/azure.md), and
+[Perplexity](articles/perplexity.md). You can select any of these
+providers based on your preference or specific requirements. You can
+also run local models with [Ollama](articles/ollama.md). This requires
+more setup but at the benefit of not sharing your data with any third
+party.
+
+To use an alternative provider, you will need to obtain the relevant API
+key or access credentials from the chosen provider and configure them
+similarly.
+
+## Privacy Notice for gptstudio
+
+This privacy notice is applicable to the R package that uses popular
+language models like gpt-4 turbo and claude-2.1. By using this package,
+you agree to adhere to the privacy terms and conditions set by the API
+service.
+
+### Data Sharing with AI Services
+
+When using this R package, any text or code you highlight/select with
+your cursor, or the prompt you enter within the built-in applications,
+will be sent to the selected AI service provider (e.g., OpenAI,
+Anthropic, HuggingFace, Google AI Studio, Azure OpenAI) as part of an
+API request. This data sharing is governed by the privacy notice, rules,
+and exceptions that you agreed to with the respective service provider
+when creating an account.
+
+### Security and Data Usage by AI Service Providers
+
+We cannot guarantee the security of the data you send via the API to any
+AI service provider, nor can we provide details on how each service
+processes or uses your data. However, these providers often state that
+they use prompts and results to enhance their AI models, as outlined in
+their terms of use. Be sure to review the terms of use of the respective
+AI service provider directly.
+
+### Limiting Data Sharing
+
+The R package is designed to share only the text or code that you
+specifically highlight/select or include in a prompt through our
+built-in applications. No other elements of your R environment will be
+shared unless you turn those features on. It is your responsibility to
+ensure that you do not accidentally share sensitive data with any AI
+service provider.
+
+**IMPORTANT: To maintain the privacy of your data, do not highlight,
+include in a prompt, or otherwise upload any sensitive data, code, or
+text that should remain confidential.**
+
 ## Usage
 
-Some examples of use.
+Some examples of how to use the package are below.
 
 ### Chat in RStudio
 
@@ -166,6 +188,8 @@ of AI solutions you can use. You can set the model using the setting
 <video src="https://user-images.githubusercontent.com/6314313/252512899-c45e4711-2197-4849-a5c1-4925355a1369.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512899-c45e4711-2197-4849-a5c1-4925355a1369.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px; max-width:700px">
 </video>
 
+<br>
+
 #### Persistent User Settings & Custom Prompt
 
 You can now save your app settings across sessions. These are saved in a
@@ -176,6 +200,8 @@ your own custom prompt to pass to the model as instructions.
 <video src="https://user-images.githubusercontent.com/6314313/252512933-5965b70c-4d58-4b82-aa67-7e2baf10660c.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512933-5965b70c-4d58-4b82-aa67-7e2baf10660c.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px; max-width:700px">
 </video>
 
+<br>
+
 ### Provide your own instructions in R, R Markdown, or Quarto files
 
 **Addins \> GPTSTUDIO \> Chat in Source:** Apply any edit what YOU
@@ -184,18 +210,16 @@ desire or can dream up to a selection of code or text.
 <video src="https://user-images.githubusercontent.com/6314313/225774578-72e4e966-a740-4afc-beca-1ac25abb504c.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px; max-width:700px">
 </video>
 
+<br>
+
 ### Spelling ang grammar check
 
 **Addins \> GPTSTUDIO \> Spelling and Grammar:** Takes the selected text
 sends it to OpenAI’s best model and instructs it to return a spelling
 and grammar checked version.
 
-<figure>
-<img
-src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/spelling.gif"
-alt="spelling" />
-<figcaption aria-hidden="true">spelling</figcaption>
-</figure>
+![spelling](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/spelling.gif)
+<br>
 
 ### Comment your code:
 
