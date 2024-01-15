@@ -44,7 +44,7 @@ For convenience, you may want to map the addin to a keyboard shortcut. You can d
 
 The `Chat in Source` addin allows you to customize the model and API service used by the app. Like the `Chat` addin, the default service is OpenAI. To change this, you need to change the settings in the `Chat` app. This will change the model for both the `Chat` and `Chat in Source` addins.
 
-![](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/spelling.gif){width=700px}
+![](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/gptstudio-change-model.gif){width=700px}
 
 ## Examples and Use Cases
 
