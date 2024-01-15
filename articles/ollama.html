@@ -42,8 +42,12 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-addins">Addins</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-addins">
+    <a class="dropdown-item" href="../articles/chat.html">Chat</a>
+    <a class="dropdown-item" href="../articles/chat-in-source.html">Chat in Source</a>
+  </div>
 </li>
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-services">Services</a>
@@ -56,6 +60,9 @@
     <a class="dropdown-item" href="../articles/google.html">Google AI Studio</a>
     <a class="dropdown-item" href="../articles/perplexity.html">Perplexity</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
@@ -127,6 +134,14 @@ documentation</a>.</p>
 <code>http://localhost:11434</code> to locate the ollama API. You can
 customize this by setting up the <code>OLLAMA_HOST</code> environmental
 variable with <code>usethis::edit_r_environ()</code>.</p>
+<div class="section level2">
+<h2 id="an-example-with-ollama">An Example with Ollama<a class="anchor" aria-label="anchor" href="#an-example-with-ollama"></a>
+</h2>
+<p>Here is a short video showing you how to get started with ollama. It
+assumes that you have already installed docker. See the docker <a href="https://docs.docker.com/get-docker/" class="external-link">installation guide</a> for
+more information.</p>
+<p><img src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/gptstudio-ollama-example.gif" width="700"></p>
+</div>
   </main>
 </div>
 

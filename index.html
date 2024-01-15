@@ -48,8 +48,12 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="reference/index.html">Reference</a>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-addins">Addins</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-addins">
+    <a class="dropdown-item" href="articles/chat.html">Chat</a>
+    <a class="dropdown-item" href="articles/chat-in-source.html">Chat in Source</a>
+  </div>
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-services">Services</a>
@@ -62,6 +66,9 @@
     <a class="dropdown-item" href="articles/google.html">Google AI Studio</a>
     <a class="dropdown-item" href="articles/perplexity.html">Perplexity</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="reference/index.html">Reference</a>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="news/index.html">Changelog</a>
@@ -96,7 +103,7 @@
 <p>The goal of gptstudio is for R programmers to easily incorporate use of large language models (LLMs) into their project workflows. These models appear to be a step change in our use of text for knowledge work, but you should carefully consider ethical implications of using these models.</p>
 <p>For further addins, tailored for R developers, also see the sister package: <a href="https://jameshwade.github.io/gpttools/" class="external-link">gpttools</a></p>
 <div class="section level2">
-<h2 id="install-the-addins-from-this-package">Install the addins from this package:<a class="anchor" aria-label="anchor" href="#install-the-addins-from-this-package"></a>
+<h2 id="getting-started-installation--ai-service-setup">Getting Started: Installation &amp; AI Service Setup<a class="anchor" aria-label="anchor" href="#getting-started-installation--ai-service-setup"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"gptstudio"</span><span class="op">)</span></span></code></pre></div>
@@ -104,6 +111,101 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"MichelNivard/gptstudio"</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="available-ai-services-and-models">Available AI Services and Models<a class="anchor" aria-label="anchor" href="#available-ai-services-and-models"></a>
+</h3>
+<table class="table">
+<colgroup>
+<col width="23%">
+<col width="34%">
+<col width="31%">
+<col width="10%">
+</colgroup>
+<thead><tr class="header">
+<th>AI Service</th>
+<th>Models</th>
+<th>Documentation</th>
+<th>Setup</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://platform.openai.com" class="external-link">OpenAI</a></td>
+<td>gpt-4-turbo, gpt-4, gpt-3.5-turbo (<a href="https://platform.openai.com/docs/models" class="external-link">latest models</a>)</td>
+<td><a href="https://platform.openai.com/docs/api-reference" class="external-link">OpenAI API Docs</a></td>
+<td><a href="articles/openai.html">OpenAI Setup</a></td>
+</tr>
+<tr class="even">
+<td><a href="https://huggingface.co/" class="external-link">HuggingFace</a></td>
+<td>various</td>
+<td><a href="https://huggingface.co/docs/hub/models-inference" class="external-link">HF Inference API Docs</a></td>
+<td><a href="articles/huggingface.html">HF Setup</a></td>
+</tr>
+<tr class="odd">
+<td><a href="https://docs.anthropic.com/claude/docs/guide-to-anthropics-prompt-engineering-resources" class="external-link">Anthropic</a></td>
+<td>claude-2.1, claude-instant-1.2</td>
+<td><a href="https://docs.anthropic.com/claude/reference/getting-started-with-the-api" class="external-link">Anthropic API Docs</a></td>
+<td><a href="articles/anthropic.html">Anthropic Setup</a></td>
+</tr>
+<tr class="even">
+<td><a href="https://ollama.ai/" class="external-link">Ollama</a></td>
+<td>mistral, llama2, mixtral, phi (<a href="https://ollama.ai/library" class="external-link">latest models</a>)</td>
+<td><a href="https://github.com/jmorganca/ollama/blob/main/docs/api.md" class="external-link">Ollama API Docs</a></td>
+<td><a href="articles/ollama.html">Ollama Setup</a></td>
+</tr>
+<tr class="odd">
+<td><a href="https://www.perplexity.ai" class="external-link">Perplexity</a></td>
+<td>pplx-7b-chat, pplx-70b-chat, pplx-7b-online, pplx-70b-online, llama-2-70b-chat, codellama-34b-instruct, mistral-7b-instruct, and mixtral-8x7b-instruct</td>
+<td><a href="https://docs.perplexity.ai/reference/post_chat_completions" class="external-link">Perplexity API Docs</a></td>
+<td><a href="articles/perplexity.html">Perplexity Setup</a></td>
+</tr>
+<tr class="even">
+<td><a href="https://ai.google.dev/tutorials/ai-studio_quickstart" class="external-link">Google AI Studio</a></td>
+<td>Gemini and Palm (legacy)</td>
+<td><a href="https://ai.google.dev/docs" class="external-link">Google AI Studio Docs</a></td>
+<td><a href="articles/googleai.html">Google AI Studio Setup</a></td>
+</tr>
+<tr class="odd">
+<td><a href="https://learn.microsoft.com/en-us/azure/ai-services/openai/overview" class="external-link">Azure OpenAI</a></td>
+<td>gpt-4, gpt-3.5-turbo (<a href="https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#gpt-4-and-gpt-4-turbo-preview" class="external-link">latest models</a>)</td>
+<td><a href="https://learn.microsoft.com/en-us/azure/ai-services/openai/quickstart?tabs=command-line,python&amp;pivots=rest-api" class="external-link">Azure OpenAI API Docs</a></td>
+<td><a href="articles/azure.html">Azure OpenAI Setup</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="default-ai-service-openai">Default AI Service: OpenAI<a class="anchor" aria-label="anchor" href="#default-ai-service-openai"></a>
+</h3>
+<p>To get started, you must first set up an API service. The package is configured to work with several AI service providers, allowing for flexibility and choice based on your specific needs. The default configuration is set to use OpenAI’s services. To use it you need:</p>
+<ol style="list-style-type: decimal">
+<li><p>Make an OpenAI account. <a href="https://platform.openai.com/" class="external-link">Sign up here</a>.</p></li>
+<li><p><a href="https://platform.openai.com/account/api-keys" class="external-link">Create an OpenAI API key</a> to use with the package.</p></li>
+<li><p>Set the API key up in Rstudio. See the section below on configuring the API key.</p></li>
+</ol>
+<div class="section level4">
+<h4 id="configuring-openai-api-key">Configuring OpenAI API Key<a class="anchor" aria-label="anchor" href="#configuring-openai-api-key"></a>
+</h4>
+<p>To interact with the OpenAI API, it’s required to have a valid <code>OPENAI_API_KEY</code> environment variable. Here are the steps to configure it.</p>
+<p>You can establish this environment variable globally by including it in your project’s .Renviron file. This approach ensures that the environment variable persists across all sessions as the Shiny app runs in the background.</p>
+<p>Here is a set of commands to open the .Renviron file for modification:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://usethis.r-lib.org" class="external-link">usethis</a></span><span class="op">)</span></span>
+<span><span class="fu">edit_r_environ</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>If you wish to set the variable temporarily for a single session, use this command, substituting <code>"&lt;APIKEY&gt;"</code> with your actual OpenAI API key:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>OPENAI_API_KEY <span class="op">=</span> <span class="st">"&lt;APIKEY&gt;"</span><span class="op">)</span></span></code></pre></div>
+<p>For a persistent setting that loads every time you launch this project, add the following line to .Renviron, replacing <code>"&lt;APIKEY&gt;"</code> with your actual API key:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">OPENAI_API_KEY</span><span class="op">=</span><span class="st">"&lt;APIKEY&gt;"</span></span></code></pre></div>
+<p><strong>Caution:</strong> If you’re using version control systems like GitHub or GitLab, remember to include .Renviron in your .gitignore file to prevent exposing your API key!</p>
+<p><strong>Important Note:</strong> OpenAI API will not function without valid payment details entered into your OpenAI account. This is a restriction imposed by OpenAI and is unrelated to this package.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="alternative-ai-service-providers">Alternative AI Service Providers<a class="anchor" aria-label="anchor" href="#alternative-ai-service-providers"></a>
+</h3>
+<p>While OpenAI is the default and currently considered one of the most robust options, <code>gptstudio</code> is also compatible with other AI service providers. These include <a href="articles/anthropic.html">Anthropic</a>, <a href="articles/huggingface.html">HuggingFace</a>, <a href="articles/googleai.html">Google AI Studio</a>, <a href="articles/azure.html">Azure OpenAI</a>, and <a href="articles/perplexity.html">Perplexity</a>. You can select any of these providers based on your preference or specific requirements. You can also run local models with <a href="articles/ollama.html">Ollama</a>. This requires more setup but at the benefit of not sharing your data with any third party.</p>
+<p>To use an alternative provider, you will need to obtain the relevant API key or access credentials from the chosen provider and configure them similarly.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="privacy-notice-for-gptstudio">Privacy Notice for gptstudio<a class="anchor" aria-label="anchor" href="#privacy-notice-for-gptstudio"></a>
@@ -124,83 +226,6 @@
 </h3>
 <p>The R package is designed to share only the text or code that you specifically highlight/select or include in a prompt through our built-in applications. No other elements of your R environment will be shared unless you turn those features on. It is your responsibility to ensure that you do not accidentally share sensitive data with any AI service provider.</p>
 <p><strong>IMPORTANT: To maintain the privacy of your data, do not highlight, include in a prompt, or otherwise upload any sensitive data, code, or text that should remain confidential.</strong></p>
-</div>
-</div>
-<div class="section level2">
-<h2 id="getting-started-with-openai">Getting Started with OpenAI<a class="anchor" aria-label="anchor" href="#getting-started-with-openai"></a>
-</h2>
-<ol style="list-style-type: decimal">
-<li><p>Make an OpenAI account. <a href="https://platform.openai.com/" class="external-link">Sign up here</a>.</p></li>
-<li><p><a href="https://platform.openai.com/account/api-keys" class="external-link">Create an OpenAI API key</a> to use with the package.</p></li>
-<li><p>Set the API key up in Rstudio. See the section below on configuring the API key.</p></li>
-</ol>
-<div class="section level3">
-<h3 id="configuring-openai-api-key">Configuring OpenAI API Key<a class="anchor" aria-label="anchor" href="#configuring-openai-api-key"></a>
-</h3>
-<p>To interact with the OpenAI API, it’s required to have a valid <code>OPENAI_API_KEY</code> environment variable. Here are the steps to configure it.</p>
-<p>You can establish this environment variable globally by including it in your project’s .Renviron file. This approach ensures that the environment variable persists across all sessions as the Shiny app runs in the background.</p>
-<p>Here is a set of commands to open the .Renviron file for modification:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://usethis.r-lib.org" class="external-link">usethis</a></span><span class="op">)</span></span>
-<span><span class="fu">edit_r_environ</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>If you wish to set the variable temporarily for a single session, use this command, substituting <code>"&lt;APIKEY&gt;"</code> with your actual OpenAI API key:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>OPENAI_API_KEY <span class="op">=</span> <span class="st">"&lt;APIKEY&gt;"</span><span class="op">)</span></span></code></pre></div>
-<p>For a persistent setting that loads every time you launch this project, add the following line to .Renviron, replacing <code>"&lt;APIKEY&gt;"</code> with your actual API key:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">OPENAI_API_KEY</span><span class="op">=</span><span class="st">"&lt;APIKEY&gt;"</span></span></code></pre></div>
-<p><strong>Caution:</strong> If you’re using version control systems like GitHub or GitLab, remember to include .Renviron in your .gitignore file to prevent exposing your API key!</p>
-<p><strong>Important Note:</strong> OpenAI API will not function without valid payment details entered into your OpenAI account. This is a restriction imposed by OpenAI and is unrelated to this package.</p>
-</div>
-</div>
-<div class="section level2">
-<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
-</h2>
-<p>Some examples of use.</p>
-<div class="section level3">
-<h3 id="chat-in-rstudio">Chat in RStudio<a class="anchor" aria-label="anchor" href="#chat-in-rstudio"></a>
-</h3>
-<ol style="list-style-type: decimal">
-<li><strong>Addins &gt; gptstudio &gt; Chat</strong></li>
-<li>Type your question.</li>
-<li>Click “Send” button or press “Enter”</li>
-<li>Ask more questions</li>
-<li>Copy and try code</li>
-</ol>
-<video src="https://user-images.githubusercontent.com/6314313/252512856-7f677852-f2c8-4d7c-a2b6-ca909caaa142.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512856-7f677852-f2c8-4d7c-a2b6-ca909caaa142.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px; max-width:700px"></video><p>The Chat addin supports internationalization. You can set the “GPTSTUDIO_LANGUAGE” environmental variable to the language of your preference (i.e. <code>GPTSTUDIO_LANGUAGE="es"</code> for spanish). See the full list of supported languages in the translation file (<code>"inst/translations/translation.json"</code>).</p>
-<div class="section level4">
-<h4 id="using-other-models">Using Other Models<a class="anchor" aria-label="anchor" href="#using-other-models"></a>
-</h4>
-<p>We’re excited to announce that our service now includes models from HuggingFace’s inference API, Anthropic’s claude models, and Google’s AI Studio, Azure OpenAI, and local models with Ollama broadening the range of AI solutions you can use. You can set the model using the setting (gear) button in the Chat addin app.</p>
-<video src="https://user-images.githubusercontent.com/6314313/252512899-c45e4711-2197-4849-a5c1-4925355a1369.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512899-c45e4711-2197-4849-a5c1-4925355a1369.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px; max-width:700px"></video>
-</div>
-<div class="section level4">
-<h4 id="persistent-user-settings--custom-prompt">Persistent User Settings &amp; Custom Prompt<a class="anchor" aria-label="anchor" href="#persistent-user-settings--custom-prompt"></a>
-</h4>
-<p>You can now save your app settings across sessions. These are saved in a user config file. The easiest way to change these settings is the “Save as Default” button in the add-in app. This also allows you to specify your own custom prompt to pass to the model as instructions.</p>
-<video src="https://user-images.githubusercontent.com/6314313/252512933-5965b70c-4d58-4b82-aa67-7e2baf10660c.mov" data-canonical-src="https://user-images.githubusercontent.com/6314313/252512933-5965b70c-4d58-4b82-aa67-7e2baf10660c.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px; max-width:700px"></video>
-</div>
-</div>
-<div class="section level3">
-<h3 id="provide-your-own-instructions-in-r-r-markdown-or-quarto-files">Provide your own instructions in R, R Markdown, or Quarto files<a class="anchor" aria-label="anchor" href="#provide-your-own-instructions-in-r-r-markdown-or-quarto-files"></a>
-</h3>
-<p><strong>Addins &gt; GPTSTUDIO &gt; Chat in Source:</strong> Apply any edit what YOU desire or can dream up to a selection of code or text.</p>
-<video src="https://user-images.githubusercontent.com/6314313/225774578-72e4e966-a740-4afc-beca-1ac25abb504c.mov" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px; max-width:700px"></video>
-</div>
-<div class="section level3">
-<h3 id="spelling-ang-grammar-check">Spelling ang grammar check<a class="anchor" aria-label="anchor" href="#spelling-ang-grammar-check"></a>
-</h3>
-<p><strong>Addins &gt; GPTSTUDIO &gt; Spelling and Grammar:</strong> Takes the selected text sends it to OpenAI’s best model and instructs it to return a spelling and grammar checked version.</p>
-<figure><img src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/spelling.gif" alt="spelling"><figcaption aria-hidden="true">
-spelling
-</figcaption></figure>
-</div>
-<div class="section level3">
-<h3 id="comment-your-code">Comment your code:<a class="anchor" aria-label="anchor" href="#comment-your-code"></a>
-</h3>
-<p><strong>Addins &gt; GPTSTUDIO &gt; Comment your code:</strong> Takes the selected text sends it to OpenAI as a prompt for a code specific model to work with, asks for a version with a comment added explaining the code line by line.</p>
-<figure><img src="https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/comments.gif" alt="add comments to code"><figcaption aria-hidden="true">
-add comments to code
-</figcaption></figure>
 </div>
 </div>
 <div class="section level2">
