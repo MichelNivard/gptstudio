@@ -12,7 +12,7 @@ We are happy to announce that we now support local models with [ollama](https://
 
 ### Perplexity Service
 
-Perlexity AI is now available as another service. The current version include the following models: pplx-7b-chat, pplx-70b-chat, pplx-7b-online, pplx-70b-online, llama-2-70b-chat, codellama-34b-instruct, mistral-7b-instruct, and mixtral-8x7b-instruct.
+Perplexity AI is now available as another service. The current version include the following models: pplx-7b-chat, pplx-70b-chat, pplx-7b-online, pplx-70b-online, llama-2-70b-chat, codellama-34b-instruct, mistral-7b-instruct, and mixtral-8x7b-instruct.
 
 ### Internal
 
@@ -77,7 +77,7 @@ To ensure optimal user experience, we're now using GitHub Actions to check compa
 
 We hope you enjoy the enhanced features and improved performance in this latest version. As always, your feedback is invaluable to us, so please keep it coming!
 
-### Traslations
+### Translations
 
 The ChatGPT addin can now speak German! Thanks to [Mark Colley](https://github.com/M-Colley) #107
 
@@ -105,7 +105,7 @@ Instead of waiting for the full response to be received before showing it to the
 
 ### New look of the message history
 
-Each individual message is now rounded and has an icon indicating whether it comes from the user or from the assistant. Each role has a different horizontal aligment and a slightly different background color.
+Each individual message is now rounded and has an icon indicating whether it comes from the user or from the assistant. Each role has a different horizontal alignment and a slightly different background color.
 
 ![image](https://user-images.githubusercontent.com/19418298/233134945-06311099-92c0-4f4f-b728-66eb37f67836.png)
 
@@ -115,7 +115,7 @@ The prompt and buttons have been simplified to give the chat more room to expand
 
 ![image](https://user-images.githubusercontent.com/19418298/233137057-7d0991d8-ab56-4b7f-ae93-e88cba41e600.png)
 
-Now the app has a settings button where the user can still choose its skill level and prefered style.
+Now the app has a settings button where the user can still choose its skill level and preferred style.
 
 ![image](https://user-images.githubusercontent.com/19418298/233137374-4593410a-3132-4c1a-a886-5fd4966cb7e5.png)
 
@@ -143,7 +143,7 @@ Every code chunk now has on top a bar indicating the language of the code displa
 
 ### Custom scrollbar
 
-The app uses now a narrower grey scrollbar.
+The app uses now a narrower grey scroll bar.
 
 ## gptstudio 0.1.0
 
