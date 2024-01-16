@@ -25,12 +25,6 @@
     <loc>/articles/azure.html</loc>
   </url>
   <url>
-    <loc>/articles/chat-in-source.html</loc>
-  </url>
-  <url>
-    <loc>/articles/chat.html</loc>
-  </url>
-  <url>
     <loc>/articles/google.html</loc>
   </url>
   <url>
@@ -40,7 +34,13 @@
     <loc>/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/ollama.html</loc>
+    <loc>/articles/no-build/chat-in-source.html</loc>
+  </url>
+  <url>
+    <loc>/articles/no-build/chat.html</loc>
+  </url>
+  <url>
+    <loc>/articles/no-build/ollama.html</loc>
   </url>
   <url>
     <loc>/articles/openai.html</loc>
