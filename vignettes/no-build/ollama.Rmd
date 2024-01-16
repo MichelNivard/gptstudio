@@ -1,10 +1,6 @@
 ---
 title: "Local Models with Ollama"
 output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Local Models with Ollama}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
