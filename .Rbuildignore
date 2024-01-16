@@ -14,3 +14,6 @@ _\.new\.png$
 diagram.svg
 ^revdep$
 dev/
+^vignette/chat\.Rmd$
+^vignette/ollama\.Rmd$
+^vignette/chat-in-source\.Rmd$
