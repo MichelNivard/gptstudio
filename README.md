@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# gptstudio <img src="man/figures/logo.png" align="right" height="90"/>
+# gptstudio <a href="https://michelnivard.github.io/gptstudio"><img src="man/figures/logo.png" align="right" height="150"/>
 
 <!-- badges: start -->
 
@@ -87,13 +87,6 @@ Here is a set of commands to open the .Renviron file for modification:
 ``` r
 require(usethis)
 edit_r_environ()
-```
-
-If you wish to set the variable temporarily for a single session, use
-this command, substituting `"<APIKEY>"` with your actual OpenAI API key:
-
-``` r
-Sys.setenv(OPENAI_API_KEY = "<APIKEY>")
 ```
 
 For a persistent setting that loads every time you launch this project,
