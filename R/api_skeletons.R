@@ -215,6 +215,7 @@ new_gptstudio_request_skeleton_perplexity <- function(
 #'   configured request ready to be passed to the corresponding API.
 #'
 #' @examples
+#' \dontrun{
 #' request_skeleton <- gptstudio_create_skeleton(
 #'   service = "openai",
 #'   prompt = "Name the top 5 packages in R.",
@@ -222,6 +223,7 @@ new_gptstudio_request_skeleton_perplexity <- function(
 #'   stream = TRUE,
 #'   model = "gpt-3.5-turbo"
 #' )
+#' }
 #'
 #' @export
 gptstudio_create_skeleton <- function(service = "openai",

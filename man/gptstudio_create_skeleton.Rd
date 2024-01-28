@@ -43,6 +43,7 @@ This function dynamically creates a request skeleton for different AI text
 generation services.
 }
 \examples{
+\dontrun{
 request_skeleton <- gptstudio_create_skeleton(
   service = "openai",
   prompt = "Name the top 5 packages in R.",
@@ -50,5 +51,6 @@ request_skeleton <- gptstudio_create_skeleton(
   stream = TRUE,
   model = "gpt-3.5-turbo"
 )
+}
 
 }
