@@ -11,8 +11,8 @@ chat(
   stream = FALSE,
   model = getOption("gptstudio.model"),
   skill = getOption("gptstudio.skill"),
-  style = getOption("gptstudio.code_style"),
-  task = getOption("gptstudio.task"),
+  style = getOption("gptstudio.code_style", "no preference"),
+  task = getOption("gptstudio.task", "coding"),
   custom_prompt = NULL,
   process_response = FALSE,
   ...

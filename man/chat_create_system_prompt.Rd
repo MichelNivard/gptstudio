@@ -5,29 +5,47 @@
 \title{Create system prompt}
 \usage{
 chat_create_system_prompt(
-  style = c("tidyverse", "base", "no preference", NULL),
-  skill = c("beginner", "intermediate", "advanced", "genius", NULL),
-  task = c("coding", "general", "advanced developer", "custom"),
-  custom_prompt = NULL,
-  in_source
+  style = getOption("gptstudio.code_style"),
+  skill = getOption("gptstudio.skill"),
+  task = getOption("gptstudio.task"),
+  custom_prompt = getOption("gptstudio.custom_prompt"),
+  in_source = FALSE
 )
 }
 \arguments{
-\item{style}{A character string indicating the preferred coding style, the
-default is "tidyverse".}
+\item{style}{A character string indicating the preferred coding style. Valid
+values are "tidyverse", "base", "no preference". Defaults to \code{getOption(gptstudio.code_style)}.}
 
-\item{skill}{The self-described skill level of the programmer,
-default is "beginner"}
+\item{skill}{The self-described skill level of the programmer. Valid values
+are "beginner", "intermediate", "advanced", "genius". Defaults to \code{getOption(gptstudio.skill)}.}
 
-\item{task}{The task to be performed: "coding", "general", or "advanced developer".}
+\item{task}{The specific task to be performed: "coding", "general", "advanced
+developer", or "custom". This influences the generated system prompt.
+Defaults to "coding".}
 
-\item{custom_prompt}{An optional custom prompt to be displayed.}
+\item{custom_prompt}{An optional custom prompt string to be utilized when
+\code{task} is set to "custom". Default is NULL.}
 
-\item{in_source}{Whether to add instructions to act as in a source script.}
+\item{in_source}{A logical indicating whether the instructions are intended
+for use in a source script. This parameter is required and must be
+explicitly set to TRUE or FALSE. Default is FALSE.}
 }
 \value{
-A string
+Returns a character string that forms a system prompt tailored to the
+specified parameters. The string provides guidance or instructions based on
+the user's coding style, skill level, and task.
 }
 \description{
-This creates a system prompt based on the user defined parameters.
+This function creates a customizable system prompt based on user-defined
+parameters such as coding style, skill level, and task. It supports
+customization for specific use cases through a custom prompt option.
+}
+\examples{
+\dontrun{
+chat_create_system_prompt(in_source = TRUE)
+chat_create_system_prompt(style = "tidyverse",
+                          skill = "advanced",
+                          task = "coding",
+                          in_source = FALSE)
+}
 }
