@@ -32,9 +32,11 @@ validate_skeleton <- function(url, api_key, model, prompt, history, stream) {
     rlang::is_scalar_character(prompt),
     msg = "Prompt is not a valid list"
   )
+
+  # is list or is NULL
   assert_that(
-    rlang::is_list(history),
-    msg = "History is not a valid list"
+    rlang::is_list(history) || is.null(history),
+    msg = "History is not a valid list or NULL"
   )
   assert_that(
     rlang::is_bool(stream),
