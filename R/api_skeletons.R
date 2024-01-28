@@ -32,9 +32,11 @@ validate_skeleton <- function(url, api_key, model, prompt, history, stream) {
     rlang::is_scalar_character(prompt),
     msg = "Prompt is not a valid list"
   )
+
+  # is list or is NULL
   assert_that(
-    rlang::is_list(history),
-    msg = "History is not a valid list"
+    rlang::is_list(history) || is.null(history),
+    msg = "History is not a valid list or NULL"
   )
   assert_that(
     rlang::is_bool(stream),
@@ -189,7 +191,41 @@ new_gptstudio_request_skeleton_perplexity <- function(
                                 class = "gptstudio_request_perplexity")
 }
 
-
+#' Create a Request Skeleton
+#'
+#' This function dynamically creates a request skeleton for different AI text
+#' generation services.
+#'
+#' @param service The text generation service to use. Currently supports
+#'   "openai", "huggingface", "anthropic", "palm", "azure_openai", "ollama", and
+#'   "perplexity".
+#' @param prompt The initial prompt or question to pass to the text generation
+#'   service.
+#' @param history A list indicating the conversation history, where each element
+#'   is a list with elements "role" (who is speaking; e.g., "system", "user")
+#'   and "content" (what was said).
+#' @param stream Logical; indicates if streaming responses should be used.
+#'   Currently, this option is not supported across all services.
+#' @param model The specific model to use for generating responses. Defaults to
+#'   "gpt-3.5-turbo".
+#' @param ... Additional arguments passed to the service-specific skeleton
+#'   creation function.
+#'
+#' @return Depending on the selected service, returns a list that represents the
+#'   configured request ready to be passed to the corresponding API.
+#'
+#' @examples
+#' \dontrun{
+#' request_skeleton <- gptstudio_create_skeleton(
+#'   service = "openai",
+#'   prompt = "Name the top 5 packages in R.",
+#'   history = list(list(role = "system", content = "You are an R assistant")),
+#'   stream = TRUE,
+#'   model = "gpt-3.5-turbo"
+#' )
+#' }
+#'
+#' @export
 gptstudio_create_skeleton <- function(service = "openai",
                                       prompt = "Name the top 5 packages in R.",
                                       history = list(
