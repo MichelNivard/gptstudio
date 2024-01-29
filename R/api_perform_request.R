@@ -56,7 +56,7 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
   if (isTRUE(skeleton$stream)) {
     if (is.null(shinySession)) stop("Stream requires a shiny session object")
 
-    stream_handler <- StreamHandler$new(
+    stream_handler <- OpenaiStreamParser$new(
       session = shinySession,
       user_prompt = skeleton$prompt
     )
@@ -76,12 +76,12 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
 
     stream_chat_completion(
       messages = skeleton$history,
-      element_callback = stream_handler$handle_streamed_element,
+      element_callback = stream_handler$parse_sse,
       model = skeleton$model,
       openai_api_key = skeleton$api_key
     )
 
-    response <- stream_handler$current_value
+    response <- stream_handler$value
   } else {
     response_json <- request %>%
       httr2::req_perform() %>%

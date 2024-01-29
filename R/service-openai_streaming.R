@@ -48,3 +48,66 @@ stream_chat_completion <-
       handle = handle
     )
   }
+
+
+
+#' Stream handler for chat completions
+#'
+#' R6 class that allows to handle chat completions chunk by chunk.
+#' It also adds methods to retrieve relevant data. This class DOES NOT make the request.
+#'
+#' Because `curl::curl_fetch_stream` blocks the R console until the stream finishes,
+#' this class can take a shiny session object to handle communication with JS
+#' without recurring to a `shiny::observe` inside a module server.
+#'
+#' @param session The shiny session it will send the message to (optional).
+#' @param user_prompt The prompt for the chat completion. Only to be displayed in an HTML tag containing the prompt. (Optional).
+#' @param parsed_event An already parsed server-sent event to append to the events field.
+#' @importFrom R6 R6Class
+#' @importFrom jsonlite fromJSON
+OpenaiStreamParser <- R6::R6Class(
+  classname = "OpenaiStreamParser",
+  inherit = SSEparser::SSEparser,
+  public = list(
+    #' @field shinySession  Holds the `session` provided at initialization
+    shinySession = NULL,
+    #' @field user_prompt  The `user_prompt` provided at initialization after being formatted with markdown.
+    user_prompt = NULL,
+    #' @field value The content of the stream. It updates constantly until the stream ends.
+    value = NULL, # this will be our buffer
+    #' @description Start a StreamHandler. Recommended to be assigned to the `stream_handler` name.
+    initialize = function(session = NULL, user_prompt = NULL) {
+      self$shinySession <- session
+      self$user_prompt <- user_prompt
+      self$value <- ""
+      super$initialize()
+    },
+
+    #' @description Overwrites `SSEparser$append_parsed_sse()` to be able to send a custom message to a shiny session, escaping shiny's reactivity.
+    append_parsed_sse = function(parsed_event) {
+      # ----- here you can do whatever you want with the event data -----
+      if (parsed_event$data == "[DONE]") return()
+      parsed_event$data <- jsonlite::fromJSON(parsed_event$data, simplifyDataFrame = FALSE)
+
+      content <- parsed_event$data$choices[[1]]$delta$content
+      self$value <- paste0(self$value, content)
+
+      if (!is.null(self$shinySession)) {
+        # any communication with JS should be handled here!!
+        self$shinySession$sendCustomMessage(
+          type = "render-stream",
+          message = list(
+            user = self$user_prompt,
+            assistant = shiny::markdown(self$value)
+          )
+        )
+      }
+
+
+      # ----- END ----
+
+      self$events <- c(self$events, list(parsed_event))
+      invisible(self)
+    }
+  )
+)

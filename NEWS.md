@@ -16,7 +16,7 @@ Perlexity AI is now available as another service. The current version include th
 
 ### Internal
 
-- Reverted back to use an R6 class for OpenAI streaming. This doesn't affect how the users interact with the addins.
+- Reverted back to use an R6 class for OpenAI streaming (which now inherits from `SSEparser::SSEparser`). This doesn't affect how the users interact with the addins, but avoids a wider range of server errors.
 - Fixed a bug in retrieval of OpenAI models
 - Fixed a bug in Azure OpenAI request formation.
 - Fixed a bug in "in source" calls for addins.
