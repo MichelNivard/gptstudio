@@ -19,9 +19,9 @@ knitr::opts_chunk$set(
 - Visit [Google's AI Studio website](https://makersuite.google.com) and sign up.
 - Complete the verification process.
 
-### Accessing Google PALM API
+### Accessing Google AI Studio (Gemini and PALM) API
 
-- In your Google Cloud Console, enable the PALM API.
+- In your Google Cloud Console, enable the Google AI Studio API.
 - Create an API key as per the instructions in [Google's API documentation](https://ai.google.dev/docs).
 
 ### Setting the Google AI Studio API Key in .Renviron
@@ -34,10 +34,10 @@ require(usethis)
 edit_r_environ()
 ```
 
-For a persistent setting, add the following line to `.Renviron`, replacing `"<APIKEY>"` with your actual Google PALM API key:  
+For a persistent setting, add the following line to `.Renviron`, replacing `"<APIKEY>"` with your actual Google AI Studio API key:  
 
 ```bash 
-PALM_API_KEY="<APIKEY>"
+GOOGLE_API_KEY="<APIKEY>"
 ```
 
 Save the file and restart your R session for the changes to take effect.

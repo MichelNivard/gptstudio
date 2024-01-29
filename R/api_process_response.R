@@ -1,7 +1,7 @@
 #' Call API
 #'
 #' This function provides a generic interface for calling different APIs
-#' (e.g., OpenAI, HuggingFace, PALM (MakerSuite)). It dispatches the actual API
+#' (e.g., OpenAI, HuggingFace, Google AI Studio). It dispatches the actual API
 #' calls to the relevant method based on the `class` of the `skeleton` argument.
 #'
 #' @param skeleton A `gptstudio_response_skeleton` object
@@ -82,7 +82,7 @@ gptstudio_response_process.gptstudio_response_anthropic <-
   }
 
 #' @export
-gptstudio_response_process.gptstudio_response_palm <-
+gptstudio_response_process.gptstudio_response_google <-
   function(skeleton, ...) {
     response <- skeleton$response
     skeleton <- skeleton$skeleton
@@ -98,7 +98,7 @@ gptstudio_response_process.gptstudio_response_palm <-
     skeleton$history <- new_history
     skeleton$prompt <- NULL # remove the last prompt
     class(skeleton) <- c("gptstudio_request_skeleton",
-                         "gptstudio_request_palm")
+                         "gptstudio_request_google")
     skeleton
   }
 

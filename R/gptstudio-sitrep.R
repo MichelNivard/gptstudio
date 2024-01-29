@@ -6,7 +6,11 @@
 #' @param api_key The API key used for authentication.
 #' @return A logical value indicating whether the connection was successful.
 check_api_connection_openai <- function(service, api_key) {
-  check_api_key(service, api_key)
+  api_check <- check_api_key(service, api_key)
+  if (rlang::is_false(api_check)) {
+    return(invisible(NULL))
+  }
+
   response <-
     request_base(task = "models") %>%
     httr2::req_error(is_error = function(resp) FALSE) %>%
@@ -16,7 +20,10 @@ check_api_connection_openai <- function(service, api_key) {
 
 #' @inheritParams check_api_connection_openai
 check_api_connection_huggingface <- function(service, api_key) {
-  check_api_key(service, api_key)
+  api_check <- check_api_key(service, api_key)
+  if (rlang::is_false(api_check)) {
+    return(invisible(NULL))
+  }
   response <- request_base_huggingface(task = "gpt2") %>%
     httr2::req_error(is_error = function(resp) FALSE) %>%
     httr2::req_perform()
@@ -26,7 +33,11 @@ check_api_connection_huggingface <- function(service, api_key) {
 
 #' @inheritParams check_api_connection_openai
 check_api_connection_anthropic <- function(service, api_key) {
-  check_api_key(service, api_key)
+  api_check <- check_api_key(service, api_key)
+  if (rlang::is_false(api_check)) {
+    return(invisible(NULL))
+  }
+
   response <-
     request_base_anthropic(key = Sys.getenv("ANTHROPIC_API_KEY")) %>%
     httr2::req_body_json(
@@ -43,11 +54,17 @@ check_api_connection_anthropic <- function(service, api_key) {
 }
 
 #' @inheritParams check_api_connection_openai
-check_api_connection_palm <- function(service, api_key) {
-  check_api_key(service, api_key)
+check_api_connection_google <- function(service, api_key) {
+  api_check <- check_api_key(service, api_key)
+  if (rlang::is_false(api_check)) {
+    return(invisible(NULL))
+  }
 
-  response <- request_base_palm(model = "text-bison-001", key = api_key) %>%
-    httr2::req_body_json(data = list(prompt = list(text = "Hello."))) %>%
+  request_body <-
+    list(contents = list(list(parts = list(list(text = "Hello there")))))
+
+  response <- request_base_google(model = "gemini-pro", key = api_key) %>%
+    httr2::req_body_json(data = request_body) %>%
     httr2::req_error(is_error = function(resp) FALSE) %>%
     httr2::req_perform()
 
@@ -55,8 +72,11 @@ check_api_connection_palm <- function(service, api_key) {
 }
 
 #' @inheritParams check_api_connection_openai
-check_api_connection_azure_openai <- function(service, api_key) {
-  check_api_key(service, api_key)
+check_api_connection_azure_openai <- function(service, api_key) {''
+  api_check <- check_api_key(service, api_key)
+  if (rlang::is_false(api_check)) {
+    return(invisible(NULL))
+  }
 
   response <- request_base_azure_openai() %>%
     httr2::req_body_json(list(list(role = "user", content = "Hello world!"))) %>%
@@ -68,7 +88,10 @@ check_api_connection_azure_openai <- function(service, api_key) {
 
 #' @inheritParams check_api_connection_openai
 check_api_connection_perplexity <- function(service, api_key) {
-  check_api_key(service, api_key)
+  api_check <- check_api_key(service, api_key)
+  if (rlang::is_false(api_check)) {
+    return(invisible(NULL))
+  }
 
   response <- request_base_perplexity() %>%
     httr2::req_body_json(data = list(
@@ -131,12 +154,12 @@ gptstudio_sitrep <- function(verbose = TRUE) {
     cli::cli_h3("Checking Anthropic API connection")
     check_api_connection_anthropic(service = "Anthropic",
                                    api_key = Sys.getenv("ANTHROPIC_API_KEY"))
-    cli::cli_h3("Checking Google PALM Makersuite API connection")
-    check_api_connection_palm(service = "Google PALM",
-                              api_key = Sys.getenv("PALM_API_KEY"))
+    cli::cli_h3("Checking Google AI Studio API connection")
+    check_api_connection_google(service = "Google AI Studio",
+                                api_key = Sys.getenv("GOOGLE_API_KEY"))
     cli::cli_h3("Checking Azure OpenAI API connection")
-    check_api_connection_palm(service = "Azure OpenAI",
-                              api_key = Sys.getenv("AZURE_OPENAI_KEY"))
+    check_api_connection_azure_openai(service = "Azure OpenAI",
+                                      api_key = Sys.getenv("AZURE_OPENAI_KEY"))
     cli::cli_h3("Checking Perplexity API connection")
     check_api_connection_perplexity(service = "Perplexity",
                                     api_key = Sys.getenv("PERPLEXITY_API_KEY"))
@@ -155,6 +178,9 @@ gptstudio_sitrep <- function(verbose = TRUE) {
 check_api_key <- function(service, api_key) {
   if (is.null(api_key) || api_key == "") {
     cli::cli_alert_danger("API key is not set or invalid for {service} service.")
+    return(invisible(FALSE))
+  } else {
+    return(invisible(TRUE))
   }
 }
 

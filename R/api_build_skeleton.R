@@ -84,8 +84,8 @@ gptstudio_skeleton_build.gptstudio_request_anthropic <-
   }
 
 #' @export
-gptstudio_skeleton_build.gptstudio_request_palm <-
-  function(skeleton = gptstudio_create_skeleton("palm"),
+gptstudio_skeleton_build.gptstudio_request_google <-
+  function(skeleton = gptstudio_create_skeleton("google"),
            skill    = getOption("gptstudio.skill") ,
            style    = getOption("gptstudio.code_style"),
            task     = "coding",
@@ -97,7 +97,7 @@ gptstudio_skeleton_build.gptstudio_request_palm <-
     stream         <- skeleton$stream
     new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
 
-    new_gptstudio_request_skeleton_palm(model   = model,
+    new_gptstudio_request_skeleton_google(model   = model,
                                         prompt  = prompt,
                                         history = new_history,
                                         stream  = stream)
