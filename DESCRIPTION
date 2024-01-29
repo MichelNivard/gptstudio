@@ -42,6 +42,7 @@ Imports:
     rvest,
     shiny,
     shiny.i18n,
+    SSEparser,
     stringr (>= 1.5.0),
     utils,
     waiter,
