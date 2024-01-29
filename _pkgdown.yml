@@ -20,7 +20,7 @@ navbar:
       menu:
       - text: OpenAI
         href: articles/openai.html
-      - text: Local Models with Ollama
+      - text: Ollama for Local Models
         href: articles/ollama.html
       - text: HuggingFace
         href: articles/huggingface.html
@@ -32,3 +32,5 @@ navbar:
         href: articles/google.html
       - text: Perplexity
         href: articles/perplexity.html
+      - text: Cohere
+        href: articles/cohere.html

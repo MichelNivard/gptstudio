@@ -146,6 +146,10 @@ get_available_models <- function(service) {
     ollama_list() %>%
       purrr::pluck("models") %>%
       purrr::map_chr("name")
+  } else if (service == "cohere") {
+    c("command", "command-light", "command-nightly", "command-light-nightly")
+  } else if (service == "google") {
+    get_available_models_google()
   }
 }
 

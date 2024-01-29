@@ -222,6 +222,35 @@ gptstudio_request_perform.gptstudio_request_perplexity <-
     )
   }
 
+#' @export
+gptstudio_request_perform.gptstudio_request_cohere <- function(skeleton, ...) {
+  prompt      <- skeleton$prompt
+  model        <- skeleton$model
+
+  skeleton$history <- chat_history_append(
+    history = skeleton$history,
+    role = "user",
+    name = "user_message",
+    content = skeleton$prompt
+  )
+
+  cli_inform(c("i" = "Using Cohere API with {model} model"))
+  response <- create_chat_cohere(
+    prompt = prompt,
+    model = model,
+    api_key = skeleton$api_key
+  )
+
+  cli_alert_info("Response: {response}")
+
+  structure(
+    list(
+      skeleton = skeleton,
+      response = response
+    ),
+    class = "gptstudio_response_cohere"
+  )
+}
 
 #' @export
 gptstudio_request_perform.default <- function(skeleton, ...) {

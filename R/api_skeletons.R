@@ -47,7 +47,7 @@ validate_skeleton <- function(url, api_key, model, prompt, history, stream) {
 new_gptstudio_request_skeleton_openai <- function(
     url = glue("{getOption(\"gptstudio.openai_url\")}/chat/completions"),
     api_key = Sys.getenv("OPENAI_API_KEY"),
-    model = "gpt-3.5-turbo",
+    model = "gpt-4-turbo-preview",
     prompt = "What is a ggplot?",
     history = list(
       list(
@@ -191,6 +191,22 @@ new_gptstudio_request_skeleton_perplexity <- function(
                                 class = "gptstudio_request_perplexity")
 }
 
+# Cohere Skeleton Creation Function
+new_gptstudio_request_skeleton_cohere <- function(
+    model = "command",
+    prompt = "What is R?",
+    history = NULL,
+    stream = FALSE  # forcing false until streaming implemented for cohere
+) {
+  new_gpstudio_request_skeleton(url = "https://api.cohere.ai/v1/chat",
+                                api_key = Sys.getenv("COHERE_API_KEY"),
+                                model = model,
+                                prompt = prompt,
+                                history = history,
+                                stream = stream,
+                                class = "gptstudio_request_cohere")
+}
+
 #' Create a Request Skeleton
 #'
 #' This function dynamically creates a request skeleton for different AI text
@@ -277,6 +293,13 @@ gptstudio_create_skeleton <- function(service = "openai",
            prompt = prompt,
            history = history,
            # forcing false until streaming implemented for perplexity
+           stream = FALSE
+         ),
+         "cohere" = new_gptstudio_request_skeleton_cohere(
+           model = model,
+           prompt = prompt,
+           history = history,
+           # forcing false until streaming implemented for cohere
            stream = FALSE
          ))
 }
