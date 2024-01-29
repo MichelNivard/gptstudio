@@ -25,6 +25,9 @@
     <loc>/articles/azure.html</loc>
   </url>
   <url>
+    <loc>/articles/cohere.html</loc>
+  </url>
+  <url>
     <loc>/articles/google.html</loc>
   </url>
   <url>
@@ -77,6 +80,9 @@
   </url>
   <url>
     <loc>/reference/create_chat_app_theme.html</loc>
+  </url>
+  <url>
+    <loc>/reference/create_chat_cohere.html</loc>
   </url>
   <url>
     <loc>/reference/create_completion_anthropic.html</loc>
@@ -172,6 +178,9 @@
     <loc>/reference/query_api_anthropic.html</loc>
   </url>
   <url>
+    <loc>/reference/query_api_cohere.html</loc>
+  </url>
+  <url>
     <loc>/reference/query_api_google.html</loc>
   </url>
   <url>
@@ -191,6 +200,9 @@
   </url>
   <url>
     <loc>/reference/request_base_anthropic.html</loc>
+  </url>
+  <url>
+    <loc>/reference/request_base_cohere.html</loc>
   </url>
   <url>
     <loc>/reference/request_base_google.html</loc>
