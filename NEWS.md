@@ -14,7 +14,11 @@ We are happy to announce that we now support local models with [ollama](https://
 
 ### Perplexity Service
 
-Perplexity AI is now available as another service. The current version include the following models: pplx-7b-chat, pplx-70b-chat, pplx-7b-online, pplx-70b-online, llama-2-70b-chat, codellama-34b-instruct, mistral-7b-instruct, and mixtral-8x7b-instruct.
+Perplexity AI is now available as another service. The current version includes the following models: pplx-7b-chat, pplx-70b-chat, pplx-7b-online, pplx-70b-online, llama-2-70b-chat, codellama-34b-instruct, mistral-7b-instruct, and mixtral-8x7b-instruct. See [Perplexity's](https://blog.perplexity.ai/blog/introducing-pplx-online-llms) for more on these models.
+
+### Cohere Service
+
+Cohere is now available as another service. The current version includes the following models: command, command-light, command-nightly, and command-light-nightly. See [Cohere's docs](https://docs.cohere.com/ ) for more on these models and capabilities.
 
 ### Internal
 
