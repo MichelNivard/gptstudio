@@ -56,6 +56,7 @@ pak::pak("MichelNivard/gptstudio")
 | [Perplexity](https://www.perplexity.ai) | pplx-7b-chat, pplx-70b-chat, pplx-7b-online, pplx-70b-online, llama-2-70b-chat, codellama-34b-instruct, mistral-7b-instruct, and mixtral-8x7b-instruct | [Perplexity API Docs](https://docs.perplexity.ai/reference/post_chat_completions) | [Perplexity Setup](articles/perplexity.md) |
 | [Google AI Studio](https://ai.google.dev/tutorials/ai-studio_quickstart) | Gemini and Palm (legacy) | [Google AI Studio Docs](https://ai.google.dev/docs) | [Google AI Studio Setup](articles/googleai.md) |
 | [Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview) | gpt-4, gpt-3.5-turbo ([latest models](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#gpt-4-and-gpt-4-turbo-preview)) | [Azure OpenAI API Docs](https://learn.microsoft.com/en-us/azure/ai-services/openai/quickstart?tabs=command-line,python&pivots=rest-api) | [Azure OpenAI Setup](articles/azure.md) |
+| [Cohere](https://cohere.com/) | command, command-light, command-nightly, command-light-nightly | [Cohere API Docs](https://docs.cohere.com/) | [Cohere Setup](articles/cohere.md) |
 
 ### Default AI Service: OpenAI
 
