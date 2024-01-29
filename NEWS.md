@@ -23,6 +23,7 @@ Perplexity AI is now available as another service. The current version include t
 - Fixed a bug in Azure OpenAI request formation.
 - Fixed a bug in "in source" calls for addins.
 - The chat addin no longer closes itself when an OpenAI api key is not detected.
+- Converted from PALM to Google for Google AI Studio models.
 
 ### Quality of Life Improvements and Documentation
 
