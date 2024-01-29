@@ -1,7 +1,7 @@
 #' Perform API Request
 #'
 #' This function provides a generic interface for calling different APIs
-#' (e.g., OpenAI, HuggingFace, PALM (MakerSuite)). It dispatches the actual API
+#' (e.g., OpenAI, HuggingFace, Google AI Studio). It dispatches the actual API
 #' calls to the relevant method based on the `class` of the `skeleton` argument.
 #'
 #' @param skeleton A `gptstudio_request_skeleton` object
@@ -117,15 +117,15 @@ gptstudio_request_perform.gptstudio_request_huggingface <-
   }
 
 #' @export
-gptstudio_request_perform.gptstudio_request_palm <-
+gptstudio_request_perform.gptstudio_request_google <-
   function(skeleton, ...) {
-    response <- create_completion_palm(prompt = skeleton$prompt)
+    response <- create_completion_google(prompt = skeleton$prompt)
     structure(
       list(
         skeleton = skeleton,
         response = response
       ),
-      class = "gptstudio_response_palm"
+      class = "gptstudio_response_google"
     )
   }
 

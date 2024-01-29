@@ -112,9 +112,9 @@ new_gptstudio_request_skeleton_anthropic <- function(
                                 class = "gptstudio_request_anthropic")
 }
 
-new_gptstudio_request_skeleton_palm <- function(
+new_gptstudio_request_skeleton_google <- function(
     url = "https://generativelanguage.googleapis.com/v1beta2/models/",
-    api_key = Sys.getenv("PALM_API_KEY"),
+    api_key = Sys.getenv("GOOGLE_API_KEY"),
     model = ":generateText?key=",
     prompt = "What is a ggplot?",
     history = list(
@@ -131,7 +131,7 @@ new_gptstudio_request_skeleton_palm <- function(
                                 prompt,
                                 history,
                                 stream,
-                                class = "gptstudio_request_palm")
+                                class = "gptstudio_request_google")
 }
 
 new_gptstudio_request_skeleton_azure_openai <- function(
@@ -197,7 +197,7 @@ new_gptstudio_request_skeleton_perplexity <- function(
 #' generation services.
 #'
 #' @param service The text generation service to use. Currently supports
-#'   "openai", "huggingface", "anthropic", "palm", "azure_openai", "ollama", and
+#'   "openai", "huggingface", "anthropic", "google", "azure_openai", "ollama", and
 #'   "perplexity".
 #' @param prompt The initial prompt or question to pass to the text generation
 #'   service.
@@ -254,17 +254,17 @@ gptstudio_create_skeleton <- function(service = "openai",
            prompt = prompt,
            # forcing false until streaming implemented for anthropic
            stream = FALSE),
-         "palm" = new_gptstudio_request_skeleton_palm(
+         "google" = new_gptstudio_request_skeleton_google(
            model = model,
            prompt = prompt,
            history = history,
-           # forcing false until streaming implemented for palm
+           # forcing false until streaming implemented for google
            stream = FALSE),
          "azure_openai" = new_gptstudio_request_skeleton_azure_openai(
            model = model,
            prompt = prompt,
            history = history,
-           # forcing false until streaming implemented for palm
+           # forcing false until streaming implemented for azure openai
            stream = FALSE),
          "ollama" = new_gptstudio_request_skeleton_ollama(
            model = model,
@@ -276,6 +276,7 @@ gptstudio_create_skeleton <- function(service = "openai",
            model = model,
            prompt = prompt,
            history = history,
+           # forcing false until streaming implemented for perplexity
            stream = FALSE
          ))
 }

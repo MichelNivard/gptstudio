@@ -15,7 +15,7 @@ gptstudio_create_skeleton(
 }
 \arguments{
 \item{service}{The text generation service to use. Currently supports
-"openai", "huggingface", "anthropic", "palm", "azure_openai", "ollama", and
+"openai", "huggingface", "anthropic", "google", "azure_openai", "ollama", and
 "perplexity".}
 
 \item{prompt}{The initial prompt or question to pass to the text generation
