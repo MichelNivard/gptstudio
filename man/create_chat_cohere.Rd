@@ -5,7 +5,7 @@
 \title{Create a chat with the Cohere Chat API}
 \usage{
 create_chat_cohere(
-  message,
+  prompt,
   chat_history = NULL,
   connectors = NULL,
   model = "command",
@@ -13,7 +13,7 @@ create_chat_cohere(
 )
 }
 \arguments{
-\item{message}{A string containing the user message.}
+\item{prompt}{A string containing the user message.}
 
 \item{chat_history}{A list of previous messages for context, if any.}
 

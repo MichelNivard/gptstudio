@@ -48,7 +48,8 @@ query_api_cohere <- function(request_body, api_key = Sys.getenv("COHERE_API_KEY"
   }
 
   response %>%
-    httr2::resp_body_json()
+    httr2::resp_body_json() %>%
+    purrr::pluck("text")
 }
 
 #' Create a chat with the Cohere Chat API
@@ -56,7 +57,7 @@ query_api_cohere <- function(request_body, api_key = Sys.getenv("COHERE_API_KEY"
 #' This function submits a user message to the Cohere Chat API, potentially along with other parameters such as
 #' chat history or connectors, and returns the API's response.
 #'
-#' @param message A string containing the user message.
+#' @param prompt A string containing the user message.
 #' @param chat_history A list of previous messages for context, if any.
 #' @param connectors A list of connector objects, if any.
 #' @param model A string representing the Cohere model to be used, defaulting to "command". Other options include "command-light", "command-nightly", and "command-light-nightly".
@@ -64,13 +65,13 @@ query_api_cohere <- function(request_body, api_key = Sys.getenv("COHERE_API_KEY"
 #'   COHERE_API_KEY environment variable.
 #'
 #' @return The response from the Cohere Chat API containing the model's reply.
-create_chat_cohere <- function(message,
+create_chat_cohere <- function(prompt,
                                chat_history = NULL,
                                connectors = NULL,
                                model = "command",
                                api_key = Sys.getenv("COHERE_API_KEY")) {
   request_body <- list(
-    message = message,
+    message = prompt,
     chat_history = chat_history,
     connectors = connectors,
     model = model

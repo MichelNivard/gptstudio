@@ -183,7 +183,8 @@ gptstudio_response_process.gptstudio_response_cohere <- function(skeleton, ...) 
 
   skeleton$history <- new_history
   skeleton$prompt <- NULL # remove the last prompt
-  class(skeleton) <- c("gptstudio_request_skeleton", "gptstudio_request_cohere")
+  class(skeleton) <- c("gptstudio_request_skeleton",
+                       "gptstudio_request_cohere")
 
   skeleton
 }
