@@ -85,10 +85,10 @@
     <loc>/reference/create_completion_azure_openai.html</loc>
   </url>
   <url>
-    <loc>/reference/create_completion_huggingface.html</loc>
+    <loc>/reference/create_completion_google.html</loc>
   </url>
   <url>
-    <loc>/reference/create_completion_palm.html</loc>
+    <loc>/reference/create_completion_huggingface.html</loc>
   </url>
   <url>
     <loc>/reference/create_completion_perplexity.html</loc>
@@ -172,10 +172,10 @@
     <loc>/reference/query_api_anthropic.html</loc>
   </url>
   <url>
-    <loc>/reference/query_api_huggingface.html</loc>
+    <loc>/reference/query_api_google.html</loc>
   </url>
   <url>
-    <loc>/reference/query_api_palm.html</loc>
+    <loc>/reference/query_api_huggingface.html</loc>
   </url>
   <url>
     <loc>/reference/query_api_perplexity.html</loc>
@@ -193,10 +193,10 @@
     <loc>/reference/request_base_anthropic.html</loc>
   </url>
   <url>
-    <loc>/reference/request_base_huggingface.html</loc>
+    <loc>/reference/request_base_google.html</loc>
   </url>
   <url>
-    <loc>/reference/request_base_palm.html</loc>
+    <loc>/reference/request_base_huggingface.html</loc>
   </url>
   <url>
     <loc>/reference/request_base_perplexity.html</loc>

@@ -110,10 +110,10 @@ website</a> and sign up.</li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="accessing-google-palm-api">Accessing Google PALM API<a class="anchor" aria-label="anchor" href="#accessing-google-palm-api"></a>
+<h3 id="accessing-google-ai-studio-gemini-and-palm-api">Accessing Google AI Studio (Gemini and PALM) API<a class="anchor" aria-label="anchor" href="#accessing-google-ai-studio-gemini-and-palm-api"></a>
 </h3>
 <ul>
-<li>In your Google Cloud Console, enable the PALM API.</li>
+<li>In your Google Cloud Console, enable the Google AI Studio API.</li>
 <li>Create an API key as per the instructions in <a href="https://ai.google.dev/docs" class="external-link">Google’s API documentation</a>.</li>
 </ul>
 </div>
@@ -126,8 +126,8 @@ website</a> and sign up.</li>
 <span><span class="fu">edit_r_environ</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>For a persistent setting, add the following line to
 <code>.Renviron</code>, replacing <code>"&lt;APIKEY&gt;"</code> with
-your actual Google PALM API key:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">PALM_API_KEY</span><span class="op">=</span><span class="st">"&lt;APIKEY&gt;"</span></span></code></pre></div>
+your actual Google AI Studio API key:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">GOOGLE_API_KEY</span><span class="op">=</span><span class="st">"&lt;APIKEY&gt;"</span></span></code></pre></div>
 <p>Save the file and restart your R session for the changes to take
 effect.</p>
 <p><strong>Caution:</strong> Be careful not to expose
