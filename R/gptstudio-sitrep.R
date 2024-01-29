@@ -104,6 +104,21 @@ check_api_connection_perplexity <- function(service, api_key) {
   process_response(response, service)
 }
 
+#' @inheritParams check_api_connection_openai
+check_api_connection_cohere <- function(service, api_key) {
+  api_check <- check_api_key(service, api_key)
+  if (rlang::is_false(api_check)) {
+    return(invisible(NULL))
+  }
+
+  response <- request_base_cohere(api_key = api_key) %>%
+    httr2::req_body_json(data = list(message = "Hello world!")) %>%
+    httr2::req_error(is_error = function(resp) FALSE) %>%
+    httr2::req_perform()
+
+  process_response(response, service)
+}
+
 #' Current Configuration for gptstudio
 #'
 #' This function prints out the current configuration settings for gptstudio and
@@ -163,6 +178,9 @@ gptstudio_sitrep <- function(verbose = TRUE) {
     cli::cli_h3("Checking Perplexity API connection")
     check_api_connection_perplexity(service = "Perplexity",
                                     api_key = Sys.getenv("PERPLEXITY_API_KEY"))
+    cli::cli_h3("Checking Cohere API connection")
+    check_api_connection_cohere(service = "Cohere",
+                                api_key = Sys.getenv("COHERE_API_KEY"))
     cli::cli_h3("Check Ollama for Local API connection")
     ollama_is_available(verbose = TRUE)
     cli::cli_h2("Getting help")

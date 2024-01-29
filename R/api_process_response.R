@@ -168,3 +168,22 @@ gptstudio_response_process.gptstudio_response_perplexity <-
                          "gptstudio_request_perplexity")
     skeleton
   }
+
+#' @export
+gptstudio_response_process.gptstudio_response_cohere <- function(skeleton, ...) {
+  last_response <- skeleton$response
+  skeleton <- skeleton$skeleton
+
+  new_history <- chat_history_append(
+    history = skeleton$history,
+    role = "assistant",
+    name = "assistant",
+    content = last_response
+  )
+
+  skeleton$history <- new_history
+  skeleton$prompt <- NULL # remove the last prompt
+  class(skeleton) <- c("gptstudio_request_skeleton", "gptstudio_request_cohere")
+
+  skeleton
+}
