@@ -41,16 +41,24 @@ request_base_azure_openai <-
            base_url = Sys.getenv("AZURE_OPENAI_ENDPOINT"),
            deployment_name = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
            token = Sys.getenv("AZURE_OPENAI_KEY"),
-           api_version = Sys.getenv("AZURE_OPENAI_API_VERSION")
+           api_version = Sys.getenv("AZURE_OPENAI_API_VERSION"),
+           use_token = Sys.getenv("AZURE_OPENAI_USE_TOKEN")
   ) {
-    httr2::request(base_url) %>%
+    response <-
+      httr2::request(base_url) %>%
       httr2::req_url_path_append("openai/deployments") %>%
       httr2::req_url_path_append(deployment_name) %>%
       httr2::req_url_path_append(task) %>%
       httr2::req_url_query("api-version" = api_version) %>%
       httr2::req_headers("api-key" = token,
-                         "Content-Type" = "application/json") %>%
-      httr2::req_method("POST")
+                         "Content-Type" = "application/json")
+
+      if (use_token) {
+        token <- retrieve_azure_token()
+        response %>% httr2::req_auth_bearer_token(token = token)
+      } else {
+        response
+      }
   }
 
 query_api_azure_openai <- function(task = Sys.getenv("AZURE_OPENAI_TASK"),
@@ -79,4 +87,16 @@ query_api_azure_openai <- function(task = Sys.getenv("AZURE_OPENAI_TASK"),
   }
   response %>%
     httr2::resp_body_json()
+}
+
+retrieve_azure_token <- function() {
+  rlang::check_installed("AzureRMR")
+  token <- AzureRMR::create_azure_login(
+    tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
+    app = Sys.getenv("AZURE_OPENAI_CLIENT_ID"),
+    password = Sys.getenv("AZURE_OPENAI_CLIENT_SECRET"),
+    host = "https://cognitiveservices.azure.com/",
+    scopes = ".default"
+  )
+  invisible(token$token$credentials$access_token)
 }
