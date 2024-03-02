@@ -1,4 +1,4 @@
-pandoc: 2.19.2
+pandoc: 3.1.11
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
@@ -12,5 +12,5 @@ articles:
   ollama: no-build/ollama.html
   openai: openai.html
   perplexity: perplexity.html
-last_built: 2024-01-29T20:50Z
+last_built: 2024-03-02T01:31Z
 

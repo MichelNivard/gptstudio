@@ -124,14 +124,14 @@ Replace VARIABLE_NAME with the name of the environment variable and
 YOUR_VALUE with the actual value that you want to set. For example, to
 set the API key you would have a line like this:</li>
 </ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">AZURE_OPENAI_KEY</span><span class="op">=</span><span class="st">"your_actual_key_goes_here"</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="va">AZURE_OPENAI_KEY</span><span class="op">=</span><span class="st">"your_actual_key_goes_here"</span></span></code></pre></div>
 <p>You need to do this for each of the environment variables expected by
 the function. Your .Renviron file should look something like this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">AZURE_OPENAI_TASK</span><span class="op">=</span><span class="st">"your_task_code"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">AZURE_OPENAI_ENDPOINT</span><span class="op">=</span><span class="st">"your_endpoint_url"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">AZURE_OPENAI_DEPLOYMENT_NAME</span><span class="op">=</span><span class="st">"your_deployment_name"</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="va">AZURE_OPENAI_KEY</span><span class="op">=</span><span class="st">"your_api_key"</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="va">AZURE_OPENAI_API_VERSION</span><span class="op">=</span><span class="st">"your_api_version"</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="va">AZURE_OPENAI_TASK</span><span class="op">=</span><span class="st">"your_task_code"</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="va">AZURE_OPENAI_ENDPOINT</span><span class="op">=</span><span class="st">"your_endpoint_url"</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="va">AZURE_OPENAI_DEPLOYMENT_NAME</span><span class="op">=</span><span class="st">"your_deployment_name"</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="va">AZURE_OPENAI_KEY</span><span class="op">=</span><span class="st">"your_api_key"</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="va">AZURE_OPENAI_API_VERSION</span><span class="op">=</span><span class="st">"your_api_version"</span></span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Save and Close .Renviron: After adding your environment variables,
 save your .Renviron file and close it. You will need to restart your R
