@@ -26,6 +26,7 @@ Cohere is now available as another service. The current version includes the fol
 - Fixed a bug in retrieval of OpenAI models
 - Fixed a bug in Azure OpenAI request formation.
 - Fixed a bug in "in source" calls for addins.
+- Fixed a bug that showed a "Connection refused" message in the viewer in unix platforms. Fix #179
 - The chat addin no longer closes itself when an OpenAI api key is not detected.
 - Converted from PALM to Google for Google AI Studio models.
 
