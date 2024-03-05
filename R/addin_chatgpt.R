@@ -21,8 +21,6 @@ gptstudio_chat <- function(host = getOption("shiny.host", "127.0.0.1")) {
 
   run_app_as_bg_job(appDir = app_dir, job_name = "gptstudio", host, port)
 
-  if (.Platform$OS.type == "unix") Sys.sleep(1.5)
-
   open_bg_shinyapp(host, port)
 }
 
@@ -152,5 +150,18 @@ open_bg_shinyapp <- function(host, port) {
     cli::cli_alert_info("Showing app in browser window")
   }
 
+  if (.Platform$OS.type == "unix") {
+    wait_for_bg_shinyapp(translated_url)
+  }
+
   rstudioapi::viewer(translated_url)
+}
+
+# This function makes a request for the app's url and fails
+# if doesn't find anything after 10 seconds
+wait_for_bg_shinyapp <- function(url) {
+
+  httr2::request(url) %>%
+    httr2::req_retry(max_seconds = 10, backoff = function(n) 0.2) %>%
+    httr2::req_perform()
 }
