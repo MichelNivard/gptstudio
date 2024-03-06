@@ -33,7 +33,8 @@ create_completion_azure_openai <- function(prompt,
                                            token = Sys.getenv("AZURE_OPENAI_KEY"),
                                            api_version = Sys.getenv("AZURE_OPENAI_API_VERSION"))
 {
-  query_api_azure_openai(task, prompt, base_url, deployment_name, token, api_version)
+  request_body <- list(list(role = "user", content = prompt))
+  query_api_azure_openai(task, request_body, base_url, deployment_name, token, api_version)
 }
 
 request_base_azure_openai <-
@@ -70,7 +71,7 @@ query_api_azure_openai <- function(task = Sys.getenv("AZURE_OPENAI_TASK"),
 {
   response <-
     request_base_azure_openai(task, base_url, deployment_name, token, api_version) %>%
-    httr2::req_body_json(request_body) %>%
+    httr2::req_body_json(list(messages = request_body)) %>%
     httr2::req_retry(max_tries = 3) %>%
     httr2::req_error(is_error = function(resp) FALSE) %>%
     httr2::req_perform()

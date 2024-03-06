@@ -79,7 +79,8 @@ check_api_connection_azure_openai <- function(service, api_key) {''
   }
 
   response <- request_base_azure_openai() %>%
-    httr2::req_body_json(list(list(role = "user", content = "Hello world!"))) %>%
+    httr2::req_body_json(list(messages = list(list(role = "user",
+                                              content = "Hello world!")))) %>%
     httr2::req_error(is_error = function(resp) FALSE) %>%
     httr2::req_perform()
 
@@ -95,7 +96,7 @@ check_api_connection_perplexity <- function(service, api_key) {
 
   response <- request_base_perplexity() %>%
     httr2::req_body_json(data = list(
-      model = "mistral-7b-instruct",
+      model = "sonar-small-chat",
       messages = list(list(role = "user", content = "Hello world!"))
     )) %>%
     httr2::req_error(is_error = function(resp) FALSE) %>%
