@@ -14,7 +14,7 @@ We are happy to announce that we now support local models with [ollama](https://
 
 ### Perplexity Service
 
-Perplexity AI is now available as another service. The current version includes the following models: pplx-7b-chat, pplx-70b-chat, pplx-7b-online, pplx-70b-online, llama-2-70b-chat, codellama-34b-instruct, mistral-7b-instruct, and mixtral-8x7b-instruct. See [Perplexity's](https://blog.perplexity.ai/blog/introducing-pplx-online-llms) for more on these models.
+Perplexity AI now offers a wide range of models as part of their service. The current version includes the following models: sonar-small-chat, sonar-small-online, sonar-medium-chat, sonar-medium-online, codellama-70b-instruct, mistral-7b-instruct, mixtral-8x7b-instruct, pplx-7b-chat, pplx-70b-chat, pplx-7b-online, pplx-70b-online, llama-2-70b-chat, and codellama-34b-instruct. See Perplexity API documentation for more information on these models.
 
 ### Cohere Service
 
@@ -29,6 +29,7 @@ Cohere is now available as another service. The current version includes the fol
 - Fixed a bug that showed a "Connection refused" message in the viewer in unix platforms. Fix #179
 - The chat addin no longer closes itself when an OpenAI api key is not detected.
 - Converted from PALM to Google for Google AI Studio models.
+- Updated Anthropic models with with their claude-3 update.
 
 ### Quality of Life Improvements and Documentation
 
