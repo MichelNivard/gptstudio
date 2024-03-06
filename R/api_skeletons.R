@@ -93,7 +93,7 @@ new_gptstudio_request_skeleton_huggingface <- function(
 new_gptstudio_request_skeleton_anthropic <- function(
     url = "https://api.anthropic.com/v1/complete",
     api_key = Sys.getenv("ANTHROPIC_API_KEY"),
-    model = "claude-1",
+    model = "claude-2.1",
     prompt = "What is a ggplot?",
     history = list(
       list(

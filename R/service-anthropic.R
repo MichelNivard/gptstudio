@@ -52,7 +52,7 @@ query_api_anthropic <- function(request_body,
 #' @param prompt The prompt for generating completions
 #' @param history A list of the previous chat responses
 #' @param model The model to use for generating text. By default, the
-#'   function will try to use "claude-1".
+#'   function will try to use "claude-2.1".
 #' @param max_tokens_to_sample The maximum number of tokens to generate. Defaults to 256.
 #' @param key The API key for accessing Anthropic's API. By default, the
 #'   function will try to use the `ANTHROPIC_API_KEY` environment variable.
@@ -70,7 +70,7 @@ query_api_anthropic <- function(request_body,
 #' @export
 create_completion_anthropic <- function(prompt,
                                         history = NULL,
-                                        model = "claude-1",
+                                        model = "claude-2.1",
                                         max_tokens_to_sample = 256,
                                         key = Sys.getenv("ANTHROPIC_API_KEY")) {
   # The request body for the Anthropic API should be a list with the 'prompt', 'model', and 'max_tokens_to_sample' fields set
