@@ -7,7 +7,7 @@
 create_completion_anthropic(
   prompt,
   history = NULL,
-  model = "claude-1",
+  model = "claude-2.1",
   max_tokens_to_sample = 256,
   key = Sys.getenv("ANTHROPIC_API_KEY")
 )
@@ -18,7 +18,7 @@ create_completion_anthropic(
 \item{history}{A list of the previous chat responses}
 
 \item{model}{The model to use for generating text. By default, the
-function will try to use "claude-1".}
+function will try to use "claude-2.1".}
 
 \item{max_tokens_to_sample}{The maximum number of tokens to generate. Defaults to 256.}
 
@@ -36,7 +36,7 @@ Generate text completions using Anthropic's API
 \dontrun{
 create_completion_anthropic(
   prompt = "\n\nHuman: Hello, world!\n\nAssistant:",
-  model = "claude-1",
+  model = "claude-2.1",
   max_tokens_to_sample = 256
 )
 }

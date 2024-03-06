@@ -63,7 +63,7 @@ query_api_anthropic <- function(request_body,
 #' \dontrun{
 #' create_completion_anthropic(
 #'   prompt = "\n\nHuman: Hello, world!\n\nAssistant:",
-#'   model = "claude-1",
+#'   model = "claude-2.1",
 #'   max_tokens_to_sample = 256
 #' )
 #' }
