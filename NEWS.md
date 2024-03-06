@@ -30,6 +30,7 @@ Cohere is now available as another service. The current version includes the fol
 - The chat addin no longer closes itself when an OpenAI api key is not detected.
 - Converted from PALM to Google for Google AI Studio models.
 - Updated Anthropic models with with their claude-3 update.
+- More bug fixes with Azure OpenAI with request body structure and using token + api key.
 
 ### Quality of Life Improvements and Documentation
 
