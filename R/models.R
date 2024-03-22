@@ -8,43 +8,68 @@
 #' @export
 #'
 #' @examples
-#' get_available_endpoints()
+#' get_available_models()
 get_available_models <- function(service) {
-  if (service == "openai") {
-    models <-
-      request_base("models") %>%
-      httr2::req_perform() %>%
-      httr2::resp_body_json() %>%
-      purrr::pluck("data") %>%
-      purrr::map_chr("id")
-
-    models <- models %>%
-      stringr::str_subset("^gpt") %>%
-      stringr::str_subset("instruct", negate = TRUE) %>%
-      stringr::str_subset("vision", negate = TRUE) %>%
-      sort()
-
-    idx <- which(models == "gpt-3.5-turbo")
-    models <- c(models[idx], models[-idx])
-    return(models)
-  } else if (service == "huggingface") {
-    c("gpt2", "tiiuae/falcon-7b-instruct", "bigcode/starcoderplus")
-  } else if (service == "anthropic") {
-    c("claude-3-opus-20240229", "claude-3-sonnet-20240229", "claude-2.1", "claude-instant-1.2")
-  } else if (service == "azure_openai") {
-    "Using ENV variables"
-  } else if (service == "perplexity") {
-    c("sonar-small-chat", "sonar-small-online", "sonar-medium-chat",
-      "sonar-medium-online", "codellama-70b-instruct", "mistral-7b-instruct",
-      "mixtral-8x7b-instruct")
-  } else if (service == "ollama") {
-    if (!ollama_is_available()) stop("Couldn't find ollama in your system")
-    ollama_list() %>%
-      purrr::pluck("models") %>%
-      purrr::map_chr("name")
-  } else if (service == "cohere") {
-    c("command", "command-light", "command-nightly", "command-light-nightly")
-  } else if (service == "google") {
-    get_available_models_google()
-  }
+  UseMethod("get_available_models")
 }
+
+new_service <- function(service_name = character()) {
+  stopifnot(rlang::is_scalar_character(service_name))
+  class(service_name) <- c(service_name, "gptstudio_service")
+
+  service_name
+}
+
+get_available_models.openai <- function(service) {
+  models <-
+    request_base("models") %>%
+    httr2::req_perform() %>%
+    httr2::resp_body_json() %>%
+    purrr::pluck("data") %>%
+    purrr::map_chr("id")
+
+  models <- models %>%
+    stringr::str_subset("^gpt") %>%
+    stringr::str_subset("instruct", negate = TRUE) %>%
+    stringr::str_subset("vision", negate = TRUE) %>%
+    sort()
+
+  idx <- which(models == "gpt-3.5-turbo")
+  models <- c(models[idx], models[-idx])
+  return(models)
+}
+
+get_available_models.huggingface <- function(service) {
+  c("gpt2", "tiiuae/falcon-7b-instruct", "bigcode/starcoderplus")
+}
+
+get_available_models.anthropic <- function(service) {
+  c("claude-3-opus-20240229", "claude-3-sonnet-20240229", "claude-2.1", "claude-instant-1.2")
+}
+
+get_available_models.azure_openai <- function(service) {
+  "Using ENV variables"
+}
+
+get_available_models.perplexity <- function(service) {
+  c("sonar-small-chat", "sonar-small-online", "sonar-medium-chat",
+    "sonar-medium-online", "codellama-70b-instruct", "mistral-7b-instruct",
+    "mixtral-8x7b-instruct")
+}
+
+get_available_models.ollama <- function(service) {
+  if (!ollama_is_available()) stop("Couldn't find ollama in your system")
+  ollama_list() %>%
+    purrr::pluck("models") %>%
+    purrr::map_chr("name")
+}
+
+get_available_models.cohere <- function(service) {
+  c("command", "command-light", "command-nightly", "command-light-nightly")
+}
+
+get_available_models.google <- function(service) {
+  get_available_models_google()
+}
+
+

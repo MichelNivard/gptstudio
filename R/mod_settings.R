@@ -152,7 +152,9 @@ mod_settings_server <- function(id) {
       showNotification(ui = msg, type = "message",duration = 3, session = session)
 
       models <- tryCatch({
-        get_available_models(input$service)
+        input$service %>%
+          new_service() %>%
+          get_available_models()
       }, error = function(e) {
         showNotification(
           ui = cli::ansi_strip(e$message),
