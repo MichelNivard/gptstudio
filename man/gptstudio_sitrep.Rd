@@ -19,7 +19,7 @@ This function prints out the current configuration settings for gptstudio and
 checks API connections if verbose is TRUE.
 }
 \examples{
-gptstudio_sitrep(verbose = FALSE)  # Print basic settings, no API checks
-gptstudio_sitrep()                 # Print settings and check API connections
+gptstudio_sitrep(verbose = FALSE) # Print basic settings, no API checks
+gptstudio_sitrep() # Print settings and check API connections
 
 }

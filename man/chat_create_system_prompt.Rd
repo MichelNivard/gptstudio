@@ -43,9 +43,11 @@ customization for specific use cases through a custom prompt option.
 \examples{
 \dontrun{
 chat_create_system_prompt(in_source = TRUE)
-chat_create_system_prompt(style = "tidyverse",
-                          skill = "advanced",
-                          task = "coding",
-                          in_source = FALSE)
+chat_create_system_prompt(
+  style = "tidyverse",
+  skill = "advanced",
+  task = "coding",
+  in_source = FALSE
+)
 }
 }
