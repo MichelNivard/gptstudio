@@ -10,9 +10,9 @@
 #' @return An `httr2` request object pre-configured with the API endpoint and required headers.
 request_base_cohere <- function(api_key = Sys.getenv("COHERE_API_KEY")) {
   url <- "https://api.cohere.ai/v1/chat"
-  httr2::request(url) %>%
-    httr2::req_method("POST") %>%
-    httr2::req_headers(
+  request(url) %>%
+    req_method("POST") %>%
+    req_headers(
       "accept" = "application/json",
       "content-type" = "application/json",
       "Authorization" = paste("Bearer", api_key)
@@ -31,15 +31,15 @@ request_base_cohere <- function(api_key = Sys.getenv("COHERE_API_KEY")) {
 #' @return A parsed JSON object as the API response.
 query_api_cohere <- function(request_body, api_key = Sys.getenv("COHERE_API_KEY")) {
   response <- request_base_cohere(api_key) %>%
-    httr2::req_body_json(data = request_body) %>%
-    httr2::req_retry(max_tries = 3) %>%
-    httr2::req_error(is_error = function(resp) FALSE) %>%
-    httr2::req_perform()
+    req_body_json(data = request_body) %>%
+    req_retry(max_tries = 3) %>%
+    req_error(is_error = function(resp) FALSE) %>%
+    req_perform()
 
   # Error handling
-  if (httr2::resp_is_error(response)) {
-    status <- httr2::resp_status(response)
-    description <- httr2::resp_status_desc(response)
+  if (resp_is_error(response)) {
+    status <- resp_status(response)
+    description <- resp_status_desc(response)
 
     cli::cli_abort(message = c(
       "x" = paste("Cohere Chat API request failed. Error", status, "-", description),
@@ -48,7 +48,7 @@ query_api_cohere <- function(request_body, api_key = Sys.getenv("COHERE_API_KEY"
   }
 
   response %>%
-    httr2::resp_body_json() %>%
+    resp_body_json() %>%
     purrr::pluck("text")
 }
 

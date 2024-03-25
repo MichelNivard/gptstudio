@@ -13,8 +13,8 @@ check_api_connection_openai <- function(service, api_key) {
 
   response <-
     request_base(task = "models") %>%
-    httr2::req_error(is_error = function(resp) FALSE) %>%
-    httr2::req_perform()
+    req_error(is_error = function(resp) FALSE) %>%
+    req_perform()
   process_response(response, service)
 }
 
@@ -25,8 +25,8 @@ check_api_connection_huggingface <- function(service, api_key) {
     return(invisible(NULL))
   }
   response <- request_base_huggingface(task = "gpt2") %>%
-    httr2::req_error(is_error = function(resp) FALSE) %>%
-    httr2::req_perform()
+    req_error(is_error = function(resp) FALSE) %>%
+    req_perform()
 
   process_response(response, service)
 }
@@ -40,15 +40,15 @@ check_api_connection_anthropic <- function(service, api_key) {
 
   response <-
     request_base_anthropic(key = Sys.getenv("ANTHROPIC_API_KEY")) %>%
-    httr2::req_body_json(
+    req_body_json(
       data = list(
         prompt = "\n\nHuman: Hello, Claude\n\nAssistant:",
         model = "claude-2.1",
         max_tokens_to_sample = 1024
       )
     ) %>%
-    httr2::req_error(is_error = function(resp) FALSE) %>%
-    httr2::req_perform()
+    req_error(is_error = function(resp) FALSE) %>%
+    req_perform()
 
   process_response(response, service)
 }
@@ -64,9 +64,9 @@ check_api_connection_google <- function(service, api_key) {
     list(contents = list(list(parts = list(list(text = "Hello there")))))
 
   response <- request_base_google(model = "gemini-pro", key = api_key) %>%
-    httr2::req_body_json(data = request_body) %>%
-    httr2::req_error(is_error = function(resp) FALSE) %>%
-    httr2::req_perform()
+    req_body_json(data = request_body) %>%
+    req_error(is_error = function(resp) FALSE) %>%
+    req_perform()
 
   process_response(response, service)
 }
@@ -80,12 +80,12 @@ check_api_connection_azure_openai <- function(service, api_key) {
   }
 
   response <- request_base_azure_openai() %>%
-    httr2::req_body_json(list(messages = list(list(
+    req_body_json(list(messages = list(list(
       role = "user",
       content = "Hello world!"
     )))) %>%
-    httr2::req_error(is_error = function(resp) FALSE) %>%
-    httr2::req_perform()
+    req_error(is_error = function(resp) FALSE) %>%
+    req_perform()
 
   process_response(response, service)
 }
@@ -98,12 +98,12 @@ check_api_connection_perplexity <- function(service, api_key) {
   }
 
   response <- request_base_perplexity() %>%
-    httr2::req_body_json(data = list(
+    req_body_json(data = list(
       model = "sonar-small-chat",
       messages = list(list(role = "user", content = "Hello world!"))
     )) %>%
-    httr2::req_error(is_error = function(resp) FALSE) %>%
-    httr2::req_perform()
+    req_error(is_error = function(resp) FALSE) %>%
+    req_perform()
 
   process_response(response, service)
 }
@@ -116,9 +116,9 @@ check_api_connection_cohere <- function(service, api_key) {
   }
 
   response <- request_base_cohere(api_key = api_key) %>%
-    httr2::req_body_json(data = list(message = "Hello world!")) %>%
-    httr2::req_error(is_error = function(resp) FALSE) %>%
-    httr2::req_perform()
+    req_body_json(data = list(message = "Hello world!")) %>%
+    req_error(is_error = function(resp) FALSE) %>%
+    req_perform()
 
   process_response(response, service)
 }
@@ -223,7 +223,7 @@ check_api_key <- function(service, api_key) {
 }
 
 process_response <- function(response, service) {
-  if (httr2::resp_is_error(response)) {
+  if (resp_is_error(response)) {
     cli::cli_alert_danger("Failed to connect to the {service} API service.")
   } else {
     cli::cli_alert_success("Successfully connected to the {service} API service.")

@@ -13,8 +13,8 @@ get_available_models <- function(service) {
   if (service == "openai") {
     models <-
       request_base("models") %>%
-      httr2::req_perform() %>%
-      httr2::resp_body_json() %>%
+      req_perform() %>%
+      resp_body_json() %>%
       purrr::pluck("data") %>%
       purrr::map_chr("id")
 

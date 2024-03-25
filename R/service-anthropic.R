@@ -7,14 +7,14 @@
 #'   ANTHROPIC_API_KEY environmental variable if not specified.
 #' @return An httr2 request object
 request_base_anthropic <- function(key = Sys.getenv("ANTHROPIC_API_KEY")) {
-  httr2::request("https://api.anthropic.com/v1/complete") %>%
-    httr2::req_headers(
+  request("https://api.anthropic.com/v1/complete") %>%
+    req_headers(
       `accept` = "application/json",
       `anthropic-version` = "2023-06-01",
       `content-type` = "application/json",
       `x-api-key` = key
     ) %>%
-    httr2::req_method("POST")
+    req_method("POST")
 }
 
 #' A function that sends a request to the Anthropic API and returns the
@@ -29,15 +29,15 @@ request_base_anthropic <- function(key = Sys.getenv("ANTHROPIC_API_KEY")) {
 query_api_anthropic <- function(request_body,
                                 key = Sys.getenv("ANTHROPIC_API_KEY")) {
   response <- request_base_anthropic(key) %>%
-    httr2::req_body_json(data = request_body) %>%
-    httr2::req_retry(max_tries = 3) %>%
-    httr2::req_error(is_error = function(resp) FALSE) %>%
-    httr2::req_perform()
+    req_body_json(data = request_body) %>%
+    req_retry(max_tries = 3) %>%
+    req_error(is_error = function(resp) FALSE) %>%
+    req_perform()
 
   # error handling
-  if (httr2::resp_is_error(response)) {
-    status <- httr2::resp_status(response)
-    description <- httr2::resp_status_desc(response)
+  if (resp_is_error(response)) {
+    status <- resp_status(response)
+    description <- resp_status_desc(response)
 
     cli::cli_abort(message = c(
       "x" = "Anthropic API request failed. Error {status} - {description}",
@@ -46,7 +46,7 @@ query_api_anthropic <- function(request_body,
   }
 
   response %>%
-    httr2::resp_body_json()
+    resp_body_json()
 }
 
 #' Generate text completions using Anthropic's API

@@ -8,8 +8,8 @@
 #'   GOOGLE_API_KEY environmental variable if not specified.
 #' @return An httr2 request object
 request_base_google <- function(model, key = Sys.getenv("GOOGLE_API_KEY")) {
-  httr2::request(glue::glue("https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent")) %>%
-    httr2::req_url_query(key = key)
+  request(glue::glue("https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent")) %>%
+    req_url_query(key = key)
 }
 
 
@@ -27,15 +27,15 @@ query_api_google <- function(model,
                              request_body,
                              key = Sys.getenv("GOOGLE_API_KEY")) {
   response <- request_base_google(model, key) %>%
-    httr2::req_body_json(data = request_body) %>%
-    httr2::req_retry(max_tries = 3) %>%
-    httr2::req_error(is_error = function(resp) FALSE) %>%
-    httr2::req_perform()
+    req_body_json(data = request_body) %>%
+    req_retry(max_tries = 3) %>%
+    req_error(is_error = function(resp) FALSE) %>%
+    req_perform()
 
   # error handling
-  if (httr2::resp_is_error(response)) {
-    status <- httr2::resp_status(response)
-    description <- httr2::resp_status_desc(response)
+  if (resp_is_error(response)) {
+    status <- resp_status(response)
+    description <- resp_status_desc(response)
 
     cli::cli_abort(message = c(
       "x" = "Google AI Studio API request failed. Error {status} - {description}",
@@ -44,7 +44,7 @@ query_api_google <- function(model,
   }
 
   response %>%
-    httr2::resp_body_json()
+    resp_body_json()
 }
 
 #' Generate text completions using Google AI Studio's API
@@ -91,15 +91,15 @@ create_completion_google <- function(prompt,
 
 get_available_models_google <- function(key = Sys.getenv("GOOGLE_API_KEY")) {
   response <-
-    httr2::request("https://generativelanguage.googleapis.com/v1beta") %>%
-    httr2::req_url_path_append("models") %>%
-    httr2::req_url_query(key = key) %>%
-    httr2::req_perform()
+    request("https://generativelanguage.googleapis.com/v1beta") %>%
+    req_url_path_append("models") %>%
+    req_url_query(key = key) %>%
+    req_perform()
 
   # error handling
-  if (httr2::resp_is_error(response)) {
-    status <- httr2::resp_status(response)
-    description <- httr2::resp_status_desc(response)
+  if (resp_is_error(response)) {
+    status <- resp_status(response)
+    description <- resp_status_desc(response)
 
     cli::cli_abort(message = c(
       "x" = "Google AI Studio API request failed. Error {status} - {description}",
@@ -108,7 +108,7 @@ get_available_models_google <- function(key = Sys.getenv("GOOGLE_API_KEY")) {
   }
 
   models <- response %>%
-    httr2::resp_body_json(simplifyVector = TRUE) %>%
+    resp_body_json(simplifyVector = TRUE) %>%
     purrr::pluck("models")
 
   models$name %>%

@@ -45,9 +45,9 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
   )
 
   # Create request
-  request <- httr2::request(skeleton$url) %>%
-    httr2::req_auth_bearer_token(skeleton$api_key) %>%
-    httr2::req_body_json(body)
+  request <- request(skeleton$url) %>%
+    req_auth_bearer_token(skeleton$api_key) %>%
+    req_body_json(body)
 
   # Perform request
   response <- NULL
@@ -65,7 +65,7 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
     # somehow different. `partial` has no documentation and can't be be changed
 
     # request %>%
-    #  httr2::req_perform_stream(
+    #  req_perform_stream(
     #    buffer_kb = 32,
     #    callback = function(x) {
     #      rawToChar(x) %>% stream_handler$handle_streamed_element()
@@ -83,8 +83,8 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
     response <- stream_handler$value
   } else {
     response_json <- request %>%
-      httr2::req_perform() %>%
-      httr2::resp_body_json()
+      req_perform() %>%
+      resp_body_json()
 
     response <- response_json$choices[[1]]$message$content
   }

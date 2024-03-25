@@ -4,27 +4,27 @@ ollama_api_url <- function() {
 
 ollama_set_task <- function(task) {
   ollama_api_url() %>%
-    httr2::request() %>%
-    httr2::req_url_path_append("api") %>%
-    httr2::req_url_path_append(task)
+    request() %>%
+    req_url_path_append("api") %>%
+    req_url_path_append(task)
 }
 
 ollama_list <- function() {
   ollama_set_task("tags") %>%
-    httr2::req_perform() %>%
-    httr2::resp_body_json()
+    req_perform() %>%
+    resp_body_json()
 }
 
 ollama_is_available <- function(verbose = FALSE) {
   request <- ollama_api_url() %>%
-    httr2::request()
+    request()
 
   check_value <- logical(1)
 
   rlang::try_fetch(
     {
-      response <- httr2::req_perform(request) %>%
-        httr2::resp_body_string()
+      response <- req_perform(request) %>%
+        resp_body_string()
 
       if (verbose) cli::cli_alert_success(response)
       check_value <- TRUE
@@ -64,7 +64,7 @@ ollama_perform_stream <- function(request, parser) {
     fun = function(x) parser$parse_ndjson(rawToChar(x))
   )
 
-  httr2::response_json(
+  response_json(
     url = curl_response$url,
     method = "POST",
     body = list(response = parser$lines)
@@ -79,7 +79,7 @@ ollama_chat <- function(model, messages, stream = TRUE, shinySession = NULL, use
   )
 
   request <- ollama_set_task("chat") %>%
-    httr2::req_body_json(data = body)
+    req_body_json(data = body)
 
 
   if (stream) {
@@ -100,7 +100,7 @@ ollama_chat <- function(model, messages, stream = TRUE, shinySession = NULL, use
       content = parser$value
     )
 
-    # httr2::response_json(
+    # response_json(
     #   url = request$url,
     #   method = "POST",
     #   body = last_line
@@ -109,8 +109,8 @@ ollama_chat <- function(model, messages, stream = TRUE, shinySession = NULL, use
     last_line
   } else {
     request %>%
-      httr2::req_perform() %>%
-      httr2::resp_body_json()
+      req_perform() %>%
+      resp_body_json()
   }
 }
 

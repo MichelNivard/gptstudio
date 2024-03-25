@@ -48,19 +48,19 @@ request_base_azure_openai <-
            api_version = Sys.getenv("AZURE_OPENAI_API_VERSION"),
            use_token = Sys.getenv("AZURE_OPENAI_USE_TOKEN")) {
     response <-
-      httr2::request(base_url) %>%
-      httr2::req_url_path_append("openai/deployments") %>%
-      httr2::req_url_path_append(deployment_name) %>%
-      httr2::req_url_path_append(task) %>%
-      httr2::req_url_query("api-version" = api_version) %>%
-      httr2::req_headers(
+      request(base_url) %>%
+      req_url_path_append("openai/deployments") %>%
+      req_url_path_append(deployment_name) %>%
+      req_url_path_append(task) %>%
+      req_url_query("api-version" = api_version) %>%
+      req_headers(
         "api-key" = token,
         "Content-Type" = "application/json"
       )
 
     if (use_token) {
       token <- retrieve_azure_token()
-      response %>% httr2::req_auth_bearer_token(token = token)
+      response %>% req_auth_bearer_token(token = token)
     } else {
       response
     }
@@ -81,16 +81,16 @@ query_api_azure_openai <-
         token,
         api_version
       ) %>%
-      httr2::req_body_json(list(messages = request_body)) %>%
-      httr2::req_retry(max_tries = 3) %>%
-      httr2::req_error(is_error = function(resp) FALSE) %>%
-      httr2::req_perform()
+      req_body_json(list(messages = request_body)) %>%
+      req_retry(max_tries = 3) %>%
+      req_error(is_error = function(resp) FALSE) %>%
+      req_perform()
 
     # error handling
-    if (httr2::resp_is_error(response)) {
+    if (resp_is_error(response)) {
       # nolint start
-      status <- httr2::resp_status(response)
-      description <- httr2::resp_status_desc(response)
+      status <- resp_status(response)
+      description <- resp_status_desc(response)
       cli_abort(message = c(
         "x" = "Azure OpenAI API request failed. Error {status} - {description}",
         "i" = "Visit the {.href [Azure OpenAi Error code guidance](https://help.openai.com/en/articles/6891839-api-error-code-guidance)} for more details",
@@ -99,7 +99,7 @@ query_api_azure_openai <-
       # nolint end
     }
     response %>%
-      httr2::resp_body_json()
+      resp_body_json()
   }
 
 retrieve_azure_token <- function() {
