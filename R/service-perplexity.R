@@ -64,7 +64,9 @@ query_api_perplexity <- function(request_body, api_key = Sys.getenv("PERPLEXITY_
 #'
 #' @return The response from the Perplexity API containing the completion for the chat.
 create_completion_perplexity <- function(prompt, model = "mistral-7b-instruct", api_key = Sys.getenv("PERPLEXITY_API_KEY")) {
-  request_body <- list(model = model,
-                       messages = list(list(role = "user", content = prompt)))
+  request_body <- list(
+    model = model,
+    messages = list(list(role = "user", content = prompt))
+  )
   query_api_perplexity(request_body, api_key)
 }

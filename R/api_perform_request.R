@@ -23,7 +23,6 @@ gptstudio_request_perform <- function(skeleton, ...) {
 
 #' @export
 gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySession = NULL, ...) {
-
   # Translate request
 
   skeleton$history <- chat_history_append(
@@ -102,8 +101,8 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
 #' @export
 gptstudio_request_perform.gptstudio_request_huggingface <-
   function(skeleton, ...) {
-    model   <- skeleton$model
-    prompt  <- skeleton$prompt
+    model <- skeleton$model
+    prompt <- skeleton$prompt
     history <- skeleton$history
     cli_inform(c("i" = "Using HuggingFace API with {model} model"))
     response <- create_completion_huggingface(prompt, history, model)
@@ -132,13 +131,15 @@ gptstudio_request_perform.gptstudio_request_google <-
 #' @export
 gptstudio_request_perform.gptstudio_request_anthropic <-
   function(skeleton, ...) {
-    model   <- skeleton$model
-    prompt  <- skeleton$prompt
+    model <- skeleton$model
+    prompt <- skeleton$prompt
     history <- skeleton$history
     cli_inform(c("i" = "Using Anthropic API with {model} model"))
-    response <- create_completion_anthropic(prompt  = prompt,
-                                            history = history,
-                                            model   = model)
+    response <- create_completion_anthropic(
+      prompt = prompt,
+      history = history,
+      model = model
+    )
     structure(
       list(
         skeleton = skeleton,
@@ -150,7 +151,6 @@ gptstudio_request_perform.gptstudio_request_anthropic <-
 
 #' @export
 gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton, ...) {
-
   messages <- c(
     skeleton$history,
     list(
@@ -158,7 +158,7 @@ gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton, .
     )
   )
 
-  body <- list("messages"   = messages)
+  body <- list("messages" = messages)
 
   cat_print(body)
 
@@ -208,11 +208,13 @@ gptstudio_request_perform.gptstudio_request_ollama <- function(skeleton, shinySe
 #' @export
 gptstudio_request_perform.gptstudio_request_perplexity <-
   function(skeleton, ...) {
-    model   <- skeleton$model
-    prompt  <- skeleton$prompt
+    model <- skeleton$model
+    prompt <- skeleton$prompt
     cli_inform(c("i" = "Using Perplexity API with {model} model"))
-    response <- create_completion_perplexity(prompt   = prompt,
-                                             model    = model)
+    response <- create_completion_perplexity(
+      prompt = prompt,
+      model = model
+    )
     structure(
       list(
         skeleton = skeleton,
@@ -224,8 +226,8 @@ gptstudio_request_perform.gptstudio_request_perplexity <-
 
 #' @export
 gptstudio_request_perform.gptstudio_request_cohere <- function(skeleton, ...) {
-  prompt      <- skeleton$prompt
-  model        <- skeleton$model
+  prompt <- skeleton$prompt
+  model <- skeleton$model
 
   skeleton$history <- chat_history_append(
     history = skeleton$history,
@@ -255,7 +257,9 @@ gptstudio_request_perform.gptstudio_request_cohere <- function(skeleton, ...) {
 #' @export
 gptstudio_request_perform.default <- function(skeleton, ...) {
   cli_abort(
-    c("x" = "This API service is not implemented or is missing.",
-      "i" = "Class attribute for `prompt`: {class(prompt)}")
+    c(
+      "x" = "This API service is not implemented or is missing.",
+      "i" = "Class attribute for `prompt`: {class(prompt)}"
+    )
   )
 }

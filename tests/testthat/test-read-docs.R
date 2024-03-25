@@ -1,4 +1,4 @@
-test_that("read_docs() returns NULL when there is no namespace::object match in prompt" , {
+test_that("read_docs() returns NULL when there is no namespace::object match in prompt", {
   read_docs("Text with no match for regular expression") %>%
     expect_null()
 })

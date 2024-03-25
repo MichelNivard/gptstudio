@@ -16,7 +16,6 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
       title = "ChatGPT from gptstudio",
       class = "vh-100 p-0 m-0",
       html_dependencies(),
-
       bslib::layout_sidebar(
         class = "vh-100",
         sidebar = bslib::sidebar(
@@ -24,7 +23,6 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
           width = 300,
           class = "p-0",
           padding = "0.5rem",
-
           mod_sidebar_ui(ns("sidebar"), translator)
         ),
         div(
@@ -145,7 +143,7 @@ html_dependencies <- function() {
 #'
 #' @return A Translator from `shiny.i18n::Translator`
 create_translator <- function(language = getOption("gptstudio.language")) {
-  translator  <- shiny.i18n::Translator$new(translation_json_path = system.file("translations/translation.json", package = "gptstudio"))
+  translator <- shiny.i18n::Translator$new(translation_json_path = system.file("translations/translation.json", package = "gptstudio"))
   supported_languages <- translator$get_languages()
 
   if (!language %in% supported_languages) {

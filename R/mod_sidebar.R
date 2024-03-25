@@ -4,12 +4,10 @@ mod_sidebar_ui <- function(id, translator = create_translator()) {
     bslib::navset_hidden(
       id = ns("panel"),
       selected = "history",
-
       bslib::nav_panel_hidden(
         value = "history",
         class = "px-0 py-2",
         mod_history_ui(id = ns("history"))
-
       ),
       bslib::nav_panel_hidden(
         value = "settings",

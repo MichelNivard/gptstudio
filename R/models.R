@@ -34,9 +34,11 @@ get_available_models <- function(service) {
   } else if (service == "azure_openai") {
     "Using ENV variables"
   } else if (service == "perplexity") {
-    c("sonar-small-chat", "sonar-small-online", "sonar-medium-chat",
+    c(
+      "sonar-small-chat", "sonar-small-online", "sonar-medium-chat",
       "sonar-medium-online", "codellama-70b-instruct", "mistral-7b-instruct",
-      "mixtral-8x7b-instruct")
+      "mixtral-8x7b-instruct"
+    )
   } else if (service == "ollama") {
     if (!ollama_is_available()) stop("Couldn't find ollama in your system")
     ollama_list() %>%

@@ -56,15 +56,15 @@ new_gptstudio_request_skeleton_openai <- function(
       )
     ),
     stream = TRUE,
-    n = 1
-) {
+    n = 1) {
   new_gpstudio_request_skeleton(url,
-                                api_key,
-                                model,
-                                prompt,
-                                history,
-                                stream,
-                                class = "gptstudio_request_openai")
+    api_key,
+    model,
+    prompt,
+    history,
+    stream,
+    class = "gptstudio_request_openai"
+  )
 }
 
 
@@ -79,15 +79,15 @@ new_gptstudio_request_skeleton_huggingface <- function(
         content = "You are an R chat assistant"
       )
     ),
-    stream = FALSE
-) {
+    stream = FALSE) {
   new_gpstudio_request_skeleton(url,
-                                api_key,
-                                model,
-                                prompt,
-                                history,
-                                stream,
-                                class = "gptstudio_request_huggingface")
+    api_key,
+    model,
+    prompt,
+    history,
+    stream,
+    class = "gptstudio_request_huggingface"
+  )
 }
 
 new_gptstudio_request_skeleton_anthropic <- function(
@@ -101,15 +101,15 @@ new_gptstudio_request_skeleton_anthropic <- function(
         content = "You are an R chat assistant"
       )
     ),
-    stream = FALSE
-) {
+    stream = FALSE) {
   new_gpstudio_request_skeleton(url,
-                                api_key,
-                                model,
-                                prompt,
-                                history,
-                                stream,
-                                class = "gptstudio_request_anthropic")
+    api_key,
+    model,
+    prompt,
+    history,
+    stream,
+    class = "gptstudio_request_anthropic"
+  )
 }
 
 new_gptstudio_request_skeleton_google <- function(
@@ -123,15 +123,15 @@ new_gptstudio_request_skeleton_google <- function(
         content = "You are an R chat assistant"
       )
     ),
-    stream = FALSE
-) {
+    stream = FALSE) {
   new_gpstudio_request_skeleton(url,
-                                api_key,
-                                model,
-                                prompt,
-                                history,
-                                stream,
-                                class = "gptstudio_request_google")
+    api_key,
+    model,
+    prompt,
+    history,
+    stream,
+    class = "gptstudio_request_google"
+  )
 }
 
 new_gptstudio_request_skeleton_azure_openai <- function(
@@ -146,15 +146,15 @@ new_gptstudio_request_skeleton_azure_openai <- function(
       )
     ),
     stream = FALSE,
-    n = 1
-) {
+    n = 1) {
   new_gpstudio_request_skeleton(url,
-                                api_key,
-                                model,
-                                prompt,
-                                history,
-                                stream,
-                                class = "gptstudio_request_azure_openai")
+    api_key,
+    model,
+    prompt,
+    history,
+    stream,
+    class = "gptstudio_request_azure_openai"
+  )
 }
 
 new_gptstudio_request_skeleton_ollama <- function(model, prompt, history, stream) {
@@ -180,15 +180,15 @@ new_gptstudio_request_skeleton_perplexity <- function(
         content = "You are an R chat assistant"
       )
     ),
-    stream = FALSE
-) {
+    stream = FALSE) {
   new_gpstudio_request_skeleton(url,
-                                api_key,
-                                model,
-                                prompt,
-                                history,
-                                stream,
-                                class = "gptstudio_request_perplexity")
+    api_key,
+    model,
+    prompt,
+    history,
+    stream,
+    class = "gptstudio_request_perplexity"
+  )
 }
 
 # Cohere Skeleton Creation Function
@@ -196,15 +196,17 @@ new_gptstudio_request_skeleton_cohere <- function(
     model = "command",
     prompt = "What is R?",
     history = NULL,
-    stream = FALSE  # forcing false until streaming implemented for cohere
-) {
-  new_gpstudio_request_skeleton(url = "https://api.cohere.ai/v1/chat",
-                                api_key = Sys.getenv("COHERE_API_KEY"),
-                                model = model,
-                                prompt = prompt,
-                                history = history,
-                                stream = stream,
-                                class = "gptstudio_request_cohere")
+    stream = FALSE # forcing false until streaming implemented for cohere
+    ) {
+  new_gpstudio_request_skeleton(
+    url = "https://api.cohere.ai/v1/chat",
+    api_key = Sys.getenv("COHERE_API_KEY"),
+    model = model,
+    prompt = prompt,
+    history = history,
+    stream = stream,
+    class = "gptstudio_request_cohere"
+  )
 }
 
 #' Create a Request Skeleton
@@ -254,53 +256,58 @@ gptstudio_create_skeleton <- function(service = "openai",
                                       model = "gpt-3.5-turbo",
                                       ...) {
   switch(service,
-         "openai" = new_gptstudio_request_skeleton_openai(
-           model = model,
-           prompt = prompt,
-           history = history,
-           stream = stream),
-         "huggingface" = new_gptstudio_request_skeleton_huggingface(
-           model = model,
-           prompt = prompt,
-           history = history,
-           # forcing false until streaming implemented for hf
-           stream = FALSE),
-         "anthropic" = new_gptstudio_request_skeleton_anthropic(
-           model = model,
-           prompt = prompt,
-           # forcing false until streaming implemented for anthropic
-           stream = FALSE),
-         "google" = new_gptstudio_request_skeleton_google(
-           model = model,
-           prompt = prompt,
-           history = history,
-           # forcing false until streaming implemented for google
-           stream = FALSE),
-         "azure_openai" = new_gptstudio_request_skeleton_azure_openai(
-           model = model,
-           prompt = prompt,
-           history = history,
-           # forcing false until streaming implemented for azure openai
-           stream = FALSE),
-         "ollama" = new_gptstudio_request_skeleton_ollama(
-           model = model,
-           prompt = prompt,
-           history = history,
-           stream = stream
-         ),
-         "perplexity" = new_gptstudio_request_skeleton_perplexity(
-           model = model,
-           prompt = prompt,
-           history = history,
-           # forcing false until streaming implemented for perplexity
-           stream = FALSE
-         ),
-         "cohere" = new_gptstudio_request_skeleton_cohere(
-           model = model,
-           prompt = prompt,
-           history = history,
-           # forcing false until streaming implemented for cohere
-           stream = FALSE
-         ))
+    "openai" = new_gptstudio_request_skeleton_openai(
+      model = model,
+      prompt = prompt,
+      history = history,
+      stream = stream
+    ),
+    "huggingface" = new_gptstudio_request_skeleton_huggingface(
+      model = model,
+      prompt = prompt,
+      history = history,
+      # forcing false until streaming implemented for hf
+      stream = FALSE
+    ),
+    "anthropic" = new_gptstudio_request_skeleton_anthropic(
+      model = model,
+      prompt = prompt,
+      # forcing false until streaming implemented for anthropic
+      stream = FALSE
+    ),
+    "google" = new_gptstudio_request_skeleton_google(
+      model = model,
+      prompt = prompt,
+      history = history,
+      # forcing false until streaming implemented for google
+      stream = FALSE
+    ),
+    "azure_openai" = new_gptstudio_request_skeleton_azure_openai(
+      model = model,
+      prompt = prompt,
+      history = history,
+      # forcing false until streaming implemented for azure openai
+      stream = FALSE
+    ),
+    "ollama" = new_gptstudio_request_skeleton_ollama(
+      model = model,
+      prompt = prompt,
+      history = history,
+      stream = stream
+    ),
+    "perplexity" = new_gptstudio_request_skeleton_perplexity(
+      model = model,
+      prompt = prompt,
+      history = history,
+      # forcing false until streaming implemented for perplexity
+      stream = FALSE
+    ),
+    "cohere" = new_gptstudio_request_skeleton_cohere(
+      model = model,
+      prompt = prompt,
+      history = history,
+      # forcing false until streaming implemented for cohere
+      stream = FALSE
+    )
+  )
 }
-

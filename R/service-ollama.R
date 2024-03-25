@@ -21,22 +21,23 @@ ollama_is_available <- function(verbose = FALSE) {
 
   check_value <- logical(1)
 
-  rlang::try_fetch({
-    response <- httr2::req_perform(request) %>%
-      httr2::resp_body_string()
+  rlang::try_fetch(
+    {
+      response <- httr2::req_perform(request) %>%
+        httr2::resp_body_string()
 
-    if (verbose) cli::cli_alert_success(response)
-    check_value <- TRUE
-
-  }, error = function(cnd) {
-
-    if(inherits(cnd, "httr2_failure")) {
-      if (verbose) cli::cli_alert_danger("Couldn't connect to Ollama in {.url {ollama_api_url()}}. Is it running there?")
-    } else {
-      if (verbose) cli::cli_alert_danger(cnd)
+      if (verbose) cli::cli_alert_success(response)
+      check_value <- TRUE
+    },
+    error = function(cnd) {
+      if (inherits(cnd, "httr2_failure")) {
+        if (verbose) cli::cli_alert_danger("Couldn't connect to Ollama in {.url {ollama_api_url()}}. Is it running there?")
+      } else {
+        if (verbose) cli::cli_alert_danger(cnd)
+      }
+      check_value <- FALSE
     }
-    check_value <- FALSE
-  })
+  )
 
   invisible(check_value)
 }
@@ -117,12 +118,10 @@ OllamaStreamParser <- R6::R6Class(
   classname = "OllamaStreamParser",
   portable = TRUE,
   public = list(
-
     lines = NULL,
     value = NULL,
     shinySession = NULL,
     user_message = NULL,
-
     append_parsed_line = function(line) {
       self$value <- paste0(self$value, line$message$content)
       self$lines <- c(self$lines, list(line))
@@ -140,7 +139,6 @@ OllamaStreamParser <- R6::R6Class(
 
       invisible(self)
     },
-
     parse_ndjson = function(ndjson, pagesize = 500, verbose = FALSE, simplifyDataFrame = FALSE) {
       jsonlite::stream_in(
         con = textConnection(ndjson),
@@ -152,7 +150,6 @@ OllamaStreamParser <- R6::R6Class(
 
       invisible(self)
     },
-
     initialize = function(session = NULL, user_prompt = NULL) {
       self$lines <- list()
       self$shinySession <- session

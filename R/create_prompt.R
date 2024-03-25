@@ -24,10 +24,12 @@
 #' @examples
 #' \dontrun{
 #' chat_create_system_prompt(in_source = TRUE)
-#' chat_create_system_prompt(style = "tidyverse",
-#'                           skill = "advanced",
-#'                           task = "coding",
-#'                           in_source = FALSE)
+#' chat_create_system_prompt(
+#'   style = "tidyverse",
+#'   skill = "advanced",
+#'   task = "coding",
+#'   in_source = FALSE
+#' )
 #' }
 chat_create_system_prompt <-
   function(style = getOption("gptstudio.code_style"),
@@ -37,14 +39,17 @@ chat_create_system_prompt <-
            in_source = FALSE) {
     style %|!|%
       rlang::arg_match(style,
-                       values = c("tidyverse", "base", "no preference"))
+        values = c("tidyverse", "base", "no preference")
+      )
     skill %|!|%
       rlang::arg_match(skill,
-                       values = c("beginner", "intermediate", "advanced", "genius"))
+        values = c("beginner", "intermediate", "advanced", "genius")
+      )
     task %|!|%
       rlang::arg_match(
         task,
-        c("coding", "general", "advanced developer", "custom"))
+        c("coding", "general", "advanced developer", "custom")
+      )
 
     # Custom prompt bypass
     if (!is.null(custom_prompt) && task == "custom" && custom_prompt != "") {
@@ -53,8 +58,9 @@ chat_create_system_prompt <-
 
     task %|!|%
       switch(task,
-             "general" = return("You are a helpful chat assistant."),
-             "advanced developer" = return("Write code only. Fewer instructions and comments."))
+        "general" = return("You are a helpful chat assistant."),
+        "advanced developer" = return("Write code only. Fewer instructions and comments.")
+      )
 
     if (is.null(c(skill, style))) {
       intro <-
@@ -75,25 +81,33 @@ chat_create_system_prompt <-
 
     about_skill <- if (!is.null(skill)) {
       glue::glue("They consider themselves to be a {skill} R programmer.",
-                 "Provide answers with their skill level in mind.",
-                 .sep = " ")
-    } else ""
+        "Provide answers with their skill level in mind.",
+        .sep = " "
+      )
+    } else {
+      ""
+    }
 
     about_style <- if (!is.null(style)) {
       switch(style,
-             "no preference" = "",
-             "base" = "They prefer to use a base R style of coding. When possible, answer code questions using base R.",
-             "tidyverse" = "They prefer to use a tidyverse style of coding. When possible, answer code questions using tidyverse, r-lib, and tidymodels family of packages. R for Data Science is also a good resource to pull from."
+        "no preference" = "",
+        "base" = "They prefer to use a base R style of coding. When possible, answer code questions using base R.",
+        "tidyverse" = "They prefer to use a tidyverse style of coding. When possible, answer code questions using tidyverse, r-lib, and tidymodels family of packages. R for Data Science is also a good resource to pull from."
       )
-    } else ""
+    } else {
+      ""
+    }
 
     in_source_instructions <-
       if (in_source) {
         glue::glue("For any text that is not R code, write it as a code",
-                   "comment. Do not use code blocks or free text. Only use",
-                   "code and code comments.",
-                   .sep = " ")
-      } else ""
+          "comment. Do not use code blocks or free text. Only use",
+          "code and code comments.",
+          .sep = " "
+        )
+      } else {
+        ""
+      }
     glue::glue("{intro} {about_skill} {about_style} {in_source_instructions}")
   }
 
@@ -127,16 +141,17 @@ chat_create_system_prompt <-
 prepare_chat_history <- function(history = NULL,
                                  style = getOption("gptstudio.code_style"),
                                  skill = getOption("gptstudio.skill"),
-                                 task  = "coding",
+                                 task = "coding",
                                  custom_prompt = NULL) {
   instructions <- list(
     list(
       role = "system",
       content = chat_create_system_prompt(style,
-                                          skill,
-                                          task,
-                                          custom_prompt,
-                                          in_source = FALSE)
+        skill,
+        task,
+        custom_prompt,
+        in_source = FALSE
+      )
     )
   )
 

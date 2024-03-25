@@ -72,15 +72,18 @@ check_api_connection_google <- function(service, api_key) {
 }
 
 #' @inheritParams check_api_connection_openai
-check_api_connection_azure_openai <- function(service, api_key) {''
+check_api_connection_azure_openai <- function(service, api_key) {
+  ""
   api_check <- check_api_key(service, api_key)
   if (rlang::is_false(api_check)) {
     return(invisible(NULL))
   }
 
   response <- request_base_azure_openai() %>%
-    httr2::req_body_json(list(messages = list(list(role = "user",
-                                              content = "Hello world!")))) %>%
+    httr2::req_body_json(list(messages = list(list(
+      role = "user",
+      content = "Hello world!"
+    )))) %>%
     httr2::req_error(is_error = function(resp) FALSE) %>%
     httr2::req_perform()
 
@@ -132,8 +135,8 @@ check_api_connection_cohere <- function(service, api_key) {
 #' print to the console.
 #'
 #' @examples
-#' gptstudio_sitrep(verbose = FALSE)  # Print basic settings, no API checks
-#' gptstudio_sitrep()                 # Print settings and check API connections
+#' gptstudio_sitrep(verbose = FALSE) # Print basic settings, no API checks
+#' gptstudio_sitrep() # Print settings and check API connections
 #'
 #' @export
 gptstudio_sitrep <- function(verbose = TRUE) {
@@ -151,37 +154,53 @@ gptstudio_sitrep <- function(verbose = TRUE) {
                   Lauch the chat app with addins or {.run [gptstudio_chat()](gptstudio::gptstudio_chat())}.")
   }
   cli::cli_h2("Current Settings")
-  cli::cli_bullets(c("- Model: {getOption('gptstudio.model')}",
-                     "- Task: {getOption('gptstudio.task')}",
-                     "- Language: {getOption('gptstudio.language')}",
-                     "- Service: {getOption('gptstudio.service')}",
-                     "- Custom prompt: {getOption('gptstudio.custom_prompt')}",
-                     "- Stream: {getOption('gptstudio.stream')}",
-                     "- Code style: {getOption('gptstudio.code_style')}",
-                     "- Skill: {getOption('gptstudio.skill')}"))
+  cli::cli_bullets(c(
+    "- Model: {getOption('gptstudio.model')}",
+    "- Task: {getOption('gptstudio.task')}",
+    "- Language: {getOption('gptstudio.language')}",
+    "- Service: {getOption('gptstudio.service')}",
+    "- Custom prompt: {getOption('gptstudio.custom_prompt')}",
+    "- Stream: {getOption('gptstudio.stream')}",
+    "- Code style: {getOption('gptstudio.code_style')}",
+    "- Skill: {getOption('gptstudio.skill')}"
+  ))
   if (verbose) {
     cli::cli_h2("Checking API connections")
     cli::cli_h3("Checking OpenAI API connection")
-    check_api_connection_openai(service = "OpenAI",
-                                api_key = Sys.getenv("OPENAI_API_KEY"))
+    check_api_connection_openai(
+      service = "OpenAI",
+      api_key = Sys.getenv("OPENAI_API_KEY")
+    )
     cli::cli_h3("Checking HuggingFace API connection")
-    check_api_connection_huggingface("HuggingFace",
-                                     Sys.getenv("HF_API_KEY"))
+    check_api_connection_huggingface(
+      "HuggingFace",
+      Sys.getenv("HF_API_KEY")
+    )
     cli::cli_h3("Checking Anthropic API connection")
-    check_api_connection_anthropic(service = "Anthropic",
-                                   api_key = Sys.getenv("ANTHROPIC_API_KEY"))
+    check_api_connection_anthropic(
+      service = "Anthropic",
+      api_key = Sys.getenv("ANTHROPIC_API_KEY")
+    )
     cli::cli_h3("Checking Google AI Studio API connection")
-    check_api_connection_google(service = "Google AI Studio",
-                                api_key = Sys.getenv("GOOGLE_API_KEY"))
+    check_api_connection_google(
+      service = "Google AI Studio",
+      api_key = Sys.getenv("GOOGLE_API_KEY")
+    )
     cli::cli_h3("Checking Azure OpenAI API connection")
-    check_api_connection_azure_openai(service = "Azure OpenAI",
-                                      api_key = Sys.getenv("AZURE_OPENAI_KEY"))
+    check_api_connection_azure_openai(
+      service = "Azure OpenAI",
+      api_key = Sys.getenv("AZURE_OPENAI_KEY")
+    )
     cli::cli_h3("Checking Perplexity API connection")
-    check_api_connection_perplexity(service = "Perplexity",
-                                    api_key = Sys.getenv("PERPLEXITY_API_KEY"))
+    check_api_connection_perplexity(
+      service = "Perplexity",
+      api_key = Sys.getenv("PERPLEXITY_API_KEY")
+    )
     cli::cli_h3("Checking Cohere API connection")
-    check_api_connection_cohere(service = "Cohere",
-                                api_key = Sys.getenv("COHERE_API_KEY"))
+    check_api_connection_cohere(
+      service = "Cohere",
+      api_key = Sys.getenv("COHERE_API_KEY")
+    )
     cli::cli_h3("Check Ollama for Local API connection")
     ollama_is_available(verbose = TRUE)
     cli::cli_h2("Getting help")

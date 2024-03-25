@@ -19,5 +19,3 @@ test_that("create_translator() fails when language is not supported", {
   create_translator("latin") %>%
     expect_error()
 })
-
-

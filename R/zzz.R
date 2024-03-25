@@ -6,7 +6,8 @@
     config <- yaml::read_yaml(user_config)
   } else {
     config <- yaml::read_yaml(system.file("rstudio/config.yml",
-                                          package = "gptstudio"))
+      package = "gptstudio"
+    ))
   }
 
   op <- options()

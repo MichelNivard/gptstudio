@@ -19,23 +19,18 @@
 #'   specified.
 #' @return a list with the generated completions and other information returned
 #'   by the API
-#' @examples
-#' \dontrun{
-#' create_completion_azure_openai(
-#'   prompt = list(list(role = "user", content = "Hello world!"))
-#' }
 #'
 #' @export
-create_completion_azure_openai <- function(prompt,
-                                           task = Sys.getenv("AZURE_OPENAI_TASK"),
-                                           base_url = Sys.getenv("AZURE_OPENAI_ENDPOINT"),
-                                           deployment_name = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
-                                           token = Sys.getenv("AZURE_OPENAI_KEY"),
-                                           api_version = Sys.getenv("AZURE_OPENAI_API_VERSION"))
-{
-  request_body <- list(list(role = "user", content = prompt))
-  query_api_azure_openai(task, request_body, base_url, deployment_name, token, api_version)
-}
+create_completion_azure_openai <-
+  function(prompt,
+           task = Sys.getenv("AZURE_OPENAI_TASK"),
+           base_url = Sys.getenv("AZURE_OPENAI_ENDPOINT"),
+           deployment_name = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
+           token = Sys.getenv("AZURE_OPENAI_KEY"),
+           api_version = Sys.getenv("AZURE_OPENAI_API_VERSION")) {
+    request_body <- list(list(role = "user", content = prompt))
+    query_api_azure_openai(task, request_body, base_url, deployment_name, token, api_version)
+  }
 
 request_base_azure_openai <-
   function(task = Sys.getenv("AZURE_OPENAI_TASK"),
@@ -43,23 +38,24 @@ request_base_azure_openai <-
            deployment_name = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
            token = Sys.getenv("AZURE_OPENAI_KEY"),
            api_version = Sys.getenv("AZURE_OPENAI_API_VERSION"),
-           use_token = Sys.getenv("AZURE_OPENAI_USE_TOKEN")
-  ) {
+           use_token = Sys.getenv("AZURE_OPENAI_USE_TOKEN")) {
     response <-
       httr2::request(base_url) %>%
       httr2::req_url_path_append("openai/deployments") %>%
       httr2::req_url_path_append(deployment_name) %>%
       httr2::req_url_path_append(task) %>%
       httr2::req_url_query("api-version" = api_version) %>%
-      httr2::req_headers("api-key" = token,
-                         "Content-Type" = "application/json")
+      httr2::req_headers(
+        "api-key" = token,
+        "Content-Type" = "application/json"
+      )
 
-      if (use_token) {
-        token <- retrieve_azure_token()
-        response %>% httr2::req_auth_bearer_token(token = token)
-      } else {
-        response
-      }
+    if (use_token) {
+      token <- retrieve_azure_token()
+      response %>% httr2::req_auth_bearer_token(token = token)
+    } else {
+      response
+    }
   }
 
 query_api_azure_openai <- function(task = Sys.getenv("AZURE_OPENAI_TASK"),
@@ -67,8 +63,7 @@ query_api_azure_openai <- function(task = Sys.getenv("AZURE_OPENAI_TASK"),
                                    base_url = Sys.getenv("AZURE_OPENAI_ENDPOINT"),
                                    deployment_name = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
                                    token = Sys.getenv("AZURE_OPENAI_KEY"),
-                                   api_version = Sys.getenv("AZURE_OPENAI_API_VERSION"))
-{
+                                   api_version = Sys.getenv("AZURE_OPENAI_API_VERSION")) {
   response <-
     request_base_azure_openai(task, base_url, deployment_name, token, api_version) %>%
     httr2::req_body_json(list(messages = request_body)) %>%

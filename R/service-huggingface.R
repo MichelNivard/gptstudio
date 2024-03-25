@@ -72,16 +72,15 @@ create_completion_huggingface <- function(prompt,
                                           model = "tiiuae/falcon-7b-instruct",
                                           token = Sys.getenv("HF_API_KEY"),
                                           max_new_tokens = 250) {
-
   prepped_history <- ""
   for (i in seq_along(history)) {
-    if (history[[i]]$role == 'system') {
+    if (history[[i]]$role == "system") {
       prepped_history <-
         paste0(prepped_history, "\nInstructions:\n", history[[i]]$content)
-    } else if (history[[i]]$role == 'user') {
+    } else if (history[[i]]$role == "user") {
       prepped_history <-
         paste0(prepped_history, "\nUser:\n", history[[i]]$content)
-    } else if (history[[i]]$role == 'assistant') {
+    } else if (history[[i]]$role == "assistant") {
       prepped_history <-
         paste0(prepped_history, "\nAssistant:\n", history[[i]]$content)
     }
@@ -89,10 +88,16 @@ create_completion_huggingface <- function(prompt,
 
   prompt <- glue::glue("{prepped_history}\nUser:\n{prompt}")
 
-  request_body <- list(inputs = prompt,
-                       parameters = list(max_new_tokens	= max_new_tokens,
-                                         return_full_text = FALSE))
-  query_api_huggingface(task = model,
-                        request_body = request_body,
-                        token = token)
+  request_body <- list(
+    inputs = prompt,
+    parameters = list(
+      max_new_tokens = max_new_tokens,
+      return_full_text = FALSE
+    )
+  )
+  query_api_huggingface(
+    task = model,
+    request_body = request_body,
+    token = token
+  )
 }

@@ -69,7 +69,6 @@ query_api_google <- function(model,
 create_completion_google <- function(prompt,
                                      model = "gemini-pro",
                                      key = Sys.getenv("GOOGLE_API_KEY")) {
-
   # Constructing the request body as per the API documentation
   request_body <- list(
     contents = list(

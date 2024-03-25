@@ -160,7 +160,6 @@ open_bg_shinyapp <- function(host, port) {
 # This function makes a request for the app's url and fails
 # if doesn't find anything after 10 seconds
 wait_for_bg_shinyapp <- function(url) {
-
   httr2::request(url) %>%
     httr2::req_retry(max_seconds = 10, backoff = function(n) 0.2) %>%
     httr2::req_perform()
