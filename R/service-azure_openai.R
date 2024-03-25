@@ -5,7 +5,8 @@
 #'
 #' @param prompt a list to use as the prompt for generating
 #'   completions
-#' @param task a character string for the API task (e.g. "completions"). Defaults to the Azure OpenAI
+#' @param task a character string for the API task (e.g. "completions").
+#' Defaults to the Azure OpenAI
 #'   task from environment variables if not specified.
 #' @param base_url a character string for the base url. It defaults to the Azure
 #'   OpenAI endpoint from environment variables if not specified.
@@ -29,7 +30,14 @@ create_completion_azure_openai <-
            token = Sys.getenv("AZURE_OPENAI_KEY"),
            api_version = Sys.getenv("AZURE_OPENAI_API_VERSION")) {
     request_body <- list(list(role = "user", content = prompt))
-    query_api_azure_openai(task, request_body, base_url, deployment_name, token, api_version)
+    query_api_azure_openai(
+      task,
+      request_body,
+      base_url,
+      deployment_name,
+      token,
+      api_version
+    )
   }
 
 request_base_azure_openai <-
@@ -58,32 +66,41 @@ request_base_azure_openai <-
     }
   }
 
-query_api_azure_openai <- function(task = Sys.getenv("AZURE_OPENAI_TASK"),
-                                   request_body,
-                                   base_url = Sys.getenv("AZURE_OPENAI_ENDPOINT"),
-                                   deployment_name = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
-                                   token = Sys.getenv("AZURE_OPENAI_KEY"),
-                                   api_version = Sys.getenv("AZURE_OPENAI_API_VERSION")) {
-  response <-
-    request_base_azure_openai(task, base_url, deployment_name, token, api_version) %>%
-    httr2::req_body_json(list(messages = request_body)) %>%
-    httr2::req_retry(max_tries = 3) %>%
-    httr2::req_error(is_error = function(resp) FALSE) %>%
-    httr2::req_perform()
+query_api_azure_openai <-
+  function(task = Sys.getenv("AZURE_OPENAI_TASK"),
+           request_body,
+           base_url = Sys.getenv("AZURE_OPENAI_ENDPOINT"),
+           deployment_name = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
+           token = Sys.getenv("AZURE_OPENAI_KEY"),
+           api_version = Sys.getenv("AZURE_OPENAI_API_VERSION")) {
+    response <-
+      request_base_azure_openai(
+        task,
+        base_url,
+        deployment_name,
+        token,
+        api_version
+      ) %>%
+      httr2::req_body_json(list(messages = request_body)) %>%
+      httr2::req_retry(max_tries = 3) %>%
+      httr2::req_error(is_error = function(resp) FALSE) %>%
+      httr2::req_perform()
 
-  # error handling
-  if (httr2::resp_is_error(response)) {
-    status <- httr2::resp_status(response)
-    description <- httr2::resp_status_desc(response)
-    cli_abort(message = c(
-      "x" = "Azure OpenAI API request failed. Error {status} - {description}",
-      "i" = "Visit the {.href [Azure OpenAi Error code guidance](https://help.openai.com/en/articles/6891839-api-error-code-guidance)} for more details",
-      "i" = "You can also visit the {.href [API documentation](https://platform.openai.com/docs/guides/error-codes/api-errors)}"
-    ))
+    # error handling
+    if (httr2::resp_is_error(response)) {
+      # nolint start
+      status <- httr2::resp_status(response)
+      description <- httr2::resp_status_desc(response)
+      cli_abort(message = c(
+        "x" = "Azure OpenAI API request failed. Error {status} - {description}",
+        "i" = "Visit the {.href [Azure OpenAi Error code guidance](https://help.openai.com/en/articles/6891839-api-error-code-guidance)} for more details",
+        "i" = "You can also visit the {.href [API documentation](https://platform.openai.com/docs/guides/error-codes/api-errors)}"
+      ))
+      # nolint end
+    }
+    response %>%
+      httr2::resp_body_json()
   }
-  response %>%
-    httr2::resp_body_json()
-}
 
 retrieve_azure_token <- function() {
   rlang::check_installed("AzureRMR")
