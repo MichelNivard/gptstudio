@@ -58,7 +58,7 @@ request_base_azure_openai <-
         "Content-Type" = "application/json"
       )
 
-    if (use_token) {
+    if (is_true(as.logical(use_token))) {
       token <- retrieve_azure_token()
       response %>% req_auth_bearer_token(token = token)
     } else {
