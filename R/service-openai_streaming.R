@@ -86,7 +86,9 @@ OpenaiStreamParser <- R6::R6Class(
     #' @description Overwrites `SSEparser$append_parsed_sse()` to be able to send a custom message to a shiny session, escaping shiny's reactivity.
     append_parsed_sse = function(parsed_event) {
       # ----- here you can do whatever you want with the event data -----
-      if (parsed_event$data == "[DONE]") return()
+      if (parsed_event$data == "[DONE]") {
+        return()
+      }
       parsed_event$data <- jsonlite::fromJSON(parsed_event$data, simplifyDataFrame = FALSE)
 
       content <- parsed_event$data$choices[[1]]$delta$content

@@ -12,9 +12,9 @@ request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
       "i" = "Run {.run gptstudio::get_available_endpoints()} to get a list of supported endpoints"
     ))
   }
-  httr2::request(getOption("gptstudio.openai_url")) %>%
-    httr2::req_url_path_append(task) %>%
-    httr2::req_auth_bearer_token(token = token)
+  request(getOption("gptstudio.openai_url")) %>%
+    req_url_path_append(task) %>%
+    req_auth_bearer_token(token = token)
 }
 
 #' A function that sends an API request and returns the response.
@@ -27,23 +27,23 @@ request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
 #'
 query_api <- function(task, request_body, token = Sys.getenv("OPENAI_API_KEY")) {
   response <- request_base(task, token = token) %>%
-    httr2::req_body_json(data = request_body) %>%
-    httr2::req_retry(max_tries = 3) %>%
-    httr2::req_error(is_error = \(resp) FALSE)
+    req_body_json(data = request_body) %>%
+    req_retry(max_tries = 3) %>%
+    req_error(is_error = \(resp) FALSE)
 
-  response %>% httr2::req_dry_run()
+  response %>% req_dry_run()
 
-  response <- httr2::req_perform(response)
+  response <- req_perform(response)
 
   # error handling
-  if (httr2::resp_is_error(response)) {
-    status <- httr2::resp_status(response)
-    description <- httr2::resp_status_desc(response)
+  if (resp_is_error(response)) {
+    status <- resp_status(response)
+    description <- resp_status_desc(response)
     send_abort_message(service, status, description)
   }
 
   response %>%
-    httr2::resp_body_json()
+    resp_body_json()
 }
 
 send_abort_message <- function(service = "openai",

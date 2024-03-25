@@ -31,7 +31,7 @@ To modify the `.Renviron` file:
 
 ```{r}
 #| eval: false
-require(usethis) 
+require(usethis)
 edit_r_environ()
 ```
 

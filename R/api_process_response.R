@@ -33,8 +33,10 @@ gptstudio_response_process.gptstudio_response_openai <-
 
     skeleton$history <- new_history
     skeleton$prompt <- NULL # remove the last prompt
-    class(skeleton) <- c("gptstudio_request_skeleton",
-                         "gptstudio_request_openai")
+    class(skeleton) <- c(
+      "gptstudio_request_skeleton",
+      "gptstudio_request_openai"
+    )
     skeleton
   }
 
@@ -55,8 +57,10 @@ gptstudio_response_process.gptstudio_response_huggingface <-
 
     skeleton$history <- new_history
     skeleton$prompt <- NULL # remove the last prompt
-    class(skeleton) <- c("gptstudio_request_skeleton",
-                         "gptstudio_request_huggingface")
+    class(skeleton) <- c(
+      "gptstudio_request_skeleton",
+      "gptstudio_request_huggingface"
+    )
     skeleton
   }
 
@@ -76,8 +80,10 @@ gptstudio_response_process.gptstudio_response_anthropic <-
 
     skeleton$history <- new_history
     skeleton$prompt <- NULL # remove the last prompt
-    class(skeleton) <- c("gptstudio_request_skeleton",
-                         "gptstudio_request_anthropic")
+    class(skeleton) <- c(
+      "gptstudio_request_skeleton",
+      "gptstudio_request_anthropic"
+    )
     skeleton
   }
 
@@ -97,8 +103,10 @@ gptstudio_response_process.gptstudio_response_google <-
 
     skeleton$history <- new_history
     skeleton$prompt <- NULL # remove the last prompt
-    class(skeleton) <- c("gptstudio_request_skeleton",
-                         "gptstudio_request_google")
+    class(skeleton) <- c(
+      "gptstudio_request_skeleton",
+      "gptstudio_request_google"
+    )
     skeleton
   }
 
@@ -109,7 +117,7 @@ gptstudio_response_process.gptstudio_response_azure_openai <-
     skeleton <- skeleton$skeleton
 
     if (skeleton$stream == TRUE) {
-      last_response = response
+      last_response <- response
     } else {
       last_response <- response$choices[[1]]$message$content
     }
@@ -124,8 +132,10 @@ gptstudio_response_process.gptstudio_response_azure_openai <-
 
     skeleton$history <- new_history
     skeleton$prompt <- NULL # remove the last prompt
-    class(skeleton) <- c("gptstudio_request_skeleton",
-                         "gptstudio_request_azure_openai")
+    class(skeleton) <- c(
+      "gptstudio_request_skeleton",
+      "gptstudio_request_azure_openai"
+    )
     skeleton
   }
 
@@ -143,8 +153,10 @@ gptstudio_response_process.gptstudio_response_ollama <- function(skeleton, ...) 
 
   skeleton$history <- new_history
   skeleton$prompt <- NULL # remove the last prompt
-  class(skeleton) <- c("gptstudio_request_skeleton",
-                       "gptstudio_request_ollama")
+  class(skeleton) <- c(
+    "gptstudio_request_skeleton",
+    "gptstudio_request_ollama"
+  )
   skeleton
 }
 
@@ -164,8 +176,10 @@ gptstudio_response_process.gptstudio_response_perplexity <-
 
     skeleton$history <- new_history
     skeleton$prompt <- NULL # remove the last prompt
-    class(skeleton) <- c("gptstudio_request_skeleton",
-                         "gptstudio_request_perplexity")
+    class(skeleton) <- c(
+      "gptstudio_request_skeleton",
+      "gptstudio_request_perplexity"
+    )
     skeleton
   }
 
@@ -183,8 +197,10 @@ gptstudio_response_process.gptstudio_response_cohere <- function(skeleton, ...) 
 
   skeleton$history <- new_history
   skeleton$prompt <- NULL # remove the last prompt
-  class(skeleton) <- c("gptstudio_request_skeleton",
-                       "gptstudio_request_cohere")
+  class(skeleton) <- c(
+    "gptstudio_request_skeleton",
+    "gptstudio_request_cohere"
+  )
 
   skeleton
 }

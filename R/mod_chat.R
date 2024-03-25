@@ -71,7 +71,6 @@ mod_chat_server <- function(id,
                             history) {
   # This is where changes will focus
   moduleServer(id, function(input, output, session) {
-
     # Session data ----
 
     ns <- session$ns
@@ -111,7 +110,6 @@ mod_chat_server <- function(id,
 
 
     observe({
-
       skeleton <- gptstudio_create_skeleton(
         service = settings$service,
         model = settings$model,
@@ -139,9 +137,7 @@ mod_chat_server <- function(id,
       }
 
       updateTextAreaInput(session, "chat_input", value = "")
-
     }) %>%
       bindEvent(input$chat)
-
   })
 }
