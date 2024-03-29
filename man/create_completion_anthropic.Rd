@@ -20,10 +20,10 @@ create_completion_anthropic(
 \item{model}{The model to use for generating text. By default, the
 function will try to use "claude-2.1".}
 
+\item{max_tokens}{The maximum number of tokens to generate. Defaults to 256.}
+
 \item{key}{The API key for accessing Anthropic's API. By default, the
 function will try to use the \code{ANTHROPIC_API_KEY} environment variable.}
-
-\item{max_tokens_to_sample}{The maximum number of tokens to generate. Defaults to 256.}
 }
 \value{
 A list with the generated completions and other information returned
