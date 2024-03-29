@@ -9,12 +9,10 @@
 request_base_anthropic <- function(key = Sys.getenv("ANTHROPIC_API_KEY")) {
   request("https://api.anthropic.com/v1/complete") %>%
     req_headers(
-      `accept` = "application/json",
-      `anthropic-version` = "2023-06-01",
-      `content-type` = "application/json",
-      `x-api-key` = key
-    ) %>%
-    req_method("POST")
+      "anthropic-version" = "2023-06-01",
+      "content-type" = "application/json",
+      "x-api-key" = key
+    )
 }
 
 #' A function that sends a request to the Anthropic API and returns the
@@ -55,7 +53,7 @@ query_api_anthropic <- function(request_body,
 #' @param history A list of the previous chat responses
 #' @param model The model to use for generating text. By default, the
 #'   function will try to use "claude-2.1".
-#' @param max_tokens_to_sample The maximum number of tokens to generate. Defaults to 256.
+#' @param max_tokens The maximum number of tokens to generate. Defaults to 256.
 #' @param key The API key for accessing Anthropic's API. By default, the
 #'   function will try to use the `ANTHROPIC_API_KEY` environment variable.
 #'
@@ -73,7 +71,7 @@ query_api_anthropic <- function(request_body,
 create_completion_anthropic <- function(prompt,
                                         history = NULL,
                                         model = "claude-2.1",
-                                        max_tokens_to_sample = 256,
+                                        max_tokens = 1028,
                                         key = Sys.getenv("ANTHROPIC_API_KEY")) {
   # The request body for the Anthropic API should be a list with the 'prompt', 'model', and 'max_tokens_to_sample' fields set
   prepped_history <- ""
@@ -86,11 +84,11 @@ create_completion_anthropic <- function(prompt,
       prepped_history <- paste0(prepped_history, "\n\nAssistant:\n", history[[i]]$content)
     }
   }
-  prompt <- glue::glue("{prepped_history}\n\nHuman: {prompt}\n\nAssistant:")
+  prompt <- list(list(role = "user", content = prompt))
   request_body <- list(
-    prompt = prompt,
+    messages = prompt,
     model = model,
-    max_tokens_to_sample = max_tokens_to_sample
+    max_tokens = max_tokens
   )
   answer <- query_api_anthropic(request_body = request_body, key = key)
   answer$completion

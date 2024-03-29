@@ -8,7 +8,7 @@ create_completion_anthropic(
   prompt,
   history = NULL,
   model = "claude-2.1",
-  max_tokens_to_sample = 256,
+  max_tokens = 1028,
   key = Sys.getenv("ANTHROPIC_API_KEY")
 )
 }
@@ -20,7 +20,7 @@ create_completion_anthropic(
 \item{model}{The model to use for generating text. By default, the
 function will try to use "claude-2.1".}
 
-\item{max_tokens_to_sample}{The maximum number of tokens to generate. Defaults to 256.}
+\item{max_tokens}{The maximum number of tokens to generate. Defaults to 256.}
 
 \item{key}{The API key for accessing Anthropic's API. By default, the
 function will try to use the \code{ANTHROPIC_API_KEY} environment variable.}
