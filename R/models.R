@@ -30,7 +30,10 @@ get_available_models <- function(service) {
   } else if (service == "huggingface") {
     c("gpt2", "tiiuae/falcon-7b-instruct", "bigcode/starcoderplus")
   } else if (service == "anthropic") {
-    c("claude-3-opus-20240229", "claude-3-sonnet-20240229", "claude-2.1", "claude-instant-1.2")
+    c(
+      "claude-3-opus-20240229", "claude-3-sonnet-20240229", "claude-3-haiku-20240229",
+      "claude-2.1", "claude-instant-1.2"
+    )
   } else if (service == "azure_openai") {
     "Using ENV variables"
   } else if (service == "perplexity") {
