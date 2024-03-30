@@ -12,9 +12,9 @@ request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
       "i" = "Run {.run gptstudio::get_available_endpoints()} to get a list of supported endpoints"
     ))
   }
-  httr2::request(getOption("gptstudio.openai_url")) %>%
-    httr2::req_url_path_append(task) %>%
-    httr2::req_auth_bearer_token(token = token)
+  request(getOption("gptstudio.openai_url")) %>%
+    req_url_path_append(task) %>%
+    req_auth_bearer_token(token = token)
 }
 
 #' Generate text completions using OpenAI's API for Chat
@@ -74,15 +74,15 @@ openai_create_chat_completion <-
 #'
 query_openai_api <- function(task, request_body, openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
   response <- request_base(task, token = openai_api_key) %>%
-    httr2::req_body_json(data = request_body) %>%
-    httr2::req_retry(max_tries = 3) %>%
-    httr2::req_error(is_error = function(resp) FALSE) %>%
-    httr2::req_perform()
+    req_body_json(data = request_body) %>%
+    req_retry(max_tries = 3) %>%
+    req_error(is_error = function(resp) FALSE) %>%
+    req_perform()
 
   # error handling
-  if (httr2::resp_is_error(response)) {
-    status <- httr2::resp_status(response)
-    description <- httr2::resp_status_desc(response)
+  if (resp_is_error(response)) {
+    status <- resp_status(response)
+    description <- resp_status_desc(response)
 
     cli::cli_abort(message = c(
       "x" = "OpenAI API request failed. Error {status} - {description}",
@@ -92,7 +92,7 @@ query_openai_api <- function(task, request_body, openai_api_key = Sys.getenv("OP
   }
 
   response %>%
-    httr2::resp_body_json()
+    resp_body_json()
 }
 
 #' List supported endpoints

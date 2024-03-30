@@ -37,13 +37,13 @@ style_chat_message <- function(message,
   colors <- create_ide_matching_colors(message$role, ide_colors)
 
   icon_name <- switch(message$role,
-                      "user" = "fas fa-user",
-                      "assistant" = "fas fa-robot"
+    "user" = "fas fa-user",
+    "assistant" = "fas fa-robot"
   )
 
   position_class <- switch(message$role,
-                           "user" = "justify-content-end",
-                           "assistant" = "justify-content-start"
+    "user" = "justify-content-end",
+    "assistant" = "justify-content-start"
   )
 
 

@@ -26,160 +26,175 @@ gptstudio_skeleton_build <- function(skeleton, skill, style, task, custom_prompt
 #' @export
 gptstudio_skeleton_build.gptstudio_request_openai <-
   function(skeleton = gptstudio_create_skeleton(),
-           skill    = getOption("gptstudio.skill") ,
-           style    = getOption("gptstudio.code_style"),
-           task     = "coding",
+           skill = getOption("gptstudio.skill"),
+           style = getOption("gptstudio.code_style"),
+           task = "coding",
            custom_prompt = NULL,
            ...) {
-    prompt      <- skeleton$prompt
-    history     <- skeleton$history
-    model       <- skeleton$model
-    stream      <- skeleton$stream
+    prompt <- skeleton$prompt
+    history <- skeleton$history
+    model <- skeleton$model
+    stream <- skeleton$stream
     new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
 
-    new_gptstudio_request_skeleton_openai(model   = model,
-                                          prompt  = prompt,
-                                          history = new_history,
-                                          stream  = stream)
+    new_gptstudio_request_skeleton_openai(
+      model = model,
+      prompt = prompt,
+      history = new_history,
+      stream = stream
+    )
   }
 
 #' @export
 gptstudio_skeleton_build.gptstudio_request_huggingface <-
   function(skeleton = gptstudio_create_skeleton("huggingface"),
-           skill    = getOption("gptstudio.skill") ,
-           style    = getOption("gptstudio.code_style"),
-           task     = "coding",
+           skill = getOption("gptstudio.skill"),
+           style = getOption("gptstudio.code_style"),
+           task = "coding",
            custom_prompt = NULL,
            ...) {
-    prompt         <- skeleton$prompt
-    history        <- skeleton$history
-    model          <- skeleton$model
-    stream         <- skeleton$stream
+    prompt <- skeleton$prompt
+    history <- skeleton$history
+    model <- skeleton$model
+    stream <- skeleton$stream
     new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
 
-    new_gptstudio_request_skeleton_huggingface(model   = model,
-                                               prompt  = prompt,
-                                               history = new_history,
-                                               stream  = stream)
+    new_gptstudio_request_skeleton_huggingface(
+      model = model,
+      prompt = prompt,
+      history = new_history,
+      stream = stream
+    )
   }
 
 #' @export
 gptstudio_skeleton_build.gptstudio_request_anthropic <-
   function(skeleton = gptstudio_create_skeleton("anthropic"),
-           skill    = getOption("gptstudio.skill") ,
-           style    = getOption("gptstudio.code_style"),
-           task     = "coding",
+           skill = getOption("gptstudio.skill"),
+           style = getOption("gptstudio.code_style"),
+           task = "coding",
            custom_prompt = NULL,
            ...) {
-    prompt         <- skeleton$prompt
-    history        <- skeleton$history
-    model          <- skeleton$model
-    stream         <- skeleton$stream
+    prompt <- skeleton$prompt
+    history <- skeleton$history
+    model <- skeleton$model
+    stream <- skeleton$stream
     new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
 
-    new_gptstudio_request_skeleton_anthropic(model   = model,
-                                             prompt  = prompt,
-                                             history = new_history,
-                                             stream  = stream)
+    new_gptstudio_request_skeleton_anthropic(
+      model = model,
+      prompt = prompt,
+      history = new_history,
+      stream = stream
+    )
   }
 
 #' @export
 gptstudio_skeleton_build.gptstudio_request_google <-
   function(skeleton = gptstudio_create_skeleton("google"),
-           skill    = getOption("gptstudio.skill") ,
-           style    = getOption("gptstudio.code_style"),
-           task     = "coding",
+           skill = getOption("gptstudio.skill"),
+           style = getOption("gptstudio.code_style"),
+           task = "coding",
            custom_prompt = NULL,
            ...) {
-    prompt         <- skeleton$prompt
-    history        <- skeleton$history
-    model          <- skeleton$model
-    stream         <- skeleton$stream
+    prompt <- skeleton$prompt
+    history <- skeleton$history
+    model <- skeleton$model
+    stream <- skeleton$stream
     new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
 
-    new_gptstudio_request_skeleton_google(model   = model,
-                                        prompt  = prompt,
-                                        history = new_history,
-                                        stream  = stream)
+    new_gptstudio_request_skeleton_google(
+      model = model,
+      prompt = prompt,
+      history = new_history,
+      stream = stream
+    )
   }
 
 #' @export
 gptstudio_skeleton_build.gptstudio_request_azure_openai <-
   function(skeleton = gptstudio_create_skeleton(),
-           skill    = getOption("gptstudio.skill") ,
-           style    = getOption("gptstudio.code_style"),
-           task     = "coding",
+           skill = getOption("gptstudio.skill"),
+           style = getOption("gptstudio.code_style"),
+           task = "coding",
            custom_prompt = NULL,
            ...) {
-    prompt      <- skeleton$prompt
-    history     <- skeleton$history
-    model       <- skeleton$model
-    stream      <- skeleton$stream
+    prompt <- skeleton$prompt
+    history <- skeleton$history
+    model <- skeleton$model
+    stream <- skeleton$stream
     new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
 
-    new_gptstudio_request_skeleton_azure_openai(model   = model,
-                                                prompt  = prompt,
-                                                history = new_history,
-                                                stream  = stream)
+    new_gptstudio_request_skeleton_azure_openai(
+      model = model,
+      prompt = prompt,
+      history = new_history,
+      stream = stream
+    )
   }
 
 #' @export
 gptstudio_skeleton_build.gptstudio_request_ollama <-
   function(skeleton = gptstudio_create_skeleton(),
-           skill    = getOption("gptstudio.skill") ,
-           style    = getOption("gptstudio.code_style"),
-           task     = "coding",
+           skill = getOption("gptstudio.skill"),
+           style = getOption("gptstudio.code_style"),
+           task = "coding",
            custom_prompt = NULL,
            ...) {
-
-    prompt      <- skeleton$prompt
-    history     <- skeleton$history
-    model       <- skeleton$model
-    stream      <- skeleton$stream
+    prompt <- skeleton$prompt
+    history <- skeleton$history
+    model <- skeleton$model
+    stream <- skeleton$stream
     new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
 
-    new_gptstudio_request_skeleton_ollama(model   = model,
-                                          prompt  = prompt,
-                                          history = new_history,
-                                          stream  = stream)
+    new_gptstudio_request_skeleton_ollama(
+      model = model,
+      prompt = prompt,
+      history = new_history,
+      stream = stream
+    )
   }
 
 #' @export
 gptstudio_skeleton_build.gptstudio_request_perplexity <-
   function(skeleton = gptstudio_create_skeleton("perplexity"),
-           skill    = getOption("gptstudio.skill") ,
-           style    = getOption("gptstudio.code_style"),
-           task     = "coding",
+           skill = getOption("gptstudio.skill"),
+           style = getOption("gptstudio.code_style"),
+           task = "coding",
            custom_prompt = NULL,
            ...) {
-    prompt         <- skeleton$prompt
-    history        <- skeleton$history
-    model          <- skeleton$model
-    stream         <- skeleton$stream
+    prompt <- skeleton$prompt
+    history <- skeleton$history
+    model <- skeleton$model
+    stream <- skeleton$stream
     new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
 
-    new_gptstudio_request_skeleton_perplexity(model   = model,
-                                              prompt  = prompt,
-                                              history = new_history,
-                                              stream  = stream)
+    new_gptstudio_request_skeleton_perplexity(
+      model = model,
+      prompt = prompt,
+      history = new_history,
+      stream = stream
+    )
   }
 
 #' @export
 gptstudio_skeleton_build.gptstudio_request_cohere <-
   function(skeleton = gptstudio_create_skeleton(),
-           skill    = getOption("gptstudio.skill"),
-           style    = getOption("gptstudio.code_style"),
-           task     = "coding",
+           skill = getOption("gptstudio.skill"),
+           style = getOption("gptstudio.code_style"),
+           task = "coding",
            custom_prompt = NULL,
            ...) {
-    prompt         <- skeleton$prompt
-    history        <- skeleton$history
-    model          <- skeleton$model
-    stream         <- skeleton$stream
-    new_history    <- prepare_chat_history(history, style, skill, task, custom_prompt)
+    prompt <- skeleton$prompt
+    history <- skeleton$history
+    model <- skeleton$model
+    stream <- skeleton$stream
+    new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
 
-    new_gptstudio_request_skeleton_cohere(model   = model,
-                                          prompt  = prompt,
-                                          history = new_history,
-                                          stream  = stream)
+    new_gptstudio_request_skeleton_cohere(
+      model = model,
+      prompt = prompt,
+      history = new_history,
+      stream = stream
+    )
   }

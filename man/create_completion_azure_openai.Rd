@@ -17,7 +17,8 @@ create_completion_azure_openai(
 \item{prompt}{a list to use as the prompt for generating
 completions}
 
-\item{task}{a character string for the API task (e.g. "completions"). Defaults to the Azure OpenAI
+\item{task}{a character string for the API task (e.g. "completions").
+Defaults to the Azure OpenAI
 task from environment variables if not specified.}
 
 \item{base_url}{a character string for the base url. It defaults to the Azure
@@ -41,11 +42,4 @@ by the API
 \description{
 Use this function to generate text completions using OpenAI's
 API.
-}
-\examples{
-\dontrun{
-create_completion_azure_openai(
-  prompt = list(list(role = "user", content = "Hello world!"))
-}
-
 }

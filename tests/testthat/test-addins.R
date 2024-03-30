@@ -1,9 +1,8 @@
 test_that("Spelling and grammer editing works", {
   mockr::local_mock(
     gptstudio_chat_in_source = function(
-    task = "Add comments to explain this code. Your output will go directly into
-    a source (.R) file. Comment the code line by line"
-    ) {
+        task = "Add comments to explain this code. Your output will go directly into
+    a source (.R) file. Comment the code line by line") {
       list("text" = "new text")
     }
   )
@@ -12,10 +11,8 @@ test_that("Spelling and grammer editing works", {
 
 test_that("Commenting code works", {
   mockr::local_mock(
-    gptstudio_chat_in_source = function(
-      task = "Add comments to explain this code. Your output will go directly into
-    a source (.R) file. Comment the code line by line"
-    ) {
+    gptstudio_chat_in_source = function(task = "Add comments to explain this code. Your output will go directly into
+    a source (.R) file. Comment the code line by line") {
       list("text" = "new text")
     }
   )

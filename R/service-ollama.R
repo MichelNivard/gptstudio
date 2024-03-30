@@ -4,39 +4,40 @@ ollama_api_url <- function() {
 
 ollama_set_task <- function(task) {
   ollama_api_url() %>%
-    httr2::request() %>%
-    httr2::req_url_path_append("api") %>%
-    httr2::req_url_path_append(task)
+    request() %>%
+    req_url_path_append("api") %>%
+    req_url_path_append(task)
 }
 
 ollama_list <- function() {
   ollama_set_task("tags") %>%
-    httr2::req_perform() %>%
-    httr2::resp_body_json()
+    req_perform() %>%
+    resp_body_json()
 }
 
 ollama_is_available <- function(verbose = FALSE) {
   request <- ollama_api_url() %>%
-    httr2::request()
+    request()
 
   check_value <- logical(1)
 
-  rlang::try_fetch({
-    response <- httr2::req_perform(request) %>%
-      httr2::resp_body_string()
+  rlang::try_fetch(
+    {
+      response <- req_perform(request) %>%
+        resp_body_string()
 
-    if (verbose) cli::cli_alert_success(response)
-    check_value <- TRUE
-
-  }, error = function(cnd) {
-
-    if(inherits(cnd, "httr2_failure")) {
-      if (verbose) cli::cli_alert_danger("Couldn't connect to Ollama in {.url {ollama_api_url()}}. Is it running there?")
-    } else {
-      if (verbose) cli::cli_alert_danger(cnd)
+      if (verbose) cli::cli_alert_success(response)
+      check_value <- TRUE
+    },
+    error = function(cnd) {
+      if (inherits(cnd, "httr2_failure")) {
+        if (verbose) cli::cli_alert_danger("Couldn't connect to Ollama in {.url {ollama_api_url()}}. Is it running there?")
+      } else {
+        if (verbose) cli::cli_alert_danger(cnd)
+      }
+      check_value <- FALSE
     }
-    check_value <- FALSE
-  })
+  )
 
   invisible(check_value)
 }
@@ -63,7 +64,7 @@ ollama_perform_stream <- function(request, parser) {
     fun = function(x) parser$parse_ndjson(rawToChar(x))
   )
 
-  httr2::response_json(
+  response_json(
     url = curl_response$url,
     method = "POST",
     body = list(response = parser$lines)
@@ -78,7 +79,7 @@ ollama_chat <- function(model, messages, stream = TRUE, shinySession = NULL, use
   )
 
   request <- ollama_set_task("chat") %>%
-    httr2::req_body_json(data = body)
+    req_body_json(data = body)
 
 
   if (stream) {
@@ -99,7 +100,7 @@ ollama_chat <- function(model, messages, stream = TRUE, shinySession = NULL, use
       content = parser$value
     )
 
-    # httr2::response_json(
+    # response_json(
     #   url = request$url,
     #   method = "POST",
     #   body = last_line
@@ -108,8 +109,8 @@ ollama_chat <- function(model, messages, stream = TRUE, shinySession = NULL, use
     last_line
   } else {
     request %>%
-      httr2::req_perform() %>%
-      httr2::resp_body_json()
+      req_perform() %>%
+      resp_body_json()
   }
 }
 
@@ -117,12 +118,10 @@ OllamaStreamParser <- R6::R6Class(
   classname = "OllamaStreamParser",
   portable = TRUE,
   public = list(
-
     lines = NULL,
     value = NULL,
     shinySession = NULL,
     user_message = NULL,
-
     append_parsed_line = function(line) {
       self$value <- paste0(self$value, line$message$content)
       self$lines <- c(self$lines, list(line))
@@ -140,7 +139,6 @@ OllamaStreamParser <- R6::R6Class(
 
       invisible(self)
     },
-
     parse_ndjson = function(ndjson, pagesize = 500, verbose = FALSE, simplifyDataFrame = FALSE) {
       jsonlite::stream_in(
         con = textConnection(ndjson),
@@ -152,7 +150,6 @@ OllamaStreamParser <- R6::R6Class(
 
       invisible(self)
     },
-
     initialize = function(session = NULL, user_prompt = NULL) {
       self$lines <- list()
       self$shinySession <- session

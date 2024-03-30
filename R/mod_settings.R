@@ -18,11 +18,9 @@ mod_settings_ui <- function(id, translator = create_translator()) {
   preferences <- bslib::accordion(
     open = FALSE,
     multiple = FALSE,
-
     bslib::accordion_panel(
       title = "Assistant behavior",
       icon = fontawesome::fa("robot"),
-
       selectInput(
         inputId = ns("task"),
         label = translator$t("Task"),
@@ -56,11 +54,9 @@ mod_settings_ui <- function(id, translator = create_translator()) {
         value = getOption("gptstudio.read_docs")
       )
     ),
-
     bslib::accordion_panel(
       title = "API service",
       icon = fontawesome::fa("server"),
-
       selectInput(
         inputId = ns("service"),
         label = translator$t("Select API Service"),
@@ -84,13 +80,9 @@ mod_settings_ui <- function(id, translator = create_translator()) {
         width = "200px",
       )
     ),
-
-
-
     bslib::accordion_panel(
       title = "UI options",
       icon = fontawesome::fa("sliders"),
-
       selectInput(
         inputId = ns("language"),
         # label = translator$t("Language"), # TODO: update translator
@@ -127,15 +119,12 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     btn_to_history,
     btn_save_in_session,
     btn_save_as_default,
-
     preferences
-
   )
 }
 
 mod_settings_server <- function(id) {
   moduleServer(id, function(input, output, session) {
-
     ns <- session$ns
 
     rv <- reactiveValues()
@@ -149,21 +138,22 @@ mod_settings_server <- function(id) {
 
     observe({
       msg <- glue::glue("Fetching models for {input$service} service...")
-      showNotification(ui = msg, type = "message",duration = 3, session = session)
+      showNotification(ui = msg, type = "message", duration = 3, session = session)
 
-      models <- tryCatch({
-        input$service %>%
-          new_service() %>%
-          get_available_models()
-      }, error = function(e) {
-        showNotification(
-          ui = cli::ansi_strip(e$message),
-          duration = 3,
-          type = "error",
-          session = session
-        )
-        return(NULL)
-      })
+      models <- tryCatch(
+        {
+          get_available_models(input$service)
+        },
+        error = function(e) {
+          showNotification(
+            ui = cli::ansi_strip(e$message),
+            duration = 3,
+            type = "error",
+            session = session
+          )
+          return(NULL)
+        }
+      )
 
       if (length(models) > 0) {
         showNotification(ui = "Got models!", duration = 3, type = "message", session = session)
@@ -176,7 +166,6 @@ mod_settings_server <- function(id) {
           choices = models,
           selected = if (default_model %in% models) default_model else models[1]
         )
-
       } else {
         showNotification(ui = "No models available", duration = 3, type = "error", session = session)
 
@@ -201,7 +190,6 @@ mod_settings_server <- function(id) {
       showModal(modalDialog(
         tags$p("These settings will persist for all your future chat sessions."),
         tags$p("After changing the settings a new chat will be created."),
-
         footer = tagList(
           modalButton("Cancel"),
           actionButton(ns("confirm_default"), "Ok")
@@ -212,7 +200,9 @@ mod_settings_server <- function(id) {
 
 
     observe({
-      if (!isTruthy(input$confirm_default)) return()
+      if (!isTruthy(input$confirm_default)) {
+        return()
+      }
 
       save_user_config(
         code_style = input$style,
@@ -238,7 +228,6 @@ mod_settings_server <- function(id) {
       showModal(modalDialog(
 
         tags$p("After changing the settings a new chat will be created."),
-
         footer = tagList(
           modalButton("Cancel"),
           actionButton(ns("confirm_session"), "Ok")
@@ -248,7 +237,9 @@ mod_settings_server <- function(id) {
       bindEvent(input$save_session)
 
     observe({
-      if (!isTruthy(input$confirm_session)) return()
+      if (!isTruthy(input$confirm_session)) {
+        return()
+      }
 
       rv$modify_session_settings <- rv$modify_session_settings + 1L
       removeModal(session)
@@ -272,6 +263,5 @@ mod_settings_server <- function(id) {
 
     ## Module output ----
     rv
-
   })
 }

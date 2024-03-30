@@ -26,8 +26,9 @@ gptstudio_chat_in_source <- function(task = NULL) {
   cli::cli_inform(instructions)
 
   cli::cli_progress_step("Sending query to ChatGPT...",
-                         msg_done = "ChatGPT responded",
-                         spinner = TRUE)
+    msg_done = "ChatGPT responded",
+    spinner = TRUE
+  )
 
   cli::cli_progress_update()
 

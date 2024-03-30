@@ -10,17 +10,21 @@
 #' @examples
 #' get_available_models()
 get_available_models <- function(service) {
-  UseMethod("get_available_models")
+  list_available_models(new_gptstudio_service(service))
 }
 
-new_service <- function(service_name = character()) {
+list_available_models <- function(service) {
+  UseMethod("list_available_models")
+}
+
+new_gptstudio_service <- function(service_name = character()) {
   stopifnot(rlang::is_scalar_character(service_name))
   class(service_name) <- c(service_name, "gptstudio_service")
 
   service_name
 }
 
-get_available_models.openai <- function(service) {
+list_available_models.openai <- function(service) {
   models <-
     request_base("models") %>%
     httr2::req_perform() %>%
@@ -39,36 +43,39 @@ get_available_models.openai <- function(service) {
   return(models)
 }
 
-get_available_models.huggingface <- function(service) {
+list_available_models.huggingface <- function(service) {
   c("gpt2", "tiiuae/falcon-7b-instruct", "bigcode/starcoderplus")
 }
 
-get_available_models.anthropic <- function(service) {
-  c("claude-3-opus-20240229", "claude-3-sonnet-20240229", "claude-2.1", "claude-instant-1.2")
+list_available_models.anthropic <- function(service) {
+  c(
+    "claude-3-opus-20240229", "claude-3-sonnet-20240229", "claude-3-haiku-20240229",
+    "claude-2.1", "claude-instant-1.2"
+  )
 }
 
-get_available_models.azure_openai <- function(service) {
+list_available_models.azure_openai <- function(service) {
   "Using ENV variables"
 }
 
-get_available_models.perplexity <- function(service) {
+list_available_models.perplexity <- function(service) {
   c("sonar-small-chat", "sonar-small-online", "sonar-medium-chat",
     "sonar-medium-online", "codellama-70b-instruct", "mistral-7b-instruct",
     "mixtral-8x7b-instruct")
 }
 
-get_available_models.ollama <- function(service) {
+list_available_models.ollama <- function(service) {
   if (!ollama_is_available()) stop("Couldn't find ollama in your system")
   ollama_list() %>%
     purrr::pluck("models") %>%
     purrr::map_chr("name")
 }
 
-get_available_models.cohere <- function(service) {
+list_available_models.cohere <- function(service) {
   c("command", "command-light", "command-nightly", "command-light-nightly")
 }
 
-get_available_models.google <- function(service) {
+list_available_models.google <- function(service) {
   get_available_models_google()
 }
 

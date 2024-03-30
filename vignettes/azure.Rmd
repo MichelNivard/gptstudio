@@ -23,6 +23,7 @@ To configure gptstudio to work using Azure OpenAI service, you need to provide s
 - AZURE_OPENAI_DEPLOYMENT_NAME
 - AZURE_OPENAI_KEY
 - AZURE_OPENAI_API_VERSION
+- AZURE_OPENAI_USE_TOKEN
 
 Here's how you can add these details to your .Renviron file:
 
@@ -40,6 +41,7 @@ AZURE_OPENAI_ENDPOINT="your_endpoint_url"
 AZURE_OPENAI_DEPLOYMENT_NAME="your_deployment_name"
 AZURE_OPENAI_KEY="your_api_key"
 AZURE_OPENAI_API_VERSION="your_api_version"
+AZURE_OPENAI_USE_TOKEN=FALSE
 ```
 
 3. Save and Close .Renviron: After adding your environment variables, save your .Renviron file and close it. You will need to restart your R session to make sure the new environment variables are loaded properly.
