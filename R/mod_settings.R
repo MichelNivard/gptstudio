@@ -139,7 +139,7 @@ mod_settings_server <- function(id) {
     observe({
       msg <- glue::glue("Fetching models for {input$service} service...")
       showNotification(ui = msg, type = "message", duration = 3, session = session)
-
+      cli::cli_alert_info(msg)
       models <- tryCatch(
         {
           get_available_models(input$service)
@@ -151,12 +151,15 @@ mod_settings_server <- function(id) {
             type = "error",
             session = session
           )
+
+          cli::cli_alert_danger(e$message)
           return(NULL)
         }
       )
 
       if (length(models) > 0) {
         showNotification(ui = "Got models!", duration = 3, type = "message", session = session)
+        cli::cli_alert_success("Got models!")
 
         default_model <- getOption("gptstudio.model")
 
@@ -168,6 +171,7 @@ mod_settings_server <- function(id) {
         )
       } else {
         showNotification(ui = "No models available", duration = 3, type = "error", session = session)
+        cli::cli_alert_danger("No models available")
 
         updateSelectInput(
           session = session,
