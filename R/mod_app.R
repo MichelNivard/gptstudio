@@ -87,6 +87,8 @@ create_chat_app_theme <- function(ide_colors = get_ide_theme_info()) {
     bg = ide_colors$bg,
     fg = ide_colors$fg,
     font_scale = 0.9,
+    `btn-padding-x` = "1em",
+    `btn-padding-y` = ".5em"
   )
 }
 
