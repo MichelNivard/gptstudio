@@ -25,7 +25,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
         inputId = ns("task"),
         label = translator$t("Task"),
         choices = c("coding", "general", "advanced developer", "custom"),
-        width = "200px",
+        width = "100%",
         selected = getOption("gptstudio.task")
       ),
       selectInput(
@@ -33,7 +33,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
         label = translator$t("Programming Style"),
         choices = c("tidyverse", "base", "no preference"),
         selected = getOption("gptstudio.style"),
-        width = "200px"
+        width = "100%"
       ),
       selectInput(
         inputId = ns("skill"),
@@ -41,17 +41,19 @@ mod_settings_ui <- function(id, translator = create_translator()) {
         # label = translator$t("Programming Skill"),
         choices = c("beginner", "intermediate", "advanced", "genius"),
         selected = getOption("gptstudio.skill"),
-        width = "200px"
+        width = "100%"
       ),
       textAreaInput(
         inputId = ns("custom_prompt"),
         label = translator$t("Custom Prompt"),
-        value = getOption("gptstudio.custom_prompt")
+        value = getOption("gptstudio.custom_prompt"),
+        width = "100%"
       ),
       bslib::input_switch(
         id = ns("read_docs"),
         label = read_docs_label,
-        value = getOption("gptstudio.read_docs")
+        value = getOption("gptstudio.read_docs"),
+        width = "100%"
       )
     ),
     bslib::accordion_panel(
@@ -62,13 +64,13 @@ mod_settings_ui <- function(id, translator = create_translator()) {
         label = translator$t("Select API Service"),
         choices = api_services,
         selected = getOption("gptstudio.service"),
-        width = "200px"
+        width = "100%"
       ),
       selectInput(
         inputId = ns("model"),
         label = translator$t("Chat Model"),
         choices = getOption("gptstudio.model"),
-        width = "200px",
+        width = "100%",
         selected = getOption("gptstudio.model")
       ),
       radioButtons(
@@ -77,7 +79,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
         choiceNames = c("Yes", "No"),
         choiceValues = c(TRUE, FALSE),
         inline = TRUE,
-        width = "200px",
+        width = "100%",
       )
     ),
     bslib::accordion_panel(
@@ -88,7 +90,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
         # label = translator$t("Language"), # TODO: update translator
         label = "Language",
         choices = c("en", "es", "de"),
-        width = "200px",
+        width = "100%",
         selected = getOption("gptstudio.language")
       )
     )
