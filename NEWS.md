@@ -1,5 +1,3 @@
-# gptstudio (development version)
-
 ## gptstudio (development version)
 
 ### UI updates
@@ -31,6 +29,8 @@ Cohere is now available as another service. The current version includes the fol
 - Converted from PALM to Google for Google AI Studio models.
 - Updated Anthropic models with with their claude-3 update.
 - More bug fixes with Azure OpenAI with request body structure and using token + api key.
+- Any scrollbar now has 5px for width and height. This allows for more room when using the viewer panel.
+- `{gptstudio}` now requires `{bslib}` v0.6.0 or greater, to take advantage of the sidebar styling.
 
 ### Quality of Life Improvements and Documentation
 

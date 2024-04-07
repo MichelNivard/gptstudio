@@ -22,7 +22,7 @@ Depends:
     R (>= 4.0)
 Imports: 
     assertthat,
-    bslib (>= 0.4.2),
+    bslib (>= 0.6.0),
     cli,
     colorspace,
     curl,
