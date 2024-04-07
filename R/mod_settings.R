@@ -73,13 +73,11 @@ mod_settings_ui <- function(id, translator = create_translator()) {
         width = "100%",
         selected = getOption("gptstudio.model")
       ),
-      radioButtons(
-        inputId = ns("stream"),
+      bslib::input_switch(
+        id = ns("stream"),
         label = "Stream Response",
-        choiceNames = c("Yes", "No"),
-        choiceValues = c(TRUE, FALSE),
-        inline = TRUE,
-        width = "100%",
+        value = as.logical(getOption("gptstudio.stream")),
+        width = "100%"
       )
     ),
     bslib::accordion_panel(
