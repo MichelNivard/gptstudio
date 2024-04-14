@@ -83,7 +83,7 @@ list_available_models.ollama <- function(service) {
 
 #' @export
 list_available_models.cohere <- function(service) {
-  c("command", "command-light", "command-nightly", "command-light-nightly")
+  get_available_models_cohere()
 }
 
 #' @export
