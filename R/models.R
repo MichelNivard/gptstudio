@@ -8,7 +8,9 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' get_available_models()
+#' }
 get_available_models <- function(service) {
   list_available_models(new_gptstudio_service(service))
 }
@@ -24,6 +26,7 @@ new_gptstudio_service <- function(service_name = character()) {
   service_name
 }
 
+#' @export
 list_available_models.openai <- function(service) {
   models <-
     request_base("models") %>%
@@ -43,10 +46,12 @@ list_available_models.openai <- function(service) {
   return(models)
 }
 
+#' @export
 list_available_models.huggingface <- function(service) {
   c("gpt2", "tiiuae/falcon-7b-instruct", "bigcode/starcoderplus")
 }
 
+#' @export
 list_available_models.anthropic <- function(service) {
   c(
     "claude-3-opus-20240229", "claude-3-sonnet-20240229", "claude-3-haiku-20240229",
@@ -54,16 +59,21 @@ list_available_models.anthropic <- function(service) {
   )
 }
 
+#' @export
 list_available_models.azure_openai <- function(service) {
   "Using ENV variables"
 }
 
+#' @export
 list_available_models.perplexity <- function(service) {
-  c("sonar-small-chat", "sonar-small-online", "sonar-medium-chat",
+  c(
+    "sonar-small-chat", "sonar-small-online", "sonar-medium-chat",
     "sonar-medium-online", "codellama-70b-instruct", "mistral-7b-instruct",
-    "mixtral-8x7b-instruct")
+    "mixtral-8x7b-instruct"
+  )
 }
 
+#' @export
 list_available_models.ollama <- function(service) {
   if (!ollama_is_available()) stop("Couldn't find ollama in your system")
   ollama_list() %>%
@@ -71,12 +81,12 @@ list_available_models.ollama <- function(service) {
     purrr::map_chr("name")
 }
 
+#' @export
 list_available_models.cohere <- function(service) {
   c("command", "command-light", "command-nightly", "command-light-nightly")
 }
 
+#' @export
 list_available_models.google <- function(service) {
   get_available_models_google()
 }
-
-
