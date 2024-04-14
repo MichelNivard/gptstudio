@@ -7,7 +7,7 @@
 #'   ANTHROPIC_API_KEY environmental variable if not specified.
 #' @return An httr2 request object
 request_base_anthropic <- function(key = Sys.getenv("ANTHROPIC_API_KEY")) {
-  request("https://api.anthropic.com/v1/complete") %>%
+  request("https://api.anthropic.com/v1/messages") %>%
     req_headers(
       "anthropic-version" = "2023-06-01",
       "content-type" = "application/json",
@@ -44,13 +44,13 @@ query_api_anthropic <- function(request_body,
   }
 
   response %>%
-    resp_body_json()
+    resp_body_json(simplifyVector = TRUE)
 }
 
 #' Generate text completions using Anthropic's API
 #'
 #' @param prompt The prompt for generating completions
-#' @param history A list of the previous chat responses
+#' @param system A system messages to instruct the model. Defaults to NULL.
 #' @param model The model to use for generating text. By default, the
 #'   function will try to use "claude-2.1".
 #' @param max_tokens The maximum number of tokens to generate. Defaults to 256.
@@ -63,33 +63,22 @@ query_api_anthropic <- function(request_body,
 #' \dontrun{
 #' create_completion_anthropic(
 #'   prompt = "\n\nHuman: Hello, world!\n\nAssistant:",
-#'   model = "claude-2.1",
-#'   max_tokens_to_sample = 256
+#'   model = "claude-3-haiku-20240307",
+#'   max_tokens = 1028
 #' )
 #' }
 #' @export
-create_completion_anthropic <- function(prompt,
-                                        history = NULL,
-                                        model = "claude-2.1",
+create_completion_anthropic <- function(prompt = list(list(role = "user", content = "Hello")),
+                                        system = NULL,
+                                        model = "claude-3-haiku-20240307",
                                         max_tokens = 1028,
                                         key = Sys.getenv("ANTHROPIC_API_KEY")) {
-  # The request body for the Anthropic API should be a list with the 'prompt', 'model', and 'max_tokens_to_sample' fields set
-  prepped_history <- ""
-  for (i in seq_along(history)) {
-    if (history[[i]]$role == "system") {
-      prepped_history <- paste0(prepped_history, "\n\nHuman:\n", history[[i]]$content)
-    } else if (history[[i]]$role == "user") {
-      prepped_history <- paste0(prepped_history, "\n\nHuman:\n", history[[i]]$content)
-    } else if (history[[i]]$role == "assistant") {
-      prepped_history <- paste0(prepped_history, "\n\nAssistant:\n", history[[i]]$content)
-    }
-  }
-  prompt <- list(list(role = "user", content = prompt))
   request_body <- list(
     messages = prompt,
     model = model,
-    max_tokens = max_tokens
-  )
+    max_tokens = max_tokens,
+    system = system
+  ) %>% purrr::compact()
   answer <- query_api_anthropic(request_body = request_body, key = key)
-  answer$completion
+  answer %>% purrr::pluck("content", "text")
 }

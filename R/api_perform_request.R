@@ -132,12 +132,24 @@ gptstudio_request_perform.gptstudio_request_google <-
 gptstudio_request_perform.gptstudio_request_anthropic <-
   function(skeleton, ...) {
     model <- skeleton$model
-    prompt <- skeleton$prompt
-    history <- skeleton$history
+
+    skeleton$history <- chat_history_append(
+      history = skeleton$history,
+      role = "user",
+      content = skeleton$prompt
+    )
+
+    # Anthropic does not have a system message, so convert it to user
+    system <-
+      purrr::keep(skeleton$history, function(x) x$role == "system") %>%
+      purrr::pluck("content")
+    history <-
+      purrr::keep(skeleton$history, function(x) x$role %in% c("user", "assistant"))
+
     cli_inform(c("i" = "Using Anthropic API with {model} model"))
     response <- create_completion_anthropic(
-      prompt = prompt,
-      history = history,
+      prompt = history,
+      system = system,
       model = model
     )
     structure(

@@ -110,6 +110,7 @@ mod_chat_server <- function(id,
 
 
     observe({
+
       skeleton <- gptstudio_create_skeleton(
         service = settings$service,
         model = settings$model,

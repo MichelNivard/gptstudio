@@ -5,9 +5,9 @@
 \title{Generate text completions using Anthropic's API}
 \usage{
 create_completion_anthropic(
-  prompt,
-  history = NULL,
-  model = "claude-2.1",
+  prompt = list(list(role = "user", content = "Hello")),
+  system = NULL,
+  model = "claude-3-haiku-20240307",
   max_tokens = 1028,
   key = Sys.getenv("ANTHROPIC_API_KEY")
 )
@@ -15,7 +15,7 @@ create_completion_anthropic(
 \arguments{
 \item{prompt}{The prompt for generating completions}
 
-\item{history}{A list of the previous chat responses}
+\item{system}{A system messages to instruct the model. Defaults to NULL.}
 
 \item{model}{The model to use for generating text. By default, the
 function will try to use "claude-2.1".}
@@ -36,8 +36,8 @@ Generate text completions using Anthropic's API
 \dontrun{
 create_completion_anthropic(
   prompt = "\n\nHuman: Hello, world!\n\nAssistant:",
-  model = "claude-2.1",
-  max_tokens_to_sample = 256
+  model = "claude-3-haiku-20240307",
+  max_tokens = 1028
 )
 }
 }

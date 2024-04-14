@@ -67,15 +67,13 @@ gptstudio_response_process.gptstudio_response_huggingface <-
 #' @export
 gptstudio_response_process.gptstudio_response_anthropic <-
   function(skeleton, ...) {
-    response <- skeleton$response
+    last_response <- skeleton$response
     skeleton <- skeleton$skeleton
 
-    new_history <- c(
-      skeleton$history,
-      list(
-        list(role = "user", content = skeleton$prompt),
-        list(role = "assistant", content = response)
-      )
+    new_history <- chat_history_append(
+      history = skeleton$history,
+      role = "assistant",
+      content = last_response
     )
 
     skeleton$history <- new_history
@@ -84,6 +82,7 @@ gptstudio_response_process.gptstudio_response_anthropic <-
       "gptstudio_request_skeleton",
       "gptstudio_request_anthropic"
     )
+
     skeleton
   }
 
