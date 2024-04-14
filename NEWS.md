@@ -33,6 +33,8 @@ Cohere is now available as another service. The current version includes the fol
 - More bug fixes with Azure OpenAI with request body structure and using token + api key.
 - Any scrollbar now has 5px for width and height. This allows for more room when using the viewer panel.
 - `{gptstudio}` now requires `{bslib}` v0.6.0 or greater, to take advantage of the sidebar styling.
+- Updated anthropic API calls to use new messages endpoint.
+- Fixed a bug in Anthropic chats to now include history.
 
 ### Quality of Life Improvements and Documentation
 
