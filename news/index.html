@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gptstudio</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1.9009</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,25 +67,27 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="gptstudio-development-version">gptstudio (development version)<a class="anchor" aria-label="anchor" href="#gptstudio-development-version"></a></h2>
 <div class="section level3">
-<h3 id="ui-updates-development-version">UI updates<a class="anchor" aria-label="anchor" href="#ui-updates-development-version"></a></h3>
+<h3 id="gptstudio-development-version-development-version">gptstudio (development version)<a class="anchor" aria-label="anchor" href="#gptstudio-development-version-development-version"></a></h3>
+<div class="section level4">
+<h4 id="ui-updates-development-version">UI updates<a class="anchor" aria-label="anchor" href="#ui-updates-development-version"></a></h4>
 <ul><li>The chat app has now a sidebar where users can see their conversation history, start new chats and change the settings. Because of this, the chat interface has more room for showing messages.</li>
 <li>All saved chats are created with a placeholder title that the user can edit later.</li>
 <li>We have a shorter welcome message, but we have added lots of tooltips to help with navigation.</li>
 </ul></div>
-<div class="section level3">
-<h3 id="local-models-development-version">Local models<a class="anchor" aria-label="anchor" href="#local-models-development-version"></a></h3>
+<div class="section level4">
+<h4 id="local-models-development-version">Local models<a class="anchor" aria-label="anchor" href="#local-models-development-version"></a></h4>
 <p>We are happy to announce that we now support local models with <a href="https://github.com/jmorganca/ollama" class="external-link">ollama</a>. By default we look for the ollama host in <code>http://localhost:11434</code> but this can be customized by setting up the <code>OLLAMA_HOST</code> environmental variable. Be aware that you are in charge of maintaining your own ollama installation and models.</p>
 </div>
-<div class="section level3">
-<h3 id="perplexity-service-development-version">Perplexity Service<a class="anchor" aria-label="anchor" href="#perplexity-service-development-version"></a></h3>
+<div class="section level4">
+<h4 id="perplexity-service-development-version">Perplexity Service<a class="anchor" aria-label="anchor" href="#perplexity-service-development-version"></a></h4>
 <p>Perplexity AI now offers a wide range of models as part of their service. The current version includes the following models: sonar-small-chat, sonar-small-online, sonar-medium-chat, sonar-medium-online, codellama-70b-instruct, mistral-7b-instruct, mixtral-8x7b-instruct, pplx-7b-chat, pplx-70b-chat, pplx-7b-online, pplx-70b-online, llama-2-70b-chat, and codellama-34b-instruct. See Perplexity API documentation for more information on these models.</p>
 </div>
-<div class="section level3">
-<h3 id="cohere-service-development-version">Cohere Service<a class="anchor" aria-label="anchor" href="#cohere-service-development-version"></a></h3>
+<div class="section level4">
+<h4 id="cohere-service-development-version">Cohere Service<a class="anchor" aria-label="anchor" href="#cohere-service-development-version"></a></h4>
 <p>Cohere is now available as another service. The current version includes the following models: command, command-light, command-nightly, and command-light-nightly. See <a href="https://docs.cohere.com/" class="external-link">Cohere’s docs</a> for more on these models and capabilities.</p>
 </div>
-<div class="section level3">
-<h3 id="internal-development-version">Internal<a class="anchor" aria-label="anchor" href="#internal-development-version"></a></h3>
+<div class="section level4">
+<h4 id="internal-development-version">Internal<a class="anchor" aria-label="anchor" href="#internal-development-version"></a></h4>
 <ul><li>Reverted back to use an R6 class for OpenAI streaming (which now inherits from <code><a href="https://calderonsamuel.github.io/SSEparser/reference/SSEparser.html" class="external-link">SSEparser::SSEparser</a></code>). This doesn’t affect how the users interact with the addins, but avoids a wider range of server errors.</li>
 <li>Fixed a bug in retrieval of OpenAI models</li>
 <li>Fixed a bug in Azure OpenAI request formation.</li>
@@ -98,98 +100,100 @@
 <li>Any scrollbar now has 5px for width and height. This allows for more room when using the viewer panel.</li>
 <li>
 <a href="https://github.com/MichelNivard/gptstudio" class="external-link">gptstudio</a> now requires <a href="https://rstudio.github.io/bslib/" class="external-link">bslib</a> v0.6.0 or greater, to take advantage of the sidebar styling.</li>
+<li>Updated anthropic API calls to use new messages endpoint.</li>
+<li>Fixed a bug in Anthropic chats to now include history.</li>
 </ul></div>
-<div class="section level3">
-<h3 id="quality-of-life-improvements-and-documentation-development-version">Quality of Life Improvements and Documentation<a class="anchor" aria-label="anchor" href="#quality-of-life-improvements-and-documentation-development-version"></a></h3>
+<div class="section level4">
+<h4 id="quality-of-life-improvements-and-documentation-development-version">Quality of Life Improvements and Documentation<a class="anchor" aria-label="anchor" href="#quality-of-life-improvements-and-documentation-development-version"></a></h4>
 <ul><li>Chat in source now respects the model selection that you set using the Chat addin.</li>
 <li>A new function <code>gpstudio_sitrep()</code> has been added to help with debugging and setup.</li>
 <li>API checking is now done for each available service, including local models.</li>
 <li>New vignettes were added to setup each service.</li>
 </ul></div>
 </div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.1" id="gptstudio-031">gptstudio 0.3.1<a class="anchor" aria-label="anchor" href="#gptstudio-031"></a></h2>
+<div class="section level3">
+<h3 id="gptstudio-development-version-1">gptstudio 0.3.1<a class="anchor" aria-label="anchor" href="#gptstudio-development-version-1"></a></h3>
 <ul><li>Better API checking to direct users to .Renviron to set API key to be persistent across sessions</li>
 </ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.0" id="gptstudio-030">gptstudio 0.3.0<a class="anchor" aria-label="anchor" href="#gptstudio-030"></a></h2><p class="text-muted">CRAN release: 2023-07-11</p>
 <div class="section level3">
-<h3 id="persistent-config-file-0-3-0">Persistent Config File<a class="anchor" aria-label="anchor" href="#persistent-config-file-0-3-0"></a></h3>
+<h3 id="gptstudio-development-version-2">gptstudio 0.3.0<a class="anchor" aria-label="anchor" href="#gptstudio-development-version-2"></a></h3>
+<div class="section level4">
+<h4 id="persistent-config-file-development-version">Persistent Config File<a class="anchor" aria-label="anchor" href="#persistent-config-file-development-version"></a></h4>
 <p>We’ve introduced a configuration file that persists across sessions. Now, your preferred app settings will be loaded each time you launch the app, making it even more user-friendly.</p>
 </div>
-<div class="section level3">
-<h3 id="custom-prompt-selection-0-3-0">Custom Prompt Selection<a class="anchor" aria-label="anchor" href="#custom-prompt-selection-0-3-0"></a></h3>
+<div class="section level4">
+<h4 id="custom-prompt-selection-development-version">Custom Prompt Selection<a class="anchor" aria-label="anchor" href="#custom-prompt-selection-development-version"></a></h4>
 <p>Further enhancing customization, we’ve added a “task” option that lets you choose the system prompt from options such as “coding”, “general”, “advanced developer”, and “custom”. The “custom” option allows you to replace the system prompt instructions entirely.</p>
 </div>
-<div class="section level3">
-<h3 id="expanded-api-services-0-3-0">Expanded API Services<a class="anchor" aria-label="anchor" href="#expanded-api-services-0-3-0"></a></h3>
+<div class="section level4">
+<h4 id="expanded-api-services-development-version">Expanded API Services<a class="anchor" aria-label="anchor" href="#expanded-api-services-development-version"></a></h4>
 <p>We’re excited to announce that our service now includes models from HuggingFace’s inference API, Anthropic’s claude models, and Google’s MakerSuite, and Azure OpenAI service broadening the range of AI solutions you can use.</p>
 </div>
-<div class="section level3">
-<h3 id="s3-class-for-api-services-0-3-0">S3 Class for API Services<a class="anchor" aria-label="anchor" href="#s3-class-for-api-services-0-3-0"></a></h3>
+<div class="section level4">
+<h4 id="s3-class-for-api-services-development-version">S3 Class for API Services<a class="anchor" aria-label="anchor" href="#s3-class-for-api-services-development-version"></a></h4>
 <p>In an effort to make future API additions easier, API calls now use S3 classes.</p>
 </div>
-<div class="section level3">
-<h3 id="real-time-streaming-updates-0-3-0">Real-time Streaming Updates<a class="anchor" aria-label="anchor" href="#real-time-streaming-updates-0-3-0"></a></h3>
+<div class="section level4">
+<h4 id="real-time-streaming-updates-development-version">Real-time Streaming Updates<a class="anchor" aria-label="anchor" href="#real-time-streaming-updates-development-version"></a></h4>
 <p>Inspired by Edgar Ruiz’s work on <a href="https://github.com/mlverse/chattr" class="external-link">chattr</a>, we’ve implemented real-time streaming without relying on R6, but this will receive more attention in the 0.4.0 release.</p>
 </div>
-<div class="section level3">
-<h3 id="model-selection-feature-0-3-0">Model Selection Feature<a class="anchor" aria-label="anchor" href="#model-selection-feature-0-3-0"></a></h3>
+<div class="section level4">
+<h4 id="model-selection-feature-development-version">Model Selection Feature<a class="anchor" aria-label="anchor" href="#model-selection-feature-development-version"></a></h4>
 <p>The ChatGPT add-in now comes with an integrated model selection feature, enabling you to choose any chat completion model that matches either gpt-3.5 or gpt-4 in the model name.</p>
 </div>
-<div class="section level3">
-<h3 id="upgraded-add-ins-0-3-0">Upgraded Add-ins<a class="anchor" aria-label="anchor" href="#upgraded-add-ins-0-3-0"></a></h3>
+<div class="section level4">
+<h4 id="upgraded-add-ins-development-version">Upgraded Add-ins<a class="anchor" aria-label="anchor" href="#upgraded-add-ins-development-version"></a></h4>
 <p>The add-ins for code commenting and spelling &amp; grammar checking have been upgraded to use the chat/completions endpoint and now default to the gpt-3.5-turbo model. You can modify this default setting as needed.</p>
 </div>
-<div class="section level3">
-<h3 id="custom-openai-base-url-0-3-0">Custom OpenAI Base Url<a class="anchor" aria-label="anchor" href="#custom-openai-base-url-0-3-0"></a></h3>
+<div class="section level4">
+<h4 id="custom-openai-base-url-development-version">Custom OpenAI Base Url<a class="anchor" aria-label="anchor" href="#custom-openai-base-url-development-version"></a></h4>
 <p>You now have the option to specify a different base url for the OpenAI API. A much-requested feature by our users, this addition helps in tailoring the API access to suit your needs.</p>
 </div>
-<div class="section level3">
-<h3 id="bug-fixes-0-3-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-0"></a></h3>
+<div class="section level4">
+<h4 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h4>
 <p>We’ve addressed several issues in this update. Now, the “Spelling and Grammar” and “Comment your code” add-ins can successfully insert text in source. Also, installation issues related to the {stringr} package and compatibility with earlier versions of R have been resolved.</p>
 </div>
-<div class="section level3">
-<h3 id="improved-compatibility-checks-0-3-0">Improved Compatibility Checks<a class="anchor" aria-label="anchor" href="#improved-compatibility-checks-0-3-0"></a></h3>
+<div class="section level4">
+<h4 id="improved-compatibility-checks-development-version">Improved Compatibility Checks<a class="anchor" aria-label="anchor" href="#improved-compatibility-checks-development-version"></a></h4>
 <p>To ensure optimal user experience, we’re now using GitHub Actions to check compatibility with a wider range of R versions on Ubuntu.</p>
 <p>We hope you enjoy the enhanced features and improved performance in this latest version. As always, your feedback is invaluable to us, so please keep it coming!</p>
 </div>
-<div class="section level3">
-<h3 id="translations-0-3-0">Translations<a class="anchor" aria-label="anchor" href="#translations-0-3-0"></a></h3>
+<div class="section level4">
+<h4 id="translations-development-version">Translations<a class="anchor" aria-label="anchor" href="#translations-development-version"></a></h4>
 <p>The ChatGPT addin can now speak German! Thanks to <a href="https://github.com/M-Colley" class="external-link">Mark Colley</a> <a href="https://github.com/MichelNivard/gptstudio/issues/107" class="external-link">#107</a></p>
 </div>
 </div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.0" id="gptstudio-020">gptstudio 0.2.0<a class="anchor" aria-label="anchor" href="#gptstudio-020"></a></h2><p class="text-muted">CRAN release: 2023-05-30</p>
 <div class="section level3">
-<h3 id="translations-0-2-0">Translations<a class="anchor" aria-label="anchor" href="#translations-0-2-0"></a></h3>
+<h3 id="gptstudio-development-version-3">gptstudio 0.2.0<a class="anchor" aria-label="anchor" href="#gptstudio-development-version-3"></a></h3>
+<div class="section level4">
+<h4 id="translations-development-version-1">Translations<a class="anchor" aria-label="anchor" href="#translations-development-version-1"></a></h4>
 <p>The ChatGPT addin can now receive translations. If anyone wants to contribute with a new translation only needs to edit the translation file (“inst/translations/translation.json”). Currently supported languages are English and Spanish.</p>
 </div>
-<div class="section level3">
-<h3 id="httr2-0-2-0"><code>{httr2}</code><a class="anchor" aria-label="anchor" href="#httr2-0-2-0"></a></h3>
+<div class="section level4">
+<h4 id="httr2-development-version"><code>{httr2}</code><a class="anchor" aria-label="anchor" href="#httr2-development-version"></a></h4>
 <p>The requests are now handled with httr2 functions. This provides a more intuitive way to extend the functionality of the package, meaning that new request parameters to any endpoint are one pipe away from being implemented.</p>
 </div>
-<div class="section level3">
-<h3 id="stream-chat-completions-0-2-0">Stream chat completions<a class="anchor" aria-label="anchor" href="#stream-chat-completions-0-2-0"></a></h3>
+<div class="section level4">
+<h4 id="stream-chat-completions-development-version">Stream chat completions<a class="anchor" aria-label="anchor" href="#stream-chat-completions-development-version"></a></h4>
 <p>Instead of waiting for the full response to be received before showing it to the user, the chat app now streams the response generation in real time. This makes for shorter wait times and removes the need to use <a href="https://waiter.john-coene.com/" class="external-link">waiter</a>.</p>
 </div>
-<div class="section level3">
-<h3 id="bug-fixes-0-2-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-0"></a></h3>
+<div class="section level4">
+<h4 id="bug-fixes-development-version-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version-1"></a></h4>
 <ul><li>The welcome message is no longer consumed by the chat history.</li>
 <li>Errors in requests now point to the OpenAI documentation.</li>
 <li>In the chat app, removed unnecessary whitespace in the first line of code chunks.</li>
 <li>In the chat app, the Enter key can now be used to send the user instruction as an alternative to clicking the “Send” button.</li>
 <li>In the chat app, the copy button is now added via JS instead of a previous fragile R implementation. (by <a href="https://github.com/idavydov" class="external-link">@idavydov</a>)</li>
 </ul></div>
-<div class="section level3">
-<h3 id="new-look-of-the-message-history-0-2-0">New look of the message history<a class="anchor" aria-label="anchor" href="#new-look-of-the-message-history-0-2-0"></a></h3>
+<div class="section level4">
+<h4 id="new-look-of-the-message-history-development-version">New look of the message history<a class="anchor" aria-label="anchor" href="#new-look-of-the-message-history-development-version"></a></h4>
 <p>Each individual message is now rounded and has an icon indicating whether it comes from the user or from the assistant. Each role has a different horizontal alignment and a slightly different background color.</p>
 <div class="float">
 <img src="https://user-images.githubusercontent.com/19418298/233134945-06311099-92c0-4f4f-b728-66eb37f67836.png" alt="image"><div class="figcaption">image</div>
 </div>
 </div>
-<div class="section level3">
-<h3 id="simplified-user-inputs-0-2-0">Simplified user inputs<a class="anchor" aria-label="anchor" href="#simplified-user-inputs-0-2-0"></a></h3>
+<div class="section level4">
+<h4 id="simplified-user-inputs-development-version">Simplified user inputs<a class="anchor" aria-label="anchor" href="#simplified-user-inputs-development-version"></a></h4>
 <p>The prompt and buttons have been simplified to give the chat more room to expand.</p>
 <div class="float">
 <img src="https://user-images.githubusercontent.com/19418298/233137057-7d0991d8-ab56-4b7f-ae93-e88cba41e600.png" alt="image"><div class="figcaption">image</div>
@@ -199,36 +203,37 @@
 <img src="https://user-images.githubusercontent.com/19418298/233137374-4593410a-3132-4c1a-a886-5fd4966cb7e5.png" alt="image"><div class="figcaption">image</div>
 </div>
 </div>
-<div class="section level3">
-<h3 id="welcome-message-with-instructions-0-2-0">Welcome message with instructions<a class="anchor" aria-label="anchor" href="#welcome-message-with-instructions-0-2-0"></a></h3>
+<div class="section level4">
+<h4 id="welcome-message-with-instructions-development-version">Welcome message with instructions<a class="anchor" aria-label="anchor" href="#welcome-message-with-instructions-development-version"></a></h4>
 <p>When the app starts (or history is cleared) the assistant greets the user with a random welcome message and instructions on how to use the app.</p>
 <div class="float">
 <img src="https://user-images.githubusercontent.com/19418298/233138306-675e8693-e44a-4266-a293-070460e39e36.png" alt="image"><div class="figcaption">image</div>
 </div>
 </div>
-<div class="section level3">
-<h3 id="the-chat-can-be-adjusted-vertically-horizontally-and-is-scrollable-0-2-0">The chat can be adjusted vertically, horizontally and is scrollable<a class="anchor" aria-label="anchor" href="#the-chat-can-be-adjusted-vertically-horizontally-and-is-scrollable-0-2-0"></a></h3>
+<div class="section level4">
+<h4 id="the-chat-can-be-adjusted-vertically-horizontally-and-is-scrollable-development-version">The chat can be adjusted vertically, horizontally and is scrollable<a class="anchor" aria-label="anchor" href="#the-chat-can-be-adjusted-vertically-horizontally-and-is-scrollable-development-version"></a></h4>
 <p>Limited to 800px width. The prompt input is always fixed to the bottom of the app.</p>
 <p><a href="https://user-images.githubusercontent.com/19418298/233140923-5787ee5e-1042-4e84-8a42-6f1a55a47801.mp4" class="external-link uri">https://user-images.githubusercontent.com/19418298/233140923-5787ee5e-1042-4e84-8a42-6f1a55a47801.mp4</a></p>
 </div>
-<div class="section level3">
-<h3 id="the-chat-inherits-the-current-rstudio-theme-0-2-0">The chat inherits the current rstudio theme<a class="anchor" aria-label="anchor" href="#the-chat-inherits-the-current-rstudio-theme-0-2-0"></a></h3>
+<div class="section level4">
+<h4 id="the-chat-inherits-the-current-rstudio-theme-development-version">The chat inherits the current rstudio theme<a class="anchor" aria-label="anchor" href="#the-chat-inherits-the-current-rstudio-theme-development-version"></a></h4>
 <p>This makes it look more integrated with the IDE, giving the feel of what an extension does in <a href="https://code.visualstudio.com/" class="external-link">VScode</a>.</p>
 <p><a href="https://user-images.githubusercontent.com/19418298/233145316-5efe0e77-2192-48e6-97a1-02d87bd37255.mp4" class="external-link uri">https://user-images.githubusercontent.com/19418298/233145316-5efe0e77-2192-48e6-97a1-02d87bd37255.mp4</a></p>
 </div>
-<div class="section level3">
-<h3 id="copy-to-clipboard-button-in-code-chunks-0-2-0">Copy to clipboard button in code chunks<a class="anchor" aria-label="anchor" href="#copy-to-clipboard-button-in-code-chunks-0-2-0"></a></h3>
+<div class="section level4">
+<h4 id="copy-to-clipboard-button-in-code-chunks-development-version">Copy to clipboard button in code chunks<a class="anchor" aria-label="anchor" href="#copy-to-clipboard-button-in-code-chunks-development-version"></a></h4>
 <p>Every code chunk now has on top a bar indicating the language of the code displayed and a “Copy” button. When the user clicks the button writes the code in the clipboard and shows a short “Copied” feedback in the button.</p>
 </div>
-<div class="section level3">
-<h3 id="custom-scrollbar-0-2-0">Custom scrollbar<a class="anchor" aria-label="anchor" href="#custom-scrollbar-0-2-0"></a></h3>
+<div class="section level4">
+<h4 id="custom-scrollbar-development-version">Custom scrollbar<a class="anchor" aria-label="anchor" href="#custom-scrollbar-development-version"></a></h4>
 <p>The app uses now a narrower grey scroll bar.</p>
 </div>
 </div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1.0" id="gptstudio-010">gptstudio 0.1.0<a class="anchor" aria-label="anchor" href="#gptstudio-010"></a></h2><p class="text-muted">CRAN release: 2023-03-20</p>
+<div class="section level3">
+<h3 id="gptstudio-development-version-4">gptstudio 0.1.0<a class="anchor" aria-label="anchor" href="#gptstudio-development-version-4"></a></h3>
 <ul><li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
 </ul></div>
+</div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
