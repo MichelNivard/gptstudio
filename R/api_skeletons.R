@@ -272,6 +272,7 @@ gptstudio_create_skeleton <- function(service = "openai",
     "anthropic" = new_gptstudio_request_skeleton_anthropic(
       model = model,
       prompt = prompt,
+      history = history,
       # forcing false until streaming implemented for anthropic
       stream = FALSE
     ),

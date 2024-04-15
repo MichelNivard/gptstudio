@@ -82,3 +82,18 @@ create_chat_cohere <- function(prompt,
 
   query_api_cohere(request_body, api_key)
 }
+
+
+get_available_models_cohere <- function(api_key = Sys.getenv("COHERE_API_KEY")) {
+  request("https://api.cohere.ai/v1/models") %>%
+    req_url_path_append("?endpoint=chat") %>%
+    req_method("GET") %>%
+    req_headers(
+      "accept" = "application/json",
+      "Authorization" = paste("Bearer", api_key)
+    ) %>%
+    req_perform() %>%
+    resp_body_json() |>
+    purrr::pluck("models") |>
+    purrr::map_chr(function(x) x$name)
+}

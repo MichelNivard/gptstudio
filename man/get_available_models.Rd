@@ -16,5 +16,7 @@ A character vector
 Get a list of the models supported by the OpenAI API.
 }
 \examples{
-get_available_endpoints()
+\dontrun{
+get_available_models()
+}
 }
