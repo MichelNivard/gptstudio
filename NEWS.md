@@ -35,6 +35,7 @@ Cohere is now available as another service. The current version includes the fol
 - `{gptstudio}` now requires `{bslib}` v0.6.0 or greater, to take advantage of the sidebar styling.
 - Updated anthropic API calls to use new messages endpoint.
 - Fixed a bug in Anthropic chats to now include history.
+- OpenAI stream no longer hangs with error "Argument has length 0". #199
 
 ### Quality of Life Improvements and Documentation
 
