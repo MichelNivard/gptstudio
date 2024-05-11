@@ -139,7 +139,7 @@ docs_to_message <- function(x) {
     }) %>%
     paste0(collapse = "\n\n")
 
-  glue::glue("gptstudio-metadata-docs-start-{x$pkg_ref}-{x$topic}-gptstudio-metadata-docs-end{inner_content}")
+  glue::glue("gptstudio-metadata-docs-start-{x$pkg_ref}-{x$topic}-gptstudio-metadata-docs-end{inner_content}") # nolint
 }
 
 add_docs_messages_to_history <- function(skeleton_history) {

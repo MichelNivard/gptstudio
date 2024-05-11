@@ -170,7 +170,12 @@ mod_settings_server <- function(id) {
           selected = if (default_model %in% models) default_model else models[1]
         )
       } else {
-        showNotification(ui = "No models available", duration = 3, type = "error", session = session)
+        showNotification(
+          ui = "No models available",
+          duration = 3,
+          type = "error",
+          session = session
+        )
         cli::cli_alert_danger("No models available")
 
         updateSelectInput(

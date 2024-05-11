@@ -21,8 +21,9 @@ request_base_perplexity <- function(api_key = Sys.getenv("PERPLEXITY_API_KEY")) 
 
 #' Send a request to the Perplexity API and return the response
 #'
-#' This function sends a JSON post request to the Perplexity API, retries on failure up to three times, and
-#' returns the response. The function handles errors by providing a descriptive message and failing gracefully.
+#' This function sends a JSON post request to the Perplexity API,
+#' retries on failure up to three times, and returns the response.
+#' The function handles errors by providing a descriptive message and failing gracefully.
 #'
 #' @param request_body A list containing the body of the POST request.
 #' @param api_key String containing a Perplexity API key. Defaults to the
@@ -53,8 +54,8 @@ query_api_perplexity <- function(request_body, api_key = Sys.getenv("PERPLEXITY_
 
 #' Create a chat completion request to the Perplexity API
 #'
-#' This function sends a series of messages alongside a chosen model to the Perplexity API to generate a chat
-#' completion. It returns the API's generated responses.
+#' This function sends a series of messages alongside a chosen model to the Perplexity API
+#' to generate a chat completion. It returns the API's generated responses.
 #'
 #' @param prompt A list containing prompts to be sent in the chat.
 #' @param model A character string representing the Perplexity model to be used.
@@ -63,7 +64,9 @@ query_api_perplexity <- function(request_body, api_key = Sys.getenv("PERPLEXITY_
 #'   PERPLEXITY_API_KEY environment variable.
 #'
 #' @return The response from the Perplexity API containing the completion for the chat.
-create_completion_perplexity <- function(prompt, model = "mistral-7b-instruct", api_key = Sys.getenv("PERPLEXITY_API_KEY")) {
+create_completion_perplexity <- function(prompt,
+                                         model = "mistral-7b-instruct",
+                                         api_key = Sys.getenv("PERPLEXITY_API_KEY")) {
   request_body <- list(
     model = model,
     messages = list(list(role = "user", content = prompt))

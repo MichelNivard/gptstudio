@@ -87,7 +87,7 @@ chat_create_system_prompt <-
     } else {
       ""
     }
-
+    # nolint start
     about_style <- if (!is.null(style)) {
       switch(style,
         "no preference" = "",
@@ -97,6 +97,7 @@ chat_create_system_prompt <-
     } else {
       ""
     }
+    # nolint end
 
     in_source_instructions <-
       if (in_source) {

@@ -8,7 +8,11 @@
 #'   GOOGLE_API_KEY environmental variable if not specified.
 #' @return An httr2 request object
 request_base_google <- function(model, key = Sys.getenv("GOOGLE_API_KEY")) {
-  request(glue::glue("https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent")) %>%
+  url <- glue::glue(
+    "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+  )
+
+  request(url) %>%
     req_url_query(key = key)
 }
 
@@ -84,7 +88,7 @@ create_completion_google <- function(prompt,
 
   response <- query_api_google(model = model, request_body = request_body, key = key)
 
-  # Assuming the response structure aligns with the API documentation example, parsing it accordingly.
+  # Assuming the response structure follows the API documentation example, parsing it accordingly.
   # Please adjust if the actual API response has a different structure.
   purrr::map_chr(response$candidates, ~ .x$content$parts[[1]]$text)
 }

@@ -1,6 +1,7 @@
 #' Check API Connection
 #'
-#' This generic function checks the API connection for a specified service by dispatching to related methods.
+#' This generic function checks the API connection for a specified service
+#' by dispatching to related methods.
 #'
 #' @param service The name of the API service for which the connection is being checked.
 #' @param api_key The API key used for authentication.
@@ -148,10 +149,12 @@ gptstudio_sitrep <- function(verbose = TRUE) {
   if (file.exists(user_config)) {
     cli::cli_inform("Using user configuration file at {.file {user_config}}")
   } else {
-    cli::cli_text("No user configuration file found at {.file {user_config}}.
-                  Using default configuration.
-                  Change configuration settings in the chat app.
-                  Lauch the chat app with addins or {.run [gptstudio_chat()](gptstudio::gptstudio_chat())}.")
+    cli::cli_text(
+      "No user configuration file found at {.file {user_config}}.
+      Using default configuration.
+      Change configuration settings in the chat app.
+      Lauch the chat app with addins or {.run [gptstudio_chat()](gptstudio::gptstudio_chat())}."
+    )
   }
   cli::cli_h2("Current Settings")
   cli::cli_bullets(c(
@@ -204,9 +207,9 @@ gptstudio_sitrep <- function(verbose = TRUE) {
     cli::cli_h3("Check Ollama for Local API connection")
     ollama_is_available(verbose = TRUE)
     cli::cli_h2("Getting help")
-    cli::cli_inform("See the {.href [gptstudio homepage](https://michelnivard.github.io/gptstudio/)} for getting started guides and package documentation. File an issue or contribute to the package at the {.href [GitHub repo](https://github.com/MichelNivard/gptstudio)}.")
+    cli::cli_inform("See the {.href [gptstudio homepage](https://michelnivard.github.io/gptstudio/)} for getting started guides and package documentation. File an issue or contribute to the package at the {.href [GitHub repo](https://github.com/MichelNivard/gptstudio)}.") # nolint
   } else {
-    cli::cli_text("Run {.run [gptstudio_sitrep(verbose = TRUE)](gptstudio::gptstudio_sitrep(verbose = TRUE))} to check API connections.")
+    cli::cli_text("Run {.run [gptstudio_sitrep(verbose = TRUE)](gptstudio::gptstudio_sitrep(verbose = TRUE))} to check API connections.") # nolint
   }
   cli::cli_rule(left = "End of gptstudio configuration")
 }

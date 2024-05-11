@@ -31,7 +31,7 @@ ollama_is_available <- function(verbose = FALSE) {
     },
     error = function(cnd) {
       if (inherits(cnd, "httr2_failure")) {
-        if (verbose) cli::cli_alert_danger("Couldn't connect to Ollama in {.url {ollama_api_url()}}. Is it running there?")
+        if (verbose) cli::cli_alert_danger("Couldn't connect to Ollama in {.url {ollama_api_url()}}. Is it running there?") # nolint
       } else {
         if (verbose) cli::cli_alert_danger(cnd)
       }

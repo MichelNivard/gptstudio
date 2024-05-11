@@ -21,8 +21,9 @@ request_base_cohere <- function(api_key = Sys.getenv("COHERE_API_KEY")) {
 
 #' Send a request to the Cohere Chat API and return the response
 #'
-#' This function sends a JSON post request to the Cohere Chat API, retries on failure up to three times, and
-#' returns the response. The function handles errors by providing a descriptive message and failing gracefully.
+#' This function sends a JSON post request to the Cohere Chat API,
+#' retries on failure up to three times, and returns the response.
+#' The function handles errors by providing a descriptive message and failing gracefully.
 #'
 #' @param request_body A list containing the body of the POST request.
 #' @param api_key String containing a Cohere API key. Defaults to the
@@ -54,13 +55,15 @@ query_api_cohere <- function(request_body, api_key = Sys.getenv("COHERE_API_KEY"
 
 #' Create a chat with the Cohere Chat API
 #'
-#' This function submits a user message to the Cohere Chat API, potentially along with other parameters such as
-#' chat history or connectors, and returns the API's response.
+#' This function submits a user message to the Cohere Chat API,
+#' potentially along with other parameters such as chat history or connectors,
+#' and returns the API's response.
 #'
 #' @param prompt A string containing the user message.
 #' @param chat_history A list of previous messages for context, if any.
 #' @param connectors A list of connector objects, if any.
-#' @param model A string representing the Cohere model to be used, defaulting to "command". Other options include "command-light", "command-nightly", and "command-light-nightly".
+#' @param model A string representing the Cohere model to be used, defaulting to "command".
+#' Other options include "command-light", "command-nightly", and "command-light-nightly".
 #' @param api_key The API key for accessing the Cohere API, defaults to the
 #'   COHERE_API_KEY environment variable.
 #'

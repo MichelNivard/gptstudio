@@ -1,9 +1,12 @@
 #' Base for a request to the OPENAI API
 #'
-#' This function sends a request to a specific OpenAI API \code{task} endpoint at the base URL \code{https://api.openai.com/v1}, and authenticates with an API key using a Bearer token.
+#' This function sends a request to a specific OpenAI API \code{task} endpoint at
+#' the base URL \code{https://api.openai.com/v1}, and authenticates with
+#' an API key using a Bearer token.
 #'
 #' @param task character string specifying an OpenAI API endpoint task
-#' @param token String containing an OpenAI API key. Defaults to the OPENAI_API_KEY environmental variable if not specified.
+#' @param token String containing an OpenAI API key. Defaults to the OPENAI_API_KEY
+#' environmental variable if not specified.
 #' @return An httr2 request object
 request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
   if (!task %in% get_available_endpoints()) {
@@ -68,7 +71,8 @@ openai_create_chat_completion <-
 #'
 #' @param task A character string that specifies the task to send to the API.
 #' @param request_body A list that contains the parameters for the task.
-#' @param openai_api_key String containing an OpenAI API key. Defaults to the OPENAI_API_KEY environmental variable if not specified.
+#' @param openai_api_key String containing an OpenAI API key. Defaults to the OPENAI_API_KEY
+#' environmental variable if not specified.
 #'
 #' @return The response from the API.
 #'
@@ -84,11 +88,13 @@ query_openai_api <- function(task, request_body, openai_api_key = Sys.getenv("OP
     status <- resp_status(response)
     description <- resp_status_desc(response)
 
+    # nolint start
     cli::cli_abort(message = c(
       "x" = "OpenAI API request failed. Error {status} - {description}",
       "i" = "Visit the {.href [OpenAi Error code guidance](https://help.openai.com/en/articles/6891839-api-error-code-guidance)} for more details",
       "i" = "You can also visit the {.href [API documentation](https://platform.openai.com/docs/guides/error-codes/api-errors)}"
     ))
+    # nolint end
   }
 
   response %>%
