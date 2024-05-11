@@ -1,3 +1,4 @@
+# nolint start
 library(shiny)
 library(shinyjs)
 library(httr)
@@ -163,3 +164,4 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
+# nolint end
