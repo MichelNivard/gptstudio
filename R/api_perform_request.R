@@ -22,7 +22,7 @@ gptstudio_request_perform <- function(skeleton, ...) {
 }
 
 #' @export
-gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySession = NULL, ...) {
+gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shiny_session = NULL) {
   # Translate request
 
   skeleton$history <- chat_history_append(
@@ -53,25 +53,12 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, shinySe
   response <- NULL
 
   if (isTRUE(skeleton$stream)) {
-    if (is.null(shinySession)) stop("Stream requires a shiny session object")
+    if (is.null(shiny_session)) stop("Stream requires a shiny session object")
 
     stream_handler <- OpenaiStreamParser$new(
-      session = shinySession,
+      session = shiny_session,
       user_prompt = skeleton$prompt
     )
-
-    # This should work exactly the same as stream_chat_completion
-    # but it uses curl::curl_connection(partial=FALSE), which makes it
-    # somehow different. `partial` has no documentation and can't be be changed
-
-    # request %>%
-    #  req_perform_stream(
-    #    buffer_kb = 32,
-    #    callback = function(x) {
-    #      rawToChar(x) %>% stream_handler$handle_streamed_element()
-    #      TRUE
-    #    }
-    #  )
 
     stream_chat_completion(
       messages = skeleton$history,
@@ -185,7 +172,7 @@ gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton, .
 }
 
 #' @export
-gptstudio_request_perform.gptstudio_request_ollama <- function(skeleton, shinySession = NULL, ...) {
+gptstudio_request_perform.gptstudio_request_ollama <- function(skeleton, shiny_session = NULL) {
   # Translate request
 
   skeleton$history <- chat_history_append(
@@ -203,7 +190,7 @@ gptstudio_request_perform.gptstudio_request_ollama <- function(skeleton, shinySe
     model = skeleton$model,
     messages = skeleton$history,
     stream = skeleton$stream,
-    shinySession = shinySession,
+    shinySession = shiny_session,
     user_prompt = skeleton$prompt
   )
 
