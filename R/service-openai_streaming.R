@@ -65,7 +65,7 @@ stream_chat_completion <-
 #' @param parsed_event An already parsed server-sent event to append to the events field.
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON
-OpenaiStreamParser <- R6::R6Class(
+OpenaiStreamParser <- R6::R6Class( # nolint
   classname = "OpenaiStreamParser",
   inherit = SSEparser::SSEparser,
   public = list(
