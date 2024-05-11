@@ -23,7 +23,7 @@ gptstudio_chat_in_source <- function(task = NULL) {
 
   instructions <- glue::glue("{task}: {selection$value}")
 
-  cli::cli_inform(instructions)
+  cli::cli_inform("{instructions}")
 
   cli::cli_progress_step("Sending query to ChatGPT...",
     msg_done = "ChatGPT responded",
