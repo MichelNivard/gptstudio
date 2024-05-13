@@ -100,12 +100,6 @@ ollama_chat <- function(model, messages, stream = TRUE, shiny_session = NULL, us
       content = parser$value
     )
 
-    # response_json(
-    #   url = request$url,
-    #   method = "POST",
-    #   body = last_line
-    # )
-
     last_line
   } else {
     request %>%

@@ -30,15 +30,6 @@ read_html_docs <- function(pkg_ref, topic_name) {
     get_help_file_path() %>%
     lazyLoad(envir = env)
 
-  #################
-  # This is an alternative way to read the help but
-  # requires writing to disk first
-
-  # tmp <- tempfile(fileext = ".html")
-  # tools::Rd2HTML(Rd = env[[topic_name]], out = tmp)
-  # rvest::read_html(tmp)
-  ##################
-
   env[[topic_name]] %>%
     tools::Rd2HTML() %>%
     utils::capture.output() %>%

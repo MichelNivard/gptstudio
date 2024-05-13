@@ -17,7 +17,6 @@ mod_chat_ui <- function(id, translator = create_translator()) {
           welcomeMessageOutput(ns("welcome")),
           uiOutput(ns("history")),
           streamingMessageOutput(ns("streaming")),
-          # uiOutput(ns("streaming"))
         ),
         div(
           class = "mt-auto",

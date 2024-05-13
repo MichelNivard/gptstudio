@@ -38,7 +38,6 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       selectInput(
         inputId = ns("skill"),
         label = "Programming Skill", # TODO: update translator
-        # label = translator$t("Programming Skill"),
         choices = c("beginner", "intermediate", "advanced", "genius"),
         selected = getOption("gptstudio.skill"),
         width = "100%"

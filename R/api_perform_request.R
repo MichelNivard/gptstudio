@@ -22,7 +22,8 @@ gptstudio_request_perform <- function(skeleton, ...) {
 }
 
 #' @export
-gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ..., shiny_session = NULL) {
+gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...,
+                                                               shiny_session = NULL) {
   # Translate request
 
   skeleton$history <- chat_history_append(
@@ -172,7 +173,8 @@ gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton, .
 }
 
 #' @export
-gptstudio_request_perform.gptstudio_request_ollama <- function(skeleton, ..., shiny_session = NULL) {
+gptstudio_request_perform.gptstudio_request_ollama <- function(skeleton, ...,
+                                                               shiny_session = NULL) {
   # Translate request
 
   skeleton$history <- chat_history_append(
