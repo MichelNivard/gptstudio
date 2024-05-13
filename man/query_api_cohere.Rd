@@ -16,6 +16,7 @@ COHERE_API_KEY environmental variable if not specified.}
 A parsed JSON object as the API response.
 }
 \description{
-This function sends a JSON post request to the Cohere Chat API, retries on failure up to three times, and
-returns the response. The function handles errors by providing a descriptive message and failing gracefully.
+This function sends a JSON post request to the Cohere Chat API,
+retries on failure up to three times, and returns the response.
+The function handles errors by providing a descriptive message and failing gracefully.
 }

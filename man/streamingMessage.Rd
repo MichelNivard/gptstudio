@@ -8,7 +8,7 @@ streamingMessage(
   ide_colors = get_ide_theme_info(),
   width = NULL,
   height = NULL,
-  elementId = NULL
+  element_id = NULL
 )
 }
 \arguments{
@@ -18,7 +18,7 @@ streamingMessage(
 \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
 string and have \code{'px'} appended.}
 
-\item{elementId}{The element's id}
+\item{element_id}{The element's id}
 }
 \description{
 Places an invisible empty chat message that will hold a streaming message.

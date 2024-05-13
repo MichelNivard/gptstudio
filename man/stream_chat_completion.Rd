@@ -12,9 +12,11 @@ stream_chat_completion(
 )
 }
 \arguments{
-\item{messages}{A list of messages in the conversation, including the current user prompt (optional).}
+\item{messages}{A list of messages in the conversation,
+including the current user prompt (optional).}
 
-\item{element_callback}{A callback function to handle each element of the streamed response (optional).}
+\item{element_callback}{A callback function to handle each element
+of the streamed response (optional).}
 
 \item{model}{A character string specifying the model to use for chat completion.
 The default model is "gpt-3.5-turbo".}

@@ -17,3 +17,4 @@ dev/
 ^vignette/chat\.Rmd$
 ^vignette/ollama\.Rmd$
 ^vignette/chat-in-source\.Rmd$
+.lintr

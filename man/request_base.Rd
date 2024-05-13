@@ -9,11 +9,14 @@ request_base(task, token = Sys.getenv("OPENAI_API_KEY"))
 \arguments{
 \item{task}{character string specifying an OpenAI API endpoint task}
 
-\item{token}{String containing an OpenAI API key. Defaults to the OPENAI_API_KEY environmental variable if not specified.}
+\item{token}{String containing an OpenAI API key. Defaults to the OPENAI_API_KEY
+environmental variable if not specified.}
 }
 \value{
 An httr2 request object
 }
 \description{
-This function sends a request to a specific OpenAI API \code{task} endpoint at the base URL \code{https://api.openai.com/v1}, and authenticates with an API key using a Bearer token.
+This function sends a request to a specific OpenAI API \code{task} endpoint at
+the base URL \code{https://api.openai.com/v1}, and authenticates with
+an API key using a Bearer token.
 }

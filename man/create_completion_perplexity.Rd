@@ -23,6 +23,6 @@ PERPLEXITY_API_KEY environment variable.}
 The response from the Perplexity API containing the completion for the chat.
 }
 \description{
-This function sends a series of messages alongside a chosen model to the Perplexity API to generate a chat
-completion. It returns the API's generated responses.
+This function sends a series of messages alongside a chosen model to the Perplexity API
+to generate a chat completion. It returns the API's generated responses.
 }
