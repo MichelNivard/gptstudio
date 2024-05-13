@@ -16,7 +16,7 @@ gptstudio_chat_in_source <- function(task = NULL) {
     task <- glue::glue(
       "You are an expert on following instructions without making conversation.",
       "Do the task specified after the colon,",
-      "formatting your response to go directly into a .{gptstudio_chat_in_source_file_ext} file without any post processing",
+      "formatting your response to go directly into a .{gptstudio_chat_in_source_file_ext} file without any post processing", # nolint
       .sep = " "
     )
   }

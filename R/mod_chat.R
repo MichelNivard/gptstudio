@@ -17,7 +17,6 @@ mod_chat_ui <- function(id, translator = create_translator()) {
           welcomeMessageOutput(ns("welcome")),
           uiOutput(ns("history")),
           streamingMessageOutput(ns("streaming")),
-          # uiOutput(ns("streaming"))
         ),
         div(
           class = "mt-auto",
@@ -73,8 +72,6 @@ mod_chat_server <- function(id,
   moduleServer(id, function(input, output, session) {
     # Session data ----
 
-    ns <- session$ns
-
     rv <- reactiveValues()
     rv$reset_welcome_message <- 0L
     rv$reset_streaming_message <- 0L
@@ -127,7 +124,7 @@ mod_chat_server <- function(id,
 
       response <- gptstudio_request_perform(
         skeleton = skeleton,
-        shinySession = session
+        shiny_session = session
       ) %>%
         gptstudio_response_process()
 

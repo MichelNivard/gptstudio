@@ -15,5 +15,6 @@ check_api_connection_openai(service, api_key)
 A logical value indicating whether the connection was successful.
 }
 \description{
-This generic function checks the API connection for a specified service by dispatching to related methods.
+This generic function checks the API connection for a specified service
+by dispatching to related methods.
 }

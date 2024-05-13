@@ -19,7 +19,8 @@ create_chat_cohere(
 
 \item{connectors}{A list of connector objects, if any.}
 
-\item{model}{A string representing the Cohere model to be used, defaulting to "command". Other options include "command-light", "command-nightly", and "command-light-nightly".}
+\item{model}{A string representing the Cohere model to be used, defaulting to "command".
+Other options include "command-light", "command-nightly", and "command-light-nightly".}
 
 \item{api_key}{The API key for accessing the Cohere API, defaults to the
 COHERE_API_KEY environment variable.}
@@ -28,6 +29,7 @@ COHERE_API_KEY environment variable.}
 The response from the Cohere Chat API containing the model's reply.
 }
 \description{
-This function submits a user message to the Cohere Chat API, potentially along with other parameters such as
-chat history or connectors, and returns the API's response.
+This function submits a user message to the Cohere Chat API,
+potentially along with other parameters such as chat history or connectors,
+and returns the API's response.
 }

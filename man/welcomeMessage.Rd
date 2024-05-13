@@ -9,7 +9,7 @@ welcomeMessage(
   translator = create_translator(),
   width = NULL,
   height = NULL,
-  elementId = NULL
+  element_id = NULL
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ welcomeMessage(
 \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
 string and have \code{'px'} appended.}
 
-\item{elementId}{The element's id}
+\item{element_id}{The element's id}
 }
 \description{
 HTML widget for showing a welcome message in the chat app.

@@ -132,7 +132,7 @@ render_docs_message_content <- function(x) {
 #'
 #' @return A modified textAreaInput
 text_area_input_wrapper <-
-  function(inputId,
+  function(inputId, # nolint
            label,
            value = "",
            width = NULL,

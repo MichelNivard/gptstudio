@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 The "Chat" app in `gptstudio` is an interactive Shiny app that can be launched directly from RStudio. It serves as a powerful tool to converse with various AI models, similar to ChatGPT and GitHub Copilot Chat, but integrated within your R environment.
 
 ```{r fig.cap = "Chat App from gptstudio", out.width = "80%", fig.align='center', echo = FALSE}
-knitr::include_graphics("https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/gptstudio-chat-app.png")
+knitr::include_graphics("https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/gptstudio-chat-app.png") # nolint
 ```
 
 **Usage:**

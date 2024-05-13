@@ -38,7 +38,6 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       selectInput(
         inputId = ns("skill"),
         label = "Programming Skill", # TODO: update translator
-        # label = translator$t("Programming Skill"),
         choices = c("beginner", "intermediate", "advanced", "genius"),
         selected = getOption("gptstudio.skill"),
         width = "100%"
@@ -132,10 +131,6 @@ mod_settings_server <- function(id) {
     rv$modify_session_settings <- 0L
     rv$create_new_chat <- 0L
 
-    api_services <- utils::methods("gptstudio_request_perform") %>%
-      stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
-      purrr::discard(~ .x == "gptstudio_request_perform.default")
-
     observe({
       msg <- glue::glue("Fetching models for {input$service} service...")
       showNotification(ui = msg, type = "message", duration = 3, session = session)
@@ -170,7 +165,12 @@ mod_settings_server <- function(id) {
           selected = if (default_model %in% models) default_model else models[1]
         )
       } else {
-        showNotification(ui = "No models available", duration = 3, type = "error", session = session)
+        showNotification(
+          ui = "No models available",
+          duration = 3,
+          type = "error",
+          session = session
+        )
         cli::cli_alert_danger("No models available")
 
         updateSelectInput(

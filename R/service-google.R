@@ -8,7 +8,11 @@
 #'   GOOGLE_API_KEY environmental variable if not specified.
 #' @return An httr2 request object
 request_base_google <- function(model, key = Sys.getenv("GOOGLE_API_KEY")) {
-  request(glue::glue("https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent")) %>%
+  url <- glue::glue(
+    "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+  )
+
+  request(url) %>%
     req_url_query(key = key)
 }
 
@@ -34,8 +38,8 @@ query_api_google <- function(model,
 
   # error handling
   if (resp_is_error(response)) {
-    status <- resp_status(response)
-    description <- resp_status_desc(response)
+    status <- resp_status(response) # nolint
+    description <- resp_status_desc(response) # nolint
 
     cli::cli_abort(message = c(
       "x" = "Google AI Studio API request failed. Error {status} - {description}",
@@ -84,7 +88,7 @@ create_completion_google <- function(prompt,
 
   response <- query_api_google(model = model, request_body = request_body, key = key)
 
-  # Assuming the response structure aligns with the API documentation example, parsing it accordingly.
+  # Assuming the response structure follows the API documentation example, parsing it accordingly.
   # Please adjust if the actual API response has a different structure.
   purrr::map_chr(response$candidates, ~ .x$content$parts[[1]]$text)
 }
@@ -98,8 +102,8 @@ get_available_models_google <- function(key = Sys.getenv("GOOGLE_API_KEY")) {
 
   # error handling
   if (resp_is_error(response)) {
-    status <- resp_status(response)
-    description <- resp_status_desc(response)
+    status <- resp_status(response) # nolint
+    description <- resp_status_desc(response) # nolint
 
     cli::cli_abort(message = c(
       "x" = "Google AI Studio API request failed. Error {status} - {description}",

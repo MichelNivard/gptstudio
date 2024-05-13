@@ -24,7 +24,8 @@ without recurring to a \code{shiny::observe} inside a module server.
 \describe{
 \item{\code{shinySession}}{Holds the \code{session} provided at initialization}
 
-\item{\code{user_prompt}}{The \code{user_prompt} provided at initialization after being formatted with markdown.}
+\item{\code{user_prompt}}{The \code{user_prompt} provided at initialization,
+after being formatted with markdown.}
 
 \item{\code{value}}{The content of the stream. It updates constantly until the stream ends.}
 }
@@ -59,7 +60,8 @@ Start a StreamHandler. Recommended to be assigned to the \code{stream_handler} n
 \describe{
 \item{\code{session}}{The shiny session it will send the message to (optional).}
 
-\item{\code{user_prompt}}{The prompt for the chat completion. Only to be displayed in an HTML tag containing the prompt. (Optional).}
+\item{\code{user_prompt}}{The prompt for the chat completion.
+Only to be displayed in an HTML tag containing the prompt. (Optional).}
 }
 \if{html}{\out{</div>}}
 }
@@ -68,7 +70,8 @@ Start a StreamHandler. Recommended to be assigned to the \code{stream_handler} n
 \if{html}{\out{<a id="method-OpenaiStreamParser-append_parsed_sse"></a>}}
 \if{latex}{\out{\hypertarget{method-OpenaiStreamParser-append_parsed_sse}{}}}
 \subsection{Method \code{append_parsed_sse()}}{
-Overwrites \code{SSEparser$append_parsed_sse()} to be able to send a custom message to a shiny session, escaping shiny's reactivity.
+Overwrites \code{SSEparser$append_parsed_sse()} to be able to send a custom message
+to a shiny session, escaping shiny's reactivity.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OpenaiStreamParser$append_parsed_sse(parsed_event)}\if{html}{\out{</div>}}
 }
