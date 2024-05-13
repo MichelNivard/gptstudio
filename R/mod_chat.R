@@ -132,7 +132,7 @@ mod_chat_server <- function(id,
 
       append_to_conversation_history(
         id = history$selected_conversation$id %||% ids::random_id(),
-        title = history$selected_conversation$title %||% find_placeholder_title(history$chat_history),
+        title = history$selected_conversation$title %||% find_placeholder_title(history$chat_history), # nolint
         messages = history$chat_history
       )
 
@@ -145,4 +145,3 @@ mod_chat_server <- function(id,
       bindEvent(input$chat)
   })
 }
-
