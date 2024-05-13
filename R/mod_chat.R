@@ -124,7 +124,7 @@ mod_chat_server <- function(id,
 
       response <- gptstudio_request_perform(
         skeleton = skeleton,
-        shinySession = session
+        shiny_session = session
       ) %>%
         gptstudio_response_process()
 
