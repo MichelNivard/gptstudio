@@ -72,8 +72,6 @@ mod_chat_server <- function(id,
   moduleServer(id, function(input, output, session) {
     # Session data ----
 
-    ns <- session$ns
-
     rv <- reactiveValues()
     rv$reset_welcome_message <- 0L
     rv$reset_streaming_message <- 0L

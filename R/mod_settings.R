@@ -131,10 +131,6 @@ mod_settings_server <- function(id) {
     rv$modify_session_settings <- 0L
     rv$create_new_chat <- 0L
 
-    api_services <- utils::methods("gptstudio_request_perform") %>%
-      stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
-      purrr::discard(~ .x == "gptstudio_request_perform.default")
-
     observe({
       msg <- glue::glue("Fetching models for {input$service} service...")
       showNotification(ui = msg, type = "message", duration = 3, session = session)

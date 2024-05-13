@@ -30,8 +30,6 @@ save_user_config <- function(code_style,
 }
 
 set_user_options <- function(config) {
-  op <- options()
-
   op_gptstudio <- list(
     gptstudio.code_style    = config$code_style,
     gptstudio.skill         = config$skill,

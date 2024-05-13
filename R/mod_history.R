@@ -1,6 +1,5 @@
 mod_history_ui <- function(id) {
   ns <- NS(id)
-  conversation_history <- read_conversation_history()
 
   btn_new_chat <- actionButton(
     inputId = ns("new_chat"),

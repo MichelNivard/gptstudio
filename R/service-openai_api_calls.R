@@ -85,8 +85,8 @@ query_openai_api <- function(task, request_body, openai_api_key = Sys.getenv("OP
 
   # error handling
   if (resp_is_error(response)) {
-    status <- resp_status(response)
-    description <- resp_status_desc(response)
+    status <- resp_status(response) # nolint
+    description <- resp_status_desc(response) # nolint
 
     # nolint start
     cli::cli_abort(message = c(

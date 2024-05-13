@@ -38,8 +38,8 @@ query_api_google <- function(model,
 
   # error handling
   if (resp_is_error(response)) {
-    status <- resp_status(response)
-    description <- resp_status_desc(response)
+    status <- resp_status(response) # nolint
+    description <- resp_status_desc(response) # nolint
 
     cli::cli_abort(message = c(
       "x" = "Google AI Studio API request failed. Error {status} - {description}",
@@ -102,8 +102,8 @@ get_available_models_google <- function(key = Sys.getenv("GOOGLE_API_KEY")) {
 
   # error handling
   if (resp_is_error(response)) {
-    status <- resp_status(response)
-    description <- resp_status_desc(response)
+    status <- resp_status(response) # nolint
+    description <- resp_status_desc(response) # nolint
 
     cli::cli_abort(message = c(
       "x" = "Google AI Studio API request failed. Error {status} - {description}",

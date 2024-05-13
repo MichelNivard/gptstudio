@@ -34,8 +34,8 @@ query_api_anthropic <- function(request_body,
 
   # error handling
   if (resp_is_error(response)) {
-    status <- resp_status(response)
-    description <- resp_status_desc(response)
+    status <- resp_status(response) # nolint
+    description <- resp_status_desc(response) # nolint
 
     cli::cli_abort(message = c(
       "x" = "Anthropic API request failed. Error {status} - {description}",

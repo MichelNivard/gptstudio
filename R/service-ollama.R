@@ -35,7 +35,7 @@ ollama_is_available <- function(verbose = FALSE) {
       } else {
         if (verbose) cli::cli_alert_danger(cnd)
       }
-      check_value <- FALSE
+      check_value <- FALSE # nolint
     }
   )
 
