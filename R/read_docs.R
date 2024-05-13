@@ -102,7 +102,7 @@ docs_get_sections <- function(children) {
     })
 
   section_ranges %>%
-    purrr::map(~ inner_texts[.x$begin:.x$end] %>% paste0(collapse = "\n\n")) %>%
+    purrr::map(~ inner_texts[.x$begin:.x$end] %>% paste0(collapse = "\n\n")) %>% # nolint
     purrr::set_names(inner_texts[h3_locations])
 }
 
