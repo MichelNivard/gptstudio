@@ -3,8 +3,10 @@
 #' `stream_chat_completion` sends the prepared chat completion request to the
 #' OpenAI API and retrieves the streamed response.
 #'
-#' @param messages A list of messages in the conversation, including the current user prompt (optional).
-#' @param element_callback A callback function to handle each element of the streamed response (optional).
+#' @param messages A list of messages in the conversation,
+#' including the current user prompt (optional).
+#' @param element_callback A callback function to handle each element
+#' of the streamed response (optional).
 #' @param model A character string specifying the model to use for chat completion.
 #' The default model is "gpt-3.5-turbo".
 #' @param openai_api_key A character string of the OpenAI API key.
@@ -61,17 +63,19 @@ stream_chat_completion <-
 #' without recurring to a `shiny::observe` inside a module server.
 #'
 #' @param session The shiny session it will send the message to (optional).
-#' @param user_prompt The prompt for the chat completion. Only to be displayed in an HTML tag containing the prompt. (Optional).
+#' @param user_prompt The prompt for the chat completion.
+#' Only to be displayed in an HTML tag containing the prompt. (Optional).
 #' @param parsed_event An already parsed server-sent event to append to the events field.
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON
-OpenaiStreamParser <- R6::R6Class(
+OpenaiStreamParser <- R6::R6Class( # nolint
   classname = "OpenaiStreamParser",
   inherit = SSEparser::SSEparser,
   public = list(
     #' @field shinySession  Holds the `session` provided at initialization
     shinySession = NULL,
-    #' @field user_prompt  The `user_prompt` provided at initialization after being formatted with markdown.
+    #' @field user_prompt  The `user_prompt` provided at initialization,
+    #'  after being formatted with markdown.
     user_prompt = NULL,
     #' @field value The content of the stream. It updates constantly until the stream ends.
     value = NULL, # this will be our buffer
@@ -83,7 +87,8 @@ OpenaiStreamParser <- R6::R6Class(
       super$initialize()
     },
 
-    #' @description Overwrites `SSEparser$append_parsed_sse()` to be able to send a custom message to a shiny session, escaping shiny's reactivity.
+    #' @description Overwrites `SSEparser$append_parsed_sse()` to be able to send a custom message
+    #' to a shiny session, escaping shiny's reactivity.
     append_parsed_sse = function(parsed_event) {
       # ----- here you can do whatever you want with the event data -----
       if (is.null(parsed_event$data) || parsed_event$data == "[DONE]") {

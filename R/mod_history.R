@@ -1,6 +1,5 @@
 mod_history_ui <- function(id) {
   ns <- NS(id)
-  conversation_history <- read_conversation_history()
 
   btn_new_chat <- actionButton(
     inputId = ns("new_chat"),
@@ -96,7 +95,12 @@ mod_history_server <- function(id, settings) {
       file.remove(conversation_history_file)
       removeModal(session)
 
-      showNotification("Deleted all conversations", type = "warning", duration = 3, session = session)
+      showNotification(
+        ui = "Deleted all conversations",
+        type = "warning",
+        duration = 3,
+        session = session
+      )
       rv$reload_conversation_history <- rv$reload_conversation_history + 1L
     }) %>%
       bindEvent(input$confirm_delete_all)

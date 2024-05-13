@@ -31,11 +31,11 @@ ollama_is_available <- function(verbose = FALSE) {
     },
     error = function(cnd) {
       if (inherits(cnd, "httr2_failure")) {
-        if (verbose) cli::cli_alert_danger("Couldn't connect to Ollama in {.url {ollama_api_url()}}. Is it running there?")
+        if (verbose) cli::cli_alert_danger("Couldn't connect to Ollama in {.url {ollama_api_url()}}. Is it running there?") # nolint
       } else {
         if (verbose) cli::cli_alert_danger(cnd)
       }
-      check_value <- FALSE
+      check_value <- FALSE # nolint
     }
   )
 
@@ -43,8 +43,8 @@ ollama_is_available <- function(verbose = FALSE) {
 }
 
 body_to_json_str <- function(x) {
-  toJSON_params <- rlang::list2(x = x$data, !!!x$params)
-  do.call(jsonlite::toJSON, toJSON_params)
+  to_json_params <- rlang::list2(x = x$data, !!!x$params)
+  do.call(jsonlite::toJSON, to_json_params)
 }
 
 
@@ -71,7 +71,7 @@ ollama_perform_stream <- function(request, parser) {
   )
 }
 
-ollama_chat <- function(model, messages, stream = TRUE, shinySession = NULL, user_prompt = NULL) {
+ollama_chat <- function(model, messages, stream = TRUE, shiny_session = NULL, user_prompt = NULL) {
   body <- list(
     model = model,
     messages = messages,
@@ -84,7 +84,7 @@ ollama_chat <- function(model, messages, stream = TRUE, shinySession = NULL, use
 
   if (stream) {
     parser <- OllamaStreamParser$new(
-      session = shinySession,
+      session = shiny_session,
       user_prompt = user_prompt
     )
 
@@ -100,12 +100,6 @@ ollama_chat <- function(model, messages, stream = TRUE, shinySession = NULL, use
       content = parser$value
     )
 
-    # response_json(
-    #   url = request$url,
-    #   method = "POST",
-    #   body = last_line
-    # )
-
     last_line
   } else {
     request %>%
@@ -114,7 +108,7 @@ ollama_chat <- function(model, messages, stream = TRUE, shinySession = NULL, use
   }
 }
 
-OllamaStreamParser <- R6::R6Class(
+OllamaStreamParser <- R6::R6Class( # nolint
   classname = "OllamaStreamParser",
   portable = TRUE,
   public = list(
@@ -139,7 +133,7 @@ OllamaStreamParser <- R6::R6Class(
 
       invisible(self)
     },
-    parse_ndjson = function(ndjson, pagesize = 500, verbose = FALSE, simplifyDataFrame = FALSE) {
+    parse_ndjson = function(ndjson, pagesize = 500, verbose = FALSE, simplifyDataFrame = FALSE) { # nolint
       jsonlite::stream_in(
         con = textConnection(ndjson),
         pagesize = pagesize,

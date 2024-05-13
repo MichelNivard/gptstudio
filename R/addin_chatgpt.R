@@ -47,7 +47,7 @@ random_port <- function() {
 #' @inheritParams shiny::runApp
 #' @return This function returns nothing because is meant to run an app as a
 #'   side effect.
-run_app_as_bg_job <- function(appDir = ".", job_name, host, port) {
+run_app_as_bg_job <- function(appDir = ".", job_name, host, port) { # nolint
   job_script <- create_tmp_job_script(
     appDir = appDir,
     port = port,
@@ -66,7 +66,7 @@ run_app_as_bg_job <- function(appDir = ".", job_name, host, port) {
 #' application from the specified directory with the specified port and host.
 #' @inheritParams shiny::runApp
 #' @return A string containing the path of a temporary job script
-create_tmp_job_script <- function(appDir, port, host) {
+create_tmp_job_script <- function(appDir, port, host) { # nolint
   script_file <- tempfile(fileext = ".R")
 
   line <-

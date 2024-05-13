@@ -15,7 +15,8 @@ query_openai_api(
 
 \item{request_body}{A list that contains the parameters for the task.}
 
-\item{openai_api_key}{String containing an OpenAI API key. Defaults to the OPENAI_API_KEY environmental variable if not specified.}
+\item{openai_api_key}{String containing an OpenAI API key. Defaults to the OPENAI_API_KEY
+environmental variable if not specified.}
 }
 \value{
 The response from the API.

@@ -192,12 +192,8 @@ new_gptstudio_request_skeleton_perplexity <- function(
 }
 
 # Cohere Skeleton Creation Function
-new_gptstudio_request_skeleton_cohere <- function(
-    model = "command",
-    prompt = "What is R?",
-    history = NULL,
-    stream = FALSE # forcing false until streaming implemented for cohere
-    ) {
+new_gptstudio_request_skeleton_cohere <- function(model = "command", prompt = "What is R?",
+                                                  history = NULL, stream = FALSE) {
   new_gpstudio_request_skeleton(
     url = "https://api.cohere.ai/v1/chat",
     api_key = Sys.getenv("COHERE_API_KEY"),

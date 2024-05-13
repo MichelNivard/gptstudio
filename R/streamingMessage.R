@@ -6,11 +6,11 @@
 #' @import htmlwidgets
 #' @inheritParams run_chatgpt_app
 #' @inheritParams streamingMessage-shiny
-#' @param elementId The element's id
-streamingMessage <- function(ide_colors = get_ide_theme_info(),
+#' @param element_id The element's id
+streamingMessage <- function(ide_colors = get_ide_theme_info(), # nolint
                              width = NULL,
                              height = NULL,
-                             elementId = NULL) {
+                             element_id = NULL) {
   message <- list(
     list(role = "user", content = ""),
     list(role = "assistant", content = "")
@@ -29,7 +29,7 @@ streamingMessage <- function(ide_colors = get_ide_theme_info(),
     width = width,
     height = height,
     package = "gptstudio",
-    elementId = elementId
+    elementId = element_id
   )
 }
 
@@ -49,12 +49,12 @@ streamingMessage <- function(ide_colors = get_ide_theme_info(),
 #'
 #' @name streamingMessage-shiny
 #'
-streamingMessageOutput <- function(outputId, width = "100%", height = NULL) {
+streamingMessageOutput <- function(outputId, width = "100%", height = NULL) { # nolint
   htmlwidgets::shinyWidgetOutput(outputId, "streamingMessage", width, height, package = "gptstudio")
 }
 
 #' @rdname streamingMessage-shiny
-renderStreamingMessage <- function(expr, env = parent.frame(), quoted = FALSE) {
+renderStreamingMessage <- function(expr, env = parent.frame(), quoted = FALSE) { # nolint
   if (!quoted) {
     expr <- substitute(expr)
   } # force quoted
