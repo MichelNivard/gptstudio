@@ -36,6 +36,7 @@ Cohere is now available as another service. The current version includes the fol
 - Updated anthropic API calls to use new messages endpoint.
 - Fixed a bug in Anthropic chats to now include history.
 - OpenAI stream no longer hangs with error "Argument has length 0". #199
+- In source calls no longer attempt to evaluate R code. #203
 
 ### Quality of Life Improvements and Documentation
 
