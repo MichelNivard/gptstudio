@@ -43,7 +43,7 @@ mod_history_server <- function(id, settings) {
     rv$chat_history <- list()
 
     conversation_history <- reactive(read_conversation_history()) %>%
-      bindEvent(rv$reload_conversation_history)
+      bindEvent(rv$reload_conversation_history, rv$chat_history)
 
     output$conversation_history <- renderUI({
       conversation_history() %>%
@@ -56,12 +56,6 @@ mod_history_server <- function(id, settings) {
       bindEvent(input$settings)
 
     observe({
-      append_to_conversation_history(
-        id = rv$selected_conversation$id %||% ids::random_id(),
-        title = rv$selected_conversation$title %||% find_placeholder_title(rv$chat_history),
-        messages = rv$chat_history
-      )
-
       rv$chat_history <- list()
       rv$selected_conversation <- NULL
 
