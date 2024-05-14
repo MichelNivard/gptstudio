@@ -5,7 +5,7 @@
 ### UI updates
 
 - The chat app has now a sidebar where users can see their conversation history, start new chats and change the settings. Because of this, the chat interface has more room for showing messages.
-- All saved chats are created with a placeholder title that the user can edit later.
+- All chats are saved and automatically updated after every assistant's message. They are created with a placeholder title built using the first user message in the conversation. Titles are editable and users are able to delete any conversation (or all of them at once).
 - We have a shorter welcome message, but we have added lots of tooltips to help with navigation.
 
 ### Local models

@@ -43,7 +43,7 @@ mod_history_server <- function(id, settings) {
     rv$chat_history <- list()
 
     conversation_history <- reactive(read_conversation_history()) %>%
-      bindEvent(rv$reload_conversation_history)
+      bindEvent(rv$reload_conversation_history, rv$chat_history)
 
     output$conversation_history <- renderUI({
       conversation_history() %>%
@@ -56,18 +56,12 @@ mod_history_server <- function(id, settings) {
       bindEvent(input$settings)
 
     observe({
-      append_to_conversation_history(
-        id = rv$selected_conversation$id %||% ids::random_id(),
-        title = rv$selected_conversation$title %||% "Placeholder title",
-        messages = rv$chat_history
-      )
-
       rv$chat_history <- list()
       rv$selected_conversation <- NULL
 
       rv$reload_conversation_history <- rv$reload_conversation_history + 1L
     }) %>%
-      bindEvent(input$new_chat, settings$create_new_chat)
+      bindEvent(input$new_chat, settings$create_new_chat, ignoreInit = TRUE)
 
     observe({
       conversation_history <- read_conversation_history()
@@ -274,3 +268,11 @@ conversation <- function(
 }
 
 tooltip_on_hover <- purrr::partial(bslib::tooltip, options = list(trigger = "hover"))
+
+# Finds the first user prompt and returns it truncated
+find_placeholder_title <- function(chat_history) {
+  chat_history %>%
+    purrr::keep(~(!is.null(.x$name)) && .x$name == "user_message") %>%
+    purrr::pluck(1L, "content") %>%
+    stringr::str_trunc(40L)
+}

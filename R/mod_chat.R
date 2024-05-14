@@ -130,6 +130,12 @@ mod_chat_server <- function(id,
 
       history$chat_history <- response$history
 
+      append_to_conversation_history(
+        id = history$selected_conversation$id %||% ids::random_id(),
+        title = history$selected_conversation$title %||% find_placeholder_title(history$chat_history), # nolint
+        messages = history$chat_history
+      )
+
       if (settings$stream) {
         rv$reset_streaming_message <- rv$reset_streaming_message + 1L
       }
