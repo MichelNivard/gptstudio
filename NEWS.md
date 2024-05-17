@@ -1,6 +1,6 @@
-# gptstudio (development version)
+## gptstudio 0.4.0
 
-## gptstudio (development version)
+This release introduces several exciting enhancements. The chat app now features a sidebar for conversation history, new chats, and settings, along with helpful tooltips. Additionally, local models are now supported using ollama, and the Perplexity Service offers various models like llama-3-sonar and mixtral-8x7b. Cohere Service, with models such as command and command-light, is also available. Internally, there are improvements, bug fixes, and quality-of-life enhancements.
 
 ### UI updates
 
@@ -14,7 +14,7 @@ We are happy to announce that we now support local models with [ollama](https://
 
 ### Perplexity Service
 
-Perplexity AI now offers a wide range of models as part of their service. The current version includes the following models: sonar-small-chat, sonar-small-online, sonar-medium-chat, sonar-medium-online, codellama-70b-instruct, mistral-7b-instruct, mixtral-8x7b-instruct, pplx-7b-chat, pplx-70b-chat, pplx-7b-online, pplx-70b-online, llama-2-70b-chat, and codellama-34b-instruct. See Perplexity API documentation for more information on these models.
+Perplexity AI now offers a wide range of models as part of their service. The current version includes the following models: llama-3-sonar-small-32k-chat, llama-3-sonar-small-32k-online, llama-3-sonar-large-32k-chat, llama-3-sonar-large-32k-online, llama-3-8b-instruct, llama-3-70b-instruct, mixtral-8x7b-instruc". See Perplexity API documentation for more information on these models.
 
 ### Cohere Service
 

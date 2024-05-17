@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 ## Creating an OpenAI API Key
 
 - Once logged in, navigate to the API section in your account settings.
-- Follow the instructions to create a new API key. More detailed steps can be found in OpenAI's [API documentation](https://beta.openai.com/docs/).
+- Follow the instructions to create a new API key. More detailed steps can be found in OpenAI's [API documentation](https://platform.openai.com/docs/).
 
 ## Setting the OpenAI API Key in .Renviron
 
