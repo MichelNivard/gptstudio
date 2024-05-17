@@ -1,3 +1,5 @@
+# gptstudio (development version)
+
 ## gptstudio 0.4.0
 
 This release introduces several exciting enhancements. The chat app now features a sidebar for conversation history, new chats, and settings, along with helpful tooltips. Additionally, local models are now supported using ollama, and the Perplexity Service offers various models like llama-3-sonar and mixtral-8x7b. Cohere Service, with models such as command and command-light, is also available. Internally, there are improvements, bug fixes, and quality-of-life enhancements.
