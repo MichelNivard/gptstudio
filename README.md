@@ -98,13 +98,15 @@ actual API key:
 OPENAI_API_KEY="<APIKEY>"
 ```
 
-**Caution:** If you’re using version control systems like GitHub or
-GitLab, remember to include .Renviron in your .gitignore file to prevent
-exposing your API key!
+> [!WARNING]
+> If you’re using version control systems like GitHub or GitLab,
+> remember to include .Renviron in your .gitignore file
+> to prevent exposing your API key!
 
-**Important Note:** OpenAI API will not function without valid payment
-details entered into your OpenAI account. This is a restriction imposed
-by OpenAI and is unrelated to this package.
+> [!IMPORTANT]
+> OpenAI API will not function without valid payment
+> details entered into your OpenAI account.
+> This is a restriction imposed by OpenAI and is unrelated to this package.
 
 ### Alternative AI Service Providers
 
@@ -158,9 +160,10 @@ shared unless you turn those features on. It is your responsibility to
 ensure that you do not accidentally share sensitive data with any AI
 service provider.
 
-**IMPORTANT: To maintain the privacy of your data, do not highlight,
-include in a prompt, or otherwise upload any sensitive data, code, or
-text that should remain confidential.**
+> [!IMPORTANT]
+> To maintain the privacy of your data, do not highlight,
+> include in a prompt, or otherwise upload any sensitive data, code, or
+> text that should remain confidential.**
 
 ## Code of Conduct
 
