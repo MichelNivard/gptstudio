@@ -195,8 +195,12 @@
 <span><span class="fu">edit_r_environ</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>For a persistent setting that loads every time you launch this project, add the following line to .Renviron, replacing <code>"&lt;APIKEY&gt;"</code> with your actual API key:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="va">OPENAI_API_KEY</span><span class="op">=</span><span class="st">"&lt;APIKEY&gt;"</span></span></code></pre></div>
-<p><strong>Caution:</strong> If you’re using version control systems like GitHub or GitLab, remember to include .Renviron in your .gitignore file to prevent exposing your API key!</p>
-<p><strong>Important Note:</strong> OpenAI API will not function without valid payment details entered into your OpenAI account. This is a restriction imposed by OpenAI and is unrelated to this package.</p>
+<blockquote>
+<p>[!WARNING] If you’re using version control systems like GitHub or GitLab, remember to include .Renviron in your .gitignore file to prevent exposing your API key!</p>
+</blockquote>
+<blockquote>
+<p>[!IMPORTANT] OpenAI API will not function without valid payment details entered into your OpenAI account. This is a restriction imposed by OpenAI and is unrelated to this package.</p>
+</blockquote>
 </div>
 </div>
 <div class="section level3">
@@ -224,7 +228,9 @@
 <h3 id="limiting-data-sharing">Limiting Data Sharing<a class="anchor" aria-label="anchor" href="#limiting-data-sharing"></a>
 </h3>
 <p>The R package is designed to share only the text or code that you specifically highlight/select or include in a prompt through our built-in applications. No other elements of your R environment will be shared unless you turn those features on. It is your responsibility to ensure that you do not accidentally share sensitive data with any AI service provider.</p>
-<p><strong>IMPORTANT: To maintain the privacy of your data, do not highlight, include in a prompt, or otherwise upload any sensitive data, code, or text that should remain confidential.</strong></p>
+<blockquote>
+<p>[!IMPORTANT] To maintain the privacy of your data, do not highlight, include in a prompt, or otherwise upload any sensitive data, code, or text that should remain confidential.**</p>
+</blockquote>
 </div>
 </div>
 <div class="section level2">
