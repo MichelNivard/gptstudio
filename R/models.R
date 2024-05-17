@@ -67,9 +67,9 @@ list_available_models.azure_openai <- function(service) {
 #' @export
 list_available_models.perplexity <- function(service) {
   c(
-    "sonar-small-chat", "sonar-small-online", "sonar-medium-chat",
-    "sonar-medium-online", "codellama-70b-instruct", "mistral-7b-instruct",
-    "mixtral-8x7b-instruct"
+    "llama-3-sonar-small-32k-chat", "llama-3-sonar-small-32k-online",
+    "llama-3-sonar-large-32k-chat", "llama-3-sonar-large-32k-online",
+    "llama-3-8b-instruct", "llama-3-70b-instruct", "mixtral-8x7b-instruct"
   )
 }
 
