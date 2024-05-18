@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ### Creating a Cohere Account
 
-- Go to the [Cohere website](https://cohere.ai/) and sign up.
+- Go to the [Cohere website](https://cohere.com/) and sign up.
 - Verify your account as instructed.
 
 ### Creating a Cohere API Key

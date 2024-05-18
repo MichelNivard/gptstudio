@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# gptstudio <a href="https://michelnivard.github.io/gptstudio"><img src="man/figures/logo.png" align="right" height="150"/>
+# gptstudio <a href="https://michelnivard.github.io/gptstudio/"><img src="man/figures/logo.png" align="right" height="150"/>
 
 <!-- badges: start -->
 
@@ -13,9 +13,9 @@ status](https://www.r-pkg.org/badges/version/gptstudio)](https://CRAN.R-project.
 coverage](https://codecov.io/gh/MichelNivard/gptstudio/branch/main/graph/badge.svg)](https://app.codecov.io/gh/MichelNivard/gptstudio?branch=main)
 [![R-CMD-check](https://github.com/MichelNivard/gptstudio/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MichelNivard/gptstudio/actions/workflows/R-CMD-check.yaml)
 [![CRAN RStudio mirror
-downloads](http://cranlogs.r-pkg.org/badges/gptstudio)](https://www.r-pkg.org:443/pkg/gptstudio)
+downloads](http://cranlogs.r-pkg.org/badges/gptstudio)](https://www.r-pkg.org/pkg/gptstudio)
 [![CRAN RStudio mirror
-downloads](http://cranlogs.r-pkg.org/badges/grand-total/gptstudio)](https://www.r-pkg.org:443/gptstudio)
+downloads](http://cranlogs.r-pkg.org/badges/grand-total/gptstudio)](https://www.r-pkg.org/pkg/gptstudio)
 
 <!-- badges: end -->
 
@@ -49,7 +49,7 @@ pak::pak("MichelNivard/gptstudio")
 | [OpenAI](https://platform.openai.com)                                                                | gpt-4-turbo, gpt-4, gpt-3.5-turbo ([latest models](https://platform.openai.com/docs/models))                                                           | [OpenAI API Docs](https://platform.openai.com/docs/api-reference)                                                                       | [OpenAI Setup](https://michelnivard.github.io/gptstudio/articles/openai.html)           |
 | [HuggingFace](https://huggingface.co/)                                                               | various                                                                                                                                                | [HF Inference API Docs](https://huggingface.co/docs/hub/models-inference)                                                               | [HF Setup](https://michelnivard.github.io/gptstudio/articles/huggingface.html)          |
 | [Anthropic](https://docs.anthropic.com/claude/docs/guide-to-anthropics-prompt-engineering-resources) | claude-2.1, claude-instant-1.2                                                                                                                         | [Anthropic API Docs](https://docs.anthropic.com/claude/reference/getting-started-with-the-api)                                          | [Anthropic Setup](https://michelnivard.github.io/gptstudio/articles/anthropic.html)     |
-| [Ollama](https://ollama.ai/)                                                                         | mistral, llama2, mixtral, phi ([latest models](https://ollama.ai/library))                                                                             | [Ollama API Docs](https://github.com/jmorganca/ollama/blob/main/docs/api.md)                                                            | [Ollama Setup](https://michelnivard.github.io/gptstudio/articles/ollama.html)           |
+| [Ollama](https://ollama.com/)                                                                        | mistral, llama2, mixtral, phi ([latest models](https://ollama.com/library))                                                                            | [Ollama API Docs](https://github.com/ollama/ollama/blob/main/docs/api.md)                                                               | [Ollama Setup](https://michelnivard.github.io/gptstudio/articles/ollama.html)           |
 | [Perplexity](https://www.perplexity.ai)                                                              | pplx-7b-chat, pplx-70b-chat, pplx-7b-online, pplx-70b-online, llama-2-70b-chat, codellama-34b-instruct, mistral-7b-instruct, and mixtral-8x7b-instruct | [Perplexity API Docs](https://docs.perplexity.ai/reference/post_chat_completions)                                                       | [Perplexity Setup](https://michelnivard.github.io/gptstudio/articles/perplexity.html)   |
 | [Google AI Studio](https://ai.google.dev/tutorials/ai-studio_quickstart)                             | Gemini and Palm (legacy)                                                                                                                               | [Google AI Studio Docs](https://ai.google.dev/docs)                                                                                     | [Google AI Studio Setup](https://michelnivard.github.io/gptstudio/articles/google.html) |
 | [Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview)                  | gpt-4, gpt-3.5-turbo ([latest models](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#gpt-4-and-gpt-4-turbo-preview))       | [Azure OpenAI API Docs](https://learn.microsoft.com/en-us/azure/ai-services/openai/quickstart?tabs=command-line,python&pivots=rest-api) | [Azure OpenAI Setup](https://michelnivard.github.io/gptstudio/articles/azure.html)      |
@@ -62,8 +62,7 @@ configured to work with several AI service providers, allowing for
 flexibility and choice based on your specific needs. The default
 configuration is set to use OpenAI’s services. To use it you need:
 
-1.  Make an OpenAI account. [Sign up
-    here](https://platform.openai.com/).
+1.  Make an OpenAI account. [Sign up here](https://openai.com/api/).
 
 2.  [Create an OpenAI API
     key](https://platform.openai.com/account/api-keys) to use with the
