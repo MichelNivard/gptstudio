@@ -97,28 +97,32 @@ actual API key:
 OPENAI_API_KEY="<APIKEY>"
 ```
 
-> [!WARNING]
-> If you’re using version control systems like GitHub or GitLab,
-> remember to include .Renviron in your .gitignore file
-> to prevent exposing your API key!
+**Caution:** If you’re using version control systems like GitHub or
+GitLab, remember to include .Renviron in your .gitignore file to prevent
+exposing your API key!
 
-> [!IMPORTANT]
-> OpenAI API will not function without valid payment
-> details entered into your OpenAI account.
-> This is a restriction imposed by OpenAI and is unrelated to this package.
+**Important Note:** OpenAI API will not function without valid payment
+details entered into your OpenAI account. This is a restriction imposed
+by OpenAI and is unrelated to this package.
 
 ### Alternative AI Service Providers
 
 While OpenAI is the default and currently considered one of the most
 robust options, `gptstudio` is also compatible with other AI service
-providers. These include [Anthropic](articles/anthropic.md),
-[HuggingFace](articles/huggingface.md), [Google AI
-Studio](articles/googleai.md), [Azure OpenAI](articles/azure.md), and
-[Perplexity](articles/perplexity.md). You can select any of these
-providers based on your preference or specific requirements. You can
-also run local models with [Ollama](articles/ollama.md). This requires
-more setup but at the benefit of not sharing your data with any third
-party.
+providers. These include
+[Anthropic](https://michelnivard.github.io/gptstudio/articles/anthropic.html),
+[HuggingFace](https://michelnivard.github.io/gptstudio/articles/huggingface.html),
+[Google AI
+Studio](https://michelnivard.github.io/gptstudio/articles/perplexity.html),
+[Azure
+OpenAI](https://michelnivard.github.io/gptstudio/articles/azure.html),
+and
+[Perplexity](https://michelnivard.github.io/gptstudio/articles/perplexity.html).
+You can select any of these providers based on your preference or
+specific requirements. You can also run local models with
+[Ollama](https://michelnivard.github.io/gptstudio/articles/ollama.html).
+This requires more setup but at the benefit of not sharing your data
+with any third party.
 
 To use an alternative provider, you will need to obtain the relevant API
 key or access credentials from the chosen provider and configure them
@@ -159,10 +163,9 @@ shared unless you turn those features on. It is your responsibility to
 ensure that you do not accidentally share sensitive data with any AI
 service provider.
 
-> [!IMPORTANT]
-> To maintain the privacy of your data, do not highlight,
-> include in a prompt, or otherwise upload any sensitive data, code, or
-> text that should remain confidential.**
+**IMPORTANT: To maintain the privacy of your data, do not highlight,
+include in a prompt, or otherwise upload any sensitive data, code, or
+text that should remain confidential.**
 
 ## Code of Conduct
 
