@@ -113,7 +113,7 @@ providers. These include
 [Anthropic](https://michelnivard.github.io/gptstudio/articles/anthropic.html),
 [HuggingFace](https://michelnivard.github.io/gptstudio/articles/huggingface.html),
 [Google AI
-Studio](https://michelnivard.github.io/gptstudio/articles/perplexity.html),
+Studio](https://michelnivard.github.io/gptstudio/articles/google.html),
 [Azure
 OpenAI](https://michelnivard.github.io/gptstudio/articles/azure.html),
 and
