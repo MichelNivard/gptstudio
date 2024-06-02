@@ -15,6 +15,7 @@
 #' }
 gptstudio_spelling_grammar <- function() {
   gptstudio_chat_in_source(
-    task = "Improve spelling and grammar of the text"
+    task = "Improve spelling and grammar of the text",
+    keep_selection = FALSE
   )
 }

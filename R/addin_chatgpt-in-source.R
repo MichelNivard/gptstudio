@@ -17,31 +17,11 @@ gptstudio_chat_in_source_addin <- function() {
   gptstudio_chat_in_source()
 }
 
-gptstudio_chat_in_source <- function(task = NULL) {
+gptstudio_chat_in_source <- function(task = NULL, keep_selection = TRUE) {
   selection <- get_selection()
   service <- getOption("gptstudio.service")
   model <- getOption("gptstudio.model")
-
-  if (is.null(task)) {
-    file_ext <- character(1L)
-
-    tryCatch(expr = {
-      doc_path <- rstudioapi::documentPath()
-      file_ext <<- tools::file_ext(doc_path)
-    }, error = function(e) {
-      cli::cli_alert_warning("Current document is not saved. Assuming .R file extension")
-      file_ext <<- "R"
-    })
-
-    task <- glue::glue(
-      "You are an expert on following instructions without making conversation.",
-      "Do the task specified after the colon.",
-      "Your response will go directly into an open .{file_ext} file in an IDE",
-      "without any post processing.",
-      "Output only plain text. Do not output markdown.",
-      .sep = " "
-    )
-  }
+  task <- task %||% create_generic_task()
 
   instructions <- glue::glue("{task}: {selection$value}")
 
@@ -64,7 +44,33 @@ gptstudio_chat_in_source <- function(task = NULL) {
     gptstudio_request_perform()
 
   text_to_insert <- as.character(response$response)
-  insert_text(c(selection$value, text_to_insert))
+
+  if (keep_selection) {
+    text_to_insert <- c(selection$value, text_to_insert)
+  }
+
+  insert_text(text_to_insert)
 
   cli_process_done()
+}
+
+create_generic_task <- function() {
+  file_ext <- character(1L)
+
+  tryCatch(expr = {
+    doc_path <- rstudioapi::documentPath()
+    file_ext <<- tools::file_ext(doc_path)
+  }, error = function(e) {
+    cli::cli_alert_warning("Current document is not saved. Assuming .R file extension")
+    file_ext <<- "R"
+  })
+
+  glue::glue(
+    "You are an expert on following instructions without making conversation.",
+    "Do the task specified after the colon.",
+    "Your response will go directly into an open .{file_ext} file in an IDE",
+    "without any post processing.",
+    "Output only plain text. Do not output markdown.",
+    .sep = " "
+  )
 }

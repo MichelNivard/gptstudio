@@ -13,6 +13,7 @@
 #' }
 gptstudio_comment_code <- function() {
   gptstudio_chat_in_source(
-    task = "Add comments to explain this code. Comment the code line by line"
+    task = "Add comments to explain this code. Comment the code line by line",
+    keep_selection = FALSE
   )
 }
