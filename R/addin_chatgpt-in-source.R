@@ -23,7 +23,7 @@ gptstudio_chat_in_source <- function(task = NULL, keep_selection = TRUE) {
   model <- getOption("gptstudio.model")
   task <- task %||% create_generic_task()
 
-  instructions <- glue::glue("{task}: {selection$value}")
+  instructions <- glue::glue("{task}: {selection}")
 
   cli::cli_progress_step(
     msg = "Sending query to {service}...",
@@ -46,12 +46,12 @@ gptstudio_chat_in_source <- function(task = NULL, keep_selection = TRUE) {
   text_to_insert <- as.character(response$response)
 
   if (keep_selection) {
-    text_to_insert <- c(selection$value, text_to_insert)
+    text_to_insert <- c(selection, text_to_insert)
   }
 
-  insert_text(text_to_insert)
-
   cli_process_done()
+
+  insert_text(text_to_insert)
 }
 
 create_generic_task <- function() {
