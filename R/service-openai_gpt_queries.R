@@ -46,4 +46,6 @@ gptstudio_chat_in_source <- function(task = NULL) {
 
   text_to_insert <- as.character(response$response)
   insert_text(c(selection$value, text_to_insert))
+
+  cli_process_done()
 }

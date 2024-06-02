@@ -14,9 +14,7 @@
 #' gptstudio_spelling_grammar()
 #' }
 gptstudio_spelling_grammar <- function() {
-  cli_process_start("Sending query to ChatGPT")
   gptstudio_chat_in_source(
     task = "Improve spelling and grammar of the text"
   )
-  cli_process_done()
 }
