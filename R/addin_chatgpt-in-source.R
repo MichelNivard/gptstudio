@@ -55,6 +55,19 @@ gptstudio_chat_in_source <- function(task = NULL, keep_selection = TRUE) {
 }
 
 create_generic_task <- function() {
+  file_ext <- get_file_extension()
+
+  glue::glue(
+    "You are an expert on following instructions without making conversation.",
+    "Do the task specified after the colon.",
+    "Your response will go directly into an open .{file_ext} file in an IDE",
+    "without any post processing.",
+    "Output only plain text. Do not output markdown.",
+    .sep = " "
+  )
+}
+
+get_file_extension <- function() {
   file_ext <- character(1L)
 
   tryCatch(expr = {
@@ -65,12 +78,5 @@ create_generic_task <- function() {
     file_ext <<- "R"
   })
 
-  glue::glue(
-    "You are an expert on following instructions without making conversation.",
-    "Do the task specified after the colon.",
-    "Your response will go directly into an open .{file_ext} file in an IDE",
-    "without any post processing.",
-    "Output only plain text. Do not output markdown.",
-    .sep = " "
-  )
+  return(file_ext)
 }
