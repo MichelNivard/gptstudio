@@ -4,7 +4,9 @@ test_that("Spelling and grammer editing works", {
     get_selection = function() "Do something",
     insert_text = function(x) x
   )
-  expect_type(gptstudio_spelling_grammar(), "character")
+  gptstudio_spelling_grammar() |>
+    expect_type("character") |>
+    expect_length(1L)
 })
 
 test_that("Commenting code works", {
@@ -13,7 +15,9 @@ test_that("Commenting code works", {
     get_selection = function() "Do something",
     insert_text = function(x) x
   )
-  expect_type(gptstudio_comment_code(), "character")
+  gptstudio_comment_code() |>
+    expect_type("character") |>
+    expect_length(1L)
 })
 
 test_that("chatgpt_addin runs", {
@@ -32,5 +36,7 @@ test_that("chatgpt_addin_in_source runs", {
     get_selection = function() "Do something",
     insert_text = function(x) x
   )
-  expect_type(gptstudio_chat_in_source_addin(), "character")
+  gptstudio_chat_in_source_addin() |>
+    expect_type("character") |>
+    expect_length(2L)
 })
