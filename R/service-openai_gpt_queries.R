@@ -1,32 +1,34 @@
 gptstudio_chat_in_source <- function(task = NULL) {
   selection <- get_selection()
+  service <- getOption("gptstudio.service")
+  model <- getOption("gptstudio.model")
 
   if (is.null(task)) {
-    gptstudio_chat_in_source_file_ext <- character(1L)
+    file_ext <- character(1L)
 
     tryCatch(expr = {
       doc_path <- rstudioapi::documentPath()
-      gptstudio_chat_in_source_file_ext <- tools::file_ext(doc_path)
+      file_ext <<- tools::file_ext(doc_path)
     }, error = function(e) {
-      cli::cli_alert_info("Current document is not saved.
-                          Assuming .R file extension")
-      gptstudio_chat_in_source_file_ext <- "R"
+      cli::cli_alert_warning("Current document is not saved. Assuming .R file extension")
+      file_ext <<- "R"
     })
 
     task <- glue::glue(
       "You are an expert on following instructions without making conversation.",
-      "Do the task specified after the colon,",
-      "formatting your response to go directly into a .{gptstudio_chat_in_source_file_ext} file without any post processing", # nolint
+      "Do the task specified after the colon.",
+      "Your response will go directly into an open .{file_ext} file in an IDE",
+      "without any post processing.",
+      "Output only plain text. Do not output markdown.",
       .sep = " "
     )
   }
 
   instructions <- glue::glue("{task}: {selection$value}")
 
-  cli::cli_inform("{instructions}")
-
-  cli::cli_progress_step("Sending query to ChatGPT...",
-    msg_done = "ChatGPT responded",
+  cli::cli_progress_step(
+    msg = "Sending query to {service}...",
+    msg_done = "{service} responded",
     spinner = TRUE
   )
 
@@ -34,11 +36,11 @@ gptstudio_chat_in_source <- function(task = NULL) {
 
   response <-
     gptstudio_create_skeleton(
-      service = getOption("gptstudio.service"),
+      service = service,
       prompt  = instructions,
       history = list(),
       stream  = FALSE,
-      model   = getOption("gptstudio.model")
+      model   = model
     ) %>%
     gptstudio_request_perform()
 
