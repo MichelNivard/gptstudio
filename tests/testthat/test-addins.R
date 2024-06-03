@@ -1,22 +1,23 @@
 test_that("Spelling and grammer editing works", {
+  skip_if_not(rstudioapi::isAvailable())
   mockr::local_mock(
-    gptstudio_chat_in_source = function(
-        task = "Add comments to explain this code. Your output will go directly into
-    a source (.R) file. Comment the code line by line") {
-      list("text" = "new text")
-    }
+    get_selection = function() "Do something",
+    insert_text = function(x) x
   )
-  expect_type(gptstudio_spelling_grammar(), "character")
+  gptstudio_spelling_grammar() |>
+    expect_type("character") |>
+    expect_length(1L)
 })
 
 test_that("Commenting code works", {
+  skip_if_not(rstudioapi::isAvailable())
   mockr::local_mock(
-    gptstudio_chat_in_source = function(task = "Add comments to explain this code.
-      Your output will go directly into a source (.R) file. Comment the code line by line") {
-      list("text" = "new text")
-    }
+    get_selection = function() "Do something",
+    insert_text = function(x) x
   )
-  expect_type(gptstudio_comment_code(), "character")
+  gptstudio_comment_code() |>
+    expect_type("character") |>
+    expect_length(1L)
 })
 
 test_that("chatgpt_addin runs", {
@@ -30,10 +31,12 @@ test_that("chatgpt_addin runs", {
 })
 
 test_that("chatgpt_addin_in_source runs", {
+  skip_if_not(rstudioapi::isAvailable())
   mockr::local_mock(
-    gptstudio_chat_in_source = function() {
-      list("text" = "here is some text")
-    }
+    get_selection = function() "Do something",
+    insert_text = function(x) x
   )
-  expect_type(gptstudio_chat_in_source_addin(), "character")
+  gptstudio_chat_in_source_addin() |>
+    expect_type("character") |>
+    expect_length(2L)
 })

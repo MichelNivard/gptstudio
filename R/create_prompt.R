@@ -162,7 +162,7 @@ prepare_chat_history <- function(history = NULL,
 
 get_selection <- function() {
   rstudioapi::verifyAvailable()
-  rstudioapi::selectionGet()
+  rstudioapi::selectionGet()$value
 }
 
 insert_text <- function(improved_text) {

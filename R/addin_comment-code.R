@@ -12,9 +12,19 @@
 #' gptstudio_comment_code()
 #' }
 gptstudio_comment_code <- function() {
-  gptstudio_chat_in_source(
-    task = "Add comments to explain this code. Your output will go directly into
-    a source (.R) file. Comment the code line by line"
+
+  file_ext <- get_file_extension()
+
+  task <- glue::glue(
+    "Add comments to explain this code.",
+    "Your response will go directly into an open .{file_ext} file in an IDE",
+    "without any post processing.",
+    "Output only plain text. Do not output markdown.",
+    .sep = " "
   )
-  cli_process_done()
+
+  gptstudio_chat_in_source(
+    task = task,
+    keep_selection = FALSE
+  )
 }
