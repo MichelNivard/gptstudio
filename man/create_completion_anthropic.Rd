@@ -7,7 +7,7 @@
 create_completion_anthropic(
   prompt = list(list(role = "user", content = "Hello")),
   system = NULL,
-  model = "claude-3-haiku-20240307",
+  model = "claude-3-5-sonnet-20240620",
   max_tokens = 1028,
   key = Sys.getenv("ANTHROPIC_API_KEY")
 )
