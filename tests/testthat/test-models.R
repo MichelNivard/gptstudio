@@ -10,6 +10,10 @@ mock_ollama_list <- function() list(models = list(
 
 # Create test cases
 test_that("get_available_models works for openai", {
+<<<<<<< HEAD
+=======
+  skip_if_offline()
+>>>>>>> dd7d2e2 (add tests for getting models)
   service <- "openai"
   models <- get_available_models(service)
   expect_equal(models, c(
@@ -21,12 +25,20 @@ test_that("get_available_models works for openai", {
 })
 
 test_that("get_available_models works for huggingface", {
+<<<<<<< HEAD
+=======
+  skip_if_offline()
+>>>>>>> dd7d2e2 (add tests for getting models)
   service <- "huggingface"
   models <- get_available_models(service)
   expect_equal(models, c("gpt2", "tiiuae/falcon-7b-instruct", "bigcode/starcoderplus"))
 })
 
 test_that("get_available_models works for anthropic", {
+<<<<<<< HEAD
+=======
+  skip_if_offline()
+>>>>>>> dd7d2e2 (add tests for getting models)
   service <- "anthropic"
   models <- get_available_models(service)
   expect_equal(models, c(
@@ -42,6 +54,10 @@ test_that("get_available_models works for azure_openai", {
 })
 
 test_that("get_available_models works for perplexity", {
+<<<<<<< HEAD
+=======
+  skip_if_offline()
+>>>>>>> dd7d2e2 (add tests for getting models)
   service <- "perplexity"
   models <- get_available_models(service)
   expect_equal(models, c(
@@ -63,6 +79,10 @@ test_that("get_available_models works for ollama", {
 })
 
 test_that("get_available_models works for cohere", {
+<<<<<<< HEAD
+=======
+  skip_if_offline()
+>>>>>>> dd7d2e2 (add tests for getting models)
   service <- "cohere"
   models <- get_available_models(service)
   expect_equal(models, c(
@@ -72,6 +92,10 @@ test_that("get_available_models works for cohere", {
 })
 
 test_that("get_available_models works for google", {
+<<<<<<< HEAD
+=======
+  skip_if_offline()
+>>>>>>> dd7d2e2 (add tests for getting models)
   service <- "google"
   models <- get_available_models(service)
   expect_equal(models, c(
