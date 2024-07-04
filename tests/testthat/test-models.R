@@ -2,11 +2,13 @@ library(testthat)
 
 # Define the mock functions for ollama
 mock_ollama_is_available <- function() TRUE
-mock_ollama_list <- function() list(models = list(
-  list(name = "ollama-3.5"),
-  list(name = "ollama-3"),
-  list(name = "ollama-2")
-))
+mock_ollama_list <- function() {
+  list(models = list(
+    list(name = "ollama-3.5"),
+    list(name = "ollama-3"),
+    list(name = "ollama-2")
+  ))
+}
 
 # Create test cases
 test_that("get_available_models works for openai", {
