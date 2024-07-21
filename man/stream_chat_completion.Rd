@@ -7,7 +7,7 @@
 stream_chat_completion(
   messages = NULL,
   element_callback = cat,
-  model = "gpt-3.5-turbo",
+  model = "gpt-4o-mini",
   openai_api_key = Sys.getenv("OPENAI_API_KEY")
 )
 }
@@ -19,7 +19,7 @@ including the current user prompt (optional).}
 of the streamed response (optional).}
 
 \item{model}{A character string specifying the model to use for chat completion.
-The default model is "gpt-3.5-turbo".}
+The default model is "gpt-4o-mini".}
 
 \item{openai_api_key}{A character string of the OpenAI API key.
 By default, it is fetched from the "OPENAI_API_KEY" environment variable.

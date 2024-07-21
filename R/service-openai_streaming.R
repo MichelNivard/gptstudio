@@ -8,7 +8,7 @@
 #' @param element_callback A callback function to handle each element
 #' of the streamed response (optional).
 #' @param model A character string specifying the model to use for chat completion.
-#' The default model is "gpt-3.5-turbo".
+#' The default model is "gpt-4o-mini".
 #' @param openai_api_key A character string of the OpenAI API key.
 #' By default, it is fetched from the "OPENAI_API_KEY" environment variable.
 #' Please note that the OpenAI API key is sensitive information and should be
@@ -17,7 +17,7 @@
 stream_chat_completion <-
   function(messages = NULL,
            element_callback = cat,
-           model = "gpt-3.5-turbo",
+           model = "gpt-4o-mini",
            openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
     # Set the API endpoint URL
     url <- paste0(getOption("gptstudio.openai_url"), "/chat/completions")
