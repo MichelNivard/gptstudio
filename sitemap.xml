@@ -1,249 +1,85 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/SUPPORT.html</loc>
-  </url>
-  <url>
-    <loc>/articles/anthropic.html</loc>
-  </url>
-  <url>
-    <loc>/articles/azure.html</loc>
-  </url>
-  <url>
-    <loc>/articles/cohere.html</loc>
-  </url>
-  <url>
-    <loc>/articles/google.html</loc>
-  </url>
-  <url>
-    <loc>/articles/huggingface.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/no-build/chat-in-source.html</loc>
-  </url>
-  <url>
-    <loc>/articles/no-build/chat.html</loc>
-  </url>
-  <url>
-    <loc>/articles/no-build/ollama.html</loc>
-  </url>
-  <url>
-    <loc>/articles/openai.html</loc>
-  </url>
-  <url>
-    <loc>/articles/perplexity.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/OpenaiStreamParser.html</loc>
-  </url>
-  <url>
-    <loc>/reference/chat.html</loc>
-  </url>
-  <url>
-    <loc>/reference/chat_create_system_prompt.html</loc>
-  </url>
-  <url>
-    <loc>/reference/chat_history_append.html</loc>
-  </url>
-  <url>
-    <loc>/reference/chat_message_default.html</loc>
-  </url>
-  <url>
-    <loc>/reference/check_api_connection_openai.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_chat_app_theme.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_chat_cohere.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_completion_anthropic.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_completion_azure_openai.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_completion_google.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_completion_huggingface.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_completion_perplexity.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_ide_matching_colors.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_tmp_job_script.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_translator.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_available_endpoints.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_available_models.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_ide_theme_info.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gptstudio-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gptstudio_chat.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gptstudio_chat_in_source_addin.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gptstudio_comment_code.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gptstudio_create_skeleton.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gptstudio_request_perform.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gptstudio_response_process.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gptstudio_sitrep.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gptstudio_skeleton_build.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gptstudio_spelling_grammar.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mod_app_server.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mod_app_ui.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mod_chat_server.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mod_chat_ui.html</loc>
-  </url>
-  <url>
-    <loc>/reference/open_bg_shinyapp.html</loc>
-  </url>
-  <url>
-    <loc>/reference/openai_create_chat_completion.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>/reference/prepare_chat_history.html</loc>
-  </url>
-  <url>
-    <loc>/reference/query_api_anthropic.html</loc>
-  </url>
-  <url>
-    <loc>/reference/query_api_cohere.html</loc>
-  </url>
-  <url>
-    <loc>/reference/query_api_google.html</loc>
-  </url>
-  <url>
-    <loc>/reference/query_api_huggingface.html</loc>
-  </url>
-  <url>
-    <loc>/reference/query_api_perplexity.html</loc>
-  </url>
-  <url>
-    <loc>/reference/query_openai_api.html</loc>
-  </url>
-  <url>
-    <loc>/reference/random_port.html</loc>
-  </url>
-  <url>
-    <loc>/reference/request_base.html</loc>
-  </url>
-  <url>
-    <loc>/reference/request_base_anthropic.html</loc>
-  </url>
-  <url>
-    <loc>/reference/request_base_cohere.html</loc>
-  </url>
-  <url>
-    <loc>/reference/request_base_google.html</loc>
-  </url>
-  <url>
-    <loc>/reference/request_base_huggingface.html</loc>
-  </url>
-  <url>
-    <loc>/reference/request_base_perplexity.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rgb_str_to_hex.html</loc>
-  </url>
-  <url>
-    <loc>/reference/run_app_as_bg_job.html</loc>
-  </url>
-  <url>
-    <loc>/reference/run_chatgpt_app.html</loc>
-  </url>
-  <url>
-    <loc>/reference/stream_chat_completion.html</loc>
-  </url>
-  <url>
-    <loc>/reference/streamingMessage-shiny.html</loc>
-  </url>
-  <url>
-    <loc>/reference/streamingMessage.html</loc>
-  </url>
-  <url>
-    <loc>/reference/style_chat_history.html</loc>
-  </url>
-  <url>
-    <loc>/reference/style_chat_message.html</loc>
-  </url>
-  <url>
-    <loc>/reference/text_area_input_wrapper.html</loc>
-  </url>
-  <url>
-    <loc>/reference/welcomeMessage-shiny.html</loc>
-  </url>
-  <url>
-    <loc>/reference/welcomeMessage.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>/CONTRIBUTING.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/SUPPORT.html</loc></url>
+<url><loc>/articles/anthropic.html</loc></url>
+<url><loc>/articles/azure.html</loc></url>
+<url><loc>/articles/cohere.html</loc></url>
+<url><loc>/articles/google.html</loc></url>
+<url><loc>/articles/huggingface.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/no-build/chat-in-source.html</loc></url>
+<url><loc>/articles/no-build/chat.html</loc></url>
+<url><loc>/articles/no-build/ollama.html</loc></url>
+<url><loc>/articles/openai.html</loc></url>
+<url><loc>/articles/perplexity.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/OpenaiStreamParser.html</loc></url>
+<url><loc>/reference/chat.html</loc></url>
+<url><loc>/reference/chat_create_system_prompt.html</loc></url>
+<url><loc>/reference/chat_history_append.html</loc></url>
+<url><loc>/reference/chat_message_default.html</loc></url>
+<url><loc>/reference/check_api_connection_openai.html</loc></url>
+<url><loc>/reference/create_chat_app_theme.html</loc></url>
+<url><loc>/reference/create_chat_cohere.html</loc></url>
+<url><loc>/reference/create_completion_anthropic.html</loc></url>
+<url><loc>/reference/create_completion_azure_openai.html</loc></url>
+<url><loc>/reference/create_completion_google.html</loc></url>
+<url><loc>/reference/create_completion_huggingface.html</loc></url>
+<url><loc>/reference/create_completion_perplexity.html</loc></url>
+<url><loc>/reference/create_ide_matching_colors.html</loc></url>
+<url><loc>/reference/create_tmp_job_script.html</loc></url>
+<url><loc>/reference/create_translator.html</loc></url>
+<url><loc>/reference/get_available_endpoints.html</loc></url>
+<url><loc>/reference/get_available_models.html</loc></url>
+<url><loc>/reference/get_ide_theme_info.html</loc></url>
+<url><loc>/reference/gptstudio-package.html</loc></url>
+<url><loc>/reference/gptstudio_chat.html</loc></url>
+<url><loc>/reference/gptstudio_chat_in_source_addin.html</loc></url>
+<url><loc>/reference/gptstudio_comment_code.html</loc></url>
+<url><loc>/reference/gptstudio_create_skeleton.html</loc></url>
+<url><loc>/reference/gptstudio_request_perform.html</loc></url>
+<url><loc>/reference/gptstudio_response_process.html</loc></url>
+<url><loc>/reference/gptstudio_sitrep.html</loc></url>
+<url><loc>/reference/gptstudio_skeleton_build.html</loc></url>
+<url><loc>/reference/gptstudio_spelling_grammar.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/mod_app_server.html</loc></url>
+<url><loc>/reference/mod_app_ui.html</loc></url>
+<url><loc>/reference/mod_chat_server.html</loc></url>
+<url><loc>/reference/mod_chat_ui.html</loc></url>
+<url><loc>/reference/open_bg_shinyapp.html</loc></url>
+<url><loc>/reference/openai_create_chat_completion.html</loc></url>
+<url><loc>/reference/pipe.html</loc></url>
+<url><loc>/reference/prepare_chat_history.html</loc></url>
+<url><loc>/reference/query_api_anthropic.html</loc></url>
+<url><loc>/reference/query_api_cohere.html</loc></url>
+<url><loc>/reference/query_api_google.html</loc></url>
+<url><loc>/reference/query_api_huggingface.html</loc></url>
+<url><loc>/reference/query_api_perplexity.html</loc></url>
+<url><loc>/reference/query_openai_api.html</loc></url>
+<url><loc>/reference/random_port.html</loc></url>
+<url><loc>/reference/request_base.html</loc></url>
+<url><loc>/reference/request_base_anthropic.html</loc></url>
+<url><loc>/reference/request_base_cohere.html</loc></url>
+<url><loc>/reference/request_base_google.html</loc></url>
+<url><loc>/reference/request_base_huggingface.html</loc></url>
+<url><loc>/reference/request_base_perplexity.html</loc></url>
+<url><loc>/reference/rgb_str_to_hex.html</loc></url>
+<url><loc>/reference/run_app_as_bg_job.html</loc></url>
+<url><loc>/reference/run_chatgpt_app.html</loc></url>
+<url><loc>/reference/stream_chat_completion.html</loc></url>
+<url><loc>/reference/streamingMessage-shiny.html</loc></url>
+<url><loc>/reference/streamingMessage.html</loc></url>
+<url><loc>/reference/style_chat_history.html</loc></url>
+<url><loc>/reference/style_chat_message.html</loc></url>
+<url><loc>/reference/text_area_input_wrapper.html</loc></url>
+<url><loc>/reference/welcomeMessage-shiny.html</loc></url>
+<url><loc>/reference/welcomeMessage.html</loc></url>
 </urlset>
+

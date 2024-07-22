@@ -1,16 +1,15 @@
 pandoc: 3.1.11
-pkgdown: 2.0.9
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   anthropic: anthropic.html
   azure: azure.html
-  chat-in-source: no-build/chat-in-source.html
-  chat: no-build/chat.html
+  no-build/chat-in-source: no-build/chat-in-source.html
+  no-build/chat: no-build/chat.html
   cohere: cohere.html
   google: google.html
   huggingface: huggingface.html
-  ollama: no-build/ollama.html
+  no-build/ollama: no-build/ollama.html
   openai: openai.html
   perplexity: perplexity.html
-last_built: 2024-07-04T02:28Z
-
+last_built: 2024-07-22T21:00Z
