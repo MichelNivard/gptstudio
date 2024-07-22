@@ -41,7 +41,7 @@ list_available_models.openai <- function(service) {
     stringr::str_subset("vision", negate = TRUE) %>%
     sort()
 
-  idx <- which(models == "gpt-3.5-turbo")
+  idx <- which(models == "gpt-4o-mini")
   models <- c(models[idx], models[-idx])
   return(models)
 }

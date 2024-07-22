@@ -9,7 +9,7 @@ gptstudio_create_skeleton(
   prompt = "Name the top 5 packages in R.",
   history = list(list(role = "system", content = "You are an R chat assistant")),
   stream = TRUE,
-  model = "gpt-3.5-turbo",
+  model = "gpt-4o-mini",
   ...
 )
 }
