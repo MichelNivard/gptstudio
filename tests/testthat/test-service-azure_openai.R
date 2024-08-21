@@ -64,7 +64,7 @@ test_that("request_base_azure_openai constructs correct request", {
         api_version = "test_version"
       )
 
-      expect_equal(result$url, "https://test.openai.azure.com/openai/deployments/test_deployment/test_task?api-version=test_version")
+      expect_equal(result$url, "https://test.openai.azure.com/openai/deployments/test_deployment/test_task?api-version=test_version") #nolint
       expect_equal(result$headers, list("api-key" = "test_token",
                                         "Content-Type" = "application/json"))
     }
@@ -146,7 +146,9 @@ test_that("query_api_azure_openai handles error response", {
 
 test_that("retrieve_azure_token successfully gets existing token", {
   local_mocked_bindings(
-    get_azure_login = function(...) list(token = list(credentials = list(access_token = "existing_token"))),
+    get_azure_login = function(...) {
+      list(token = list(credentials = list(access_token = "existing_token")))
+    },
     create_azure_login = function(...) stop("Should not be called"),
     .package = "AzureRMR"
   )
@@ -159,7 +161,9 @@ test_that("retrieve_azure_token successfully gets existing token", {
 test_that("retrieve_azure_token creates new token when get_azure_login fails", {
   local_mocked_bindings(
     get_azure_login = function(...) stop("Error"),
-    create_azure_login = function(...) list(token = list(credentials = list(access_token = "new_token"))),
+    create_azure_login = function(...) {
+      list(token = list(credentials = list(access_token = "new_token")))
+    },
     .package = "AzureRMR"
   )
 
