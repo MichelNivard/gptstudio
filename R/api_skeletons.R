@@ -137,7 +137,7 @@ new_gptstudio_request_skeleton_google <- function(
 new_gptstudio_request_skeleton_azure_openai <- function(
     url = "user provided with environmental variables",
     api_key = Sys.getenv("AZURE_OPENAI_API_KEY"),
-    model = "gpt-4o-mini",
+    model = "gpt-4o",
     prompt = "What is a ggplot?",
     history = list(
       list(
