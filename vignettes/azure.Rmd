@@ -21,7 +21,7 @@ To configure gptstudio to work using Azure OpenAI service, you need to provide s
 - AZURE_OPENAI_TASK
 - AZURE_OPENAI_ENDPOINT
 - AZURE_OPENAI_DEPLOYMENT_NAME
-- AZURE_OPENAI_KEY
+- AZURE_OPENAI_API_KEY
 - AZURE_OPENAI_API_VERSION
 - AZURE_OPENAI_USE_TOKEN
 
@@ -31,7 +31,7 @@ Here's how you can add these details to your .Renviron file:
 2. Add environment variable details: Add a new line for each variable you need to set in the following format: VARIABLE_NAME="YOUR_VALUE". Replace VARIABLE_NAME with the name of the environment variable and YOUR_VALUE with the actual value that you want to set. For example, to set the API key you would have a line like this:
 
 ```bash
-AZURE_OPENAI_KEY="your_actual_key_goes_here"
+AZURE_OPENAI_API_KEY="your_actual_key_goes_here"
 ```
 You need to do this for each of the environment variables expected by the function. Your .Renviron file should look something like this:
 
@@ -39,7 +39,7 @@ You need to do this for each of the environment variables expected by the functi
 AZURE_OPENAI_TASK="your_task_code"
 AZURE_OPENAI_ENDPOINT="your_endpoint_url"
 AZURE_OPENAI_DEPLOYMENT_NAME="your_deployment_name"
-AZURE_OPENAI_KEY="your_api_key"
+AZURE_OPENAI_API_KEY="your_api_key"
 AZURE_OPENAI_API_VERSION="your_api_version"
 AZURE_OPENAI_USE_TOKEN=FALSE
 ```

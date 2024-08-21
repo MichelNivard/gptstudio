@@ -9,7 +9,7 @@ create_completion_azure_openai(
   task = Sys.getenv("AZURE_OPENAI_TASK"),
   base_url = Sys.getenv("AZURE_OPENAI_ENDPOINT"),
   deployment_name = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
-  token = Sys.getenv("AZURE_OPENAI_KEY"),
+  token = Sys.getenv("AZURE_OPENAI_API_KEY"),
   api_version = Sys.getenv("AZURE_OPENAI_API_VERSION")
 )
 }

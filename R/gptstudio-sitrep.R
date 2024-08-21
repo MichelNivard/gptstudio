@@ -192,7 +192,7 @@ gptstudio_sitrep <- function(verbose = TRUE) {
     cli::cli_h3("Checking Azure OpenAI API connection")
     check_api_connection_azure_openai(
       service = "Azure OpenAI",
-      api_key = Sys.getenv("AZURE_OPENAI_KEY")
+      api_key = Sys.getenv("AZURE_OPENAI_API_KEY")
     )
     cli::cli_h3("Checking Perplexity API connection")
     check_api_connection_perplexity(
