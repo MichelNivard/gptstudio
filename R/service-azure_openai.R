@@ -13,7 +13,7 @@
 #' @param deployment_name a character string for the deployment name. It will
 #'   default to the Azure OpenAI deployment name from environment variables if
 #'   not specified.
-#' @param token a character string for the API key. It will default to the Azure
+#' @param api_key a character string for the API key. It will default to the Azure
 #'   OpenAI API key from your environment variables if not specified.
 #' @param api_version a character string for the API version. It will default to
 #'   the Azure OpenAI API version from your environment variables if not
@@ -27,7 +27,7 @@ create_completion_azure_openai <-
            task = Sys.getenv("AZURE_OPENAI_TASK"),
            base_url = Sys.getenv("AZURE_OPENAI_ENDPOINT"),
            deployment_name = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
-           token = Sys.getenv("AZURE_OPENAI_KEY"),
+           api_key = Sys.getenv("AZURE_OPENAI_API_KEY"),
            api_version = Sys.getenv("AZURE_OPENAI_API_VERSION")) {
     request_body <- list(list(role = "user", content = prompt))
     query_api_azure_openai(
@@ -35,7 +35,7 @@ create_completion_azure_openai <-
       request_body,
       base_url,
       deployment_name,
-      token,
+      api_key,
       api_version
     )
   }
@@ -44,7 +44,7 @@ request_base_azure_openai <-
   function(task = Sys.getenv("AZURE_OPENAI_TASK"),
            base_url = Sys.getenv("AZURE_OPENAI_ENDPOINT"),
            deployment_name = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
-           token = Sys.getenv("AZURE_OPENAI_KEY"),
+           api_key = Sys.getenv("AZURE_OPENAI_API_KEY"),
            api_version = Sys.getenv("AZURE_OPENAI_API_VERSION"),
            use_token = Sys.getenv("AZURE_OPENAI_USE_TOKEN")) {
     response <-
@@ -52,18 +52,24 @@ request_base_azure_openai <-
       req_url_path_append("openai/deployments") %>%
       req_url_path_append(deployment_name) %>%
       req_url_path_append(task) %>%
-      req_url_query("api-version" = api_version) %>%
-      req_headers(
-        "api-key" = token,
-        "Content-Type" = "application/json"
-      )
+      req_url_query("api-version" = api_version)
 
     if (is_true(as.logical(use_token))) {
       token <- retrieve_azure_token()
-      response %>% req_auth_bearer_token(token = token)
+      response %>%
+        req_headers(
+          "api-key" = api_key,
+          "Content-Type" = "application/json"
+        ) %>%
+        req_auth_bearer_token(token = token)
     } else {
-      response
+      response %>%
+        req_headers(
+          "api-key" = api_key,
+          "Content-Type" = "application/json"
+        )
     }
+
   }
 
 query_api_azure_openai <-
@@ -71,14 +77,14 @@ query_api_azure_openai <-
            request_body,
            base_url = Sys.getenv("AZURE_OPENAI_ENDPOINT"),
            deployment_name = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
-           token = Sys.getenv("AZURE_OPENAI_KEY"),
+           api_key = Sys.getenv("AZURE_OPENAI_API_KEY"),
            api_version = Sys.getenv("AZURE_OPENAI_API_VERSION")) {
     response <-
       request_base_azure_openai(
         task,
         base_url,
         deployment_name,
-        token,
+        api_key,
         api_version
       ) %>%
       req_body_json(list(messages = request_body)) %>%
@@ -104,12 +110,24 @@ query_api_azure_openai <-
 
 retrieve_azure_token <- function() {
   rlang::check_installed("AzureRMR")
-  token <- AzureRMR::create_azure_login(
-    tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
-    app = Sys.getenv("AZURE_OPENAI_CLIENT_ID"),
-    password = Sys.getenv("AZURE_OPENAI_CLIENT_SECRET"),
-    host = "https://cognitiveservices.azure.com/",
-    scopes = ".default"
-  )
+
+  token <- tryCatch({
+    AzureRMR::get_azure_login(
+      tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
+      app = Sys.getenv("AZURE_OPENAI_CLIENT_ID"),
+      scopes = ".default"
+    )
+  }, error = function(e) NULL)
+
+  if (is.null(token)) {
+    token <- AzureRMR::create_azure_login(
+      tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
+      app = Sys.getenv("AZURE_OPENAI_CLIENT_ID"),
+      password = Sys.getenv("AZURE_OPENAI_CLIENT_SECRET"),
+      host = "https://cognitiveservices.azure.com/",
+      scopes = ".default"
+    )
+  }
+
   invisible(token$token$credentials$access_token)
 }

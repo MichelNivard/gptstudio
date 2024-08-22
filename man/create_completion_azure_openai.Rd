@@ -9,7 +9,7 @@ create_completion_azure_openai(
   task = Sys.getenv("AZURE_OPENAI_TASK"),
   base_url = Sys.getenv("AZURE_OPENAI_ENDPOINT"),
   deployment_name = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
-  token = Sys.getenv("AZURE_OPENAI_KEY"),
+  api_key = Sys.getenv("AZURE_OPENAI_API_KEY"),
   api_version = Sys.getenv("AZURE_OPENAI_API_VERSION")
 )
 }
@@ -28,7 +28,7 @@ OpenAI endpoint from environment variables if not specified.}
 default to the Azure OpenAI deployment name from environment variables if
 not specified.}
 
-\item{token}{a character string for the API key. It will default to the Azure
+\item{api_key}{a character string for the API key. It will default to the Azure
 OpenAI API key from your environment variables if not specified.}
 
 \item{api_version}{a character string for the API version. It will default to

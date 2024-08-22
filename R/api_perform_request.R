@@ -158,15 +158,12 @@ gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton, .
     )
   )
 
-  body <- list("messages" = messages)
+  response <- query_api_azure_openai(request_body = messages)
 
-  cat_print(body)
-
-  response <- create_completion_azure_openai(prompt = body)
   structure(
     list(
       skeleton = skeleton,
-      response = response
+      response = response$choices[[1]]$message$content
     ),
     class = "gptstudio_response_azure_openai"
   )

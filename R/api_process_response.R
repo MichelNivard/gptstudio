@@ -115,11 +115,7 @@ gptstudio_response_process.gptstudio_response_azure_openai <-
     response <- skeleton$response
     skeleton <- skeleton$skeleton
 
-    if (skeleton$stream == TRUE) {
-      last_response <- response
-    } else {
-      last_response <- response$choices[[1]]$message$content
-    }
+    last_response <- response
 
     new_history <- c(
       skeleton$history,
