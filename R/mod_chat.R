@@ -42,9 +42,10 @@ mod_chat_ui <- function(id, translator = create_translator()) {
             ),
             div(
               class = "position-absolute top-50 end-0 translate-middle",
-              actionButton(
-                inputId = ns("chat"),
+              bslib::input_task_button(
+                id = ns("chat"),
                 label = icon("fas fa-paper-plane"),
+                label_busy = NULL,
                 class = "w-100 btn-primary p-1 chat-send-btn"
               ) %>%
                 bslib::tooltip("Send (click or Enter)")
