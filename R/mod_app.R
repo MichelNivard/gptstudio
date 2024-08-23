@@ -94,38 +94,63 @@ create_chat_app_theme <- function(ide_colors = get_ide_theme_info()) {
 }
 
 
-#' Get IDE theme information.
+#' Get IDE Theme Information
 #'
-#' This function returns a list with the current IDE theme's information.
+#' Retrieves the current RStudio IDE theme information including whether it is a dark theme,
+#' and the background and foreground colors in hexadecimal format.
 #'
-#' @return A list with three components:
-#' \item{is_dark}{A boolean indicating whether the current IDE theme is dark.}
-#' \item{bg}{The current IDE theme's background color.}
-#' \item{fg}{The current IDE theme's foreground color.}
+#' @return A list with the following components:
+#'   \item{is_dark}{A logical indicating whether the current IDE theme is dark.}
+#'   \item{bg}{A character string representing the background color of the IDE theme in hex format.}
+#'   \item{fg}{A character string representing the foreground color of the IDE theme in hex format.}
+#'
+#' If RStudio is unavailable, returns the fallback theme details.
+#'
+#' @examples
+#' theme_info <- get_ide_theme_info()
+#' print(theme_info)
 #'
 #' @export
-#'
 get_ide_theme_info <- function() {
   if (rstudioapi::isAvailable()) {
-    rstudio_theme_info <- rstudioapi::getThemeInfo()
+    tryCatch(
+      {
+        rstudio_theme_info <- rstudioapi::getThemeInfo()
 
-    # create a list with three components
-    list(
-      is_dark = rstudio_theme_info$dark,
-      bg = rgb_str_to_hex(rstudio_theme_info$background),
-      fg = rgb_str_to_hex(rstudio_theme_info$foreground)
+        # Create a list with theme components
+        list(
+          is_dark = rstudio_theme_info$dark,
+          bg = rgb_str_to_hex(rstudio_theme_info$background),
+          fg = rgb_str_to_hex(rstudio_theme_info$foreground)
+        )
+      },
+      error = function(e) {
+        warn("Error fetching theme info from RStudio: {e$message}")
+        fallback_theme()
+      }
     )
   } else {
-    if (interactive()) cli::cli_inform("Using fallback ide theme")
-
-    # create a list with three components with fallback values
-    list(
-      is_dark = TRUE,
-      bg = "#002B36",
-      fg = "#93A1A1"
-    )
+    if (interactive()) cli::cli_inform("RStudio is not available. Using fallback IDE theme.")
+    fallback_theme()
   }
 }
+
+# Function to convert RGB string to HEX
+rgb_str_to_hex <- function(rgb_str) {
+  # Assumes RGB is provided as a character vector like "rgb(r, g, b)"
+  rgb_components <- as.integer(strsplit(sub("rgb\\((.+)\\)", "\\1", rgb_str), ",")[[1]])
+  rgb(rgb_components[1], rgb_components[2], rgb_components[3], maxColorValue = 255)
+}
+
+# Fallback function to provide default values
+fallback_theme <- function() {
+  list(
+    is_dark = TRUE,
+    bg = "#002B36",
+    fg = "#93A1A1"
+  )
+}
+
 
 html_dependencies <- function() {
   htmltools::htmlDependency(
