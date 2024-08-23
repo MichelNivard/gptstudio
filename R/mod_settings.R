@@ -133,7 +133,7 @@ mod_settings_server <- function(id) {
 
     observe({
       msg <- glue::glue("Fetching models for {input$service} service...")
-      showNotification(ui = msg, type = "message", duration = 3, session = session)
+      showNotification(ui = msg, type = "message", duration = 1, session = session)
       cli::cli_alert_info(msg)
       models <- tryCatch(
         {
@@ -153,7 +153,7 @@ mod_settings_server <- function(id) {
       )
 
       if (length(models) > 0) {
-        showNotification(ui = "Got models!", duration = 3, type = "message", session = session)
+        showNotification(ui = "Got models!", duration = 1.5, type = "message", session = session)
         cli::cli_alert_success("Got models!")
 
         default_model <- getOption("gptstudio.model")
