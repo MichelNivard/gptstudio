@@ -4,7 +4,7 @@
 #' It can be reset dynamically inside a shiny app
 #'
 #' @import htmlwidgets
-#' @inheritParams run_chatgpt_app
+#' @inheritParams gptstudio_run_chat_app
 #' @inheritParams streamingMessage-shiny
 #' @param element_id The element's id
 streamingMessage <- function(ide_colors = get_ide_theme_info(), # nolint

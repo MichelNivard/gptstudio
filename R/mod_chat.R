@@ -42,7 +42,7 @@ mod_chat_ui <- function(id, translator = create_translator()) {
 #' @param id id of the module
 #' @param translator Translator from `shiny.i18n::Translator`
 #' @param settings,history Reactive values from the settings and history module
-#' @inheritParams run_chatgpt_app
+#' @inheritParams gptstudio_run_chat_app
 #'
 mod_chat_server <- function(id,
                             ide_colors = get_ide_theme_info(),

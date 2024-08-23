@@ -5,7 +5,7 @@
 #'
 #' @param history A list of chat messages with elements containing 'role' and
 #' 'content'.
-#' @inheritParams run_chatgpt_app
+#' @inheritParams gptstudio_run_chat_app
 #'
 #' @return A list of formatted chat messages with styling applied, excluding
 #' system messages.
@@ -30,7 +30,7 @@ style_chat_history <- function(history, ide_colors = get_ide_theme_info()) {
 #' Style a message based on the role of its author.
 #'
 #' @param message A chat message.
-#' @inheritParams run_chatgpt_app
+#' @inheritParams gptstudio_run_chat_app
 #' @return An HTML element.
 style_chat_message <- function(message,
                                ide_colors = get_ide_theme_info()) {
@@ -77,7 +77,7 @@ style_chat_message <- function(message,
 #' This returns a list of color properties for a chat message
 #'
 #' @param role The role of the message author
-#' @inheritParams run_chatgpt_app
+#' @inheritParams gptstudio_run_chat_app
 #' @return list
 create_ide_matching_colors <- function(role,
                                        ide_colors = get_ide_theme_info()) {
