@@ -29,37 +29,7 @@ mod_chat_ui <- function(id, translator = create_translator()) {
             style = css(
               "width" = "100%"
             ),
-            div(
-              div(
-                style = "flex-grow: 1; height: 100%;",
-                text_area_input_wrapper(
-                  inputId = ns("chat_input"),
-                  label = NULL,
-                  width = "100%",
-                  height = "100%",
-                  value = "",
-                  resize = "none",
-                  textarea_class = "chat-prompt"
-                )
-              ),
-              div(
-                style = "position: absolute; right: 10px; top: 50%; transform: translateY(-50%);",
-                bslib::input_task_button(
-                  id = ns("chat"),
-                  label = icon("fas fa-paper-plane"),
-                  label_busy = NULL,
-                  class = "btn-primary p-1 chat-send-btn"
-                ) %>%
-                  bslib::tooltip("Send (click or Enter)")
-              ),
-              div(
-                style = "position: absolute; right: 40px; top: 30%; transform: translateY(-50%);",
-                input_audio_clip(ns("clip"),
-                                 record_label = NULL,
-                                 stop_label = NULL,
-                                 show_mic_settings = FALSE)
-              )
-            )
+            uiOutput(ns("chat_with_audio"))
           )
         )
       )
@@ -79,9 +49,7 @@ mod_chat_server <- function(id,
                             translator = create_translator(),
                             settings,
                             history) {
-  # This is where changes will focus
   moduleServer(id, function(input, output, session) {
-    ns <- NS(id)
     # Session data ----
     rv <- reactiveValues()
     rv$reset_welcome_message <- 0L
@@ -117,7 +85,6 @@ mod_chat_server <- function(id,
       bindEvent(history$create_new_chat)
 
     observe({
-      cli::cli_inform("Chat triggered")
       skeleton <- gptstudio_create_skeleton(
         service = settings$service,
         model = settings$model,
@@ -199,47 +166,48 @@ mod_chat_server <- function(id,
     }) %>%
       bindEvent(input$clip)
 
-    # output$chat_input <- renderUI({
-    #   audio_recorder <-
-    #     if (rv$audio_input %||% getOption("gptstudio.audio_input")) {
-    #       div(
-    #         style = "position: absolute; right: 40px; top: 30%; transform: translateY(-50%);",
-    #         input_audio_clip("clip",
-    #                          record_label = NULL,
-    #                          stop_label = NULL,
-    #                          show_mic_settings = FALSE)
-    #       )
-    #     } else {
-    #       NULL
-    #     }
-    #
-    #   tagList(
-    #     div(
-    #       div(
-    #         style = "flex-grow: 1; height: 100%;",
-    #         text_area_input_wrapper(
-    #           inputId = "chat_input",
-    #           label = NULL,
-    #           width = "100%",
-    #           height = "100%",
-    #           value = "",
-    #           resize = "none",
-    #           textarea_class = "chat-prompt"
-    #         )
-    #       ),
-    #       div(
-    #         style = "position: absolute; right: 10px; top: 50%; transform: translateY(-50%);",
-    #         bslib::input_task_button(
-    #           id = "chat",
-    #           label = icon("fas fa-paper-plane"),
-    #           label_busy = NULL,
-    #           class = "btn-primary p-1 chat-send-btn"
-    #         ) %>%
-    #           bslib::tooltip("Send (click or Enter)")
-    #       ),
-    #       audio_recorder
-    #     )
-    #   )
-    # })
+    output$chat_with_audio <- renderUI({
+      ns <- session$ns
+      audio_recorder <-
+        if (rv$audio_input %||% getOption("gptstudio.audio_input")) {
+          div(
+            style = "position: absolute; right: 40px; top: 25%; transform: translateY(-50%);",
+            input_audio_clip(ns("clip"),
+                             record_label = NULL,
+                             stop_label = NULL,
+                             show_mic_settings = FALSE, class = "btn-secondary m-1")
+          )
+        } else {
+          NULL
+        }
+
+      tagList(
+        div(
+          div(
+            style = "flex-grow: 1; height: 100%;",
+            text_area_input_wrapper(
+              inputId = ns("chat_input"),
+              label = NULL,
+              width = "100%",
+              height = "100%",
+              value = "",
+              resize = "none",
+              textarea_class = "chat-prompt"
+            )
+          ),
+          div(
+            style = "position: absolute; right: 10px; top: 50%; transform: translateY(-50%);",
+            bslib::input_task_button(
+              id = ns("chat"),
+              label = icon("fas fa-paper-plane"),
+              label_busy = NULL,
+              class = "btn-primary p-1 chat-send-btn"
+            ) %>%
+              bslib::tooltip("Send (click or Enter)")
+          ),
+          audio_recorder
+        )
+      )
+    })
   })
 }

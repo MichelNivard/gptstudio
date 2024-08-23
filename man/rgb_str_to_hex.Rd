@@ -4,7 +4,7 @@
 \alias{rgb_str_to_hex}
 \title{RGB str to hex}
 \usage{
-rgb_str_to_hex(rgb_string)
+rgb_str_to_hex(rgb_str)
 }
 \arguments{
 \item{rgb_string}{The RGB string as returned by \code{rstudioapi::getThemeInfo()}}

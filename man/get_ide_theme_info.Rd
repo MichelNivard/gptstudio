@@ -2,16 +2,24 @@
 % Please edit documentation in R/mod_app.R
 \name{get_ide_theme_info}
 \alias{get_ide_theme_info}
-\title{Get IDE theme information.}
+\title{Get IDE Theme Information}
 \usage{
 get_ide_theme_info()
 }
 \value{
-A list with three components:
-\item{is_dark}{A boolean indicating whether the current IDE theme is dark.}
-\item{bg}{The current IDE theme's background color.}
-\item{fg}{The current IDE theme's foreground color.}
+A list with the following components:
+\item{is_dark}{A logical indicating whether the current IDE theme is dark.}
+\item{bg}{A character string representing the background color of the IDE theme in hex format.}
+\item{fg}{A character string representing the foreground color of the IDE theme in hex format.}
+
+If RStudio is unavailable, returns the fallback theme details.
 }
 \description{
-This function returns a list with the current IDE theme's information.
+Retrieves the current RStudio IDE theme information including whether it is a dark theme,
+and the background and foreground colors in hexadecimal format.
+}
+\examples{
+theme_info <- get_ide_theme_info()
+print(theme_info)
+
 }

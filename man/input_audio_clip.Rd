@@ -2,10 +2,13 @@
 % Please edit documentation in R/record-audio.R
 \name{input_audio_clip}
 \alias{input_audio_clip}
-\title{An audio clip input control that records short audio clips from the microphone}
+\title{An audio clip input control that records short audio clips from the
+microphone}
 \usage{
 input_audio_clip(
   inputId,
+  record_label = "Record",
+  stop_label = "Stop",
   reset_on_record = TRUE,
   mime_type = NULL,
   audio_bits_per_second = NULL,
@@ -16,21 +19,28 @@ input_audio_clip(
 \arguments{
 \item{inputId}{The input slot that will be used to access the value.}
 
-\item{reset_on_record}{Whether to reset the audio clip input value when recording starts. If
-TRUE, the audio clip input value will become NULL at the moment the
-Record button is pressed; if FALSE, the value will not change until
-the user stops recording. Default is TRUE.}
+\item{record_label}{Display label for the "record" control, or NULL for no
+label. Default is 'Record'.}
 
-\item{mime_type}{The MIME type of the audio clip to record. By default, this is NULL,
-which means the browser will choose a suitable MIME type for audio
+\item{stop_label}{Display label for the "stop" control, or NULL for no label.
+Default is 'Record'.}
+
+\item{reset_on_record}{Whether to reset the audio clip input value when
+recording starts. If TRUE, the audio clip input value will become NULL at
+the moment the Record button is pressed; if FALSE, the value will not
+change until the user stops recording. Default is TRUE.}
+
+\item{mime_type}{The MIME type of the audio clip to record. By default, this
+is NULL, which means the browser will choose a suitable MIME type for audio
 recording. Common MIME types include 'audio/webm' and 'audio/mp4'.}
 
-\item{audio_bits_per_second}{The target audio bitrate in bits per second. By default, this is NULL,
-which means the browser will choose a suitable bitrate for audio
-recording. This is only a suggestion; the browser may choose a different
-bitrate.}
+\item{audio_bits_per_second}{The target audio bitrate in bits per second. By
+default, this is NULL, which means the browser will choose a suitable
+bitrate for audio recording. This is only a suggestion; the browser may
+choose a different bitrate.}
 
-\item{show_mic_settings}{Whether to show the microphone settings in the settings menu. Default is TRUE.}
+\item{show_mic_settings}{Whether to show the microphone settings in the
+settings menu. Default is TRUE.}
 
 \item{...}{Additional parameters to pass to the underlying HTML tag.}
 }
@@ -38,5 +48,6 @@ bitrate.}
 An audio clip input control that can be added to a UI definition.
 }
 \description{
-An audio clip input control that records short audio clips from the microphone
+An audio clip input control that records short audio clips from the
+microphone
 }
