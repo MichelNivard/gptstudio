@@ -117,7 +117,7 @@ multimodal_dep <- function() {
     name = "multimodal",
     version = "0.0.1",
     package = "shinymedia",
-    src = "dist",
+    src = system.file("dist", package = "gptstudio"),
     script = "index.js",
     stylesheet = "index.css"
   )

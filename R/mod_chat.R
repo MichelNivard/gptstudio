@@ -29,27 +29,7 @@ mod_chat_ui <- function(id, translator = create_translator()) {
             style = css(
               "width" = "100%"
             ),
-            div(
-              text_area_input_wrapper(
-                inputId = ns("chat_input"),
-                label = NULL,
-                width = "100%",
-                placeholder = translator$t("Write your prompt here"),
-                value = "",
-                resize = "none",
-                textarea_class = "chat-prompt"
-              )
-            ),
-            div(
-              class = "position-absolute top-50 end-0 translate-middle",
-              bslib::input_task_button(
-                id = ns("chat"),
-                label = icon("fas fa-paper-plane"),
-                label_busy = NULL,
-                class = "w-100 btn-primary p-1 chat-send-btn"
-              ) %>%
-                bslib::tooltip("Send (click or Enter)")
-            )
+            uiOutput(ns("chat_input"))
           )
         )
       )
@@ -144,5 +124,46 @@ mod_chat_server <- function(id,
       updateTextAreaInput(session, "chat_input", value = "")
     }) %>%
       bindEvent(input$chat)
+
+    output$chat_input <- renderUI({
+      tagList(
+        fluidRow(
+          column(
+            width = 3,
+            div(
+              style = "display: flex; align-items: center; height: 100%;",
+              input_audio_clip("clip", show_mic_settings = FALSE)
+            )
+          ),
+          column(
+            width = 9,
+            div(
+              style = "display: flex; align-items: center; position: relative; height: 100%;",
+              div(
+                style = "flex-grow: 1;",
+                text_area_input_wrapper(
+                  inputId = "chat_input",
+                  label = NULL,
+                  width = "100%",
+                  value = "",
+                  resize = "none",
+                  textarea_class = "chat-prompt"
+                )
+              ),
+              div(
+                style = "position: absolute; right: 10px;",
+                bslib::input_task_button(
+                  id = "chat",
+                  label = icon("fas fa-paper-plane"),
+                  label_busy = NULL,
+                  class = "w-100 btn-primary p-1 chat-send-btn"
+                ) %>%
+                  bslib::tooltip("Send (click or Enter)")
+              )
+            )
+          )
+        )
+      )
+    })
   })
 }

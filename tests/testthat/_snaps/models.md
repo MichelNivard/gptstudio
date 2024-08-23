@@ -15,9 +15,9 @@
     Code
       models
     Output
-      [1] "command-r"             "command-nightly"       "command-r-plus"       
-      [4] "c4ai-aya-23-35b"       "command-light-nightly" "c4ai-aya-23-8b"       
-      [7] "command"               "command-light"        
+      [1] "c4ai-aya-23-35b"       "command-r"             "command-nightly"      
+      [4] "command-r-plus"        "command-light-nightly" "command"              
+      [7] "command-r-08-2024"     "command-light"         "c4ai-aya-23-8b"       
 
 # get_available_models works for google
 

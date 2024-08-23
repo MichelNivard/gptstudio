@@ -77,6 +77,12 @@ mod_settings_ui <- function(id, translator = create_translator()) {
         label = "Stream Response",
         value = as.logical(getOption("gptstudio.stream")),
         width = "100%"
+      ),
+      bslib::input_switch(
+        id = ns("audio_input"),
+        label = "Audio as Input",
+        value = as.logical(getOption("gptstudio.audio_input")),
+        width = "100%"
       )
     ),
     bslib::accordion_panel(
@@ -130,6 +136,7 @@ mod_settings_server <- function(id) {
     rv$selected_history <- 0L
     rv$modify_session_settings <- 0L
     rv$create_new_chat <- 0L
+    rv$record_input <- 0L
 
     observe({
       msg <- glue::glue("Fetching models for {input$service} service...")
@@ -217,7 +224,8 @@ mod_settings_server <- function(id) {
         model = input$model,
         custom_prompt = input$custom_prompt,
         stream = input$stream,
-        read_docs = input$read_docs
+        read_docs = input$read_docs,
+        audio_input = input$audio_input
       )
 
       rv$modify_session_settings <- rv$modify_session_settings + 1L
@@ -259,6 +267,7 @@ mod_settings_server <- function(id) {
       rv$service <- input$service %||% getOption("gptstudio.service")
       rv$stream <- as.logical(input$stream %||% getOption("gptstudio.stream"))
       rv$custom_prompt <- input$custom_prompt %||% getOption("gptstudio.custom_prompt")
+      rv$audio_input <- input$audio_input %||% getOption("gptstudio.audio_input")
 
       rv$create_new_chat <- rv$create_new_chat + 1L
     }) %>%

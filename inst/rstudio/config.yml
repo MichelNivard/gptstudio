@@ -7,3 +7,4 @@ model: "gpt-4-turbo-preview"
 custom_prompt: null
 stream: true
 read_docs: false
+audio_input: false

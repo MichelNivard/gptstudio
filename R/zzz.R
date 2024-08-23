@@ -27,7 +27,8 @@
     gptstudio.stream        = config$stream,
     # options added after v3.0 will need a safe check because the user's
     # config file might not have values for new features
-    gptstudio.read_docs     = config$read_docs %||% FALSE
+    gptstudio.read_docs     = config$read_docs %||% FALSE,
+    gptstudio.audio_input   = config$audio_input %||% FALSE
   )
 
   toset <- !(names(op_gptstudio) %in% names(op))
