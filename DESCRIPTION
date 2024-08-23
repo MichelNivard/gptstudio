@@ -44,8 +44,8 @@ Imports:
     shiny.i18n,
     SSEparser,
     stringr (>= 1.5.0),
+    tuneR,
     utils,
-    waiter,
     yaml
 Suggests: 
     AzureRMR,

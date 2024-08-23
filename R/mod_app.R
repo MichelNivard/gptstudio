@@ -10,7 +10,7 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
   ns <- NS(id)
   translator <- create_translator(language = getOption("gptstudio.language"))
   tagList(
-    waiter::use_waiter(),
+    useBusyIndicators(),
     bslib::page_fluid(
       theme = create_chat_app_theme(ide_colors),
       title = "ChatGPT from gptstudio",
@@ -84,6 +84,7 @@ rgb_str_to_hex <- function(rgb_string) {
 create_chat_app_theme <- function(ide_colors = get_ide_theme_info()) {
   bslib::bs_theme(
     version = 5,
+    preset = "shiny",
     bg = ide_colors$bg,
     fg = ide_colors$fg,
     font_scale = 0.9,

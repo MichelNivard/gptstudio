@@ -1,18 +1,24 @@
-#' An audio clip input control that records short audio clips from the microphone
+#' An audio clip input control that records short audio clips from the
+#' microphone
 #'
 #' @param inputId The input slot that will be used to access the value.
-#' @param reset_on_record Whether to reset the audio clip input value when recording starts. If
-#'   TRUE, the audio clip input value will become NULL at the moment the
-#'   Record button is pressed; if FALSE, the value will not change until
-#'   the user stops recording. Default is TRUE.
-#' @param mime_type The MIME type of the audio clip to record. By default, this is NULL,
-#'   which means the browser will choose a suitable MIME type for audio
+#' @param record_label Display label for the "record" control, or NULL for no
+#'   label. Default is 'Record'.
+#' @param stop_label Display label for the "stop" control, or NULL for no label.
+#'   Default is 'Record'.
+#' @param reset_on_record Whether to reset the audio clip input value when
+#'   recording starts. If TRUE, the audio clip input value will become NULL at
+#'   the moment the Record button is pressed; if FALSE, the value will not
+#'   change until the user stops recording. Default is TRUE.
+#' @param mime_type The MIME type of the audio clip to record. By default, this
+#'   is NULL, which means the browser will choose a suitable MIME type for audio
 #'   recording. Common MIME types include 'audio/webm' and 'audio/mp4'.
-#' @param audio_bits_per_second The target audio bitrate in bits per second. By default, this is NULL,
-#'   which means the browser will choose a suitable bitrate for audio
-#'   recording. This is only a suggestion; the browser may choose a different
-#'   bitrate.
-#' @param show_mic_settings Whether to show the microphone settings in the settings menu. Default is TRUE.
+#' @param audio_bits_per_second The target audio bitrate in bits per second. By
+#'   default, this is NULL, which means the browser will choose a suitable
+#'   bitrate for audio recording. This is only a suggestion; the browser may
+#'   choose a different bitrate.
+#' @param show_mic_settings Whether to show the microphone settings in the
+#'   settings menu. Default is TRUE.
 #' @param ... Additional parameters to pass to the underlying HTML tag.
 #'
 #' @return An audio clip input control that can be added to a UI definition.
@@ -22,6 +28,8 @@
 #' @importFrom shiny icon
 input_audio_clip <- function(
     inputId,
+    record_label = "Record",
+    stop_label = "Stop",
     reset_on_record = TRUE,
     mime_type = NULL,
     audio_bits_per_second = NULL,
@@ -80,7 +88,7 @@ input_audio_clip <- function(
         div(
           style = "display: inline-block; background-color: red; width: 1rem; height: 1rem; border-radius: 100%; position: relative; top: 0.175rem; margin-right: 0.3rem;"
         ),
-        "Record"
+        record_label
       )
     ),
     tags$button(
@@ -90,7 +98,7 @@ input_audio_clip <- function(
         div(
           style = "display: inline-block; background-color: currentColor; width: 1rem; height: 1rem; position: relative; top: 0.175rem; margin-right: 0.3rem;"
         ),
-        "Stop"
+        stop_label
       )
     )
   )
