@@ -27,16 +27,14 @@
 #' @importFrom htmltools tag tags tagList div
 #' @importFrom shiny icon
 input_audio_clip <- function(
-  id,
-  record_label = "Record",
-  stop_label = "Stop",
-  reset_on_record = TRUE,
-  mime_type = NULL,
-  audio_bits_per_second = NULL,
-  show_mic_settings = TRUE,
-  ...
-) {
-
+    id,
+    record_label = "Record",
+    stop_label = "Stop",
+    reset_on_record = TRUE,
+    mime_type = NULL,
+    audio_bits_per_second = NULL,
+    show_mic_settings = TRUE,
+    ...) {
   # Create the settings menu
   settings_menu <- if (show_mic_settings) {
     tag("av-settings-menu", list(
@@ -86,7 +84,7 @@ input_audio_clip <- function(
       style = "display: block;",
       tagList(
         div(
-          style = "display: inline-block; background-color: red; width: 1rem; height: 1rem; border-radius: 100%; position: relative; top: 0.175rem; margin-right: 0.3rem;" #nolint
+          style = "display: inline-block; background-color: red; width: 1rem; height: 1rem; border-radius: 100%; position: relative; top: 0.175rem; margin-right: 0.3rem;" # nolint
         ),
         record_label
       )
@@ -96,7 +94,7 @@ input_audio_clip <- function(
       style = "display: block;",
       tagList(
         div(
-          style = "display: inline-block; background-color: currentColor; width: 1rem; height: 1rem; position: relative; top: 0.175rem; margin-right: 0.3rem;" #nolint
+          style = "display: inline-block; background-color: currentColor; width: 1rem; height: 1rem; position: relative; top: 0.175rem; margin-right: 0.3rem;" # nolint
         ),
         stop_label
       )

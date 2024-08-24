@@ -95,7 +95,7 @@ mod_chat_server <- function(id,
 
       append_to_conversation_history(
         id = history$selected_conversation$id %||% ids::random_id(),
-        title = history$selected_conversation$title %||% find_placeholder_title(history$chat_history), #nolint
+        title = history$selected_conversation$title %||% find_placeholder_title(history$chat_history), # nolint
         messages = history$chat_history
       )
 
@@ -122,10 +122,11 @@ mod_chat_server <- function(id,
         div(
           style = "position: absolute; right: 40px; top: 25%; transform: translateY(-50%);",
           input_audio_clip(ns("clip"),
-                           record_label = NULL,
-                           stop_label = NULL,
-                           show_mic_settings = FALSE,
-                           class = "btn-secondary m-1")
+            record_label = NULL,
+            stop_label = NULL,
+            show_mic_settings = FALSE,
+            class = "btn-secondary m-1"
+          )
         )
       }
 

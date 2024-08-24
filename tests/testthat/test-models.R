@@ -55,7 +55,8 @@ test_that("get_available_models works for perplexity", {
 test_that("get_available_models works for ollama", {
   with_mocked_bindings(
     `ollama_is_available` = mock_ollama_is_available,
-    `ollama_list` = mock_ollama_list, {
+    `ollama_list` = mock_ollama_list,
+    {
       service <- "ollama"
       models <- get_available_models(service)
       expect_equal(models, c("ollama-3.5", "ollama-3", "ollama-2"))

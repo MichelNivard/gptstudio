@@ -12,7 +12,6 @@
 #' gptstudio_comment_code()
 #' }
 gptstudio_comment_code <- function() {
-
   file_ext <- get_file_extension()
 
   task <- glue::glue(

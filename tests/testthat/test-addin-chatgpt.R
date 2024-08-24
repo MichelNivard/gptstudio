@@ -14,7 +14,7 @@ test_that("create_temp_app_file creates a valid R script", {
 
   local_mocked_bindings(
     get_ide_theme_info = mock_get_ide_theme_info,
-    .package = "gptstudio"  # Specify the package explicitly
+    .package = "gptstudio" # Specify the package explicitly
   )
 
   temp_file <- create_temp_app_file()

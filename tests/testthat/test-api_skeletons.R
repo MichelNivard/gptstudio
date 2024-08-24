@@ -12,7 +12,8 @@ withr::local_envvar(
 
 test_that("multiplication works", {
   config <- yaml::read_yaml(system.file("rstudio/config.yml",
-                                       package = "gptstudio"))
+    package = "gptstudio"
+  ))
   set_user_options(config)
 
   withr::with_envvar(

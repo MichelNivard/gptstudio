@@ -37,7 +37,7 @@ parse_data_uri <- function(data_uri) {
 #'
 #' @examples
 #' \dontrun{
-#' audio_uri <- "data:audio/webm;base64,SGVsbG8gV29ybGQ="  # Example data URI
+#' audio_uri <- "data:audio/webm;base64,SGVsbG8gV29ybGQ=" # Example data URI
 #' transcription <- transcribe_audio(audio_uri)
 #' print(transcription)
 #' }
@@ -55,9 +55,10 @@ transcribe_audio <- function(audio_input, api_key = Sys.getenv("OPENAI_API_KEY")
   writeBin(parsed$data, temp_webm)
   system_result <-
     system2("ffmpeg",
-            args = c("-i", temp_webm, "-acodec", "pcm_s16le", "-ar", "44100", temp_wav), #nolint
-            stdout = TRUE,
-            stderr = TRUE)
+      args = c("-i", temp_webm, "-acodec", "pcm_s16le", "-ar", "44100", temp_wav), # nolint
+      stdout = TRUE,
+      stderr = TRUE
+    )
 
   if (!file.exists(temp_wav)) {
     stop("Failed to convert audio: ", paste(system_result, collapse = "\n"))

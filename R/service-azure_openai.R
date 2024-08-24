@@ -69,7 +69,6 @@ request_base_azure_openai <-
           "Content-Type" = "application/json"
         )
     }
-
   }
 
 query_api_azure_openai <-
@@ -111,13 +110,16 @@ query_api_azure_openai <-
 retrieve_azure_token <- function() {
   rlang::check_installed("AzureRMR")
 
-  token <- tryCatch({
-    AzureRMR::get_azure_login(
-      tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
-      app = Sys.getenv("AZURE_OPENAI_CLIENT_ID"),
-      scopes = ".default"
-    )
-  }, error = function(e) NULL)
+  token <- tryCatch(
+    {
+      AzureRMR::get_azure_login(
+        tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
+        app = Sys.getenv("AZURE_OPENAI_CLIENT_ID"),
+        scopes = ".default"
+      )
+    },
+    error = function(e) NULL
+  )
 
   if (is.null(token)) {
     token <- AzureRMR::create_azure_login(

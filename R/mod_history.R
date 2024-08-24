@@ -272,7 +272,7 @@ tooltip_on_hover <- purrr::partial(bslib::tooltip, options = list(trigger = "hov
 # Finds the first user prompt and returns it truncated
 find_placeholder_title <- function(chat_history) {
   chat_history %>%
-    purrr::keep(~(!is.null(.x$name)) && .x$name == "user_message") %>%
+    purrr::keep(~ (!is.null(.x$name)) && .x$name == "user_message") %>%
     purrr::pluck(1L, "content") %>%
     stringr::str_trunc(40L)
 }

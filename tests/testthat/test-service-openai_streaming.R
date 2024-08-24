@@ -1,5 +1,4 @@
 test_that("OpenaiStreamParser works with different kinds of data values", {
-
   openai_parser <- function(sse) {
     parser <- OpenaiStreamParser$new()
     parser$parse_sse(sse)
@@ -16,5 +15,4 @@ test_that("OpenaiStreamParser works with different kinds of data values", {
   expect_type(openai_parser(event2), "list")
   expect_type(openai_parser(event3), "list")
   expect_type(openai_parser(event4), "list")
-
 })

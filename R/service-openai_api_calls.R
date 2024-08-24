@@ -135,18 +135,20 @@ create_image_chat_openai <- function(image_path,
           role = "user",
           content = list(
             list(
-              type    = "text",
+              type = "text",
               text = prompt
             ),
             list(
-              type    = "image_url",
+              type = "image_url",
               image_url = list(url = image_data)
             )
           )
         )
       )
   )
-  query_api_openai(task = task,
-                   request_body = body,
-                   openai_api_key = openai_api_key)
+  query_api_openai(
+    task = task,
+    request_body = body,
+    openai_api_key = openai_api_key
+  )
 }

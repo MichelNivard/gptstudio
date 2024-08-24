@@ -6,6 +6,7 @@
 - Fixed bugs with Azure OpenAI service. #223
 - Add audio input option for chat app. #224
 - Fix bug with chat app not loading on linux. #224
+- Allow chat app to run in Positron (not yet as background job) #224
 
 ## gptstudio 0.4.0
 
