@@ -6,7 +6,7 @@
 microphone}
 \usage{
 input_audio_clip(
-  inputId,
+  id,
   record_label = "Record",
   stop_label = "Stop",
   reset_on_record = TRUE,
@@ -17,7 +17,7 @@ input_audio_clip(
 )
 }
 \arguments{
-\item{inputId}{The input slot that will be used to access the value.}
+\item{id}{The input slot that will be used to access the value.}
 
 \item{record_label}{Display label for the "record" control, or NULL for no
 label. Default is 'Record'.}

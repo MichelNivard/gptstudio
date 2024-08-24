@@ -9,14 +9,15 @@ transcribe_audio(audio_input, api_key = Sys.getenv("OPENAI_API_KEY"))
 \arguments{
 \item{audio_input}{A string. The audio data in data URI format.}
 
-\item{api_key}{A string. Your OpenAI API key. Defaults to the OPENAI_API_KEY environment variable.}
+\item{api_key}{A string. Your OpenAI API key. Defaults to the OPENAI_API_KEY
+environment variable.}
 }
 \value{
 A string containing the transcribed text.
 }
 \description{
-This function takes an audio file in data URI format, converts it to WAV,
-and sends it to OpenAI's transcription API to get the transcribed text.
+This function takes an audio file in data URI format, converts it to WAV, and
+sends it to OpenAI's transcription API to get the transcribed text.
 }
 \examples{
 \dontrun{
