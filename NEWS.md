@@ -4,6 +4,8 @@
 - Added claude-3.5-sonnet model from Anthropic.
 - Set gpt-4o-mini as default model for OpenAI. #219
 - Fixed bugs with Azure OpenAI service. #223
+- Add audio input option for chat app. #224
+- Fix bug with chat app not loading on linux. #224
 
 ## gptstudio 0.4.0
 

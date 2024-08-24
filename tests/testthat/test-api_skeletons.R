@@ -1,3 +1,15 @@
+withr::local_envvar(
+  list(
+    "OPENAI_API_KEY" = "a-fake-key",
+    "ANTHROPIC_API_KEY" = "a-fake-key",
+    "HF_API_KEY" = "a-fake-key",
+    "GOOGLE_API_KEY" = "a-fake-key",
+    "AZURE_OPENAI_API_KEY" = "a-fake-key",
+    "PERPLEXITY_API_KEY" = "a-fake-key",
+    "COHERE_API_KEY" = "a-fake-key"
+  )
+)
+
 test_that("multiplication works", {
   config <- yaml::read_yaml(system.file("rstudio/config.yml",
                                        package = "gptstudio"))
@@ -7,7 +19,7 @@ test_that("multiplication works", {
     new = c(
       "OPENAI_API_KEY" = "a-fake-key",
       "ANTHROPIC_API_KEY" = "a-fake-key",
-      "HUGGINGFACE_API_KEY" = "a-fake-key",
+      "HF_API_KEY" = "a-fake-key",
       "GOOGLE_API_KEY" = "a-fake-key",
       "AZURE_OPENAI_API_KEY" = "a-fake-key",
       "PERPLEXITY_API_KEY" = "a-fake-key",

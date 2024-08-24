@@ -151,7 +151,7 @@
       [1] "https://api-inference.huggingface.co/models"
       
       $api_key
-      [1] "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"
+      [1] "a-fake-key"
       
       $model
       [1] "gpt-4o-mini"
