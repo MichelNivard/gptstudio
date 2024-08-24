@@ -125,7 +125,7 @@ get_ide_theme_info <- function() {
         )
       },
       error = function(e) {
-        warn("Error fetching theme info from RStudio: {e$message}")
+        cli::cli_warn("Error fetching theme info from RStudio: {e$message}")
         fallback_theme()
       }
     )

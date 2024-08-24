@@ -51,65 +51,51 @@ mod_chat_server <- function(id,
                             history) {
   moduleServer(id, function(input, output, session) {
     # Session data ----
-    rv <- reactiveValues()
-    rv$reset_welcome_message <- 0L
-    rv$reset_streaming_message <- 0L
+    rv <- reactiveValues(
+      reset_welcome_message = 0L,
+      reset_streaming_message = 0L,
+      audio_input = getOption("gptstudio.audio_input")
+    )
 
     # UI outputs ----
-
-    output$welcome <- renderWelcomeMessage({
+    output$welcome <-
+      renderWelcomeMessage({
       welcomeMessage(ide_colors)
-    }) %>%
-      bindEvent(rv$reset_welcome_message)
-
+    }) %>% bindEvent(rv$reset_welcome_message)
 
     output$history <- renderUI({
-      history$chat_history %>%
-        style_chat_history(ide_colors = ide_colors)
+      history$chat_history %>% style_chat_history(ide_colors = ide_colors)
     })
 
-
     output$streaming <- renderStreamingMessage({
-      # This has display: none by default. It is only shown when receiving a stream
-      # After the stream is completed, it will reset.
       streamingMessage(ide_colors)
-    }) %>%
-      bindEvent(rv$reset_streaming_message)
-
+    }) %>% bindEvent(rv$reset_streaming_message)
 
     # Observers ----
-
-    observe({
+    observeEvent(history$create_new_chat, {
       rv$reset_welcome_message <- rv$reset_welcome_message + 1L
-    }) %>%
-      bindEvent(history$create_new_chat)
+    })
 
-    observe({
-      skeleton <- gptstudio_create_skeleton(
+    # Helper function for chat processing
+    process_chat <- function(prompt) {
+      response <- chat(
+        prompt = prompt,
         service = settings$service,
-        model = settings$model,
-        prompt = input$chat_input,
         history = history$chat_history,
-        stream = settings$stream
-      ) %>%
-        gptstudio_skeleton_build(
-          skill = settings$skill,
-          style = settings$style,
-          task = settings$task,
-          custom_prompt = settings$custom_prompt
-        )
-
-      response <- gptstudio_request_perform(
-        skeleton = skeleton,
-        shiny_session = session
-      ) %>%
-        gptstudio_response_process()
+        stream = settings$stream,
+        model = settings$model,
+        skill = settings$skill,
+        style = settings$style,
+        task = settings$task,
+        custom_prompt = settings$custom_prompt,
+        process_response = TRUE
+      )
 
       history$chat_history <- response$history
 
       append_to_conversation_history(
         id = history$selected_conversation$id %||% ids::random_id(),
-        title = history$selected_conversation$title %||% find_placeholder_title(history$chat_history), # nolint
+        title = history$selected_conversation$title %||% find_placeholder_title(history$chat_history),
         messages = history$chat_history
       )
 
@@ -118,68 +104,30 @@ mod_chat_server <- function(id,
       }
 
       updateTextAreaInput(session, "chat_input", value = "")
-      if (settings$stream) {
-        rv$reset_streaming_message <- rv$reset_streaming_message + 1L
-      }
-    }) %>%
-      bindEvent(input$chat)
+    }
 
-    observe({
+    observeEvent(input$chat, {
+      process_chat(input$chat_input)
+    })
+
+    observeEvent(input$clip, {
       req(input$clip)
       new_prompt <- transcribe_audio(input$clip)
-      skeleton <- gptstudio_create_skeleton(
-        service = settings$service,
-        model = settings$model,
-        prompt = new_prompt,
-        history = history$chat_history,
-        stream = settings$stream
-      ) %>%
-        gptstudio_skeleton_build(
-          skill = settings$skill,
-          style = settings$style,
-          task = settings$task,
-          custom_prompt = settings$custom_prompt
-        )
-
-      response <- gptstudio_request_perform(
-        skeleton = skeleton,
-        shiny_session = session
-      ) %>%
-        gptstudio_response_process()
-
-      history$chat_history <- response$history
-
-      append_to_conversation_history(
-        id = history$selected_conversation$id %||% ids::random_id(),
-        title = history$selected_conversation$title %||% find_placeholder_title(history$chat_history), # nolint
-        messages = history$chat_history
-      )
-
-      if (settings$stream) {
-        rv$reset_streaming_message <- rv$reset_streaming_message + 1L
-      }
-
-      updateTextAreaInput(session, "chat_input", value = "")
-      if (settings$stream) {
-        rv$reset_streaming_message <- rv$reset_streaming_message + 1L
-      }
-    }) %>%
-      bindEvent(input$clip)
+      process_chat(new_prompt)
+    })
 
     output$chat_with_audio <- renderUI({
       ns <- session$ns
-      audio_recorder <-
-        if (rv$audio_input %||% getOption("gptstudio.audio_input")) {
-          div(
-            style = "position: absolute; right: 40px; top: 25%; transform: translateY(-50%);",
-            input_audio_clip(ns("clip"),
-                             record_label = NULL,
-                             stop_label = NULL,
-                             show_mic_settings = FALSE, class = "btn-secondary m-1")
-          )
-        } else {
-          NULL
-        }
+      audio_recorder <- if (rv$audio_input) {
+        div(
+          style = "position: absolute; right: 40px; top: 25%; transform: translateY(-50%);",
+          input_audio_clip(ns("clip"),
+                           record_label = NULL,
+                           stop_label = NULL,
+                           show_mic_settings = FALSE,
+                           class = "btn-secondary m-1")
+        )
+      }
 
       tagList(
         div(
@@ -202,8 +150,7 @@ mod_chat_server <- function(id,
               label = icon("fas fa-paper-plane"),
               label_busy = NULL,
               class = "btn-primary p-1 chat-send-btn"
-            ) %>%
-              bslib::tooltip("Send (click or Enter)")
+            ) %>% bslib::tooltip("Send (click or Enter)")
           ),
           audio_recorder
         )
