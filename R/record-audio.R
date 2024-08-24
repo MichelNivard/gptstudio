@@ -1,7 +1,7 @@
 #' An audio clip input control that records short audio clips from the
 #' microphone
 #'
-#' @param inputId The input slot that will be used to access the value.
+#' @param id The input slot that will be used to access the value.
 #' @param record_label Display label for the "record" control, or NULL for no
 #'   label. Default is 'Record'.
 #' @param stop_label Display label for the "stop" control, or NULL for no label.
@@ -27,14 +27,14 @@
 #' @importFrom htmltools tag tags tagList div
 #' @importFrom shiny icon
 input_audio_clip <- function(
-    inputId,
-    record_label = "Record",
-    stop_label = "Stop",
-    reset_on_record = TRUE,
-    mime_type = NULL,
-    audio_bits_per_second = NULL,
-    show_mic_settings = TRUE,
-    ...
+  id,
+  record_label = "Record",
+  stop_label = "Stop",
+  reset_on_record = TRUE,
+  mime_type = NULL,
+  audio_bits_per_second = NULL,
+  show_mic_settings = TRUE,
+  ...
 ) {
 
   # Create the settings menu
@@ -86,7 +86,7 @@ input_audio_clip <- function(
       style = "display: block;",
       tagList(
         div(
-          style = "display: inline-block; background-color: red; width: 1rem; height: 1rem; border-radius: 100%; position: relative; top: 0.175rem; margin-right: 0.3rem;"
+          style = "display: inline-block; background-color: red; width: 1rem; height: 1rem; border-radius: 100%; position: relative; top: 0.175rem; margin-right: 0.3rem;" #nolint
         ),
         record_label
       )
@@ -96,7 +96,7 @@ input_audio_clip <- function(
       style = "display: block;",
       tagList(
         div(
-          style = "display: inline-block; background-color: currentColor; width: 1rem; height: 1rem; position: relative; top: 0.175rem; margin-right: 0.3rem;"
+          style = "display: inline-block; background-color: currentColor; width: 1rem; height: 1rem; position: relative; top: 0.175rem; margin-right: 0.3rem;" #nolint
         ),
         stop_label
       )
@@ -105,9 +105,9 @@ input_audio_clip <- function(
 
   # Create the main audio-clipper tag
   tag("audio-clipper", list(
-    id = inputId,
+    id = id,
     class = "shiny-audio-clip",
-    `data-reset-on-record` = if(reset_on_record) "true" else "false",
+    `data-reset-on-record` = if (reset_on_record) "true" else "false",
     `data-mime-type` = mime_type,
     `data-audio-bits-per-second` = audio_bits_per_second,
     multimodal_dep(),

@@ -60,8 +60,8 @@ mod_chat_server <- function(id,
     # UI outputs ----
     output$welcome <-
       renderWelcomeMessage({
-      welcomeMessage(ide_colors)
-    }) %>% bindEvent(rv$reset_welcome_message)
+        welcomeMessage(ide_colors)
+      }) %>% bindEvent(rv$reset_welcome_message)
 
     output$history <- renderUI({
       history$chat_history %>% style_chat_history(ide_colors = ide_colors)
@@ -95,7 +95,7 @@ mod_chat_server <- function(id,
 
       append_to_conversation_history(
         id = history$selected_conversation$id %||% ids::random_id(),
-        title = history$selected_conversation$title %||% find_placeholder_title(history$chat_history),
+        title = history$selected_conversation$title %||% find_placeholder_title(history$chat_history), #nolint
         messages = history$chat_history
       )
 

@@ -9,8 +9,8 @@
 #' @return Nothing.
 #' @export
 gptstudio_run_chat_app <- function(ide_colors = get_ide_theme_info(),
-                            host = getOption("shiny.host", "127.0.0.1"),
-                            port = getOption("shiny.port")) {
+                                   host = getOption("shiny.host", "127.0.0.1"),
+                                   port = getOption("shiny.port")) {
   ui <- mod_app_ui("app", ide_colors)
 
   server <- function(input, output, session) {

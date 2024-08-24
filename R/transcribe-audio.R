@@ -24,11 +24,12 @@ parse_data_uri <- function(data_uri) {
 
 #' Transcribe Audio from Data URI Using OpenAI's Whisper Model
 #'
-#' This function takes an audio file in data URI format, converts it to WAV,
-#' and sends it to OpenAI's transcription API to get the transcribed text.
+#' This function takes an audio file in data URI format, converts it to WAV, and
+#' sends it to OpenAI's transcription API to get the transcribed text.
 #'
 #' @param audio_input A string. The audio data in data URI format.
-#' @param api_key A string. Your OpenAI API key. Defaults to the OPENAI_API_KEY environment variable.
+#' @param api_key A string. Your OpenAI API key. Defaults to the OPENAI_API_KEY
+#'   environment variable.
 #'
 #' @return A string containing the transcribed text.
 #'
@@ -41,7 +42,8 @@ parse_data_uri <- function(data_uri) {
 #' print(transcription)
 #' }
 #'
-#' @importFrom httr2 request req_auth_bearer_token req_body_multipart req_perform resp_is_error resp_status_desc resp_body_json
+#' @importFrom httr2 request req_auth_bearer_token req_body_multipart
+#'   req_perform resp_is_error resp_status_desc resp_body_json
 #' @importFrom jsonlite fromJSON
 transcribe_audio <- function(audio_input, api_key = Sys.getenv("OPENAI_API_KEY")) {
   # Parse the data URI
@@ -51,7 +53,11 @@ transcribe_audio <- function(audio_input, api_key = Sys.getenv("OPENAI_API_KEY")
   temp_webm <- tempfile(fileext = ".webm")
   temp_wav <- tempfile(fileext = ".wav")
   writeBin(parsed$data, temp_webm)
-  system_result <- system2("ffmpeg", args = c("-i", temp_webm, "-acodec", "pcm_s16le", "-ar", "44100", temp_wav), stdout = TRUE, stderr = TRUE)
+  system_result <-
+    system2("ffmpeg",
+            args = c("-i", temp_webm, "-acodec", "pcm_s16le", "-ar", "44100", temp_wav), #nolint
+            stdout = TRUE,
+            stderr = TRUE)
 
   if (!file.exists(temp_wav)) {
     stop("Failed to convert audio: ", paste(system_result, collapse = "\n"))

@@ -44,11 +44,6 @@ openai_create_chat_completion <-
            model = getOption("gptstudio.model"),
            openai_api_key = Sys.getenv("OPENAI_API_KEY"),
            task = "chat/completions") {
-    assert_that(
-      is.string(model),
-      is.string(openai_api_key)
-    )
-
     if (is.string(prompt)) {
       prompt <- list(
         list(
@@ -63,7 +58,7 @@ openai_create_chat_completion <-
       messages = prompt
     )
 
-    query_openai_api(task = task, request_body = body, openai_api_key = openai_api_key)
+    query_api_openai(task = task, request_body = body, openai_api_key = openai_api_key)
   }
 
 
@@ -76,7 +71,7 @@ openai_create_chat_completion <-
 #'
 #' @return The response from the API.
 #'
-query_openai_api <- function(task, request_body, openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
+query_api_openai <- function(task, request_body, openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
   response <- request_base(task, token = openai_api_key) %>%
     req_body_json(data = request_body) %>%
     req_retry(max_tries = 3) %>%
@@ -112,4 +107,46 @@ query_openai_api <- function(task, request_body, openai_api_key = Sys.getenv("OP
 #' get_available_endpoints()
 get_available_endpoints <- function() {
   c("completions", "chat/completions", "edits", "embeddings", "models")
+}
+
+#' Encode an image file to base64
+#'
+#' @param image_path String containing the path to the image file
+#' @return A base64 encoded string of the image
+encode_image <- function(image_path) {
+  image_file <- file(image_path, "rb")
+  image_data <- readBin(image_file, "raw", file.info(image_path)$size)
+  close(image_file)
+  base64_image <- jsonlite::base64_enc(image_data)
+  paste0("data:image/jpeg;base64,", base64_image)
+}
+
+create_image_chat_openai <- function(image_path,
+                                     prompt = "What is this image?",
+                                     model = getOption("gptstudio.model"),
+                                     openai_api_key = Sys.getenv("OPENAI_API_KEY"),
+                                     task = "chat/completions") {
+  image_data <- encode_image(image_path)
+  body <- list(
+    model = model,
+    messages =
+      list(
+        list(
+          role = "user",
+          content = list(
+            list(
+              type    = "text",
+              text = prompt
+            ),
+            list(
+              type    = "image_url",
+              image_url = list(url = image_data)
+            )
+          )
+        )
+      )
+  )
+  query_api_openai(task = task,
+                   request_body = body,
+                   openai_api_key = openai_api_key)
 }
