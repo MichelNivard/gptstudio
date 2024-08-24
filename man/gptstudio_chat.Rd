@@ -2,25 +2,35 @@
 % Please edit documentation in R/addin_chatgpt.R
 \name{gptstudio_chat}
 \alias{gptstudio_chat}
-\title{Run Chat GPT
-Run the Chat GPT Shiny App as a background job and show it in the viewer pane}
+\title{Run GPTStudio Chat App}
 \usage{
 gptstudio_chat(host = getOption("shiny.host", "127.0.0.1"))
 }
 \arguments{
-\item{host}{The IPv4 address that the application should listen on. Defaults
-to the \code{shiny.host} option, if set, or \code{"127.0.0.1"} if not. See
-Details.}
+\item{host}{A character string specifying the host on which to run the app.
+Defaults to the value of \code{getOption("shiny.host", "127.0.0.1")}.}
 }
 \value{
-This function has no return value.
+This function does not return a value. It runs the Shiny app as a side effect.
 }
 \description{
-Run Chat GPT
-Run the Chat GPT Shiny App as a background job and show it in the viewer pane
+Run GPTStudio Chat App
+}
+\details{
+The function performs the following steps:
+\enumerate{
+\item Verifies that RStudio API is available.
+\item Finds an available port for the Shiny app.
+\item Creates a temporary directory for the app files.
+\item Runs the app as a background job in RStudio.
+\item Opens the app in the RStudio viewer pane or browser window.
+}
+}
+\note{
+This function is designed to work within the RStudio IDE and requires
+the rstudioapi package.
 }
 \examples{
-# Call the function as an RStudio addin
 \dontrun{
 gptstudio_chat()
 }
