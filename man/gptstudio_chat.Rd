@@ -14,7 +14,8 @@ Defaults to the value of \code{getOption("shiny.host", "127.0.0.1")}.}
 This function does not return a value. It runs the Shiny app as a side effect.
 }
 \description{
-Run GPTStudio Chat App
+This function initializes and runs the Chat GPT Shiny App as a background job
+in RStudio and opens it in the viewer pane or browser window.
 }
 \details{
 The function performs the following steps:

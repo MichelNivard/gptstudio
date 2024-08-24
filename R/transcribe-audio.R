@@ -6,7 +6,6 @@
 #'
 #' @return A list with two elements: 'mime_type' and 'data'.
 #'
-#' @importFrom base64enc base64decode
 parse_data_uri <- function(data_uri) {
   match <- regexec("data:(.+);base64,(.+)", data_uri)
   if (match[[1]][1] == -1) {
@@ -20,7 +19,7 @@ parse_data_uri <- function(data_uri) {
   if (padding > 0) {
     b64data <- paste0(b64data, strrep("=", 4 - padding))
   }
-  list(mime_type = mime_type, data = base64enc::base64decode(b64data))
+  list(mime_type = mime_type, data = jsonlite::base64_dec(b64data))
 }
 
 #' Transcribe Audio from Data URI Using OpenAI's Whisper Model
@@ -95,7 +94,7 @@ audio_to_data_uri <- function(file_path) {
   audio_data <- readBin(file_path, "raw", file.info(file_path)$size)
 
   # Encode the data
-  encoded_data <- base64enc::base64encode(audio_data)
+  encoded_data <- jsonlite::base64_enc(audio_data)
 
   # Get the MIME type
   mime_type <- mime::guess_type(file_path)

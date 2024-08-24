@@ -135,13 +135,6 @@ get_ide_theme_info <- function() {
   }
 }
 
-# Function to convert RGB string to HEX
-rgb_str_to_hex <- function(rgb_str) {
-  # Assumes RGB is provided as a character vector like "rgb(r, g, b)"
-  rgb_components <- as.integer(strsplit(sub("rgb\\((.+)\\)", "\\1", rgb_str), ",")[[1]])
-  rgb(rgb_components[1], rgb_components[2], rgb_components[3], maxColorValue = 255)
-}
-
 # Fallback function to provide default values
 fallback_theme <- function() {
   list(
