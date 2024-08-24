@@ -35,17 +35,10 @@ style_chat_history <- function(history, ide_colors = get_ide_theme_info()) {
 style_chat_message <- function(message,
                                ide_colors = get_ide_theme_info()) {
   colors <- create_ide_matching_colors(message$role, ide_colors)
-
   icon_name <- switch(message$role,
-    "user" = "fas fa-user",
-    "assistant" = "fas fa-robot"
+                      "user" = "person-fill",
+                      "assistant" = "robot"
   )
-
-  position_class <- switch(message$role,
-    "user" = "justify-content-end",
-    "assistant" = "justify-content-start"
-  )
-
 
   if (!is.null(message$name) && message$name == "docs") {
     message_content <- render_docs_message_content(message$content)
@@ -53,20 +46,58 @@ style_chat_message <- function(message,
     message_content <- shiny::markdown(message$content)
   }
 
+  bubble_style <- htmltools::css(
+    `color` = colors$fg_color,
+    `background-color` = colors$bg_color,
+    `border-radius` = if (message$role == "user") "20px 20px 0 20px" else "20px 20px 20px 0",
+    `word-wrap` = "break-word",
+    `box-shadow` = "0 2px 4px rgba(0, 0, 0, 0.2)"
+  )
+
+  icon_style <- htmltools::css(
+    `width` = "30px",
+    `height` = "30px",
+    `background-color` = colors$bg_color,
+    `color` = colors$fg_color,
+    `border-radius` = "50%",
+    `display` = "flex",
+    `align-items` = "center",
+    `justify-content` = "center",
+    `flex-shrink` = "0"
+  )
+
   htmltools::div(
-    class = glue("row m-0 p-0 {position_class}"),
-    htmltools::tags$div(
-      class = glue("p-2 mb-2 rounded d-inline-block w-auto mw-100"),
-      style = htmltools::css(
-        `color` = colors$fg_color,
-        `background-color` = colors$bg_color
-      ),
-      shiny::icon(icon_name, lib = "font-awesome"),
-      htmltools::tags$div(
-        class = glue("{message$role}-message-wrapper"),
-        htmltools::tagList(
-          message_content
-        )
+    class = "row m-0 p-2",
+    htmltools::div(
+      class = if (message$role == "user") {
+        "d-flex justify-content-end w-100"
+      } else {
+        "d-flex w-100"
+      },
+      htmltools::div(
+        class = "d-flex align-items-end",
+        if (message$role == "assistant") {
+          htmltools::div(
+            style = icon_style,
+            class = "m-1",
+            bsicons::bs_icon(icon_name)
+          )
+        },
+        htmltools::div(
+          class = glue("p-3 mb-2 rounded d-inline-block chat-bubble {message$role}-bubble"),
+          style = bubble_style,
+          htmltools::div(
+            class = glue("{message$role}-message-wrapper"),
+            htmltools::tagList(message_content)
+          )
+        ),
+        if (message$role == "user") {
+          htmltools::div(
+            style = icon_style,
+            class = "m-1",
+            bsicons::bs_icon(icon_name)
+          )
+        }
       )
     )
   )

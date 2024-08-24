@@ -76,28 +76,30 @@ input_audio_clip <- function(
 
   # Create the recording controls
   recording_controls <- div(
-    class = "btn-group",
+    class = "d-flex flex-column align-items-center",
     slot = "recording-controls",
     `aria-label` = "Recording controls",
-    tags$button(
-      class = "record-button btn btn-secondary px-3 mx-auto",
-      style = "display: block;",
-      tagList(
+    div(
+      class = "btn-group m-3",
+      tags$button(
+        class = "record-button btn-sm btn-secondary rounded-circle p-0 mx-2",
+        style = "width: 2.5rem; height: 2.5rem; display: flex; justify-content: center; align-items: center;",
         div(
-          style = "display: inline-block; background-color: red; width: 1rem; height: 1rem; border-radius: 100%; position: relative; top: 0.175rem; margin-right: 0.3rem;" # nolint
-        ),
-        record_label
+          style = "background-color: red; width: 1.5rem; height: 1.5rem; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+        )
+      ),
+      tags$button(
+        class = "stop-button btn-sm btn-secondary rounded-circle p-0 mx-2",
+        style = "width: 3rem; height: 3rem; display: flex; justify-content: center; align-items: center;",
+        div(
+          style = "background-color: currentColor; width: 1.5rem; height: 1.5rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+        )
       )
     ),
-    tags$button(
-      class = "stop-button btn btn-secondary px-3 mx-auto",
-      style = "display: block;",
-      tagList(
-        div(
-          style = "display: inline-block; background-color: currentColor; width: 1rem; height: 1rem; position: relative; top: 0.175rem; margin-right: 0.3rem;" # nolint
-        ),
-        stop_label
-      )
+    div(
+      class = "d-flex justify-content-between w-100",
+      div(class = "text-center mx-2", record_label),
+      div(class = "text-center mx-2", stop_label)
     )
   )
 

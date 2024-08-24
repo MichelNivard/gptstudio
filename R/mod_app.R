@@ -29,7 +29,6 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
           class = "row justify-content-center h-100",
           div(
             class = "col h-100",
-            style = htmltools::css(`max-width` = "800px"),
             mod_chat_ui(ns("chat"), translator)
           )
         )

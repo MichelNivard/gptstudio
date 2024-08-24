@@ -20,3 +20,21 @@
 pre code {
   display: block;
 }
+
+.chat-bubble {
+  position: relative;
+  max-width: 80%;
+}
+
+.user-bubble {
+  margin-left: auto;
+}
+
+.assistant-bubble {
+  margin-right: auto;
+}
+
+.shiny-input-container textarea {
+  border-radius: 15px;
+  padding: 10px;
+}

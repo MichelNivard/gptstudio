@@ -15,6 +15,7 @@ chat(
   task = getOption("gptstudio.task", "coding"),
   custom_prompt = NULL,
   process_response = FALSE,
+  session = NULL,
   ...
 )
 }
@@ -61,6 +62,8 @@ customize the initial prompt with additional instructions or context.}
 response. If \code{TRUE}, the response will be passed to
 \code{gptstudio_response_process()} for further processing. Defaults to \code{FALSE}.
 Refer to \code{gptstudio_response_process()} for more details.}
+
+\item{session}{An optional parameter for a shiny session object.}
 
 \item{...}{Reserved for future use.}
 }

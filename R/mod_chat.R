@@ -21,8 +21,8 @@ mod_chat_ui <- function(id, translator = create_translator()) {
         div(
           class = "mt-auto",
           style = css(
-            "margin-left" = "40px",
-            "margin-right" = "40px"
+            "margin-left" = "20px",
+            "margin-right" = "20px"
           ),
           htmltools::div(
             class = "position-relative",
@@ -88,7 +88,8 @@ mod_chat_server <- function(id,
         style = settings$style,
         task = settings$task,
         custom_prompt = settings$custom_prompt,
-        process_response = TRUE
+        process_response = TRUE,
+        session = session
       )
 
       history$chat_history <- response$history
@@ -120,12 +121,25 @@ mod_chat_server <- function(id,
       ns <- session$ns
       audio_recorder <- if (rv$audio_input) {
         div(
-          style = "position: absolute; right: 40px; top: 25%; transform: translateY(-50%);",
+          style = "position: absolute; right: 20px; top: 25%; transform: translateY(-50%);",
           input_audio_clip(ns("clip"),
             record_label = NULL,
             stop_label = NULL,
             show_mic_settings = FALSE,
-            class = "btn-secondary m-1"
+          )
+        )
+      }
+
+      image_input <- if (TRUE) {
+        div(
+          # style = "position: absolute; right: 800px; top: 25%; transform: translateY(-50%);",
+          fileInput(
+            ns("image"),
+            buttonLabel = bsicons::bs_icon("image"),
+            placeholder = "Upload an image",
+            label = NULL,
+            multiple = FALSE,
+            accept = "image/*"
           )
         )
       }
@@ -150,11 +164,12 @@ mod_chat_server <- function(id,
               id = ns("chat"),
               label = icon("fas fa-paper-plane"),
               label_busy = NULL,
-              class = "btn-primary p-1 chat-send-btn"
+              class = "btn-secondary p-2 chat-send-btn"
             ) %>% bslib::tooltip("Send (click or Enter)")
           ),
-          audio_recorder
-        )
+          audio_recorder,
+        ),
+          # image_input,
       )
     })
   })

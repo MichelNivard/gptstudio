@@ -21,7 +21,7 @@ sends it to OpenAI's transcription API to get the transcribed text.
 }
 \examples{
 \dontrun{
-audio_uri <- "data:audio/webm;base64,SGVsbG8gV29ybGQ="  # Example data URI
+audio_uri <- "data:audio/webm;base64,SGVsbG8gV29ybGQ=" # Example data URI
 transcription <- transcribe_audio(audio_uri)
 print(transcription)
 }
