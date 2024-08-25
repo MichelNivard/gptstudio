@@ -83,16 +83,16 @@ input_audio_clip <- function(
       class = "btn-group m-3",
       tags$button(
         class = "record-button btn-sm btn-secondary rounded-circle p-0 mx-2",
-        style = "width: 2.5rem; height: 2.5rem; display: flex; justify-content: center; align-items: center;",
+        style = "width: 2.5rem; height: 2.5rem; display: flex; justify-content: center; align-items: center;", #nolint
         div(
-          style = "background-color: red; width: 1.5rem; height: 1.5rem; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+          style = "background-color: red; width: 1.5rem; height: 1.5rem; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" #nolint
         )
       ),
       tags$button(
         class = "stop-button btn-sm btn-secondary rounded-circle p-0 mx-2",
-        style = "width: 3rem; height: 3rem; display: flex; justify-content: center; align-items: center;",
+        style = "width: 3rem; height: 3rem; display: flex; justify-content: center; align-items: center;", #nolint
         div(
-          style = "background-color: currentColor; width: 1.5rem; height: 1.5rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+          style = "background-color: currentColor; width: 1.5rem; height: 1.5rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" #nolint
         )
       )
     ),

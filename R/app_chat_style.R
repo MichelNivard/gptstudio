@@ -36,8 +36,8 @@ style_chat_message <- function(message,
                                ide_colors = get_ide_theme_info()) {
   colors <- create_ide_matching_colors(message$role, ide_colors)
   icon_name <- switch(message$role,
-                      "user" = "person-fill",
-                      "assistant" = "robot"
+    "user" = "person-fill",
+    "assistant" = "robot"
   )
 
   if (!is.null(message$name) && message$name == "docs") {

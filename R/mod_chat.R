@@ -130,9 +130,9 @@ mod_chat_server <- function(id,
         )
       }
 
-      image_input <- if (TRUE) {
+      image_input <- if (FALSE) {
         div(
-          # style = "position: absolute; right: 800px; top: 25%; transform: translateY(-50%);",
+          style = "position: absolute; right: 800px; top: 25%; transform: translateY(-50%);", #nolint
           fileInput(
             ns("image"),
             buttonLabel = bsicons::bs_icon("image"),
@@ -169,7 +169,7 @@ mod_chat_server <- function(id,
           ),
           audio_recorder,
         ),
-          # image_input,
+        image_input,
       )
     })
   })
