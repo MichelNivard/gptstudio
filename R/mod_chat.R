@@ -75,7 +75,15 @@ mod_chat_server <- function(id,
       rv$reset_welcome_message <- rv$reset_welcome_message + 1L
     })
 
-    process_chat <- ExtendedTask$new(function(prompt, service, chat_history, stream, model, skill, style, task, custom_prompt) {
+    process_chat <- ExtendedTask$new(function(prompt,
+                                              service,
+                                              chat_history,
+                                              stream,
+                                              model,
+                                              skill,
+                                              style,
+                                              task,
+                                              custom_prompt) {
       promises::future_promise({
         chat(
           prompt = prompt,
@@ -132,7 +140,7 @@ mod_chat_server <- function(id,
 
       append_to_conversation_history(
         id = history$selected_conversation$id %||% ids::random_id(),
-        title = history$selected_conversation$title %||% find_placeholder_title(history$chat_history),
+        title = history$selected_conversation$title %||% find_placeholder_title(history$chat_history), # nolint
         messages = history$chat_history
       )
 
@@ -148,10 +156,11 @@ mod_chat_server <- function(id,
       audio_recorder <- if (rv$audio_input) {
         div(
           style = "position: absolute; right: 20px; top: 25%; transform: translateY(-50%);",
-          input_audio_clip(ns("clip"),
-                           record_label = NULL,
-                           stop_label = NULL,
-                           show_mic_settings = FALSE,
+          input_audio_clip(
+            ns("clip"),
+            record_label = NULL,
+            stop_label = NULL,
+            show_mic_settings = FALSE,
           )
         )
       }

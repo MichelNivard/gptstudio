@@ -50,7 +50,6 @@ style_chat_message <- function(message,
     `color` = colors$fg_color,
     `background-color` = colors$bg_color,
     `border-radius` = if (message$role == "user") "20px 20px 0 20px" else "20px 20px 20px 0",
-    # `word-wrap` = "break-word",
     `box-shadow` = "0 2px 4px rgba(0, 0, 0, 0.2)"
   )
 
