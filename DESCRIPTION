@@ -36,7 +36,6 @@ Imports:
     ids,
     jsonlite,
     magrittr,
-    mime,
     promises,
     purrr,
     R6,

@@ -7,9 +7,13 @@
 #' @return A list with two elements: 'mime_type' and 'data'.
 #'
 parse_data_uri <- function(data_uri) {
-  match <- regexec("data:(.+);base64,(.+)", data_uri)
+  if (is.null(data_uri) || !is.character(data_uri) || length(data_uri) != 1) {
+    cli::cli_abort("Invalid input: data_uri must be a single character string")
+  }
+
+  match <- regexec("^data:(.+);base64,(.*)$", data_uri)
   if (match[[1]][1] == -1) {
-    stop("Invalid data URI format")
+    cli::cli_abort("Invalid data URI format")
   }
   groups <- regmatches(data_uri, match)[[1]]
   mime_type <- groups[2]
@@ -42,18 +46,13 @@ parse_data_uri <- function(data_uri) {
 #' print(transcription)
 #' }
 #'
-#' @importFrom httr2 request req_auth_bearer_token req_body_multipart
-#'   req_perform resp_is_error resp_status_desc resp_body_json
-#' @importFrom jsonlite fromJSON
 transcribe_audio <- function(audio_input, api_key = Sys.getenv("OPENAI_API_KEY")) {
-  # Parse the data URI
   parsed <- parse_data_uri(audio_input)
 
-  # Convert WebM to WAV (R doesn't have native WebM support, so we're using WAV)
   temp_webm <- tempfile(fileext = ".webm")
   temp_wav <- tempfile(fileext = ".wav")
   writeBin(parsed$data, temp_webm)
-  system_result <-
+  system_result <- #nolint
     system2("ffmpeg",
       args = c("-i", temp_webm, "-acodec", "pcm_s16le", "-ar", "44100", temp_wav), # nolint
       stdout = TRUE,
@@ -61,53 +60,24 @@ transcribe_audio <- function(audio_input, api_key = Sys.getenv("OPENAI_API_KEY")
     )
 
   if (!file.exists(temp_wav)) {
-    stop("Failed to convert audio: ", paste(system_result, collapse = "\n"))
+    cli::cli_abort("Failed to convert audio: {system_result}")
   }
 
-  # Transcribe audio using OpenAI API
-  req <- httr2::request("https://api.openai.com/v1/audio/transcriptions") %>%
-    httr2::req_auth_bearer_token(api_key) %>%
-    httr2::req_body_multipart(
+  req <- request("https://api.openai.com/v1/audio/transcriptions") %>%
+    req_auth_bearer_token(api_key) %>%
+    req_body_multipart(
       file = curl::form_file(temp_wav),
       model = "whisper-1",
       response_format = "text"
     )
 
-  resp <- httr2::req_perform(req)
+  resp <- req_perform(req)
 
-  if (httr2::resp_is_error(resp)) {
-    stop("API request failed: ", httr2::resp_status_desc(resp))
+  if (resp_is_error(resp)) {
+    cli::cli_abort("API request failed: {resp_status_desc(resp)}")
   }
 
   user_prompt <- resp_body_string(resp)
-
-  # Clean up temporary files
   file.remove(temp_webm, temp_wav)
-
   invisible(user_prompt)
-}
-
-
-#' Convert Audio File to Data URI
-#'
-#' This function takes an audio file path and converts it to a data URI.
-#'
-#' @param file_path A string. The path to the audio file.
-#'
-#' @return A string containing the data URI.
-#'
-audio_to_data_uri <- function(file_path) {
-  # Read the file
-  audio_data <- readBin(file_path, "raw", file.info(file_path)$size)
-
-  # Encode the data
-  encoded_data <- jsonlite::base64_enc(audio_data)
-
-  # Get the MIME type
-  mime_type <- mime::guess_type(file_path)
-
-  # Construct the data URI
-  data_uri <- paste0("data:", mime_type, ";base64,", encoded_data)
-
-  return(data_uri)
 }
