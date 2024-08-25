@@ -7,6 +7,8 @@
 - Add audio input option for chat app. #224
 - Fix bug with chat app not loading on linux. #224
 - Allow chat app to run in Positron (not yet as background job) #224
+- API calls now run async with ExtendedTask. #224
+- New styling of chat app. #224
 
 ## gptstudio 0.4.0
 
