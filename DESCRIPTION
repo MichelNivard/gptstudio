@@ -37,6 +37,7 @@ Imports:
     jsonlite,
     magrittr,
     mime,
+    promises,
     purrr,
     R6,
     rlang,

@@ -58,10 +58,9 @@ mod_chat_server <- function(id,
     )
 
     # UI outputs ----
-    output$welcome <-
-      renderWelcomeMessage({
-        welcomeMessage(ide_colors)
-      }) %>% bindEvent(rv$reset_welcome_message)
+    output$welcome <- renderWelcomeMessage({
+      welcomeMessage(ide_colors)
+    }) %>% bindEvent(rv$reset_welcome_message)
 
     output$history <- renderUI({
       history$chat_history %>% style_chat_history(ide_colors = ide_colors)
@@ -76,27 +75,64 @@ mod_chat_server <- function(id,
       rv$reset_welcome_message <- rv$reset_welcome_message + 1L
     })
 
-    # Helper function for chat processing
-    process_chat <- function(prompt) {
-      response <- chat(
-        prompt = prompt,
+    process_chat <- ExtendedTask$new(function(prompt, service, chat_history, stream, model, skill, style, task, custom_prompt) {
+      promises::future_promise({
+        chat(
+          prompt = prompt,
+          service = service,
+          history = chat_history,
+          stream = stream,
+          model = model,
+          skill = skill,
+          style = style,
+          task = task,
+          custom_prompt = custom_prompt,
+          process_response = TRUE,
+          session = session
+        )
+      })
+    }) %>% bslib::bind_task_button("chat")
+
+    observeEvent(input$chat, {
+      cli::cli_inform("Chat button clicked")
+      process_chat$invoke(
+        prompt = input$chat_input,
         service = settings$service,
-        history = history$chat_history,
+        chat_history = history$chat_history,
         stream = settings$stream,
         model = settings$model,
         skill = settings$skill,
         style = settings$style,
         task = settings$task,
-        custom_prompt = settings$custom_prompt,
-        process_response = TRUE,
-        session = session
+        custom_prompt = settings$custom_prompt
       )
+    })
+
+    observeEvent(input$clip, {
+      req(input$clip)
+      new_prompt <- transcribe_audio(input$clip)
+      process_chat$invoke(
+        prompt = new_prompt,
+        service = settings$service,
+        chat_history = history$chat_history,
+        stream = settings$stream,
+        model = settings$model,
+        skill = settings$skill,
+        style = settings$style,
+        task = settings$task,
+        custom_prompt = settings$custom_prompt
+      )
+    })
+
+    observeEvent(process_chat$result(), {
+      cli::cli_inform("Made it here.")
+      response <- process_chat$result()
 
       history$chat_history <- response$history
 
       append_to_conversation_history(
         id = history$selected_conversation$id %||% ids::random_id(),
-        title = history$selected_conversation$title %||% find_placeholder_title(history$chat_history), # nolint
+        title = history$selected_conversation$title %||% find_placeholder_title(history$chat_history),
         messages = history$chat_history
       )
 
@@ -105,16 +141,6 @@ mod_chat_server <- function(id,
       }
 
       updateTextAreaInput(session, "chat_input", value = "")
-    }
-
-    observeEvent(input$chat, {
-      process_chat(input$chat_input)
-    })
-
-    observeEvent(input$clip, {
-      req(input$clip)
-      new_prompt <- transcribe_audio(input$clip)
-      process_chat(new_prompt)
     })
 
     output$chat_with_audio <- renderUI({
@@ -123,23 +149,9 @@ mod_chat_server <- function(id,
         div(
           style = "position: absolute; right: 20px; top: 25%; transform: translateY(-50%);",
           input_audio_clip(ns("clip"),
-            record_label = NULL,
-            stop_label = NULL,
-            show_mic_settings = FALSE,
-          )
-        )
-      }
-
-      image_input <- if (FALSE) {
-        div(
-          style = "position: absolute; right: 800px; top: 25%; transform: translateY(-50%);", #nolint
-          fileInput(
-            ns("image"),
-            buttonLabel = bsicons::bs_icon("image"),
-            placeholder = "Upload an image",
-            label = NULL,
-            multiple = FALSE,
-            accept = "image/*"
+                           record_label = NULL,
+                           stop_label = NULL,
+                           show_mic_settings = FALSE,
           )
         )
       }
@@ -167,9 +179,8 @@ mod_chat_server <- function(id,
               class = "btn-secondary p-2 chat-send-btn"
             ) %>% bslib::tooltip("Send (click or Enter)")
           ),
-          audio_recorder,
-        ),
-        image_input,
+          audio_recorder
+        )
       )
     })
   })
