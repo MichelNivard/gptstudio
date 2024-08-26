@@ -52,7 +52,7 @@ transcribe_audio <- function(audio_input, api_key = Sys.getenv("OPENAI_API_KEY")
   temp_webm <- tempfile(fileext = ".webm")
   temp_wav <- tempfile(fileext = ".wav")
   writeBin(parsed$data, temp_webm)
-  system_result <- #nolint
+  system_result <- # nolint
     system2("ffmpeg",
       args = c("-i", temp_webm, "-acodec", "pcm_s16le", "-ar", "44100", temp_wav), # nolint
       stdout = TRUE,

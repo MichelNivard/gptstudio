@@ -5,7 +5,7 @@
 #'
 mod_chat_ui <- function(id, translator = create_translator()) {
   ns <- NS(id)
-  highlightjs_theme <- get_highlightjs_theme()
+  highlightjs_theme_url <- get_highlightjs_theme()
 
   bslib::card(
     class = "h-100",
@@ -34,11 +34,11 @@ mod_chat_ui <- function(id, translator = create_translator()) {
           )
         ),
         tags$head(
-          # Include highlight.js library
-          tags$script(src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"),
-          # Include the theme that matches RStudio's theme
-          tags$link(rel = "stylesheet",
-                    href = glue::glue("https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/{highlightjs_theme}.min.css")),
+          tags$script(src = "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/highlight.js"),
+          tags$link(
+            rel = "stylesheet",
+            href = highlightjs_theme_url
+          ),
           # Add JavaScript to initialize highlight.js
           tags$script(HTML("
             document.addEventListener('DOMContentLoaded', (event) => {
@@ -60,155 +60,156 @@ mod_chat_ui <- function(id, translator = create_translator()) {
 #' @param settings,history Reactive values from the settings and history module
 #' @inheritParams gptstudio_run_chat_app
 #'
-mod_chat_server <- function(id,
-  ide_colors = get_ide_theme_info(),
-  translator = create_translator(),
-  settings,
-  history) {
-    moduleServer(id, function(input, output, session) {
-      # Session data ----
-      rv <- reactiveValues(
-        reset_welcome_message = 0L,
-        reset_streaming_message = 0L,
-        audio_input = getOption("gptstudio.audio_input")
+mod_chat_server <- function(
+    id,
+    ide_colors = get_ide_theme_info(),
+    translator = create_translator(),
+    settings,
+    history) {
+  moduleServer(id, function(input, output, session) {
+    # Session data ----
+    rv <- reactiveValues(
+      reset_welcome_message = 0L,
+      reset_streaming_message = 0L,
+      audio_input = getOption("gptstudio.audio_input")
+    )
+
+    # UI outputs ----
+    output$welcome <- renderWelcomeMessage({
+      welcomeMessage(ide_colors)
+    }) %>% bindEvent(rv$reset_welcome_message)
+
+    output$history <- renderUI({
+      rendered_history <- history$chat_history %>% style_chat_history(ide_colors = ide_colors)
+      tagList(
+        tags$div(rendered_history),
+        tags$script("hljs.highlightAll();")
       )
+    })
 
-      # UI outputs ----
-      output$welcome <- renderWelcomeMessage({
-        welcomeMessage(ide_colors)
-      }) %>% bindEvent(rv$reset_welcome_message)
+    output$streaming <- renderStreamingMessage({
+      streamingMessage(ide_colors)
+    }) %>% bindEvent(rv$reset_streaming_message)
 
-      output$history <- renderUI({
-        rendered_history <- history$chat_history %>% style_chat_history(ide_colors = ide_colors)
-        tagList(
-          tags$div(rendered_history),
-          tags$script("hljs.highlightAll();")
+    # Observers ----
+    observeEvent(history$create_new_chat, {
+      rv$reset_welcome_message <- rv$reset_welcome_message + 1L
+    })
+
+    process_chat <- ExtendedTask$new(function(prompt,
+                                              service,
+                                              chat_history,
+                                              stream,
+                                              model,
+                                              skill,
+                                              style,
+                                              task,
+                                              custom_prompt) {
+      promises::future_promise({
+        chat(
+          prompt = prompt,
+          service = service,
+          history = chat_history,
+          stream = stream,
+          model = model,
+          skill = skill,
+          style = style,
+          task = task,
+          custom_prompt = custom_prompt,
+          process_response = TRUE,
+          session = session
         )
       })
+    }) %>% bslib::bind_task_button("chat")
 
-      output$streaming <- renderStreamingMessage({
-        streamingMessage(ide_colors)
-      }) %>% bindEvent(rv$reset_streaming_message)
+    observeEvent(input$chat, {
+      process_chat$invoke(
+        prompt = input$chat_input,
+        service = settings$service,
+        chat_history = history$chat_history,
+        stream = settings$stream,
+        model = settings$model,
+        skill = settings$skill,
+        style = settings$style,
+        task = settings$task,
+        custom_prompt = settings$custom_prompt
+      )
+    })
 
-      # Observers ----
-      observeEvent(history$create_new_chat, {
-        rv$reset_welcome_message <- rv$reset_welcome_message + 1L
-      })
+    observeEvent(input$clip, {
+      req(input$clip)
+      new_prompt <- transcribe_audio(input$clip)
+      process_chat$invoke(
+        prompt = new_prompt,
+        service = settings$service,
+        chat_history = history$chat_history,
+        stream = settings$stream,
+        model = settings$model,
+        skill = settings$skill,
+        style = settings$style,
+        task = settings$task,
+        custom_prompt = settings$custom_prompt
+      )
+    })
 
-      process_chat <- ExtendedTask$new(function(prompt,
-        service,
-        chat_history,
-        stream,
-        model,
-        skill,
-        style,
-        task,
-        custom_prompt) {
-          promises::future_promise({
-            chat(
-              prompt = prompt,
-              service = service,
-              history = chat_history,
-              stream = stream,
-              model = model,
-              skill = skill,
-              style = style,
-              task = task,
-              custom_prompt = custom_prompt,
-              process_response = TRUE,
-              session = session
+    observeEvent(process_chat$result(), {
+      response <- process_chat$result()
+
+      history$chat_history <- response$history
+
+      append_to_conversation_history(
+        id = history$selected_conversation$id %||% ids::random_id(),
+        title = history$selected_conversation$title %||% find_placeholder_title(history$chat_history), # nolint
+        messages = history$chat_history
+      )
+
+      if (settings$stream) {
+        rv$reset_streaming_message <- rv$reset_streaming_message + 1L
+      }
+
+      updateTextAreaInput(session, "chat_input", value = "")
+    })
+
+    output$chat_with_audio <- renderUI({
+      ns <- session$ns
+      audio_recorder <- if (rv$audio_input) {
+        div(
+          style = "position: absolute; right: 20px; top: 25%; transform: translateY(-50%);",
+          input_audio_clip(
+            ns("clip"),
+            record_label = NULL,
+            stop_label = NULL,
+            show_mic_settings = FALSE,
+          )
+        )
+      }
+
+      tagList(
+        div(
+          div(
+            style = "flex-grow: 1; height: 100%;",
+            text_area_input_wrapper(
+              inputId = ns("chat_input"),
+              label = NULL,
+              width = "100%",
+              height = "100%",
+              value = "",
+              resize = "none",
+              textarea_class = "chat-prompt"
             )
-          })
-        }) %>% bslib::bind_task_button("chat")
-
-        observeEvent(input$chat, {
-          process_chat$invoke(
-            prompt = input$chat_input,
-            service = settings$service,
-            chat_history = history$chat_history,
-            stream = settings$stream,
-            model = settings$model,
-            skill = settings$skill,
-            style = settings$style,
-            task = settings$task,
-            custom_prompt = settings$custom_prompt
-          )
-        })
-
-        observeEvent(input$clip, {
-          req(input$clip)
-          new_prompt <- transcribe_audio(input$clip)
-          process_chat$invoke(
-            prompt = new_prompt,
-            service = settings$service,
-            chat_history = history$chat_history,
-            stream = settings$stream,
-            model = settings$model,
-            skill = settings$skill,
-            style = settings$style,
-            task = settings$task,
-            custom_prompt = settings$custom_prompt
-          )
-        })
-
-        observeEvent(process_chat$result(), {
-          response <- process_chat$result()
-
-          history$chat_history <- response$history
-
-          append_to_conversation_history(
-            id = history$selected_conversation$id %||% ids::random_id(),
-            title = history$selected_conversation$title %||% find_placeholder_title(history$chat_history), # nolint
-            messages = history$chat_history
-          )
-
-          if (settings$stream) {
-            rv$reset_streaming_message <- rv$reset_streaming_message + 1L
-          }
-
-          updateTextAreaInput(session, "chat_input", value = "")
-        })
-
-        output$chat_with_audio <- renderUI({
-          ns <- session$ns
-          audio_recorder <- if (rv$audio_input) {
-            div(
-              style = "position: absolute; right: 20px; top: 25%; transform: translateY(-50%);",
-              input_audio_clip(
-                ns("clip"),
-                record_label = NULL,
-                stop_label = NULL,
-                show_mic_settings = FALSE,
-              )
-            )
-          }
-
-          tagList(
-            div(
-              div(
-                style = "flex-grow: 1; height: 100%;",
-                text_area_input_wrapper(
-                  inputId = ns("chat_input"),
-                  label = NULL,
-                  width = "100%",
-                  height = "100%",
-                  value = "",
-                  resize = "none",
-                  textarea_class = "chat-prompt"
-                )
-              ),
-              div(
-                style = "position: absolute; right: 10px; top: 50%; transform: translateY(-50%);",
-                bslib::input_task_button(
-                  id = ns("chat"),
-                  label = icon("fas fa-paper-plane"),
-                  label_busy = NULL,
-                  class = "btn-secondary p-2 chat-send-btn"
-                ) %>% bslib::tooltip("Send (click or Enter)")
-              ),
-              audio_recorder
-            )
-          )
-        })
-      })
-    }
+          ),
+          div(
+            style = "position: absolute; right: 10px; top: 50%; transform: translateY(-50%);",
+            bslib::input_task_button(
+              id = ns("chat"),
+              label = icon("fas fa-paper-plane"),
+              label_busy = NULL,
+              class = "btn-secondary p-2 chat-send-btn"
+            ) %>% bslib::tooltip("Send (click or Enter)")
+          ),
+          audio_recorder
+        )
+      )
+    })
+  })
+}

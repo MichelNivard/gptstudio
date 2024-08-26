@@ -6,7 +6,7 @@ test_that("parse_data_uri correctly parses valid data URIs", {
   expect_equal(result1$data, charToRaw("Hello World"))
 
   # Test case 2: Data URI with padding
-  uri2 <- "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==" #nolint
+  uri2 <- "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==" # nolint
   result2 <- parse_data_uri(uri2)
   expect_equal(result2$mime_type, "image/png")
   expect_true(length(result2$data) > 0)
@@ -32,9 +32,13 @@ test_that("parse_data_uri handles invalid inputs correctly", {
   expect_error(parse_data_uri(123), "Invalid input: data_uri must be a single character string")
 
   # Test case 8: Character vector with length > 1
-  expect_error(parse_data_uri(c("data:text/plain;base64,SGVsbG8=",
-                                "data:text/plain;base64,V29ybGQ=")),
-               "Invalid input: data_uri must be a single character string")
+  expect_error(
+    parse_data_uri(c(
+      "data:text/plain;base64,SGVsbG8=",
+      "data:text/plain;base64,V29ybGQ="
+    )),
+    "Invalid input: data_uri must be a single character string"
+  )
 })
 
 test_that("parse_data_uri handles edge cases", {
