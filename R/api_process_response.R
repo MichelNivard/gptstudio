@@ -112,17 +112,14 @@ gptstudio_response_process.gptstudio_response_google <-
 #' @export
 gptstudio_response_process.gptstudio_response_azure_openai <-
   function(skeleton, ...) {
-    response <- skeleton$response
+    last_response <- skeleton$response
     skeleton <- skeleton$skeleton
 
-    last_response <- response
-
-    new_history <- c(
-      skeleton$history,
-      list(
-        list(role = "user", content = skeleton$prompt),
-        list(role = "assistant", content = last_response)
-      )
+    new_history <- chat_history_append(
+      history = skeleton$history,
+      role = "assistant",
+      name = "assistant",
+      content = last_response
     )
 
     skeleton$history <- new_history

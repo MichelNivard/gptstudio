@@ -283,8 +283,7 @@ gptstudio_create_skeleton <- function(service = "openai",
       model = model,
       prompt = prompt,
       history = history,
-      # forcing false until streaming implemented for azure openai
-      stream = FALSE
+      stream = stream
     ),
     "ollama" = new_gptstudio_request_skeleton_ollama(
       model = model,

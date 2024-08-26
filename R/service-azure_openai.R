@@ -133,3 +133,27 @@ retrieve_azure_token <- function() {
 
   invisible(token$token$credentials$access_token)
 }
+
+
+stream_azure_openai <- function(messages = list(list(role = "user", content = "hi there")),
+                                element_callback = cat) {
+  body <- list(
+    messages = messages,
+    stream = TRUE
+  )
+
+  response <-
+    request_base_azure_openai() %>%
+    req_body_json(data = body) %>%
+    req_retry(max_tries = 3) %>%
+    req_error(is_error = function(resp) FALSE) %>%
+    req_perform_stream(
+      callback = \(x) {
+        element <- rawToChar(x)
+        element_callback(element)
+      },
+      round = "line"
+    )
+
+  invisible(response)
+}

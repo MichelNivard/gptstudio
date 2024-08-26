@@ -15,7 +15,7 @@
 #' treated accordingly.
 #' @return The same as `curl::curl_fetch_stream`
 stream_chat_completion <-
-  function(messages = NULL,
+  function(messages = list(list(role = "user", content = "Hi there!")),
            element_callback = cat,
            model = "gpt-4o-mini",
            openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
@@ -87,14 +87,20 @@ OpenaiStreamParser <- R6::R6Class( # nolint
       super$initialize()
     },
 
-    #' @description Overwrites `SSEparser$append_parsed_sse()` to be able to send a custom message
-    #' to a shiny session, escaping shiny's reactivity.
+    #' @description Overwrites `SSEparser$append_parsed_sse()` to be able to
+    #' send a custom message to a shiny session, escaping shiny's reactivity.
     append_parsed_sse = function(parsed_event) {
       # ----- here you can do whatever you want with the event data -----
+      print(parsed_event$data)
       if (is.null(parsed_event$data) || parsed_event$data == "[DONE]") {
+        cli::cli_alert_info("Skipping")
         return()
       }
-      parsed_event$data <- jsonlite::fromJSON(parsed_event$data, simplifyDataFrame = FALSE)
+
+      parsed_event$data <- jsonlite::fromJSON(parsed_event$data,
+                                              simplifyDataFrame = FALSE)
+
+      if (length(parsed_event$data$choices) == 0) return()
 
       content <- parsed_event$data$choices[[1]]$delta$content
       self$value <- paste0(self$value, content)
@@ -109,7 +115,6 @@ OpenaiStreamParser <- R6::R6Class( # nolint
           )
         )
       }
-
 
       # ----- END ----
 

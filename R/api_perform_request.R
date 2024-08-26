@@ -150,20 +150,42 @@ gptstudio_request_perform.gptstudio_request_anthropic <-
   }
 
 #' @export
-gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton, ...) {
-  messages <- c(
-    skeleton$history,
-    list(
-      list(role = "user", content = skeleton$prompt)
-    )
+gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton,
+                                                                     shiny_session = NULL,
+                                                                     ...) {
+
+  skeleton$history <- chat_history_append(
+    history = skeleton$history,
+    role = "user",
+    name = "user_message",
+    content = skeleton$prompt
   )
 
-  response <- query_api_azure_openai(request_body = messages)
+  print(skeleton)
+
+  if (isTRUE(skeleton$stream)) {
+    if (is.null(shiny_session)) stop("Stream requires a shiny session object")
+
+    stream_handler <- OpenaiStreamParser$new(
+      session = shiny_session,
+      user_prompt = skeleton$prompt
+    )
+
+    stream_azure_openai(
+      messages = skeleton$history,
+      element_callback = stream_handler$parse_sse
+    )
+
+    response <- stream_handler$value
+  } else {
+    response <- query_api_azure_openai(request_body = skeleton$history)
+    response <- response$choices[[1]]$message$content
+  }
 
   structure(
     list(
       skeleton = skeleton,
-      response = response$choices[[1]]$message$content
+      response = response
     ),
     class = "gptstudio_response_azure_openai"
   )

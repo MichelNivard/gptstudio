@@ -34,7 +34,7 @@ mod_chat_ui <- function(id, translator = create_translator()) {
           )
         ),
         tags$head(
-          tags$script(src = "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/highlight.js"),
+          tags$script(src = "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/highlight.js"), #nolint
           tags$link(
             rel = "stylesheet",
             href = highlightjs_theme_url
