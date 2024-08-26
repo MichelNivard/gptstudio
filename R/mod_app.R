@@ -138,8 +138,8 @@ get_ide_theme_info <- function() {
 fallback_theme <- function() {
   list(
     is_dark = TRUE,
-    bg = "#002B36",
-    fg = "#93A1A1"
+    bg = "#181818",
+    fg = "#C1C1C1"
   )
 }
 
