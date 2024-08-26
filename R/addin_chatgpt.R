@@ -90,6 +90,7 @@ open_app_in_viewer <- function(host, port) {
 
   if (.Platform$OS.type == "unix") {
     wait_for_bg_app(translated_url)
+    Sys.sleep(1)
   }
 
   rstudioapi::viewer(translated_url)
