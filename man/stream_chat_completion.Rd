@@ -5,7 +5,7 @@
 \title{Stream Chat Completion}
 \usage{
 stream_chat_completion(
-  messages = NULL,
+  messages = list(list(role = "user", content = "Hi there!")),
   element_callback = cat,
   model = "gpt-4o-mini",
   openai_api_key = Sys.getenv("OPENAI_API_KEY")

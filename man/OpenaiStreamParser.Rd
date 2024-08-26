@@ -70,8 +70,8 @@ Only to be displayed in an HTML tag containing the prompt. (Optional).}
 \if{html}{\out{<a id="method-OpenaiStreamParser-append_parsed_sse"></a>}}
 \if{latex}{\out{\hypertarget{method-OpenaiStreamParser-append_parsed_sse}{}}}
 \subsection{Method \code{append_parsed_sse()}}{
-Overwrites \code{SSEparser$append_parsed_sse()} to be able to send a custom message
-to a shiny session, escaping shiny's reactivity.
+Overwrites \code{SSEparser$append_parsed_sse()} to be able to
+send a custom message to a shiny session, escaping shiny's reactivity.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OpenaiStreamParser$append_parsed_sse(parsed_event)}\if{html}{\out{</div>}}
 }
