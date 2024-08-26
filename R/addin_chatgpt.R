@@ -95,8 +95,12 @@ open_app_in_viewer <- function(host, port) {
   rstudioapi::viewer(translated_url)
 }
 
-wait_for_bg_app <- function(url) {
+wait_for_bg_app <- function(url, max_seconds = 10) {
   request(url) %>%
-    req_retry(max_seconds = 10, backoff = function(n) 0.2) %>%
+    req_retry(
+      max_seconds = max_seconds,
+      is_transient = \(resp) resp_status(resp) >= 300,
+      backoff = function(n) 0.2
+    ) %>%
     req_perform()
 }
