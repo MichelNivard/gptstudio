@@ -6,7 +6,9 @@
 #' @import htmltools
 #' @import shiny
 #'
-mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
+mod_app_ui <- function(id,
+                       ide_colors = get_ide_theme_info(),
+                       code_theme_url = get_highlightjs_theme()) {
   ns <- NS(id)
   translator <- create_translator(language = getOption("gptstudio.language"))
   tagList(
@@ -29,7 +31,7 @@ mod_app_ui <- function(id, ide_colors = get_ide_theme_info()) {
           class = "row justify-content-center h-100",
           div(
             class = "col h-100",
-            mod_chat_ui(ns("chat"), translator)
+            mod_chat_ui(ns("chat"), translator, code_theme_url)
           )
         )
       )

@@ -2,10 +2,10 @@
 #'
 #' @param id id of the module
 #' @param translator A Translator from `shiny.i18n::Translator`
+#' @param code_theme_url URL to the highlight.js theme
 #'
-mod_chat_ui <- function(id, translator = create_translator()) {
+mod_chat_ui <- function(id, translator = create_translator(), code_theme_url = get_highlightjs_theme()) {
   ns <- NS(id)
-  highlightjs_theme_url <- get_highlightjs_theme()
 
   bslib::card(
     class = "h-100",
@@ -37,7 +37,7 @@ mod_chat_ui <- function(id, translator = create_translator()) {
           tags$script(src = "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/highlight.js"), #nolint
           tags$link(
             rel = "stylesheet",
-            href = highlightjs_theme_url
+            href = code_theme_url
           ),
           # Add JavaScript to initialize highlight.js
           tags$script(HTML("

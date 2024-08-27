@@ -6,12 +6,15 @@
 \usage{
 gptstudio_run_chat_app(
   ide_colors = get_ide_theme_info(),
+  code_theme_url = get_highlightjs_theme(),
   host = getOption("shiny.host", "127.0.0.1"),
   port = getOption("shiny.port")
 )
 }
 \arguments{
 \item{ide_colors}{List containing the colors of the IDE theme.}
+
+\item{code_theme_url}{URL to the highlight.js theme}
 
 \item{host}{The IPv4 address that the application should listen on. Defaults
 to the \code{shiny.host} option, if set, or \code{"127.0.0.1"} if not. See

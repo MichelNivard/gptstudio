@@ -32,6 +32,11 @@ gptstudio_chat <- function(host = getOption("shiny.host", "127.0.0.1")) {
   app_dir <- create_temp_app_dir()
 
   run_app_background(app_dir, "gptstudio", host, port)
+
+  if (rstudioapi::versionInfo()$mode == "server") {
+    Sys.sleep(3)
+  }
+
   open_app_in_viewer(host, port)
 }
 
@@ -52,15 +57,19 @@ create_temp_app_dir <- function() {
 create_temp_app_file <- function() {
   temp_file <- tempfile(fileext = ".R")
   ide_colors <- dput(get_ide_theme_info())
+  code_theme_url <- get_highlightjs_theme()
 
-  writeLines(c(
-    glue::glue("ide_colors <- {paste(deparse(ide_colors), collapse = '\n')}"),
-    "ui <- gptstudio:::mod_app_ui('app', ide_colors)",
-    "server <- function(input, output, session) {",
-    "  gptstudio:::mod_app_server('app', ide_colors)",
-    "}",
-    "shiny::shinyApp(ui, server)"
-  ), temp_file)
+  writeLines(
+    glue::glue(
+    "ide_colors <- {{paste(deparse(ide_colors), collapse = '\n')}}
+    ui <- gptstudio:::mod_app_ui('app', ide_colors, '{{code_theme_url}}')
+    server <- function(input, output, session) {
+        gptstudio:::mod_app_server('app', ide_colors)
+    }
+    shiny::shinyApp(ui, server)",
+    .open = "{{", .close = "}}"
+    ),
+    temp_file)
 
   temp_file
 }
@@ -88,10 +97,7 @@ open_app_in_viewer <- function(host, port) {
     cli::cli_alert_info("Showing app in browser window")
   }
 
-  if (.Platform$OS.type == "unix") {
-    wait_for_bg_app(translated_url)
-    Sys.sleep(1)
-  }
+  wait_for_bg_app(translated_url)
 
   rstudioapi::viewer(translated_url)
 }
