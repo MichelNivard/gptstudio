@@ -4,7 +4,9 @@
 #' @param translator A Translator from `shiny.i18n::Translator`
 #' @param code_theme_url URL to the highlight.js theme
 #'
-mod_chat_ui <- function(id, translator = create_translator(), code_theme_url = get_highlightjs_theme()) {
+mod_chat_ui <- function(id,
+                        translator = create_translator(),
+                        code_theme_url = get_highlightjs_theme()) {
   ns <- NS(id)
 
   bslib::card(

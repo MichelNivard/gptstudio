@@ -60,17 +60,18 @@ create_temp_app_file <- function() {
   code_theme_url <- get_highlightjs_theme()
 
   writeLines(
+    # nolint start
     glue::glue(
-    "ide_colors <- {{paste(deparse(ide_colors), collapse = '\n')}}
-    ui <- gptstudio:::mod_app_ui('app', ide_colors, '{{code_theme_url}}')
-    server <- function(input, output, session) {
-        gptstudio:::mod_app_server('app', ide_colors)
-    }
-    shiny::shinyApp(ui, server)",
-    .open = "{{", .close = "}}"
+      "ide_colors <- {{paste(deparse(ide_colors), collapse = '\n')}}
+      ui <- gptstudio:::mod_app_ui('app', ide_colors, '{{code_theme_url}}')
+      server <- function(input, output, session) {
+          gptstudio:::mod_app_server('app', ide_colors)
+      }
+      shiny::shinyApp(ui, server)",
+      .open = "{{", .close = "}}"
     ),
     temp_file)
-
+    # nolint end
   temp_file
 }
 
