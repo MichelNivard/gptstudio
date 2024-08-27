@@ -67,6 +67,9 @@ mod_chat_server <- function(
     settings,
     history) {
   moduleServer(id, function(input, output, session) {
+    check_installed(c("promises", ))
+
+
     # Session data ----
     rv <- reactiveValues(
       reset_welcome_message = 0L,

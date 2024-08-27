@@ -62,6 +62,7 @@ mod_app_server <- function(id, ide_colors = get_ide_theme_info()) {
 #'
 #' @return hex color
 rgb_str_to_hex <- function(rgb_string) {
+  check_installed("grDevices")
   rgb_vec <- unlist(strsplit(gsub("[rgba() ]", "", rgb_string), ","))
   grDevices::rgb(
     red = as.numeric(rgb_vec[1]),
