@@ -9,6 +9,7 @@
 - Allow chat app to run in Positron (not yet as background job) #224
 - API calls now run async with ExtendedTask. #224
 - New styling of chat app. #224
+- Add code syntax highlighting to chat app. #224
 
 ## gptstudio 0.4.0
 
