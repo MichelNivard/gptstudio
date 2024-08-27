@@ -113,9 +113,9 @@ style_chat_message <- function(message,
 #' @param role The role of the message author
 #' @inheritParams gptstudio_run_chat_app
 #' @return list
-create_ide_matching_colors <- function(role,
+create_ide_matching_colors <- function(role = c("user", "assistant"),
                                        ide_colors = get_ide_theme_info()) {
-  assert_that(role %in% c("user", "assistant"))
+  arg_match(role)
 
   bg_colors <- if (ide_colors$is_dark) {
     list(

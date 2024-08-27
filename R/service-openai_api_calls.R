@@ -44,7 +44,7 @@ openai_create_chat_completion <-
            model = getOption("gptstudio.model"),
            openai_api_key = Sys.getenv("OPENAI_API_KEY"),
            task = "chat/completions") {
-    if (is.string(prompt)) {
+    if (is_string(prompt)) {
       prompt <- list(
         list(
           role    = "user",

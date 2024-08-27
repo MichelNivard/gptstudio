@@ -202,7 +202,7 @@ mod_chat_server <- function(
             style = "position: absolute; right: 10px; top: 50%; transform: translateY(-50%);",
             bslib::input_task_button(
               id = ns("chat"),
-              label = icon("fas fa-paper-plane"),
+              label = bsicons::bs_icon("send"),
               label_busy = NULL,
               class = "btn-secondary p-2 chat-send-btn"
             ) %>% bslib::tooltip("Send (click or Enter)")

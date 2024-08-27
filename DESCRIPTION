@@ -21,13 +21,11 @@ BugReports: https://github.com/MichelNivard/gptstudio/issues
 Depends:
     R (>= 4.0)
 Imports: 
-    assertthat,
     bsicons,
     bslib (>= 0.8.0),
     cli,
     colorspace,
     curl,
-    fontawesome,
     glue,
     grDevices,
     htmltools,

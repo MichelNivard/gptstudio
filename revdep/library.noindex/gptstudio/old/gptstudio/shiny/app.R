@@ -16,7 +16,8 @@ chat_card <- bslib::card(
     shiny::actionButton(
       width = "100%",
       inputId = "chat", label = "Chat",
-      icon = shiny::icon("robot"), class = "btn-primary"
+      icon = bsicons::bs_icon("robot"),
+      class = "btn-primary"
     ),
     shiny::br(), shiny::br(),
     shiny::fluidRow(
@@ -34,7 +35,7 @@ chat_card <- bslib::card(
     shiny::actionButton(
       width = "100%",
       inputId = "clear_history", label = "Clear History",
-      icon = shiny::icon("eraser")
+      icon = bsicons::bs_icon("eraser")
     ),
   )
 )

@@ -4,20 +4,20 @@ mod_history_ui <- function(id) {
   btn_new_chat <- actionButton(
     inputId = ns("new_chat"),
     label = "New chat",
-    icon = shiny::icon("plus"),
+    icon = icon("plus"),
     class = "flex-grow-1 me-2"
   )
 
   btn_delete_all <- actionButton(
     inputId = ns("delete_all"),
-    label = fontawesome::fa("trash"),
+    label = bsicons::bs_icon("trash"),
     class = "me-2"
   ) %>%
     bslib::tooltip("Delete all chats")
 
   btn_settings <- actionButton(
     inputId = ns("settings"),
-    label = fontawesome::fa("gear")
+    label = bsicons::bs_icon("gear")
   ) %>%
     bslib::tooltip("Settings")
 
@@ -237,13 +237,13 @@ conversation <- function(
     class = "multi-click-input flex-grow-1 text-truncate",
     `shiny-input-id` = ns_safe("conversation_id", ns),
     value = id,
-    fontawesome::fa("message"),
+    bsicons::bs_icon("chat"),
     title
   ) %>%
     tooltip_on_hover(title, placement = "right")
 
   edit_btn <- tags$span(
-    fontawesome::fa("pen-to-square", margin_left = "0.4em"),
+    bsicons::bs_icon("pencil-square"),
     class = "multi-click-input",
     `shiny-input-id` = ns_safe("conversation_to_edit", ns),
     value = id
@@ -251,7 +251,7 @@ conversation <- function(
     tooltip_on_hover("Edit title", placement = "left")
 
   delete_btn <- tags$span(
-    fontawesome::fa("trash-can", margin_left = "0.4em"),
+    bsicons::bs_icon("trash"),
     class = "multi-click-input",
     `shiny-input-id` = ns_safe("conversation_to_delete", ns),
     value = id

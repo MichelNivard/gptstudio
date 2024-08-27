@@ -8,7 +8,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
   read_docs_label <- tags$span(
     "Read R help pages",
     bslib::tooltip(
-      shiny::icon("info-circle"),
+      bsicons::bs_icon("info-circle"),
       "Add help pages of 'package::object' matches for context.
       Potentially expensive.
       Save as default to effectively change"
@@ -20,7 +20,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     multiple = FALSE,
     bslib::accordion_panel(
       title = "Assistant behavior",
-      icon = fontawesome::fa("robot"),
+      icon = bsicons::bs_icon("robot"),
       selectInput(
         inputId = ns("task"),
         label = translator$t("Task"),
@@ -57,7 +57,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     ),
     bslib::accordion_panel(
       title = "API service",
-      icon = fontawesome::fa("server"),
+      icon = bsicons::bs_icon("server"),
       selectInput(
         inputId = ns("service"),
         label = translator$t("Select API Service"),
@@ -87,7 +87,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     ),
     bslib::accordion_panel(
       title = "UI options",
-      icon = fontawesome::fa("sliders"),
+      icon = bsicons::bs_icon("sliders"),
       selectInput(
         inputId = ns("language"),
         # label = translator$t("Language"), # TODO: update translator
@@ -101,21 +101,21 @@ mod_settings_ui <- function(id, translator = create_translator()) {
 
   btn_to_history <- actionButton(
     inputId = ns("to_history"),
-    label = fontawesome::fa("arrow-left-long"),
+    label = bsicons::bs_icon("arrow-left"),
     class = "mb-3"
   ) %>%
     bslib::tooltip("Back to history")
 
   btn_save_as_default <- actionButton(
     inputId = ns("save_default"),
-    label = fontawesome::fa("floppy-disk"),
+    label = bsicons::bs_icon("floppy"),
     class = "mb-3"
   ) %>%
     bslib::tooltip("Save as default")
 
   btn_save_in_session <- actionButton(
     inputId = ns("save_session"),
-    label = fontawesome::fa("bookmark"),
+    label = bsicons::bs_icon("bookmark"),
     class = "mb-3"
   ) %>%
     bslib::tooltip("Save for this session")

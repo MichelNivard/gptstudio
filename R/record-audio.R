@@ -45,7 +45,7 @@ input_audio_clip <- function(
           class = "btn btn-sm btn-secondary dropdown-toggle px-3 py-2",
           type = "button",
           `data-bs-toggle` = "dropdown",
-          icon("gear", class = "fw")
+          bsicons::bs_icon("gear")
         ),
         tags$ul(
           class = "dropdown-menu",

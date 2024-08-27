@@ -203,7 +203,7 @@ test_that("validate_skeleton handles NULL history", {
 })
 
 test_that("validate_skeleton throws error for invalid URL", {
-  expect_error(
+  expect_snapshot(
     validate_skeleton(
       url = 123,
       api_key = "valid_key",
@@ -212,12 +212,12 @@ test_that("validate_skeleton throws error for invalid URL", {
       history = list(),
       stream = TRUE
     ),
-    "URL is not a valid character scalar"
+    error = TRUE
   )
 })
 
 test_that("validate_skeleton throws error for empty API key", {
-  expect_error(
+  expect_snapshot(
     validate_skeleton(
       url = "https://api.example.com",
       api_key = "",
@@ -226,12 +226,12 @@ test_that("validate_skeleton throws error for empty API key", {
       history = list(),
       stream = TRUE
     ),
-    "API key is not valid"
+    error = TRUE
   )
 })
 
 test_that("validate_skeleton throws error for empty model", {
-  expect_error(
+  expect_snapshot(
     validate_skeleton(
       url = "https://api.example.com",
       api_key = "valid_key",
@@ -240,12 +240,12 @@ test_that("validate_skeleton throws error for empty model", {
       history = list(),
       stream = TRUE
     ),
-    "Model name is not a valid character scalar"
+    error = TRUE
   )
 })
 
 test_that("validate_skeleton throws error for non-character prompt", {
-  expect_error(
+  expect_snapshot(
     validate_skeleton(
       url = "https://api.example.com",
       api_key = "valid_key",
@@ -254,12 +254,12 @@ test_that("validate_skeleton throws error for non-character prompt", {
       history = list(),
       stream = TRUE
     ),
-    "Prompt is not a valid list"
+    error = TRUE
   )
 })
 
 test_that("validate_skeleton throws error for invalid history", {
-  expect_error(
+  expect_snapshot(
     validate_skeleton(
       url = "https://api.example.com",
       api_key = "valid_key",
@@ -268,12 +268,12 @@ test_that("validate_skeleton throws error for invalid history", {
       history = "not a list",
       stream = TRUE
     ),
-    "History is not a valid list or NULL"
+    error = TRUE
   )
 })
 
 test_that("validate_skeleton throws error for non-boolean stream", {
-  expect_error(
+  expect_snapshot(
     validate_skeleton(
       url = "https://api.example.com",
       api_key = "valid_key",
@@ -282,6 +282,6 @@ test_that("validate_skeleton throws error for non-boolean stream", {
       history = list(),
       stream = "not a boolean"
     ),
-    "Stream is not a valid boolean"
+    error = TRUE
   )
 })

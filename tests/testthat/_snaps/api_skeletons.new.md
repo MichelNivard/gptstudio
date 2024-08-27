@@ -184,7 +184,7 @@
       gptstudio_create_skeleton(service = "ollama")
     Output
       $url
-      [1] ""
+      [1] "http://172.23.250.2:11434"
       
       $api_key
       [1] "JUST A PLACESHOLDER"
