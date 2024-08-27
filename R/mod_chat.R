@@ -67,8 +67,7 @@ mod_chat_server <- function(
     settings,
     history) {
   moduleServer(id, function(input, output, session) {
-    check_installed(c("promises", ))
-
+    check_installed("promises")
 
     # Session data ----
     rv <- reactiveValues(

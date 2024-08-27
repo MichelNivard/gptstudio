@@ -34,7 +34,11 @@ Imports:
     jsonlite,
     magrittr,
     purrr,
+<<<<<<< HEAD
     R6 (>=2.0.0),
+=======
+    R6 (>=2.0),
+>>>>>>> 37ff8643 (more packages to suggests)
     rlang,
     rstudioapi (>= 0.12),
     shiny (>= 1.9.0),
