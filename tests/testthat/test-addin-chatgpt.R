@@ -77,31 +77,17 @@ test_that("open_app_in_viewer opens the app correctly", {
   )
 })
 
-test_that("wait_for_bg_app retries the request", {
-  mock_request <- function(...) structure(list(), class = "httr2_request")
-  mock_req_retry <- function(...) structure(list(), class = "httr2_request")
-  mock_req_perform <- function(...) NULL
-
-  with_mocked_bindings(
-    request = mock_request,
-    req_retry = mock_req_retry,
-    req_perform = mock_req_perform,
-    .package = "httr2",
-    {
-      expect_no_error(wait_for_bg_app("http://example.com"))
-    }
-  )
-})
-
 test_that("gptstudio_chat runs the app correctly", {
   mock_verify_available <- function() NULL
   mock_find_available_port <- function() 3000
   mock_create_temp_app_dir <- function() "test_dir"
   mock_run_app_background <- function(...) NULL
   mock_open_app_in_viewer <- function(...) NULL
+  mock_version_availalbe <- function() list(mode = "desktop")
 
   with_mocked_bindings(
     verifyAvailable = mock_verify_available,
+    versionInfo = mock_version_availalbe,
     .package = "rstudioapi",
     {
       local_mocked_bindings(

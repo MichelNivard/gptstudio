@@ -15,8 +15,8 @@
     Code
       models
     Output
-      [1] "c4ai-aya-23-35b"       "command-r"             "command-nightly"      
-      [4] "command-r-plus"        "command-light-nightly" "command"              
+      [1] "c4ai-aya-23-35b"       "command-r"             "command-r-plus"       
+      [4] "command-nightly"       "command-light-nightly" "command"              
       [7] "command-r-08-2024"     "command-light"         "c4ai-aya-23-8b"       
 
 # get_available_models works for google
@@ -31,7 +31,7 @@
        [9] "gemini-pro-vision"            "gemini-1.5-pro-latest"       
       [11] "gemini-1.5-pro-001"           "gemini-1.5-pro"              
       [13] "gemini-1.5-pro-exp-0801"      "gemini-1.5-flash-latest"     
-      [15] "gemini-1.5-flash-001"         "gemini-1.5-flash"            
-      [17] "gemini-1.5-flash-001-tuning"  "embedding-001"               
+      [15] "gemini-1.5-flash-001"         "gemini-1.5-flash-001-tuning" 
+      [17] "gemini-1.5-flash"             "embedding-001"               
       [19] "text-embedding-004"           "aqa"                         
 

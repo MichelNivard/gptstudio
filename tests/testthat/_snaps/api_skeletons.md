@@ -184,10 +184,10 @@
       gptstudio_create_skeleton(service = "ollama")
     Output
       $url
-      [1] ""
+      [1] "JUST A PLACEHOLDER"
       
       $api_key
-      [1] "JUST A PLACESHOLDER"
+      [1] "JUST A PLACEHOLDER"
       
       $model
       [1] "gpt-4o-mini"

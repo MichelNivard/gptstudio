@@ -163,7 +163,7 @@ new_gptstudio_request_skeleton_azure_openai <- function(
 new_gptstudio_request_skeleton_ollama <- function(model, prompt, history, stream) {
   new_gpstudio_request_skeleton(
     url = Sys.getenv("OLLAMA_HOST"),
-    api_key = "JUST A PLACESHOLDER",
+    api_key = "JUST A PLACEHOLDER",
     model = model,
     prompt = prompt,
     history = history,

@@ -24,7 +24,8 @@ test_that("multiplication works", {
       "GOOGLE_API_KEY" = "a-fake-key",
       "AZURE_OPENAI_API_KEY" = "a-fake-key",
       "PERPLEXITY_API_KEY" = "a-fake-key",
-      "COHERE_API_KEY" = "a-fake-key"
+      "COHERE_API_KEY" = "a-fake-key",
+      "OLLAMA_HOST" = "JUST A PLACEHOLDER"
     ),
     {
       expect_snapshot(gptstudio_create_skeleton())
