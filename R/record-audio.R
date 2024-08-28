@@ -122,11 +122,10 @@ input_audio_clip <- function(
 #' @importFrom htmltools htmlDependency
 multimodal_dep <- function() {
   htmlDependency(
-    name = "multimodal",
-    version = "0.0.1",
-    package = "shinymedia",
-    src = system.file("dist", package = "gptstudio"),
-    script = "index.js",
-    stylesheet = "index.css"
+    name = "gptstudio-assets", version = "0.4.0",
+    package = "gptstudio",
+    src = "assets",
+    script = "js/audio-recorder.js",
+    stylesheet = "css/audio-recorder.css"
   )
 }
