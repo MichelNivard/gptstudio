@@ -9,7 +9,7 @@ Stream handler for chat completions"><meta property="og:image" content="/logo.pn
 
     <a class="navbar-brand me-2" href="../index.html">gptstudio</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,11 +58,11 @@ Stream handler for chat completions"><meta property="og:image" content="/logo.pn
 
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>R6 class that allows to handle chat completions chunk by chunk.
-It also adds methods to retrieve relevant data. This class DOES NOT make the request.</p>
-<p>Because <code><a href="https://rdrr.io/pkg/curl/man/curl_fetch.html" class="external-link">curl::curl_fetch_stream</a></code> blocks the R console until the stream finishes,
-this class can take a shiny session object to handle communication with JS
-without recurring to a <code><a href="https://rdrr.io/pkg/shiny/man/observe.html" class="external-link">shiny::observe</a></code> inside a module server.</p>
+    <p>R6 class that allows to handle chat completions chunk by chunk. It also adds
+methods to retrieve relevant data. This class DOES NOT make the request.</p>
+<p>Because <code><a href="https://httr2.r-lib.org/reference/req_perform_stream.html" class="external-link">httr2::req_perform_stream</a></code> blocks the R console until the stream
+finishes, this class can take a shiny session object to handle communication
+with JS without recurring to a <code><a href="https://rdrr.io/pkg/shiny/man/observe.html" class="external-link">shiny::observe</a></code> inside a module server.</p>
     </div>
     <div class="section level2">
     <h2 id="super-class">Super class<a class="anchor" aria-label="anchor" href="#super-class"></a></h2>
@@ -109,8 +109,8 @@ after being formatted with markdown.</p></dd>
 
 
 <dt><code>user_prompt</code></dt>
-<dd><p>The prompt for the chat completion.
-Only to be displayed in an HTML tag containing the prompt. (Optional).</p></dd>
+<dd><p>The prompt for the chat completion. Only to be displayed
+in an HTML tag containing the prompt. (Optional).</p></dd>
 
 
 </dl><p></p></div>
@@ -118,8 +118,8 @@ Only to be displayed in an HTML tag containing the prompt. (Optional).</p></dd>
 
 </div><p></p><hr><a id="method-OpenaiStreamParser-append_parsed_sse"></a><div class="section">
 <h3 id="method-append-parsed-sse-">Method <code>append_parsed_sse()</code><a class="anchor" aria-label="anchor" href="#method-append-parsed-sse-"></a></h3>
-<p>Overwrites <code>SSEparser$append_parsed_sse()</code> to be able to send a custom message
-to a shiny session, escaping shiny's reactivity.</p><div class="section">
+<p>Overwrites <code>SSEparser$append_parsed_sse()</code> to be able to
+send a custom message to a shiny session, escaping shiny's reactivity.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OpenaiStreamParser</span><span class="op">$</span><span class="fu">append_parsed_sse</span><span class="op">(</span><span class="va">parsed_event</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
@@ -127,7 +127,8 @@ to a shiny session, escaping shiny's reactivity.</p><div class="section">
 <div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>parsed_event</code></dt>
-<dd><p>An already parsed server-sent event to append to the events field.</p></dd>
+<dd><p>An already parsed server-sent event to append to the
+events field.</p></dd>
 
 
 </dl><p></p></div>

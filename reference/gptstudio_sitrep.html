@@ -9,7 +9,7 @@ checks API connections if verbose is TRUE."><meta property="og:image" content="/
 
     <a class="navbar-brand me-2" href="../index.html">gptstudio</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,79 +77,10 @@ print to the console.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">gptstudio_sitrep</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># Print basic settings, no API checks</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Configuration for gptstudio</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> No user configuration file found at</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">/home/runner/.config/R/gptstudio/config.yml</span>. Using default configuration.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Change configuration settings in the chat app. Lauch the chat app with addins</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> or `gptstudio_chat()`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Current Settings</span> ──</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Model: gpt-4-turbo-preview</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Task: coding</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Language: en</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Service: openai</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Custom prompt:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Stream: TRUE</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Code style: no preference</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Skill: beginner</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Run `gptstudio_sitrep(verbose = TRUE)` to check API connections.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── End of gptstudio configuration ──────────────────────────────────────────────</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="fu">gptstudio_sitrep</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># Print basic settings, no API checks</span></span></span>
 <span class="r-in"><span><span class="fu">gptstudio_sitrep</span><span class="op">(</span><span class="op">)</span> <span class="co"># Print settings and check API connections</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Configuration for gptstudio</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> No user configuration file found at</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">/home/runner/.config/R/gptstudio/config.yml</span>. Using default configuration.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Change configuration settings in the chat app. Lauch the chat app with addins</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> or `gptstudio_chat()`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Current Settings</span> ──</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Model: gpt-4-turbo-preview</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Task: coding</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Language: en</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Service: openai</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Custom prompt:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Stream: TRUE</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Code style: no preference</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Skill: beginner</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Checking API connections</span> ──</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Checking OpenAI API connection </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> API key is not set or invalid for OpenAI service.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Checking HuggingFace API connection </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> API key is not set or invalid for HuggingFace service.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Checking Anthropic API connection </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> API key is not set or invalid for Anthropic service.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Checking Google AI Studio API connection </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> API key is not set or invalid for Google AI Studio service.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Checking Azure OpenAI API connection </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> API key is not set or invalid for Azure OpenAI service.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Checking Perplexity API connection </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> API key is not set or invalid for Perplexity service.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Checking Cohere API connection </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> API key is not set or invalid for Cohere service.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Check Ollama for Local API connection </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Couldn't connect to Ollama in <span style="color: #0000BB; font-style: italic;">&lt;http://localhost:11434&gt;</span>. Is it running there?</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Getting help</span> ──</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> See the gptstudio homepage (<span style="color: #0000BB; font-style: italic;">&lt;https://michelnivard.github.io/gptstudio/&gt;</span>) for</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> getting started guides and package documentation. File an issue or contribute</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> to the package at the GitHub repo</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> (<span style="color: #0000BB; font-style: italic;">&lt;https://github.com/MichelNivard/gptstudio&gt;</span>).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── End of gptstudio configuration ──────────────────────────────────────────────</span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
