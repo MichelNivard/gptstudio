@@ -35,7 +35,8 @@ style_chat_history <- function(history, ide_colors = get_ide_theme_info()) {
 style_chat_message <- function(message,
                                ide_colors = get_ide_theme_info()) {
   colors <- create_ide_matching_colors(message$role, ide_colors)
-  icon_name <- switch(message$role,
+  icon_name <- switch(
+    message$role,
     "user" = "person-fill",
     "assistant" = "robot"
   )
@@ -356,9 +357,11 @@ get_highlightjs_theme <- function() {
     )
 
     theme <- theme_mapping[[clean_theme_name]] %||% "github-dark"
-    glue::glue("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/styles/{theme}.min.css")
   } else {
     cli::cli_inform("Failed to get RStudio theme. Using default 'github-dark' theme.")
-    glue::glue("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/styles/github-dark.min.css")
+    theme <- "github-dark"
   }
+  base_url <-
+    "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/styles/"
+  glue::glue("{base_url}{theme}.min.css")
 }
