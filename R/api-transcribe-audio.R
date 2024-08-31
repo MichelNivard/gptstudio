@@ -54,9 +54,9 @@ transcribe_audio <- function(audio_input, api_key = Sys.getenv("OPENAI_API_KEY")
   writeBin(parsed$data, temp_webm)
   system_result <- # nolint
     system2("ffmpeg",
-      args = c("-i", temp_webm, "-acodec", "pcm_s16le", "-ar", "44100", temp_wav), # nolint
-      stdout = TRUE,
-      stderr = TRUE
+            args = c("-i", temp_webm, "-acodec", "pcm_s16le", "-ar", "44100", temp_wav), # nolint
+            stdout = TRUE,
+            stderr = TRUE
     )
 
   if (!file.exists(temp_wav)) {
@@ -66,7 +66,10 @@ transcribe_audio <- function(audio_input, api_key = Sys.getenv("OPENAI_API_KEY")
   req <- request("https://api.openai.com/v1/audio/transcriptions") %>%
     req_auth_bearer_token(api_key) %>%
     req_body_multipart(
-      file = curl::form_file(temp_wav),
+      file = structure(list(path = temp_wav,
+                            type = NULL,
+                            name = NULL),
+                       class = "form_file"),
       model = "whisper-1",
       response_format = "text"
     )

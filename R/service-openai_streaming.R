@@ -13,59 +13,70 @@
 #' By default, it is fetched from the "OPENAI_API_KEY" environment variable.
 #' Please note that the OpenAI API key is sensitive information and should be
 #' treated accordingly.
-#' @return The same as `curl::curl_fetch_stream`
+#' @return The same as `httr2::req_perform_stream`
 stream_chat_completion <-
   function(messages = list(list(role = "user", content = "Hi there!")),
-           element_callback = cat,
+           element_callback = openai_handler,
            model = "gpt-4o-mini",
            openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
     # Set the API endpoint URL
     url <- paste0(getOption("gptstudio.openai_url"), "/chat/completions")
 
-    # Set the request headers
-    headers <- list(
-      "Content-Type" = "application/json",
-      "Authorization" = paste0("Bearer ", openai_api_key)
-    )
-
-    # Set the request body
     body <- list(
       "model" = model,
       "stream" = TRUE,
       "messages" = messages
     )
 
-    # Create a new curl handle object
-    handle <- curl::new_handle() %>%
-      curl::handle_setheaders(.list = headers) %>%
-      curl::handle_setopt(postfields = jsonlite::toJSON(body, auto_unbox = TRUE)) # request body
 
-    # Make the streaming request using curl_fetch_stream()
-    curl::curl_fetch_stream(
-      url = url,
-      fun = function(x) {
-        element <- rawToChar(x)
-        element_callback(element) # Do whatever element_callback does
-      },
-      handle = handle
-    )
+    # Prepare the request
+    req <- request(url) %>%
+      req_headers(
+        "Content-Type" = "application/json",
+        "Authorization" = paste0("Bearer ", openai_api_key)
+      ) %>%
+      req_body_json(body) %>%
+      req_perform_stream(
+        callback = function(x) {
+          element <- rawToChar(x)
+          element_callback(element)
+          TRUE
+        },
+        round = "line",
+        buffer_kb = 0.01
+      )
   }
 
-
+openai_handler <- function(x) {
+  lines <- stringr::str_split(x, "\n")[[1]]
+  lines <- lines[lines != ""]
+  lines <- stringr::str_replace_all(lines, "^data: ", "")
+  lines <- lines[lines != "[DONE]"]
+  if (length(lines) == 0) {
+    return()
+  }
+  json <- jsonlite::parse_json(lines)
+  if (!is.null(json$choices[[1]]$finish_reason)) {
+    return()
+  } else {
+    cat(json$choices[[1]]$delta$content)
+  }
+}
 
 #' Stream handler for chat completions
 #'
-#' R6 class that allows to handle chat completions chunk by chunk.
-#' It also adds methods to retrieve relevant data. This class DOES NOT make the request.
+#' R6 class that allows to handle chat completions chunk by chunk. It also adds
+#' methods to retrieve relevant data. This class DOES NOT make the request.
 #'
-#' Because `curl::curl_fetch_stream` blocks the R console until the stream finishes,
-#' this class can take a shiny session object to handle communication with JS
-#' without recurring to a `shiny::observe` inside a module server.
+#' Because `httr2::req_perform_stream` blocks the R console until the stream
+#' finishes, this class can take a shiny session object to handle communication
+#' with JS without recurring to a `shiny::observe` inside a module server.
 #'
 #' @param session The shiny session it will send the message to (optional).
-#' @param user_prompt The prompt for the chat completion.
-#' Only to be displayed in an HTML tag containing the prompt. (Optional).
-#' @param parsed_event An already parsed server-sent event to append to the events field.
+#' @param user_prompt The prompt for the chat completion. Only to be displayed
+#'   in an HTML tag containing the prompt. (Optional).
+#' @param parsed_event An already parsed server-sent event to append to the
+#'   events field.
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON
 OpenaiStreamParser <- R6::R6Class( # nolint
@@ -92,7 +103,6 @@ OpenaiStreamParser <- R6::R6Class( # nolint
     append_parsed_sse = function(parsed_event) {
       # ----- here you can do whatever you want with the event data -----
       if (is.null(parsed_event$data) || parsed_event$data == "[DONE]") {
-        cli::cli_alert_info("Skipping")
         return()
       }
 

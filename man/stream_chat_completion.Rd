@@ -6,7 +6,7 @@
 \usage{
 stream_chat_completion(
   messages = list(list(role = "user", content = "Hi there!")),
-  element_callback = cat,
+  element_callback = openai_handler,
   model = "gpt-4o-mini",
   openai_api_key = Sys.getenv("OPENAI_API_KEY")
 )
@@ -27,7 +27,7 @@ Please note that the OpenAI API key is sensitive information and should be
 treated accordingly.}
 }
 \value{
-The same as \code{curl::curl_fetch_stream}
+The same as \code{httr2::req_perform_stream}
 }
 \description{
 \code{stream_chat_completion} sends the prepared chat completion request to the
