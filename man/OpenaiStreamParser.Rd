@@ -9,12 +9,12 @@ Stream handler for chat completions
 Stream handler for chat completions
 }
 \details{
-R6 class that allows to handle chat completions chunk by chunk.
-It also adds methods to retrieve relevant data. This class DOES NOT make the request.
+R6 class that allows to handle chat completions chunk by chunk. It also adds
+methods to retrieve relevant data. This class DOES NOT make the request.
 
-Because \code{curl::curl_fetch_stream} blocks the R console until the stream finishes,
-this class can take a shiny session object to handle communication with JS
-without recurring to a \code{shiny::observe} inside a module server.
+Because \code{httr2::req_perform_stream} blocks the R console until the stream
+finishes, this class can take a shiny session object to handle communication
+with JS without recurring to a \code{shiny::observe} inside a module server.
 }
 \section{Super class}{
 \code{\link[SSEparser:SSEparser]{SSEparser::SSEparser}} -> \code{OpenaiStreamParser}
@@ -60,8 +60,8 @@ Start a StreamHandler. Recommended to be assigned to the \code{stream_handler} n
 \describe{
 \item{\code{session}}{The shiny session it will send the message to (optional).}
 
-\item{\code{user_prompt}}{The prompt for the chat completion.
-Only to be displayed in an HTML tag containing the prompt. (Optional).}
+\item{\code{user_prompt}}{The prompt for the chat completion. Only to be displayed
+in an HTML tag containing the prompt. (Optional).}
 }
 \if{html}{\out{</div>}}
 }
@@ -70,8 +70,8 @@ Only to be displayed in an HTML tag containing the prompt. (Optional).}
 \if{html}{\out{<a id="method-OpenaiStreamParser-append_parsed_sse"></a>}}
 \if{latex}{\out{\hypertarget{method-OpenaiStreamParser-append_parsed_sse}{}}}
 \subsection{Method \code{append_parsed_sse()}}{
-Overwrites \code{SSEparser$append_parsed_sse()} to be able to send a custom message
-to a shiny session, escaping shiny's reactivity.
+Overwrites \code{SSEparser$append_parsed_sse()} to be able to
+send a custom message to a shiny session, escaping shiny's reactivity.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OpenaiStreamParser$append_parsed_sse(parsed_event)}\if{html}{\out{</div>}}
 }
@@ -79,7 +79,8 @@ to a shiny session, escaping shiny's reactivity.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{parsed_event}}{An already parsed server-sent event to append to the events field.}
+\item{\code{parsed_event}}{An already parsed server-sent event to append to the
+events field.}
 }
 \if{html}{\out{</div>}}
 }

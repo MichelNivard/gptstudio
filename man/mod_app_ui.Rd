@@ -4,12 +4,18 @@
 \alias{mod_app_ui}
 \title{App UI}
 \usage{
-mod_app_ui(id, ide_colors = get_ide_theme_info())
+mod_app_ui(
+  id,
+  ide_colors = get_ide_theme_info(),
+  code_theme_url = get_highlightjs_theme()
+)
 }
 \arguments{
 \item{id}{id of the module}
 
 \item{ide_colors}{List containing the colors of the IDE theme.}
+
+\item{code_theme_url}{URL to the highlight.js theme}
 }
 \description{
 App UI

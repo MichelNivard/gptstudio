@@ -4,7 +4,7 @@
 #' This has been created to be able to bind the message to a shiny event to trigger a new render.
 #'
 #' @import htmlwidgets
-#' @inheritParams run_chatgpt_app
+#' @inheritParams gptstudio_run_chat_app
 #' @inheritParams welcomeMessage-shiny
 #' @inheritParams chat_message_default
 #' @param element_id The element's id

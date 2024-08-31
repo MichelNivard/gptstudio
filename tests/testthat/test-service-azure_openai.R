@@ -41,8 +41,10 @@ test_that("request_base_azure_openai constructs correct request", {
   }
 
   mock_req_headers <- function(req, ...) {
-    req$headers <- list("api-key" = "test_token",
-                        "Content-Type" = "application/json")
+    req$headers <- list(
+      "api-key" = "test_token",
+      "Content-Type" = "application/json"
+    )
     req
   }
 
@@ -64,9 +66,11 @@ test_that("request_base_azure_openai constructs correct request", {
         api_version = "test_version"
       )
 
-      expect_equal(result$url, "https://test.openai.azure.com/openai/deployments/test_deployment/test_task?api-version=test_version") #nolint
-      expect_equal(result$headers, list("api-key" = "test_token",
-                                        "Content-Type" = "application/json"))
+      expect_equal(result$url, "https://test.openai.azure.com/openai/deployments/test_deployment/test_task?api-version=test_version") # nolint
+      expect_equal(result$headers, list(
+        "api-key" = "test_token",
+        "Content-Type" = "application/json"
+      ))
     }
   )
 })
@@ -74,12 +78,14 @@ test_that("request_base_azure_openai constructs correct request", {
 test_that("query_api_azure_openai handles successful response", {
   mock_request_base <- function(...) {
     structure(list(url = "https://test.openai.azure.com", headers = list()),
-              class = "httr2_request")
+      class = "httr2_request"
+    )
   }
 
   mock_req_perform <- function(req) {
     structure(list(status_code = 200, body = '{"result": "success"}'),
-              class = "httr2_response")
+      class = "httr2_response"
+    )
   }
 
   mock_resp_body_json <- function(resp) list(result = "success")
@@ -110,12 +116,14 @@ test_that("query_api_azure_openai handles successful response", {
 test_that("query_api_azure_openai handles error response", {
   mock_request_base <- function(...) {
     structure(list(url = "https://test.openai.azure.com", headers = list()),
-              class = "httr2_request")
+      class = "httr2_request"
+    )
   }
 
   mock_req_perform <- function(req) {
     structure(list(status_code = 400, body = '{"error": "Bad Request"}'),
-              class = "httr2_response")
+      class = "httr2_response"
+    )
   }
 
   local_mocked_bindings(

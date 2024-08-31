@@ -136,9 +136,10 @@ check_api_connection_cohere <- function(service, api_key) {
 #' print to the console.
 #'
 #' @examples
+#' \dontrun{
 #' gptstudio_sitrep(verbose = FALSE) # Print basic settings, no API checks
 #' gptstudio_sitrep() # Print settings and check API connections
-#'
+#' }
 #' @export
 gptstudio_sitrep <- function(verbose = TRUE) {
   cli::cli_h1("Configuration for gptstudio")

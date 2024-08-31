@@ -69,7 +69,6 @@ request_base_azure_openai <-
           "Content-Type" = "application/json"
         )
     }
-
   }
 
 query_api_azure_openai <-
@@ -111,13 +110,16 @@ query_api_azure_openai <-
 retrieve_azure_token <- function() {
   rlang::check_installed("AzureRMR")
 
-  token <- tryCatch({
-    AzureRMR::get_azure_login(
-      tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
-      app = Sys.getenv("AZURE_OPENAI_CLIENT_ID"),
-      scopes = ".default"
-    )
-  }, error = function(e) NULL)
+  token <- tryCatch(
+    {
+      AzureRMR::get_azure_login(
+        tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
+        app = Sys.getenv("AZURE_OPENAI_CLIENT_ID"),
+        scopes = ".default"
+      )
+    },
+    error = function(e) NULL
+  )
 
   if (is.null(token)) {
     token <- AzureRMR::create_azure_login(
@@ -130,4 +132,29 @@ retrieve_azure_token <- function() {
   }
 
   invisible(token$token$credentials$access_token)
+}
+
+
+stream_azure_openai <- function(messages = list(list(role = "user", content = "hi there")),
+                                element_callback = cat) {
+  body <- list(
+    messages = messages,
+    stream = TRUE
+  )
+
+  response <-
+    request_base_azure_openai() %>%
+    req_body_json(data = body) %>%
+    req_retry(max_tries = 3) %>%
+    req_error(is_error = function(resp) FALSE) %>%
+    req_perform_stream(
+      callback = \(x) {
+        element <- rawToChar(x)
+        element_callback(element)
+        TRUE
+      },
+      round = "line"
+    )
+
+  invisible(response)
 }

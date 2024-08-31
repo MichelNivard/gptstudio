@@ -16,32 +16,35 @@ new_gpstudio_request_skeleton <- function(url, api_key, model, prompt, history,
 }
 
 validate_skeleton <- function(url, api_key, model, prompt, history, stream) {
-  assert_that(
-    rlang::is_scalar_character(url),
-    msg = "URL is not a valid character scalar"
-  )
-  assert_that(
-    rlang::is_scalar_character(api_key) && api_key != "",
-    msg = "API key is not valid"
-  )
-  assert_that(
-    rlang::is_scalar_character(model) && model != "",
-    msg = "Model name is not a valid character scalar"
-  )
-  assert_that(
-    rlang::is_scalar_character(prompt),
-    msg = "Prompt is not a valid list"
-  )
+  if (!is_scalar_character(url)) {
+    cli_abort("{.arg url} is not a valid character scalar.
+              It is a {.cls {class(url)}}.")
+  }
 
-  # is list or is NULL
-  assert_that(
-    rlang::is_list(history) || is.null(history),
-    msg = "History is not a valid list or NULL"
-  )
-  assert_that(
-    rlang::is_bool(stream),
-    msg = "Stream is not a valid boolean"
-  )
+  if (!is_scalar_character(api_key) || api_key == "") {
+    cli_abort("{.arg api_key} is not a valid character scalar.
+              It is a {.cls {class(api_key)}}.")
+  }
+
+  if (!is_scalar_character(model) || model == "") {
+    cli_abort("{.arg model} is not a valid character scalar.
+              It is a {.cls {class(model)}}.")
+  }
+
+  if (!is_scalar_character(prompt)) {
+    cli_abort("{.arg prompt} is not a valid character scalar.
+              It is a {.cls {class(prompt)}}.")
+  }
+
+  if (!is_list(history) && !is.null(history)) {
+    cli_abort("{.arg history} is not a valid list or NULL.
+              It is a {.cls {class(history)}}.")
+  }
+
+  if (!is_scalar_logical(stream)) {
+    cli_abort("{.arg stream} is not a valid boolean.
+              It is a {.cls {class(stream)}}.")
+  }
 }
 
 new_gptstudio_request_skeleton_openai <- function(
@@ -160,7 +163,7 @@ new_gptstudio_request_skeleton_azure_openai <- function(
 new_gptstudio_request_skeleton_ollama <- function(model, prompt, history, stream) {
   new_gpstudio_request_skeleton(
     url = Sys.getenv("OLLAMA_HOST"),
-    api_key = "JUST A PLACESHOLDER",
+    api_key = "JUST A PLACEHOLDER",
     model = model,
     prompt = prompt,
     history = history,
@@ -283,8 +286,7 @@ gptstudio_create_skeleton <- function(service = "openai",
       model = model,
       prompt = prompt,
       history = history,
-      # forcing false until streaming implemented for azure openai
-      stream = FALSE
+      stream = stream
     ),
     "ollama" = new_gptstudio_request_skeleton_ollama(
       model = model,

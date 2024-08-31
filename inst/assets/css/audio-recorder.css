@@ -1,0 +1,12 @@
+av-settings-menu {
+  display: block;
+  width: min-content;
+}
+
+/* The normal treatment of .dropdown-item.active is a little too much */
+av-settings-menu .dropdown-item.active,
+av-settings-menu .dropdown-menu > li > a.active {
+  color: inherit;
+  background-color: inherit;
+  font-weight: bold;
+}

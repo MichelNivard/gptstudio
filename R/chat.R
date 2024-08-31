@@ -40,6 +40,7 @@
 #'   response. If `TRUE`, the response will be passed to
 #'   `gptstudio_response_process()` for further processing. Defaults to `FALSE`.
 #'   Refer to `gptstudio_response_process()` for more details.
+#' @param session An optional parameter for a shiny session object.
 #' @param ... Reserved for future use.
 #'
 #' @return Depending on the task and processing, the function returns the
@@ -82,6 +83,7 @@ chat <- function(prompt,
                  task = getOption("gptstudio.task", "coding"),
                  custom_prompt = NULL,
                  process_response = FALSE,
+                 session = NULL,
                  ...) {
   response <-
     gptstudio_create_skeleton(
@@ -98,7 +100,7 @@ chat <- function(prompt,
       task = task,
       custom_prompt = custom_prompt
     ) %>%
-    gptstudio_request_perform()
+    gptstudio_request_perform(shiny_session = session)
 
   if (process_response) {
     response %>% gptstudio_response_process()

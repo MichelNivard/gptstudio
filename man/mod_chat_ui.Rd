@@ -4,12 +4,18 @@
 \alias{mod_chat_ui}
 \title{Chat UI}
 \usage{
-mod_chat_ui(id, translator = create_translator())
+mod_chat_ui(
+  id,
+  translator = create_translator(),
+  code_theme_url = get_highlightjs_theme()
+)
 }
 \arguments{
 \item{id}{id of the module}
 
 \item{translator}{A Translator from \code{shiny.i18n::Translator}}
+
+\item{code_theme_url}{URL to the highlight.js theme}
 }
 \description{
 Chat UI

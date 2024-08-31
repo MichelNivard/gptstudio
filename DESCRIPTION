@@ -1,7 +1,7 @@
 Type: Package
 Package: gptstudio
 Title: Use Large Language Models Directly in your Development Environment
-Version: 0.4.0.9003
+Version: 0.4.0.9004
 Authors@R: c(
     person("Michel", "Nivard", , "m.g.nivard@vu.nl", role = c("aut", "cph")),
     person("James", "Wade", , "github@jameshwade.com", role = c("aut", "cre", "cph"),
@@ -21,14 +21,11 @@ BugReports: https://github.com/MichelNivard/gptstudio/issues
 Depends:
     R (>= 4.0)
 Imports: 
-    assertthat,
-    bslib (>= 0.6.0),
+    bsicons,
+    bslib (>= 0.8.0),
     cli,
     colorspace,
-    curl,
-    fontawesome,
     glue,
-    grDevices,
     htmltools,
     htmlwidgets,
     httr2,
@@ -36,22 +33,25 @@ Imports:
     jsonlite,
     magrittr,
     purrr,
-    R6,
+    R6 (>= 2.0),
     rlang,
     rstudioapi (>= 0.12),
-    rvest,
-    shiny,
+    shiny (>= 1.9.0),
     shiny.i18n,
     SSEparser,
     stringr (>= 1.5.0),
     utils,
-    waiter,
     yaml
 Suggests: 
     AzureRMR,
+    future,
+    grDevices,
     knitr,
+    miniUI,
     mockr,
+    promises,
     rmarkdown,
+    rvest,
     shinytest2,
     spelling,
     testthat (>= 3.0.0),

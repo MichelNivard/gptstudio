@@ -8,7 +8,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
   read_docs_label <- tags$span(
     "Read R help pages",
     bslib::tooltip(
-      shiny::icon("info-circle"),
+      bsicons::bs_icon("info-circle"),
       "Add help pages of 'package::object' matches for context.
       Potentially expensive.
       Save as default to effectively change"
@@ -20,7 +20,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     multiple = FALSE,
     bslib::accordion_panel(
       title = "Assistant behavior",
-      icon = fontawesome::fa("robot"),
+      icon = bsicons::bs_icon("robot"),
       selectInput(
         inputId = ns("task"),
         label = translator$t("Task"),
@@ -57,7 +57,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     ),
     bslib::accordion_panel(
       title = "API service",
-      icon = fontawesome::fa("server"),
+      icon = bsicons::bs_icon("server"),
       selectInput(
         inputId = ns("service"),
         label = translator$t("Select API Service"),
@@ -77,11 +77,17 @@ mod_settings_ui <- function(id, translator = create_translator()) {
         label = "Stream Response",
         value = as.logical(getOption("gptstudio.stream")),
         width = "100%"
+      ),
+      bslib::input_switch(
+        id = ns("audio_input"),
+        label = "Audio as Input",
+        value = as.logical(getOption("gptstudio.audio_input")),
+        width = "100%"
       )
     ),
     bslib::accordion_panel(
       title = "UI options",
-      icon = fontawesome::fa("sliders"),
+      icon = bsicons::bs_icon("sliders"),
       selectInput(
         inputId = ns("language"),
         # label = translator$t("Language"), # TODO: update translator
@@ -95,21 +101,21 @@ mod_settings_ui <- function(id, translator = create_translator()) {
 
   btn_to_history <- actionButton(
     inputId = ns("to_history"),
-    label = fontawesome::fa("arrow-left-long"),
+    label = bsicons::bs_icon("arrow-left"),
     class = "mb-3"
   ) %>%
     bslib::tooltip("Back to history")
 
   btn_save_as_default <- actionButton(
     inputId = ns("save_default"),
-    label = fontawesome::fa("floppy-disk"),
+    label = bsicons::bs_icon("floppy"),
     class = "mb-3"
   ) %>%
     bslib::tooltip("Save as default")
 
   btn_save_in_session <- actionButton(
     inputId = ns("save_session"),
-    label = fontawesome::fa("bookmark"),
+    label = bsicons::bs_icon("bookmark"),
     class = "mb-3"
   ) %>%
     bslib::tooltip("Save for this session")
@@ -130,10 +136,11 @@ mod_settings_server <- function(id) {
     rv$selected_history <- 0L
     rv$modify_session_settings <- 0L
     rv$create_new_chat <- 0L
+    rv$record_input <- 0L
 
     observe({
       msg <- glue::glue("Fetching models for {input$service} service...")
-      showNotification(ui = msg, type = "message", duration = 3, session = session)
+      showNotification(ui = msg, type = "message", duration = 1, session = session)
       cli::cli_alert_info(msg)
       models <- tryCatch(
         {
@@ -153,7 +160,7 @@ mod_settings_server <- function(id) {
       )
 
       if (length(models) > 0) {
-        showNotification(ui = "Got models!", duration = 3, type = "message", session = session)
+        showNotification(ui = "Got models!", duration = 1.5, type = "message", session = session)
         cli::cli_alert_success("Got models!")
 
         default_model <- getOption("gptstudio.model")
@@ -217,7 +224,8 @@ mod_settings_server <- function(id) {
         model = input$model,
         custom_prompt = input$custom_prompt,
         stream = input$stream,
-        read_docs = input$read_docs
+        read_docs = input$read_docs,
+        audio_input = input$audio_input
       )
 
       rv$modify_session_settings <- rv$modify_session_settings + 1L
@@ -259,6 +267,7 @@ mod_settings_server <- function(id) {
       rv$service <- input$service %||% getOption("gptstudio.service")
       rv$stream <- as.logical(input$stream %||% getOption("gptstudio.stream"))
       rv$custom_prompt <- input$custom_prompt %||% getOption("gptstudio.custom_prompt")
+      rv$audio_input <- input$audio_input %||% getOption("gptstudio.audio_input")
 
       rv$create_new_chat <- rv$create_new_chat + 1L
     }) %>%

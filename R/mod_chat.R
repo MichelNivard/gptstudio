@@ -2,8 +2,11 @@
 #'
 #' @param id id of the module
 #' @param translator A Translator from `shiny.i18n::Translator`
+#' @param code_theme_url URL to the highlight.js theme
 #'
-mod_chat_ui <- function(id, translator = create_translator()) {
+mod_chat_ui <- function(id,
+                        translator = create_translator(),
+                        code_theme_url = get_highlightjs_theme()) {
   ns <- NS(id)
 
   bslib::card(
@@ -21,35 +24,31 @@ mod_chat_ui <- function(id, translator = create_translator()) {
         div(
           class = "mt-auto",
           style = css(
-            "margin-left" = "40px",
-            "margin-right" = "40px"
+            "margin-left" = "20px",
+            "margin-right" = "20px"
           ),
           htmltools::div(
             class = "position-relative",
             style = css(
               "width" = "100%"
             ),
-            div(
-              text_area_input_wrapper(
-                inputId = ns("chat_input"),
-                label = NULL,
-                width = "100%",
-                placeholder = translator$t("Write your prompt here"),
-                value = "",
-                resize = "none",
-                textarea_class = "chat-prompt"
-              )
-            ),
-            div(
-              class = "position-absolute top-50 end-0 translate-middle",
-              actionButton(
-                inputId = ns("chat"),
-                label = icon("fas fa-paper-plane"),
-                class = "w-100 btn-primary p-1 chat-send-btn"
-              ) %>%
-                bslib::tooltip("Send (click or Enter)")
-            )
+            uiOutput(ns("chat_with_audio"))
           )
+        ),
+        tags$head(
+          tags$script(src = "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/highlight.js"), #nolint
+          tags$link(
+            rel = "stylesheet",
+            href = code_theme_url
+          ),
+          # Add JavaScript to initialize highlight.js
+          tags$script(HTML("
+            document.addEventListener('DOMContentLoaded', (event) => {
+              document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+              });
+            });
+          "))
         )
       )
     )
@@ -61,72 +60,104 @@ mod_chat_ui <- function(id, translator = create_translator()) {
 #' @param id id of the module
 #' @param translator Translator from `shiny.i18n::Translator`
 #' @param settings,history Reactive values from the settings and history module
-#' @inheritParams run_chatgpt_app
+#' @inheritParams gptstudio_run_chat_app
 #'
-mod_chat_server <- function(id,
-                            ide_colors = get_ide_theme_info(),
-                            translator = create_translator(),
-                            settings,
-                            history) {
-  # This is where changes will focus
+mod_chat_server <- function(
+    id,
+    ide_colors = get_ide_theme_info(),
+    translator = create_translator(),
+    settings,
+    history) {
   moduleServer(id, function(input, output, session) {
-    # Session data ----
+    check_installed("promises")
 
-    rv <- reactiveValues()
-    rv$reset_welcome_message <- 0L
-    rv$reset_streaming_message <- 0L
+    # Session data ----
+    rv <- reactiveValues(
+      reset_welcome_message = 0L,
+      reset_streaming_message = 0L,
+      audio_input = getOption("gptstudio.audio_input")
+    )
 
     # UI outputs ----
-
     output$welcome <- renderWelcomeMessage({
       welcomeMessage(ide_colors)
-    }) %>%
-      bindEvent(rv$reset_welcome_message)
-
+    }) %>% bindEvent(rv$reset_welcome_message)
 
     output$history <- renderUI({
-      history$chat_history %>%
-        style_chat_history(ide_colors = ide_colors)
+      rendered_history <- history$chat_history %>% style_chat_history(ide_colors = ide_colors)
+      tagList(
+        tags$div(rendered_history),
+        tags$script("hljs.highlightAll();")
+      )
     })
 
-
     output$streaming <- renderStreamingMessage({
-      # This has display: none by default. It is only shown when receiving a stream
-      # After the stream is completed, it will reset.
       streamingMessage(ide_colors)
-    }) %>%
-      bindEvent(rv$reset_streaming_message)
-
+    }) %>% bindEvent(rv$reset_streaming_message)
 
     # Observers ----
-
-    observe({
+    observeEvent(history$create_new_chat, {
       rv$reset_welcome_message <- rv$reset_welcome_message + 1L
-    }) %>%
-      bindEvent(history$create_new_chat)
+    })
 
-
-    observe({
-
-      skeleton <- gptstudio_create_skeleton(
-        service = settings$service,
-        model = settings$model,
-        prompt = input$chat_input,
-        history = history$chat_history,
-        stream = settings$stream
-      ) %>%
-        gptstudio_skeleton_build(
-          skill = settings$skill,
-          style = settings$style,
-          task = settings$task,
-          custom_prompt = settings$custom_prompt
+    process_chat <- ExtendedTask$new(function(prompt,
+                                              service,
+                                              chat_history,
+                                              stream,
+                                              model,
+                                              skill,
+                                              style,
+                                              task,
+                                              custom_prompt) {
+      promises::future_promise({
+        chat(
+          prompt = prompt,
+          service = service,
+          history = chat_history,
+          stream = stream,
+          model = model,
+          skill = skill,
+          style = style,
+          task = task,
+          custom_prompt = custom_prompt,
+          process_response = TRUE,
+          session = session
         )
+      })
+    }) %>% bslib::bind_task_button("chat")
 
-      response <- gptstudio_request_perform(
-        skeleton = skeleton,
-        shiny_session = session
-      ) %>%
-        gptstudio_response_process()
+    observeEvent(input$chat, {
+      process_chat$invoke(
+        prompt = input$chat_input,
+        service = settings$service,
+        chat_history = history$chat_history,
+        stream = settings$stream,
+        model = settings$model,
+        skill = settings$skill,
+        style = settings$style,
+        task = settings$task,
+        custom_prompt = settings$custom_prompt
+      )
+    })
+
+    observeEvent(input$clip, {
+      req(input$clip)
+      new_prompt <- transcribe_audio(input$clip)
+      process_chat$invoke(
+        prompt = new_prompt,
+        service = settings$service,
+        chat_history = history$chat_history,
+        stream = settings$stream,
+        model = settings$model,
+        skill = settings$skill,
+        style = settings$style,
+        task = settings$task,
+        custom_prompt = settings$custom_prompt
+      )
+    })
+
+    observeEvent(process_chat$result(), {
+      response <- process_chat$result()
 
       history$chat_history <- response$history
 
@@ -141,7 +172,48 @@ mod_chat_server <- function(id,
       }
 
       updateTextAreaInput(session, "chat_input", value = "")
-    }) %>%
-      bindEvent(input$chat)
+    })
+
+    output$chat_with_audio <- renderUI({
+      ns <- session$ns
+      audio_recorder <- if (rv$audio_input) {
+        div(
+          style = "position: absolute; right: 20px; top: 25%; transform: translateY(-50%);",
+          input_audio_clip(
+            ns("clip"),
+            record_label = NULL,
+            stop_label = NULL,
+            show_mic_settings = FALSE,
+          )
+        )
+      }
+
+      tagList(
+        div(
+          div(
+            style = "flex-grow: 1; height: 100%;",
+            text_area_input_wrapper(
+              inputId = ns("chat_input"),
+              label = NULL,
+              width = "100%",
+              height = "100%",
+              value = "",
+              resize = "none",
+              textarea_class = "chat-prompt"
+            )
+          ),
+          div(
+            style = "position: absolute; right: 10px; top: 50%; transform: translateY(-50%);",
+            bslib::input_task_button(
+              id = ns("chat"),
+              label = bsicons::bs_icon("send"),
+              label_busy = NULL,
+              class = "btn-secondary p-2 chat-send-btn"
+            ) %>% bslib::tooltip("Send (click or Enter)")
+          ),
+          audio_recorder
+        )
+      )
+    })
   })
 }

@@ -16,6 +16,7 @@ read_docs <- function(user_prompt) {
 
 
 read_html_docs <- function(pkg_ref, topic_name) {
+  check_installed("rvest")
   # This should output a scalar character
   file_location <- utils::help(topic = (topic_name), package = (pkg_ref), help_type = "html") %>%
     as.character()
@@ -51,6 +52,7 @@ get_help_file_path <- function(file) {
 
 
 docs_get_inner_text <- function(x) {
+  check_installed("rvest")
   if (is.null(x)) {
     return(NULL)
   }
@@ -79,6 +81,7 @@ docs_get_inner_text <- function(x) {
 }
 
 docs_get_sections <- function(children) {
+  check_installed("rvest")
   h3_locations <- children %>%
     purrr::map_lgl(~ rvest::html_name(.x) == "h3") %>%
     which()

@@ -44,13 +44,13 @@ function addCopyBtn() {
     }
 
     // Create a div element with the copy button and language text
-    // The svg icon was generated using FontAwesome library via R
+    // The svg icon was generated using Bootrap library via R
     var div = $(`
     <div class="d-flex justify-content-between bg-dark" style="border-radius: 5px 5px 0 0">
     <p class="px-2 py-1 m-0 text-muted small">${language}</p>
     <div>
         <button type="button" class="btn action-button btn-secondary btn-sm btn-clipboard shiny-bound-input ml-auto">
-            <i class="fas fa-copy"></i> Copy
+            <i class="bi bi-copy"></i> Copy
         </button>
     </div>
     </div>

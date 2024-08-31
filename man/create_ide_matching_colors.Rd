@@ -4,7 +4,10 @@
 \alias{create_ide_matching_colors}
 \title{Chat message colors in RStudio}
 \usage{
-create_ide_matching_colors(role, ide_colors = get_ide_theme_info())
+create_ide_matching_colors(
+  role = c("user", "assistant"),
+  ide_colors = get_ide_theme_info()
+)
 }
 \arguments{
 \item{role}{The role of the message author}
