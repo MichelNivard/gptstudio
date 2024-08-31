@@ -230,6 +230,7 @@ get_highlightjs_theme <- function() {
     clean_theme_name <- tolower(gsub(" \\{rsthemes\\}$", "", rstudio_theme))
 
     theme_mapping <- list(
+      # Original mappings
       "a11y-dark" = "a11y-dark",
       "a11y-light" = "a11y-light",
       "base16 3024" = "base16/3024",
@@ -339,13 +340,25 @@ get_highlightjs_theme <- function() {
       "solarized dark" = "solarized-dark",
       "solarized light" = "solarized-light",
       "yule rstudio (reduced motion)" = "github",
-      "yule rstudio" = "github"
+      "yule rstudio" = "github",
+      "textmate" = "github",
+      "cobalt" = "cobalt",
+      "eclipse" = "eclipse",
+      "vibrant ink" = "vibrant-ink",
+      "clouds" = "clouds",
+      "clouds midnight" = "tomorrow-night-blue",
+      "merbivore" = "merbivore",
+      "ambiance" = "ambiance",
+      "chaos" = "chaos",
+      "tomorrow night blue" = "tomorrow-night-blue",
+      "tomorrow night bright" = "tomorrow-night-bright",
+      "tomorrow night eighties" = "tomorrow-night-eighties"
     )
 
     theme <- theme_mapping[[clean_theme_name]] %||% "github-dark"
-    glue::glue("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/styles/{theme}.min.css") # nolint
+    glue::glue("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/styles/{theme}.min.css")
   } else {
-    cli::cli_inform("Failed to get RStudio theme. Using default 'github' theme.")
-    glue::glue("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/styles/github-dark.min.css") # nolint
+    cli::cli_inform("Failed to get RStudio theme. Using default 'github-dark' theme.")
+    glue::glue("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/styles/github-dark.min.css")
   }
 }
