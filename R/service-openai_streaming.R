@@ -19,7 +19,6 @@ stream_chat_completion <-
            element_callback = openai_handler,
            model = "gpt-4o-mini",
            openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
-    # Set the API endpoint URL
     url <- paste0(getOption("gptstudio.openai_url"), "/chat/completions")
 
     body <- list(
@@ -28,9 +27,7 @@ stream_chat_completion <-
       "messages" = messages
     )
 
-
-    # Prepare the request
-    req <- request(url) %>%
+    request(url) %>%
       req_headers(
         "Content-Type" = "application/json",
         "Authorization" = paste0("Bearer ", openai_api_key)
