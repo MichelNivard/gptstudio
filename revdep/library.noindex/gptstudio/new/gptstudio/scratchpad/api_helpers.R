@@ -12,8 +12,8 @@ request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
       "i" = "Run {.run gptstudio::get_available_endpoints()} to get a list of supported endpoints"
     ))
   }
-  request(getOption("gptstudio.openai_url")) %>%
-    req_url_path_append(task) %>%
+  request(getOption("gptstudio.openai_url")) |>
+    req_url_path_append(task) |>
     req_auth_bearer_token(token = token)
 }
 
@@ -26,12 +26,12 @@ request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
 #' @return The response from the API.
 #'
 query_api <- function(task, request_body, token = Sys.getenv("OPENAI_API_KEY")) {
-  response <- request_base(task, token = token) %>%
-    req_body_json(data = request_body) %>%
-    req_retry(max_tries = 3) %>%
+  response <- request_base(task, token = token) |>
+    req_body_json(data = request_body) |>
+    req_retry(max_tries = 3) |>
     req_error(is_error = \(resp) FALSE)
 
-  response %>% req_dry_run()
+  response |> req_dry_run()
 
   response <- req_perform(response)
 
@@ -42,7 +42,7 @@ query_api <- function(task, request_body, token = Sys.getenv("OPENAI_API_KEY")) 
     send_abort_message(service, status, description)
   }
 
-  response %>%
+  response |>
     resp_body_json()
 }
 

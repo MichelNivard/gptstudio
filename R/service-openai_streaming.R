@@ -27,6 +27,7 @@ stream_chat_completion <-
       "messages" = messages
     )
 
+<<<<<<< HEAD
     request(url) %>%
       req_headers(
         "Content-Type" = "application/json",
@@ -42,6 +43,22 @@ stream_chat_completion <-
         round = "line",
         buffer_kb = 0.01
       )
+=======
+    # Create a new curl handle object
+    handle <- curl::new_handle() |>
+      curl::handle_setheaders(.list = headers) |>
+      curl::handle_setopt(postfields = jsonlite::toJSON(body, auto_unbox = TRUE)) # request body
+
+    # Make the streaming request using curl_fetch_stream()
+    curl::curl_fetch_stream(
+      url = url,
+      fun = function(x) {
+        element <- rawToChar(x)
+        element_callback(element) # Do whatever element_callback does
+      },
+      handle = handle
+    )
+>>>>>>> 2a5751d (%>% to |>, R >=4.1, update news)
   }
 
 openai_handler <- function(x) {

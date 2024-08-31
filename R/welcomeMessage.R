@@ -17,7 +17,7 @@ welcomeMessage <- function(ide_colors = get_ide_theme_info(), # nolint
 
   # forward options using x
   x <- list(
-    message = style_chat_message(default_message, ide_colors = ide_colors) %>% as.character()
+    message = style_chat_message(default_message, ide_colors = ide_colors) |> as.character()
   )
 
   # create widget
@@ -94,7 +94,7 @@ chat_message_default <- function(translator = create_translator()) {
     "Greetings! As your virtual assistant for R, I'm here to help you become a confident and proficient R user.",
     "Welcome to the R community! I'm your virtual assistant, and I'm here to support you every step of the way.",
     "Hi there! I'm your personal R virtual assistant, and I'm committed to helping you achieve your coding goals."
-  ) %>%
+  ) |>
     purrr::map_chr(~ translator$t(.x))
 
   # nolint end
@@ -102,8 +102,8 @@ chat_message_default <- function(translator = create_translator()) {
   content <- c(
     "{sample(welcome_messages, 1)}\n\n",
     translator$t("Type anything to start our conversation.")
-  ) %>%
-    glue::glue_collapse() %>%
+  ) |>
+    glue::glue_collapse() |>
     glue::glue()
 
 

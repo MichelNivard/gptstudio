@@ -29,16 +29,16 @@ new_gptstudio_service <- function(service_name = character()) {
 #' @export
 list_available_models.openai <- function(service) {
   models <-
-    request_base("models") %>%
-    httr2::req_perform() %>%
-    httr2::resp_body_json() %>%
-    purrr::pluck("data") %>%
+    request_base("models") |>
+    httr2::req_perform() |>
+    httr2::resp_body_json() |>
+    purrr::pluck("data") |>
     purrr::map_chr("id")
 
-  models <- models %>%
-    stringr::str_subset("^gpt") %>%
-    stringr::str_subset("instruct", negate = TRUE) %>%
-    stringr::str_subset("vision", negate = TRUE) %>%
+  models <- models |>
+    stringr::str_subset("^gpt") |>
+    stringr::str_subset("instruct", negate = TRUE) |>
+    stringr::str_subset("vision", negate = TRUE) |>
     sort()
 
   idx <- which(models == "gpt-4o-mini")
@@ -76,8 +76,8 @@ list_available_models.perplexity <- function(service) {
 #' @export
 list_available_models.ollama <- function(service) {
   if (!ollama_is_available()) stop("Couldn't find ollama in your system")
-  ollama_list() %>%
-    purrr::pluck("models") %>%
+  ollama_list() |>
+    purrr::pluck("models") |>
     purrr::map_chr("name")
 }
 

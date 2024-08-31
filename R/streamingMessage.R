@@ -14,12 +14,12 @@ streamingMessage <- function(ide_colors = get_ide_theme_info(), # nolint
   message <- list(
     list(role = "user", content = ""),
     list(role = "assistant", content = "")
-  ) %>%
+  ) |>
     style_chat_history(ide_colors = ide_colors)
 
   # forward options using x
   x <- list(
-    message = htmltools::tags$div(message) %>% as.character()
+    message = htmltools::tags$div(message) |> as.character()
   )
 
   # create widget

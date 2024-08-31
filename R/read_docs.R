@@ -5,10 +5,10 @@ read_docs <- function(user_prompt) {
     return()
   }
 
-  documentation <- calls %>%
+  documentation <- calls |>
     purrr::map(function(x) read_html_docs(x$pkg_ref, x$topic))
 
-  inner_text <- documentation %>%
+  inner_text <- documentation |>
     purrr::map(docs_get_inner_text)
 
   purrr::map2(calls, inner_text, ~ c(.x, list(inner_text = .y)))
@@ -18,7 +18,7 @@ read_docs <- function(user_prompt) {
 read_html_docs <- function(pkg_ref, topic_name) {
   check_installed("rvest")
   # This should output a scalar character
-  file_location <- utils::help(topic = (topic_name), package = (pkg_ref), help_type = "html") %>%
+  file_location <- utils::help(topic = (topic_name), package = (pkg_ref), help_type = "html") |>
     as.character()
 
   if (rlang::is_empty(file_location)) {
@@ -27,14 +27,14 @@ read_html_docs <- function(pkg_ref, topic_name) {
 
   env <- rlang::new_environment()
 
-  file_location %>%
-    get_help_file_path() %>%
+  file_location |>
+    get_help_file_path() |>
     lazyLoad(envir = env)
 
-  env[[topic_name]] %>%
-    tools::Rd2HTML() %>%
-    utils::capture.output() %>%
-    paste0(collapse = "\n") %>%
+  env[[topic_name]] |>
+    tools::Rd2HTML() |>
+    utils::capture.output() |>
+    paste0(collapse = "\n") |>
     rvest::read_html()
 }
 
@@ -57,16 +57,16 @@ docs_get_inner_text <- function(x) {
     return(NULL)
   }
 
-  main_container <- x %>%
-    rvest::html_element("body") %>%
+  main_container <- x |>
+    rvest::html_element("body") |>
     rvest::html_element(".container")
 
-  title <- main_container %>%
-    rvest::html_element("h2") %>%
+  title <- main_container |>
+    rvest::html_element("h2") |>
     rvest::html_text()
 
-  sections <- main_container %>%
-    rvest::html_children() %>%
+  sections <- main_container |>
+    rvest::html_children() |>
     docs_get_sections()
 
   list(
@@ -82,14 +82,14 @@ docs_get_inner_text <- function(x) {
 
 docs_get_sections <- function(children) {
   check_installed("rvest")
-  h3_locations <- children %>%
-    purrr::map_lgl(~ rvest::html_name(.x) == "h3") %>%
+  h3_locations <- children |>
+    purrr::map_lgl(~ rvest::html_name(.x) == "h3") |>
     which()
 
-  inner_texts <- children %>%
+  inner_texts <- children |>
     purrr::map_chr(rvest::html_text2)
 
-  section_ranges <- h3_locations %>%
+  section_ranges <- h3_locations |>
     purrr::imap(function(.x, i) {
       begin <- h3_locations[i] + 1
       end <- integer()
@@ -104,24 +104,24 @@ docs_get_sections <- function(children) {
       list(begin = begin, end = end)
     })
 
-  section_ranges %>%
-    purrr::map(~ inner_texts[.x$begin:.x$end] %>% paste0(collapse = "\n\n")) %>% # nolint
+  section_ranges |>
+    purrr::map(~ inner_texts[.x$begin:.x$end] |> paste0(collapse = "\n\n")) |> # nolint
     purrr::set_names(inner_texts[h3_locations])
 }
 
 locate_double_colon_calls <- function(x) {
-  all_matches <- x %>%
+  all_matches <- x |>
     stringr::str_extract_all("`?\\b\\w+::(\\w|\\.)+\\b`?")
 
-  all_matches[[1]] %>%
-    stringr::str_remove_all("`") %>%
-    stringr::str_split("::") %>%
+  all_matches[[1]] |>
+    stringr::str_remove_all("`") |>
+    stringr::str_split("::") |>
     purrr::map(~ list(pkg_ref = .x[1], topic = .x[2]))
 }
 
 docs_to_message <- function(x) {
-  inner_content <- x$inner_text %>%
-    purrr::compact() %>%
+  inner_content <- x$inner_text |>
+    purrr::compact() |>
     purrr::imap_chr(function(.x, i) {
       if (i == "title") {
         return(glue::glue("# {.x}"))
@@ -130,7 +130,7 @@ docs_to_message <- function(x) {
       section_title <- stringr::str_to_title(i)
       section_body <- if (i == "examples") glue::glue("<pre>{.x}</pre>") else .x
       glue::glue("## {section_title}\n\n{section_body}")
-    }) %>%
+    }) |>
     paste0(collapse = "\n\n")
 
   glue::glue("gptstudio-metadata-docs-start-{x$pkg_ref}-{x$topic}-gptstudio-metadata-docs-end{inner_content}") # nolint

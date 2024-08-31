@@ -16,6 +16,6 @@ test_that("rgb_str_to_hex() works as expected", {
 })
 
 test_that("create_translator() fails when language is not supported", {
-  create_translator("latin") %>%
+  create_translator("latin") |>
     expect_error()
 })

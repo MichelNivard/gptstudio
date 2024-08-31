@@ -1,9 +1,9 @@
 test_that("get_ide_theme_info() returns expected output", {
   ide_colors <- get_ide_theme_info()
 
-  ide_colors %>%
-    expect_type("list") %>%
-    expect_length(3) %>%
+  ide_colors |>
+    expect_type("list") |>
+    expect_length(3) |>
     expect_named(c("is_dark", "bg", "fg"))
 })
 
@@ -11,14 +11,14 @@ test_that("create_ide_matching_colors() returns default outside of rstudio", {
   user_colors <- create_ide_matching_colors("user")
   assistant_colors <- create_ide_matching_colors("assistant")
 
-  user_colors %>%
-    expect_type("list") %>%
-    expect_length(2) %>%
+  user_colors |>
+    expect_type("list") |>
+    expect_length(2) |>
     expect_named(c("bg_color", "fg_color"))
 
-  assistant_colors %>%
-    expect_type("list") %>%
-    expect_length(2) %>%
+  assistant_colors |>
+    expect_type("list") |>
+    expect_length(2) |>
     expect_named(c("bg_color", "fg_color"))
 })
 
@@ -30,19 +30,19 @@ test_that("style_chat_message() returns HTML element", {
   user_message <- list(
     role = "user",
     content = "Hello, how can I help you?"
-  ) %>%
+  ) |>
     style_chat_message()
 
   assistant_message <- list(
     role = "assistant",
     content = "Hello, how can I help you?"
-  ) %>%
+  ) |>
     style_chat_message()
 
-  user_message %>%
+  user_message |>
     expect_s3_class("shiny.tag")
 
-  assistant_message %>%
+  assistant_message |>
     expect_s3_class("shiny.tag")
 })
 
@@ -60,12 +60,12 @@ test_that("style_chat_history() returns expected output", {
     list(role = "assistant", content = "some message"),
     list(role = "user", content = "some message"),
     list(role = "assistant", content = "some message")
-  ) %>%
+  ) |>
     style_chat_history()
 
-  history %>%
-    expect_type("list") %>%
-    expect_s3_class(NA) %>%
+  history |>
+    expect_type("list") |>
+    expect_s3_class(NA) |>
     expect_length(4)
 })
 

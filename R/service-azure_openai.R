@@ -48,22 +48,22 @@ request_base_azure_openai <-
            api_version = Sys.getenv("AZURE_OPENAI_API_VERSION"),
            use_token = Sys.getenv("AZURE_OPENAI_USE_TOKEN")) {
     response <-
-      request(base_url) %>%
-      req_url_path_append("openai/deployments") %>%
-      req_url_path_append(deployment_name) %>%
-      req_url_path_append(task) %>%
+      request(base_url) |>
+      req_url_path_append("openai/deployments") |>
+      req_url_path_append(deployment_name) |>
+      req_url_path_append(task) |>
       req_url_query("api-version" = api_version)
 
     if (is_true(as.logical(use_token))) {
       token <- retrieve_azure_token()
-      response %>%
+      response |>
         req_headers(
           "api-key" = api_key,
           "Content-Type" = "application/json"
-        ) %>%
+        ) |>
         req_auth_bearer_token(token = token)
     } else {
-      response %>%
+      response |>
         req_headers(
           "api-key" = api_key,
           "Content-Type" = "application/json"
@@ -85,10 +85,10 @@ query_api_azure_openai <-
         deployment_name,
         api_key,
         api_version
-      ) %>%
-      req_body_json(list(messages = request_body)) %>%
-      req_retry(max_tries = 3) %>%
-      req_error(is_error = function(resp) FALSE) %>%
+      ) |>
+      req_body_json(list(messages = request_body)) |>
+      req_retry(max_tries = 3) |>
+      req_error(is_error = function(resp) FALSE) |>
       req_perform()
 
     # error handling
@@ -103,7 +103,7 @@ query_api_azure_openai <-
       ))
       # nolint end
     }
-    response %>%
+    response |>
       resp_body_json()
   }
 
@@ -143,10 +143,10 @@ stream_azure_openai <- function(messages = list(list(role = "user", content = "h
   )
 
   response <-
-    request_base_azure_openai() %>%
-    req_body_json(data = body) %>%
-    req_retry(max_tries = 3) %>%
-    req_error(is_error = function(resp) FALSE) %>%
+    request_base_azure_openai() |>
+    req_body_json(data = body) |>
+    req_retry(max_tries = 3) |>
+    req_error(is_error = function(resp) FALSE) |>
     req_perform_stream(
       callback = \(x) {
         element <- rawToChar(x)

@@ -20,8 +20,8 @@
 #' style_chat_history(chat_history_example)
 #' }
 style_chat_history <- function(history, ide_colors = get_ide_theme_info()) {
-  history %>%
-    purrr::discard(~ .x$role == "system") %>%
+  history |>
+    purrr::discard(~ .x$role == "system") |>
     purrr::map(style_chat_message, ide_colors = ide_colors)
 }
 
@@ -137,22 +137,22 @@ create_ide_matching_colors <- function(role = c("user", "assistant"),
 }
 
 render_docs_message_content <- function(x) {
-  docs_info <- x %>%
-    stringr::str_extract("gptstudio-metadata-docs-start.*gptstudio-metadata-docs-end") %>%
-    stringr::str_remove("gptstudio-metadata-docs-start-") %>%
-    stringr::str_remove("-gptstudio-metadata-docs-end") %>%
+  docs_info <- x |>
+    stringr::str_extract("gptstudio-metadata-docs-start.*gptstudio-metadata-docs-end") |>
+    stringr::str_remove("gptstudio-metadata-docs-start-") |>
+    stringr::str_remove("-gptstudio-metadata-docs-end") |>
     stringr::str_split_1(pattern = "-")
 
   pkg_ref <- docs_info[1]
   topic <- docs_info[2]
 
-  message_content <- x %>%
-    stringr::str_remove("gptstudio-metadata-docs-start.*gptstudio-metadata-docs-end") %>%
+  message_content <- x |>
+    stringr::str_remove("gptstudio-metadata-docs-start.*gptstudio-metadata-docs-end") |>
     shiny::markdown()
 
   message_content <- tags$div(
     "R documentation:",
-    tags$code(glue::glue("{pkg_ref}::{topic}")) %>%
+    tags$code(glue::glue("{pkg_ref}::{topic}")) |>
       bslib::tooltip(message_content)
   )
 }
@@ -219,7 +219,7 @@ chat_history_append <- function(history, role, content, name = NULL) {
     role = role,
     content = content,
     name = name
-  ) %>%
+  ) |>
     purrr::compact()
 
   c(history, list(new_message))

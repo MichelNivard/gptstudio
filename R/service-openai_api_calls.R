@@ -15,8 +15,8 @@ request_base <- function(task, token = Sys.getenv("OPENAI_API_KEY")) {
       "i" = "Run {.run gptstudio::get_available_endpoints()} to get a list of supported endpoints"
     ))
   }
-  request(getOption("gptstudio.openai_url")) %>%
-    req_url_path_append(task) %>%
+  request(getOption("gptstudio.openai_url")) |>
+    req_url_path_append(task) |>
     req_auth_bearer_token(token = token)
 }
 
@@ -72,10 +72,10 @@ openai_create_chat_completion <-
 #' @return The response from the API.
 #'
 query_api_openai <- function(task, request_body, openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
-  response <- request_base(task, token = openai_api_key) %>%
-    req_body_json(data = request_body) %>%
-    req_retry(max_tries = 3) %>%
-    req_error(is_error = function(resp) FALSE) %>%
+  response <- request_base(task, token = openai_api_key) |>
+    req_body_json(data = request_body) |>
+    req_retry(max_tries = 3) |>
+    req_error(is_error = function(resp) FALSE) |>
     req_perform()
 
   # error handling
@@ -92,7 +92,7 @@ query_api_openai <- function(task, request_body, openai_api_key = Sys.getenv("OP
     # nolint end
   }
 
-  response %>%
+  response |>
     resp_body_json()
 }
 

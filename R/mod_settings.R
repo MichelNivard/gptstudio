@@ -1,8 +1,8 @@
 mod_settings_ui <- function(id, translator = create_translator()) {
   ns <- NS(id)
 
-  api_services <- utils::methods("gptstudio_request_perform") %>%
-    stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") %>%
+  api_services <- utils::methods("gptstudio_request_perform") |>
+    stringr::str_remove(pattern = "gptstudio_request_perform.gptstudio_request_") |>
     purrr::discard(~ .x == "gptstudio_request_perform.default")
 
   read_docs_label <- tags$span(
@@ -103,21 +103,21 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     inputId = ns("to_history"),
     label = bsicons::bs_icon("arrow-left"),
     class = "mb-3"
-  ) %>%
+  ) |>
     bslib::tooltip("Back to history")
 
   btn_save_as_default <- actionButton(
     inputId = ns("save_default"),
     label = bsicons::bs_icon("floppy"),
     class = "mb-3"
-  ) %>%
+  ) |>
     bslib::tooltip("Save as default")
 
   btn_save_in_session <- actionButton(
     inputId = ns("save_session"),
     label = bsicons::bs_icon("bookmark"),
     class = "mb-3"
-  ) %>%
+  ) |>
     bslib::tooltip("Save for this session")
 
   tagList(
@@ -187,13 +187,13 @@ mod_settings_server <- function(id) {
           selected = NULL
         )
       }
-    }) %>%
+    }) |>
       bindEvent(input$service)
 
 
     observe({
       rv$selected_history <- rv$selected_history + 1L
-    }) %>%
+    }) |>
       bindEvent(input$to_history)
 
 
@@ -206,7 +206,7 @@ mod_settings_server <- function(id) {
           actionButton(ns("confirm_default"), "Ok")
         )
       ))
-    }) %>%
+    }) |>
       bindEvent(input$save_default)
 
 
@@ -233,7 +233,7 @@ mod_settings_server <- function(id) {
       removeModal(session)
 
       showNotification("Defaults updated", duration = 3, type = "message", session = session)
-    }) %>% bindEvent(input$confirm_default)
+    }) |> bindEvent(input$confirm_default)
 
 
     observe({
@@ -245,7 +245,7 @@ mod_settings_server <- function(id) {
           actionButton(ns("confirm_session"), "Ok")
         )
       ))
-    }) %>%
+    }) |>
       bindEvent(input$save_session)
 
     observe({
@@ -255,7 +255,7 @@ mod_settings_server <- function(id) {
 
       rv$modify_session_settings <- rv$modify_session_settings + 1L
       removeModal(session)
-    }) %>%
+    }) |>
       bindEvent(input$confirm_session)
 
 
@@ -270,7 +270,7 @@ mod_settings_server <- function(id) {
       rv$audio_input <- input$audio_input %||% getOption("gptstudio.audio_input")
 
       rv$create_new_chat <- rv$create_new_chat + 1L
-    }) %>%
+    }) |>
       bindEvent(rv$modify_session_settings)
 
 

@@ -10,6 +10,6 @@ test_that("chat_history_append() respects expected structure", {
     list(role = "assistant", content = "assistant content")
   )
 
-  chat_history_append(example_history, "assistant", "assistant content") %>%
+  chat_history_append(example_history, "assistant", "assistant content") |>
     expect_equal(expected_value)
 })

@@ -81,10 +81,10 @@ mod_chat_server <- function(
     # UI outputs ----
     output$welcome <- renderWelcomeMessage({
       welcomeMessage(ide_colors)
-    }) %>% bindEvent(rv$reset_welcome_message)
+    }) |> bindEvent(rv$reset_welcome_message)
 
     output$history <- renderUI({
-      rendered_history <- history$chat_history %>% style_chat_history(ide_colors = ide_colors)
+      rendered_history <- history$chat_history |> style_chat_history(ide_colors = ide_colors)
       tagList(
         tags$div(rendered_history),
         tags$script("hljs.highlightAll();")
@@ -93,7 +93,7 @@ mod_chat_server <- function(
 
     output$streaming <- renderStreamingMessage({
       streamingMessage(ide_colors)
-    }) %>% bindEvent(rv$reset_streaming_message)
+    }) |> bindEvent(rv$reset_streaming_message)
 
     # Observers ----
     observeEvent(history$create_new_chat, {
@@ -124,7 +124,7 @@ mod_chat_server <- function(
           session = session
         )
       })
-    }) %>% bslib::bind_task_button("chat")
+    }) |> bslib::bind_task_button("chat")
 
     observeEvent(input$chat, {
       process_chat$invoke(
@@ -209,7 +209,7 @@ mod_chat_server <- function(
               label = bsicons::bs_icon("send"),
               label_busy = NULL,
               class = "btn-secondary p-2 chat-send-btn"
-            ) %>% bslib::tooltip("Send (click or Enter)")
+            ) |> bslib::tooltip("Send (click or Enter)")
           ),
           audio_recorder
         )

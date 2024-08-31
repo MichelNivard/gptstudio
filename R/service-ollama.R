@@ -3,27 +3,27 @@ ollama_api_url <- function() {
 }
 
 ollama_set_task <- function(task) {
-  ollama_api_url() %>%
-    request() %>%
-    req_url_path_append("api") %>%
+  ollama_api_url() |>
+    request() |>
+    req_url_path_append("api") |>
     req_url_path_append(task)
 }
 
 ollama_list <- function() {
-  ollama_set_task("tags") %>%
-    req_perform() %>%
+  ollama_set_task("tags") |>
+    req_perform() |>
     resp_body_json()
 }
 
 ollama_is_available <- function(verbose = FALSE) {
-  request <- ollama_api_url() %>%
+  request <- ollama_api_url() |>
     request()
 
   check_value <- logical(1)
 
   rlang::try_fetch(
     {
-      response <- req_perform(request) %>%
+      response <- req_perform(request) |>
         resp_body_string()
 
       if (verbose) cli::cli_alert_success(response)
@@ -49,6 +49,7 @@ body_to_json_str <- function(x) {
 
 
 ollama_perform_stream <- function(request, parser) {
+<<<<<<< HEAD
   req_perform_stream(
     request,
     callback = function(x) {
@@ -57,6 +58,27 @@ ollama_perform_stream <- function(request, parser) {
     },
     buffer_kb = 0.01,
     round = "line"
+=======
+  request_body <- request |>
+    purrr::pluck("body")
+
+  request_url <- request |>
+    purrr::pluck("url")
+
+  request_handle <- curl::new_handle() |>
+    curl::handle_setopt(postfields = body_to_json_str(request_body))
+
+  curl_response <- curl::curl_fetch_stream(
+    url = request_url,
+    handle = request_handle,
+    fun = function(x) parser$parse_ndjson(rawToChar(x))
+  )
+
+  response_json(
+    url = curl_response$url,
+    method = "POST",
+    body = list(response = parser$lines)
+>>>>>>> 2a5751d (%>% to |>, R >=4.1, update news)
   )
 }
 
@@ -67,7 +89,7 @@ ollama_chat <- function(model, messages, stream = TRUE, shiny_session = NULL, us
     stream = stream
   )
 
-  request <- ollama_set_task("chat") %>%
+  request <- ollama_set_task("chat") |>
     req_body_json(data = body)
 
 
@@ -91,8 +113,8 @@ ollama_chat <- function(model, messages, stream = TRUE, shiny_session = NULL, us
 
     last_line
   } else {
-    request %>%
-      req_perform() %>%
+    request |>
+      req_perform() |>
       resp_body_json()
   }
 }
