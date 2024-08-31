@@ -44,8 +44,10 @@ Imports:
     yaml
 Suggests: 
     AzureRMR,
+    future,
     grDevices,
     knitr,
+    miniUI,
     mockr,
     promises,
     rmarkdown,

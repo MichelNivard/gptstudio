@@ -13,6 +13,7 @@ gptstudio_run_chat_app <- function(ide_colors = get_ide_theme_info(),
                                    code_theme_url = get_highlightjs_theme(),
                                    host = getOption("shiny.host", "127.0.0.1"),
                                    port = getOption("shiny.port")) {
+  check_installed("future")
   ui <- mod_app_ui("app", ide_colors, code_theme_url)
 
   server <- function(input, output, session) {

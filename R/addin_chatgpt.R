@@ -26,6 +26,7 @@
 #' gptstudio_chat()
 #' }
 gptstudio_chat <- function(host = getOption("shiny.host", "127.0.0.1")) {
+  check_installed(c("miniUI", "future"))
   rstudioapi::verifyAvailable()
 
   port <- find_available_port()
