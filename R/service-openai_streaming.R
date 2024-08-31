@@ -27,12 +27,12 @@ stream_chat_completion <-
       "messages" = messages
     )
 
-    request(url) %>%
+    request(url) |>
       req_headers(
         "Content-Type" = "application/json",
         "Authorization" = paste0("Bearer ", openai_api_key)
-      ) %>%
-      req_body_json(body) %>%
+      ) |>
+      req_body_json(body) |>
       req_perform_stream(
         callback = function(x) {
           element <- rawToChar(x)
