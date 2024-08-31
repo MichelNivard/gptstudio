@@ -161,8 +161,6 @@ gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton,
     content = skeleton$prompt
   )
 
-  print(skeleton)
-
   if (isTRUE(skeleton$stream)) {
     if (is.null(shiny_session)) stop("Stream requires a shiny session object")
 

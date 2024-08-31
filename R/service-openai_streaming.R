@@ -91,7 +91,6 @@ OpenaiStreamParser <- R6::R6Class( # nolint
     #' send a custom message to a shiny session, escaping shiny's reactivity.
     append_parsed_sse = function(parsed_event) {
       # ----- here you can do whatever you want with the event data -----
-      print(parsed_event$data)
       if (is.null(parsed_event$data) || parsed_event$data == "[DONE]") {
         cli::cli_alert_info("Skipping")
         return()

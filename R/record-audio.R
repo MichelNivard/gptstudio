@@ -119,10 +119,10 @@ input_audio_clip <- function(
 
 #' Create HTML dependency for multimodal component
 #'
-#' @importFrom htmltools htmlDependency
 multimodal_dep <- function() {
-  htmlDependency(
-    name = "gptstudio-assets", version = "0.4.0",
+  htmltools::htmlDependency(
+    name = "gptstudio",
+    version = "0.4.0",
     package = "gptstudio",
     src = "assets",
     script = "js/audio-recorder.js",
