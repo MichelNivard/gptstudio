@@ -151,6 +151,7 @@ stream_azure_openai <- function(messages = list(list(role = "user", content = "h
       callback = \(x) {
         element <- rawToChar(x)
         element_callback(element)
+        TRUE
       },
       round = "line"
     )
