@@ -49,7 +49,6 @@ body_to_json_str <- function(x) {
 
 
 ollama_perform_stream <- function(request, parser) {
-<<<<<<< HEAD
   req_perform_stream(
     request,
     callback = function(x) {
@@ -58,27 +57,6 @@ ollama_perform_stream <- function(request, parser) {
     },
     buffer_kb = 0.01,
     round = "line"
-=======
-  request_body <- request |>
-    purrr::pluck("body")
-
-  request_url <- request |>
-    purrr::pluck("url")
-
-  request_handle <- curl::new_handle() |>
-    curl::handle_setopt(postfields = body_to_json_str(request_body))
-
-  curl_response <- curl::curl_fetch_stream(
-    url = request_url,
-    handle = request_handle,
-    fun = function(x) parser$parse_ndjson(rawToChar(x))
-  )
-
-  response_json(
-    url = curl_response$url,
-    method = "POST",
-    body = list(response = parser$lines)
->>>>>>> 2a5751d (%>% to |>, R >=4.1, update news)
   )
 }
 
