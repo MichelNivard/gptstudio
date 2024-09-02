@@ -58,7 +58,6 @@
 <url><loc>/reference/multimodal_dep.html</loc></url>
 <url><loc>/reference/openai_create_chat_completion.html</loc></url>
 <url><loc>/reference/parse_data_uri.html</loc></url>
-<url><loc>/reference/pipe.html</loc></url>
 <url><loc>/reference/prepare_chat_history.html</loc></url>
 <url><loc>/reference/query_api_anthropic.html</loc></url>
 <url><loc>/reference/query_api_cohere.html</loc></url>
