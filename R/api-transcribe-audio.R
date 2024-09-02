@@ -63,8 +63,8 @@ transcribe_audio <- function(audio_input, api_key = Sys.getenv("OPENAI_API_KEY")
     cli::cli_abort("Failed to convert audio: {system_result}")
   }
 
-  req <- request("https://api.openai.com/v1/audio/transcriptions") %>%
-    req_auth_bearer_token(api_key) %>%
+  req <- request("https://api.openai.com/v1/audio/transcriptions") |>
+    req_auth_bearer_token(api_key) |>
     req_body_multipart(
       file = structure(list(path = temp_wav,
                             type = NULL,

@@ -8,8 +8,8 @@
 #'   HF_API_KEY environmental variable if not specified.
 #' @return An httr2 request object
 request_base_huggingface <- function(task, token = Sys.getenv("HF_API_KEY")) {
-  request("https://api-inference.huggingface.co/models") %>%
-    req_url_path_append(task) %>%
+  request("https://api-inference.huggingface.co/models") |>
+    req_url_path_append(task) |>
     req_auth_bearer_token(token = token)
 }
 
@@ -26,12 +26,12 @@ request_base_huggingface <- function(task, token = Sys.getenv("HF_API_KEY")) {
 query_api_huggingface <- function(task,
                                   request_body,
                                   token = Sys.getenv("HF_API_KEY")) {
-  response <- request_base_huggingface(task, token) %>%
-    req_body_json(data = request_body) %>%
-    req_retry(max_tries = 3) %>%
+  response <- request_base_huggingface(task, token) |>
+    req_body_json(data = request_body) |>
+    req_retry(max_tries = 3) |>
     req_error(is_error = function(resp) FALSE)
 
-  response <- response %>% req_perform()
+  response <- response |> req_perform()
 
   # error handling
   if (resp_is_error(response)) {
@@ -44,7 +44,7 @@ query_api_huggingface <- function(task,
     ))
   }
 
-  response %>%
+  response |>
     resp_body_json()
 }
 

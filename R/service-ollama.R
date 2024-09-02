@@ -3,27 +3,27 @@ ollama_api_url <- function() {
 }
 
 ollama_set_task <- function(task) {
-  ollama_api_url() %>%
-    request() %>%
-    req_url_path_append("api") %>%
+  ollama_api_url() |>
+    request() |>
+    req_url_path_append("api") |>
     req_url_path_append(task)
 }
 
 ollama_list <- function() {
-  ollama_set_task("tags") %>%
-    req_perform() %>%
+  ollama_set_task("tags") |>
+    req_perform() |>
     resp_body_json()
 }
 
 ollama_is_available <- function(verbose = FALSE) {
-  request <- ollama_api_url() %>%
+  request <- ollama_api_url() |>
     request()
 
   check_value <- logical(1)
 
   rlang::try_fetch(
     {
-      response <- req_perform(request) %>%
+      response <- req_perform(request) |>
         resp_body_string()
 
       if (verbose) cli::cli_alert_success(response)
@@ -67,7 +67,7 @@ ollama_chat <- function(model, messages, stream = TRUE, shiny_session = NULL, us
     stream = stream
   )
 
-  request <- ollama_set_task("chat") %>%
+  request <- ollama_set_task("chat") |>
     req_body_json(data = body)
 
 
@@ -91,8 +91,8 @@ ollama_chat <- function(model, messages, stream = TRUE, shiny_session = NULL, us
 
     last_line
   } else {
-    request %>%
-      req_perform() %>%
+    request |>
+      req_perform() |>
       resp_body_json()
   }
 }

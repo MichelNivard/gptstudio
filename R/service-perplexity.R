@@ -10,8 +10,8 @@
 #' @return An `httr2` request object pre-configured with the API endpoint and required headers.
 request_base_perplexity <- function(api_key = Sys.getenv("PERPLEXITY_API_KEY")) {
   url <- "https://api.perplexity.ai/chat/completions"
-  request(url) %>%
-    req_method("POST") %>%
+  request(url) |>
+    req_method("POST") |>
     req_headers(
       "accept" = "application/json",
       "content-type" = "application/json",
@@ -31,10 +31,10 @@ request_base_perplexity <- function(api_key = Sys.getenv("PERPLEXITY_API_KEY")) 
 #'
 #' @return A parsed JSON object as the API response.
 query_api_perplexity <- function(request_body, api_key = Sys.getenv("PERPLEXITY_API_KEY")) {
-  response <- request_base_perplexity(api_key) %>%
-    req_body_json(data = request_body) %>%
-    req_retry(max_tries = 3) %>%
-    req_error(is_error = function(resp) FALSE) %>%
+  response <- request_base_perplexity(api_key) |>
+    req_body_json(data = request_body) |>
+    req_retry(max_tries = 3) |>
+    req_error(is_error = function(resp) FALSE) |>
     req_perform()
 
   # Error handling
@@ -48,7 +48,7 @@ query_api_perplexity <- function(request_body, api_key = Sys.getenv("PERPLEXITY_
     ))
   }
 
-  response %>%
+  response |>
     resp_body_json()
 }
 

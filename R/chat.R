@@ -93,17 +93,17 @@ chat <- function(prompt,
       stream = stream,
       model = model,
       ...
-    ) %>%
+    ) |>
     gptstudio_skeleton_build(
       skill = skill,
       style = style,
       task = task,
       custom_prompt = custom_prompt
-    ) %>%
+    ) |>
     gptstudio_request_perform(shiny_session = session)
 
   if (process_response) {
-    response %>% gptstudio_response_process()
+    response |> gptstudio_response_process()
   } else {
     response$response
   }

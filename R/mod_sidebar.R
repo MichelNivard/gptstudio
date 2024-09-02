@@ -27,12 +27,12 @@ mod_sidebar_server <- function(id) {
 
       observe({
         bslib::nav_select("panel", selected = "settings", session = session)
-      }) %>%
+      }) |>
         bindEvent(history$selected_settings, ignoreInit = TRUE)
 
       observe({
         bslib::nav_select("panel", selected = "history", session = session)
-      }) %>%
+      }) |>
         bindEvent(settings$selected_history, ignoreInit = TRUE)
 
       list(

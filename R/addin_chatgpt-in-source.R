@@ -40,7 +40,7 @@ gptstudio_chat_in_source <- function(task = NULL, keep_selection = TRUE) {
       history = list(),
       stream  = FALSE,
       model   = model
-    ) %>%
+    ) |>
     gptstudio_request_perform()
 
   text_to_insert <- as.character(response$response)

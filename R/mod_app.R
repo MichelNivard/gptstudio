@@ -72,7 +72,7 @@ rgb_str_to_hex <- function(rgb_string) {
     blue = as.numeric(rgb_vec[3]),
     names = FALSE,
     maxColorValue = 255
-  ) %>%
+  ) |>
     unname()
 }
 

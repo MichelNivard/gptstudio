@@ -46,8 +46,8 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...,
   )
 
   # Create request
-  request <- request(skeleton$url) %>%
-    req_auth_bearer_token(skeleton$api_key) %>%
+  request <- request(skeleton$url) |>
+    req_auth_bearer_token(skeleton$api_key) |>
     req_body_json(body)
 
   # Perform request
@@ -70,8 +70,8 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...,
 
     response <- stream_handler$value
   } else {
-    response_json <- request %>%
-      req_perform() %>%
+    response_json <- request |>
+      req_perform() |>
       resp_body_json()
 
     response <- response_json$choices[[1]]$message$content
@@ -129,7 +129,7 @@ gptstudio_request_perform.gptstudio_request_anthropic <-
 
     # Anthropic does not have a system message, so convert it to user
     system <-
-      purrr::keep(skeleton$history, function(x) x$role == "system") %>%
+      purrr::keep(skeleton$history, function(x) x$role == "system") |>
       purrr::pluck("content")
     history <-
       purrr::keep(skeleton$history, function(x) x$role %in% c("user", "assistant"))

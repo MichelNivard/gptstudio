@@ -12,7 +12,7 @@ request_base_google <- function(model, key = Sys.getenv("GOOGLE_API_KEY")) {
     "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
   )
 
-  request(url) %>%
+  request(url) |>
     req_url_query(key = key)
 }
 
@@ -30,10 +30,10 @@ request_base_google <- function(model, key = Sys.getenv("GOOGLE_API_KEY")) {
 query_api_google <- function(model,
                              request_body,
                              key = Sys.getenv("GOOGLE_API_KEY")) {
-  response <- request_base_google(model, key) %>%
-    req_body_json(data = request_body) %>%
-    req_retry(max_tries = 3) %>%
-    req_error(is_error = function(resp) FALSE) %>%
+  response <- request_base_google(model, key) |>
+    req_body_json(data = request_body) |>
+    req_retry(max_tries = 3) |>
+    req_error(is_error = function(resp) FALSE) |>
     req_perform()
 
   # error handling
@@ -47,7 +47,7 @@ query_api_google <- function(model,
     ))
   }
 
-  response %>%
+  response |>
     resp_body_json()
 }
 
@@ -95,9 +95,9 @@ create_completion_google <- function(prompt,
 
 get_available_models_google <- function(key = Sys.getenv("GOOGLE_API_KEY")) {
   response <-
-    request("https://generativelanguage.googleapis.com/v1beta") %>%
-    req_url_path_append("models") %>%
-    req_url_query(key = key) %>%
+    request("https://generativelanguage.googleapis.com/v1beta") |>
+    req_url_path_append("models") |>
+    req_url_query(key = key) |>
     req_perform()
 
   # error handling
@@ -111,10 +111,10 @@ get_available_models_google <- function(key = Sys.getenv("GOOGLE_API_KEY")) {
     ))
   }
 
-  models <- response %>%
-    resp_body_json(simplifyVector = TRUE) %>%
+  models <- response |>
+    resp_body_json(simplifyVector = TRUE) |>
     purrr::pluck("models")
 
-  models$name %>%
+  models$name |>
     stringr::str_remove("models/")
 }

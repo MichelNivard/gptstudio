@@ -7,7 +7,7 @@
 #'   ANTHROPIC_API_KEY environmental variable if not specified.
 #' @return An httr2 request object
 request_base_anthropic <- function(key = Sys.getenv("ANTHROPIC_API_KEY")) {
-  request("https://api.anthropic.com/v1/messages") %>%
+  request("https://api.anthropic.com/v1/messages") |>
     req_headers(
       "anthropic-version" = "2023-06-01",
       "content-type" = "application/json",
@@ -26,10 +26,10 @@ request_base_anthropic <- function(key = Sys.getenv("ANTHROPIC_API_KEY")) {
 #'
 query_api_anthropic <- function(request_body,
                                 key = Sys.getenv("ANTHROPIC_API_KEY")) {
-  response <- request_base_anthropic(key) %>%
-    req_body_json(data = request_body) %>%
-    req_retry(max_tries = 3) %>%
-    req_error(is_error = function(resp) FALSE) %>%
+  response <- request_base_anthropic(key) |>
+    req_body_json(data = request_body) |>
+    req_retry(max_tries = 3) |>
+    req_error(is_error = function(resp) FALSE) |>
     req_perform()
 
   # error handling
@@ -43,7 +43,7 @@ query_api_anthropic <- function(request_body,
     ))
   }
 
-  response %>%
+  response |>
     resp_body_json(simplifyVector = TRUE)
 }
 
@@ -78,7 +78,7 @@ create_completion_anthropic <- function(prompt = list(list(role = "user", conten
     model = model,
     max_tokens = max_tokens,
     system = system
-  ) %>% purrr::compact()
+  ) |> purrr::compact()
   answer <- query_api_anthropic(request_body = request_body, key = key)
-  answer %>% purrr::pluck("content", "text")
+  answer |> purrr::pluck("content", "text")
 }

@@ -105,11 +105,11 @@ open_app_in_viewer <- function(host, port) {
 }
 
 wait_for_bg_app <- function(url, max_seconds = 10) {
-  request(url) %>%
+  request(url) |>
     req_retry(
       max_seconds = max_seconds,
       is_transient = \(resp) resp_status(resp) >= 300,
       backoff = function(n) 0.2
-    ) %>%
+    ) |>
     req_perform()
 }
