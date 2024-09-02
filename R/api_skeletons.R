@@ -273,7 +273,7 @@ gptstudio_create_skeleton <- function(service = "openai",
       prompt = prompt,
       history = history,
       # forcing false until streaming implemented for anthropic
-      stream = FALSE
+      stream = stream
     ),
     "google" = new_gptstudio_request_skeleton_google(
       model = model,

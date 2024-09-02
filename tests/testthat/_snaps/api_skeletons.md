@@ -1,4 +1,4 @@
-# multiplication works
+# create skeletons works
 
     Code
       gptstudio_create_skeleton()
@@ -62,7 +62,7 @@
       
       
       $stream
-      [1] FALSE
+      [1] TRUE
       
       $extras
       list()

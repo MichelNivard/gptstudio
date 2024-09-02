@@ -117,37 +117,43 @@ gptstudio_request_perform.gptstudio_request_google <-
   }
 
 #' @export
-gptstudio_request_perform.gptstudio_request_anthropic <-
-  function(skeleton, ...) {
-    model <- skeleton$model
+gptstudio_request_perform.gptstudio_request_anthropic <- function(skeleton,
+                                                                  shiny_session = NULL,
+                                                                  ...) {
+  model  <- skeleton$model
+  stream <- skeleton$stream
+  prompt <- skeleton$prompt
 
-    skeleton$history <- chat_history_append(
-      history = skeleton$history,
-      role = "user",
-      content = skeleton$prompt
-    )
+  skeleton$history <- chat_history_append(
+    history = skeleton$history,
+    role = "user",
+    content = skeleton$prompt
+  )
 
-    # Anthropic does not have a system message, so convert it to user
-    system <-
-      purrr::keep(skeleton$history, function(x) x$role == "system") |>
-      purrr::pluck("content")
-    history <-
-      purrr::keep(skeleton$history, function(x) x$role %in% c("user", "assistant"))
+  # Anthropic does not have a system message, so convert it to user
+  system <-
+    purrr::keep(skeleton$history, function(x) x$role == "system") |>
+    purrr::pluck("content")
+  history <-
+    purrr::keep(skeleton$history, function(x) x$role %in% c("user", "assistant"))
 
-    cli_inform(c("i" = "Using Anthropic API with {model} model"))
-    response <- create_completion_anthropic(
-      prompt = history,
-      system = system,
-      model = model
-    )
-    structure(
-      list(
-        skeleton = skeleton,
-        response = response
-      ),
-      class = "gptstudio_response_anthropic"
-    )
-  }
+  cli_inform(c("i" = "Using Anthropic API with {model} model"))
+  response <- create_completion_anthropic(
+    prompt = history,
+    system = system,
+    model = model,
+    stream = stream,
+    shiny_session = shiny_session,
+    user_prompt = prompt
+  )
+  structure(
+    list(
+      skeleton = skeleton,
+      response = response
+    ),
+    class = "gptstudio_response_anthropic"
+  )
+}
 
 #' @export
 gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton,

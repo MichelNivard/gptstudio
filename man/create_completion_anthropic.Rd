@@ -6,16 +6,18 @@
 \usage{
 create_completion_anthropic(
   prompt = list(list(role = "user", content = "Hello")),
-  system = NULL,
   model = "claude-3-5-sonnet-20240620",
   max_tokens = 1028,
-  key = Sys.getenv("ANTHROPIC_API_KEY")
+  key = Sys.getenv("ANTHROPIC_API_KEY"),
+  stream = FALSE,
+  system = NULL,
+  element_callback = anthropic_handler,
+  shiny_session = NULL,
+  user_prompt = NULL
 )
 }
 \arguments{
 \item{prompt}{The prompt for generating completions}
-
-\item{system}{A system messages to instruct the model. Defaults to NULL.}
 
 \item{model}{The model to use for generating text. By default, the
 function will try to use "claude-2.1".}
@@ -24,6 +26,17 @@ function will try to use "claude-2.1".}
 
 \item{key}{The API key for accessing Anthropic's API. By default, the
 function will try to use the \code{ANTHROPIC_API_KEY} environment variable.}
+
+\item{stream}{Whether to stream the response, defaults to FALSE.}
+
+\item{system}{A system messages to instruct the model. Defaults to NULL.}
+
+\item{element_callback}{A callback function to handle each element
+of the streamed response (optional).}
+
+\item{shiny_session}{A Shiny session object to send messages to the client}
+
+\item{user_prompt}{A user prompt to send to the client}
 }
 \value{
 A list with the generated completions and other information returned
@@ -35,7 +48,7 @@ Generate text completions using Anthropic's API
 \examples{
 \dontrun{
 create_completion_anthropic(
-  prompt = "\n\nHuman: Hello, world!\n\nAssistant:",
+  prompt = list(list(role = "user", content = "Hello")),
   model = "claude-3-haiku-20240307",
   max_tokens = 1028
 )

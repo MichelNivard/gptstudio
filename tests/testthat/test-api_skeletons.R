@@ -10,7 +10,7 @@ withr::local_envvar(
   )
 )
 
-test_that("multiplication works", {
+test_that("create skeletons works", {
   config <- yaml::read_yaml(system.file("rstudio/config.yml",
     package = "gptstudio"
   ))
@@ -78,7 +78,7 @@ test_that("gptstudio_create_skeleton creates correct skeleton for Anthropic", {
   expect_s3_class(skeleton, "gptstudio_request_anthropic")
   expect_equal(skeleton$model, "claude-3-5-sonnet-20240620")
   expect_equal(skeleton$prompt, "What is R?")
-  expect_false(skeleton$stream)
+  expect_true(skeleton$stream)
 })
 
 test_that("gptstudio_create_skeleton creates correct skeleton for Cohere", {
