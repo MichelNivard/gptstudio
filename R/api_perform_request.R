@@ -69,17 +69,29 @@ gptstudio_request_perform.gptstudio_request_huggingface <-
   }
 
 #' @export
-gptstudio_request_perform.gptstudio_request_google <-
-  function(skeleton, ...) {
-    response <- create_completion_google(prompt = skeleton$prompt)
-    structure(
-      list(
-        skeleton = skeleton,
-        response = response
-      ),
-      class = "gptstudio_response_google"
-    )
+gptstudio_request_perform.gptstudio_request_google <- function(skeleton, ...) {
+  skeleton$history <- chat_history_append(
+    history = skeleton$history,
+    role = "user",
+    name = "user_message",
+    content = skeleton$prompt
+  )
+
+  if (getOption("gptstudio.read_docs")) {
+    skeleton$history <- add_docs_messages_to_history(skeleton$history)
   }
+
+  response <- create_chat_google(prompt = skeleton$history,
+                                 model = skeleton$model)
+
+  structure(
+    list(
+      skeleton = skeleton,
+      response = response
+    ),
+    class = "gptstudio_response_google"
+  )
+}
 
 #' @export
 gptstudio_request_perform.gptstudio_request_anthropic <- function(skeleton,

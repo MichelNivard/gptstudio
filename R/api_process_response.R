@@ -19,8 +19,7 @@ gptstudio_response_process <- function(skeleton, ...) {
 }
 
 #' @export
-gptstudio_response_process.gptstudio_response_openai <-
-  function(skeleton, ...) {
+gptstudio_response_process.gptstudio_response_openai <- function(skeleton, ...) {
     last_response <- skeleton$response
     skeleton <- skeleton$skeleton
 
@@ -41,8 +40,7 @@ gptstudio_response_process.gptstudio_response_openai <-
   }
 
 #' @export
-gptstudio_response_process.gptstudio_response_huggingface <-
-  function(skeleton, ...) {
+gptstudio_response_process.gptstudio_response_huggingface <- function(skeleton, ...) {
     response <- skeleton$response
     skeleton <- skeleton$skeleton
     last_response <- response[[1]]$generated_text
@@ -65,8 +63,7 @@ gptstudio_response_process.gptstudio_response_huggingface <-
   }
 
 #' @export
-gptstudio_response_process.gptstudio_response_anthropic <-
-  function(skeleton, ...) {
+gptstudio_response_process.gptstudio_response_anthropic <- function(skeleton, ...) {
     last_response <- skeleton$response
     skeleton <- skeleton$skeleton
 
@@ -87,31 +84,27 @@ gptstudio_response_process.gptstudio_response_anthropic <-
   }
 
 #' @export
-gptstudio_response_process.gptstudio_response_google <-
-  function(skeleton, ...) {
-    response <- skeleton$response
-    skeleton <- skeleton$skeleton
+gptstudio_response_process.gptstudio_response_google <- function(skeleton, ...) {
+  last_response <- skeleton$response
+  skeleton <- skeleton$skeleton
 
-    new_history <- c(
-      skeleton$history,
-      list(
-        list(role = "user", content = skeleton$prompt),
-        list(role = "assistant", content = response)
-      )
-    )
+  new_history <- chat_history_append(
+    history = skeleton$history,
+    role = "assistant",
+    content = last_response
+  )
 
-    skeleton$history <- new_history
-    skeleton$prompt <- NULL # remove the last prompt
-    class(skeleton) <- c(
-      "gptstudio_request_skeleton",
-      "gptstudio_request_google"
-    )
-    skeleton
-  }
+  skeleton$history <- new_history
+  skeleton$prompt <- NULL # remove the last prompt
+  class(skeleton) <- c(
+    "gptstudio_request_skeleton",
+    "gptstudio_request_google"
+  )
+  skeleton
+}
 
 #' @export
-gptstudio_response_process.gptstudio_response_azure_openai <-
-  function(skeleton, ...) {
+gptstudio_response_process.gptstudio_response_azure_openai <- function(skeleton, ...) {
     last_response <- skeleton$response
     skeleton <- skeleton$skeleton
 
@@ -153,8 +146,7 @@ gptstudio_response_process.gptstudio_response_ollama <- function(skeleton, ...) 
 }
 
 #' @export
-gptstudio_response_process.gptstudio_response_perplexity <-
-  function(skeleton, ...) {
+gptstudio_response_process.gptstudio_response_perplexity <- function(skeleton, ...) {
     response <- skeleton$response
     skeleton <- skeleton$skeleton
 

@@ -64,7 +64,7 @@ check_api_connection_google <- function(service, api_key) {
   request_body <-
     list(contents = list(list(parts = list(list(text = "Hello there")))))
 
-  response <- request_base_google(model = "gemini-pro", key = api_key) |>
+  response <- request_base_google(model = "gemini-pro", api_key = api_key) |>
     req_body_json(data = request_body) |>
     req_error(is_error = function(resp) FALSE) |>
     req_perform()
@@ -74,7 +74,6 @@ check_api_connection_google <- function(service, api_key) {
 
 #' @inheritParams check_api_connection_openai
 check_api_connection_azure_openai <- function(service, api_key) {
-  ""
   api_check <- check_api_key(service, api_key)
   if (rlang::is_false(api_check)) {
     return(invisible(NULL))
