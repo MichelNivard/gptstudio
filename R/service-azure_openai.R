@@ -1,47 +1,56 @@
 #' Generate text using Azure OpenAI's API
 #'
-#' @description Use this function to generate text completions using OpenAI's
-#'   API.
+#' @description Use this function to generate text completions using Azure OpenAI's API.
 #'
-#' @param prompt a list to use as the prompt for generating
-#'   completions
-#' @param task a character string for the API task (e.g. "completions").
-#' Defaults to the Azure OpenAI
-#'   task from environment variables if not specified.
-#' @param base_url a character string for the base url. It defaults to the Azure
-#'   OpenAI endpoint from environment variables if not specified.
-#' @param deployment_name a character string for the deployment name. It will
-#'   default to the Azure OpenAI deployment name from environment variables if
-#'   not specified.
-#' @param api_key a character string for the API key. It will default to the Azure
+#' @param prompt A list of messages to use as the prompt for generating completions.
+#'   Each message should be a list with 'role' and 'content' elements.
+#' @param model A character string for the model to use. Defaults to the Azure OpenAI
+#'   deployment name from environment variables if not specified.
+#' @param api_key A character string for the API key. It will default to the Azure
 #'   OpenAI API key from your environment variables if not specified.
-#' @param api_version a character string for the API version. It will default to
-#'   the Azure OpenAI API version from your environment variables if not
-#'   specified.
-#' @return a list with the generated completions and other information returned
+#' @param task A character string for the API task. Defaults to "chat/completions".
+#' @param stream Whether to stream the response, defaults to FALSE.
+#' @param shiny_session A Shiny session object to send messages to the client
+#' @param user_prompt A user prompt to send to the client
+#' @param base_url A character string for the base url. It defaults to the Azure
+#'   OpenAI endpoint from environment variables if not specified.
+#' @param api_version A character string for the API version. It defaults to
+#'   the Azure OpenAI API version from your environment variables if not specified.
+#'
+#' @return A list with the generated completions and other information returned
 #'   by the API
 #'
 #' @export
-create_completion_azure_openai <-
-  function(prompt,
-           task = Sys.getenv("AZURE_OPENAI_TASK"),
-           base_url = Sys.getenv("AZURE_OPENAI_ENDPOINT"),
-           deployment_name = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
-           api_key = Sys.getenv("AZURE_OPENAI_API_KEY"),
-           api_version = Sys.getenv("AZURE_OPENAI_API_VERSION")) {
-    request_body <- list(list(role = "user", content = prompt))
-    query_api_azure_openai(
-      task,
-      request_body,
-      base_url,
-      deployment_name,
-      api_key,
-      api_version
-    )
-  }
+create_chat_azure_openai <- function(prompt = list(list(role = "user", content = "Hello")),
+                                     model = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
+                                     api_key = Sys.getenv("AZURE_OPENAI_API_KEY"),
+                                     task = "chat/completions",
+                                     stream = FALSE,
+                                     shiny_session = NULL,
+                                     user_prompt = NULL,
+                                     base_url = Sys.getenv("AZURE_OPENAI_ENDPOINT"),
+                                     api_version = Sys.getenv("AZURE_OPENAI_API_VERSION")) {
+  request_body <- list(
+    messages = prompt,
+    model = model,
+    stream = stream
+  ) |> purrr::compact()
+
+  query_api_azure_openai(
+    task = task,
+    request_body = request_body,
+    base_url = base_url,
+    deployment_name = model,
+    api_key = api_key,
+    api_version = api_version,
+    stream = stream,
+    shiny_session = shiny_session,
+    user_prompt = user_prompt
+  )
+}
 
 request_base_azure_openai <-
-  function(task = Sys.getenv("AZURE_OPENAI_TASK"),
+  function(task,
            base_url = Sys.getenv("AZURE_OPENAI_ENDPOINT"),
            deployment_name = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
            api_key = Sys.getenv("AZURE_OPENAI_API_KEY"),
@@ -72,39 +81,63 @@ request_base_azure_openai <-
   }
 
 query_api_azure_openai <-
-  function(task = Sys.getenv("AZURE_OPENAI_TASK"),
+  function(task,
            request_body,
            base_url = Sys.getenv("AZURE_OPENAI_ENDPOINT"),
            deployment_name = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
            api_key = Sys.getenv("AZURE_OPENAI_API_KEY"),
-           api_version = Sys.getenv("AZURE_OPENAI_API_VERSION")) {
-    response <-
-      request_base_azure_openai(
-        task,
-        base_url,
-        deployment_name,
-        api_key,
-        api_version
-      ) |>
-      req_body_json(list(messages = request_body)) |>
+           api_version = Sys.getenv("AZURE_OPENAI_API_VERSION"),
+           stream = FALSE,
+           shiny_session = NULL,
+           user_prompt = NULL) {
+    req <- request_base_azure_openai(
+      task,
+      base_url,
+      deployment_name,
+      api_key,
+      api_version
+    ) |>
+      req_body_json(data = request_body) |>
       req_retry(max_tries = 3) |>
-      req_error(is_error = function(resp) FALSE) |>
-      req_perform()
+      req_error(is_error = function(resp) FALSE)
 
-    # error handling
-    if (resp_is_error(response)) {
-      # nolint start
-      status <- resp_status(response)
-      description <- resp_status_desc(response)
-      cli_abort(message = c(
-        "x" = "Azure OpenAI API request failed. Error {status} - {description}",
-        "i" = "Visit the {.href [Azure OpenAi Error code guidance](https://help.openai.com/en/articles/6891839-api-error-code-guidance)} for more details",
-        "i" = "You can also visit the {.href [API documentation](https://platform.openai.com/docs/guides/error-codes/api-errors)}"
-      ))
-      # nolint end
+    if (is_true(stream)) {
+      resp <- req |> req_perform_connection(mode = "text")
+      on.exit(close(resp))
+      results <- list()
+      repeat({
+        event <- resp_stream_sse(resp)
+        if (is.null(event) || event$data == "[DONE]") {
+          break
+        }
+        json <- jsonlite::parse_json(event$data)
+        results <- merge_dicts(results, json)
+        if (!is.null(shiny_session)) {
+          shiny_session$sendCustomMessage(
+            type = "render-stream",
+            message = list(
+              user = user_prompt,
+              assistant = shiny::markdown(results$choices[[1]]$delta$content)
+            )
+          )
+        } else {
+          cat(json$choices[[1]]$delta$content)
+        }
+      })
+      invisible(results$choices[[1]]$delta$content)
+    } else {
+      resp <- req |> req_perform()
+      if (resp_is_error(resp)) {
+        status <- resp_status(resp)
+        description <- resp_status_desc(resp)
+        cli::cli_abort(c(
+          "x" = "Azure OpenAI API request failed. Error {status} - {description}",
+          "i" = "Visit the {.href [Azure OpenAI Error code guidance](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/reference#error-codes)} for more details" # nolint
+        ))
+      }
+      results <- resp |> resp_body_json()
+      results$choices[[1]]$message$content
     }
-    response |>
-      resp_body_json()
   }
 
 retrieve_azure_token <- function() {
@@ -132,29 +165,4 @@ retrieve_azure_token <- function() {
   }
 
   invisible(token$token$credentials$access_token)
-}
-
-
-stream_azure_openai <- function(messages = list(list(role = "user", content = "hi there")),
-                                element_callback = cat) {
-  body <- list(
-    messages = messages,
-    stream = TRUE
-  )
-
-  response <-
-    request_base_azure_openai() |>
-    req_body_json(data = body) |>
-    req_retry(max_tries = 3) |>
-    req_error(is_error = function(resp) FALSE) |>
-    req_perform_stream(
-      callback = \(x) {
-        element <- rawToChar(x)
-        element_callback(element)
-        TRUE
-      },
-      round = "line"
-    )
-
-  invisible(response)
 }

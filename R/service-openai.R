@@ -133,7 +133,7 @@ encode_image <- function(image_path) {
 create_image_chat_openai <- function(image_path,
                                      prompt = "What is this image?",
                                      model = getOption("gptstudio.model"),
-                                     openai_api_key = Sys.getenv("OPENAI_API_KEY"),
+                                     api_key = Sys.getenv("OPENAI_API_KEY"),
                                      task = "chat/completions") {
   image_data <- encode_image(image_path)
   body <- list(

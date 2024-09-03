@@ -36,14 +36,6 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...,
     skeleton$history <- add_docs_messages_to_history(skeleton$history)
   }
 
-  body <- list(
-    "model"      = skeleton$model,
-    "stream"     = skeleton$stream,
-    "messages"   = skeleton$history,
-    "max_tokens" = skeleton$extras$max_tokens,
-    "n"          = skeleton$extra$n
-  )
-
   response <- create_chat_openai(prompt = skeleton$history,
                                  model = skeleton$model,
                                  stream = skeleton$stream,
@@ -140,24 +132,15 @@ gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton,
     content = skeleton$prompt
   )
 
-  if (isTRUE(skeleton$stream)) {
-    if (is.null(shiny_session)) stop("Stream requires a shiny session object")
-
-    stream_handler <- OpenaiStreamParser$new(
-      session = shiny_session,
-      user_prompt = skeleton$prompt
-    )
-
-    stream_azure_openai(
-      messages = skeleton$history,
-      element_callback = stream_handler$parse_sse
-    )
-
-    response <- stream_handler$value
-  } else {
-    response <- query_api_azure_openai(request_body = skeleton$history)
-    response <- response$choices[[1]]$message$content
+  if (getOption("gptstudio.read_docs")) {
+    skeleton$history <- add_docs_messages_to_history(skeleton$history)
   }
+
+  response <- create_chat_azure_openai(prompt = skeleton$history,
+                                       model = skeleton$model,
+                                       stream = skeleton$stream,
+                                       shiny_session = shiny_session,
+                                       user_prompt = skeleton$prompt)
 
   structure(
     list(
@@ -184,9 +167,9 @@ gptstudio_request_perform.gptstudio_request_ollama <- function(skeleton, ...,
     skeleton$history <- add_docs_messages_to_history(skeleton$history)
   }
 
-  response <- ollama_chat(
+  response <- create_chat_ollama(
     model = skeleton$model,
-    messages = skeleton$history,
+    prompt = skeleton$history,
     stream = skeleton$stream,
     shiny_session = shiny_session,
     user_prompt = skeleton$prompt
@@ -196,7 +179,7 @@ gptstudio_request_perform.gptstudio_request_ollama <- function(skeleton, ...,
   structure(
     list(
       skeleton = skeleton,
-      response = response$message$content
+      response = response
     ),
     class = "gptstudio_response_ollama"
   )

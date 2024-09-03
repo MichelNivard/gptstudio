@@ -1,142 +1,123 @@
-ollama_api_url <- function() {
-  Sys.getenv("OLLAMA_HOST", "http://localhost:11434")
+#' Generate text using Ollama's API
+#'
+#' @description Use this function to generate text completions using Ollama's API.
+#'
+#' @param prompt A list of messages to use as the prompt for generating completions.
+#'   Each message should be a list with 'role' and 'content' elements.
+#' @param model A character string for the model to use.
+#' @param api_url A character string for the API url. It defaults to the Ollama
+#'   host from environment variables or "http://localhost:11434" if not specified.
+#' @param stream Whether to stream the response, defaults to FALSE.
+#' @param shiny_session A Shiny session object to send messages to the client
+#' @param user_prompt A user prompt to send to the client
+#'
+#' @return The generated completion as a character string, or the full response if streaming.
+#'
+#' @export
+create_chat_ollama <- function(prompt = list(list(role = "user", content = "Hello")),
+                               model = "llama3.1:latest",
+                               api_url = Sys.getenv("OLLAMA_HOST", "http://localhost:11434"),
+                               stream = FALSE,
+                               shiny_session = NULL,
+                               user_prompt = NULL) {
+  request_body <- list(
+    model = model,
+    messages = prompt,
+    stream = stream
+  ) |> purrr::compact()
+
+  query_api_ollama(
+    request_body = request_body,
+    api_url = api_url,
+    stream = stream,
+    shiny_session = shiny_session,
+    user_prompt = user_prompt
+  )
 }
 
-ollama_set_task <- function(task) {
-  ollama_api_url() |>
-    request() |>
+request_base_ollama <- function(api_url = Sys.getenv("OLLAMA_HOST", "http://localhost:11434")) {
+  request(api_url) |>
     req_url_path_append("api") |>
-    req_url_path_append(task)
+    req_url_path_append("chat")
 }
 
-ollama_list <- function() {
-  ollama_set_task("tags") |>
+query_api_ollama <- function(request_body,
+                             api_url = Sys.getenv("OLLAMA_HOST", "http://localhost:11434"),
+                             stream = FALSE,
+                             shiny_session = NULL,
+                             user_prompt = NULL) {
+  req <- request_base_ollama(api_url) |>
+    req_body_json(data = request_body) |>
+    req_retry(max_tries = 3) |>
+    req_error(is_error = function(resp) FALSE)
+
+  if (is_true(stream)) {
+    resp <- req |> req_perform_connection(mode = "text")
+    on.exit(close(resp))
+    results <- list()
+    repeat({
+      event <- resp_stream_lines(resp)
+      json <- jsonlite::parse_json(event)
+      if (is_true(json$done)) {
+        break
+      }
+      results <- merge_dicts(results, json)
+      if (!is.null(shiny_session)) {
+        # any communication with JS should be handled here!!
+        shiny_session$sendCustomMessage(
+          type = "render-stream",
+          message = list(
+            user = user_prompt,
+            assistant = shiny::markdown(results$message$content)
+          )
+        )
+      } else {
+        cat(json$message$content)
+      }
+    })
+    invisible(results$message$content)
+  } else {
+    resp <- req |> req_perform()
+    if (resp_is_error(resp)) {
+      status <- resp_status(resp)
+      description <- resp_status_desc(resp)
+      cli::cli_abort(c(
+        "x" = "Ollama API request failed. Error {status} - {description}",
+        "i" = "Check your Ollama setup and try again."
+      ))
+    }
+    results <- resp |> resp_body_json()
+    results$message$content
+  }
+}
+
+# Helper functions
+ollama_list <- function(api_url = Sys.getenv("OLLAMA_HOST", "http://localhost:11434")) {
+  request(api_url) |>
+    req_url_path_append("api") |>
+    req_url_path_append("tags") |>
     req_perform() |>
     resp_body_json()
 }
 
-ollama_is_available <- function(verbose = FALSE) {
-  request <- ollama_api_url() |>
-    request()
-
+ollama_is_available <- function(api_url = Sys.getenv("OLLAMA_HOST", "http://localhost:11434"), verbose = FALSE) {
   check_value <- logical(1)
-
   rlang::try_fetch(
     {
-      response <- req_perform(request) |>
+      response <- request(api_url) |>
+        req_perform() |>
         resp_body_string()
-
       if (verbose) cli::cli_alert_success(response)
       check_value <- TRUE
     },
     error = function(cnd) {
       if (inherits(cnd, "httr2_failure")) {
-        if (verbose) cli::cli_alert_danger("Couldn't connect to Ollama in {.url {ollama_api_url()}}. Is it running there?") # nolint
+        if (verbose) cli::cli_alert_danger("Couldn't connect to Ollama in {.url {api_url}}. Is it running there?")
       } else {
         if (verbose) cli::cli_alert_danger(cnd)
       }
-      check_value <- FALSE # nolint
+      check_value <- FALSE
     }
   )
-
   invisible(check_value)
 }
-
-body_to_json_str <- function(x) {
-  to_json_params <- rlang::list2(x = x$data, !!!x$params)
-  do.call(jsonlite::toJSON, to_json_params)
-}
-
-
-ollama_perform_stream <- function(request, parser) {
-  req_perform_stream(
-    request,
-    callback = function(x) {
-      parser$parse_ndjson(rawToChar(x))
-      TRUE
-    },
-    buffer_kb = 0.01,
-    round = "line"
-  )
-}
-
-ollama_chat <- function(model, messages, stream = TRUE, shiny_session = NULL, user_prompt = NULL) {
-  body <- list(
-    model = model,
-    messages = messages,
-    stream = stream
-  )
-
-  request <- ollama_set_task("chat") |>
-    req_body_json(data = body)
-
-
-  if (stream) {
-    parser <- OllamaStreamParser$new(
-      session = shiny_session,
-      user_prompt = user_prompt
-    )
-
-    ollama_perform_stream(
-      request = request,
-      parser = parser
-    )
-
-    last_line <- parser$lines[[length(parser$lines)]]
-
-    last_line$message <- list(
-      role = "assistant",
-      content = parser$value
-    )
-
-    last_line
-  } else {
-    request |>
-      req_perform() |>
-      resp_body_json()
-  }
-}
-
-OllamaStreamParser <- R6::R6Class( # nolint
-  classname = "OllamaStreamParser",
-  portable = TRUE,
-  public = list(
-    lines = NULL,
-    value = NULL,
-    shinySession = NULL,
-    user_message = NULL,
-    append_parsed_line = function(line) {
-      self$value <- paste0(self$value, line$message$content)
-      self$lines <- c(self$lines, list(line))
-
-      if (!is.null(self$shinySession)) {
-        # any communication with JS should be handled here!!
-        self$shinySession$sendCustomMessage(
-          type = "render-stream",
-          message = list(
-            user = self$user_message,
-            assistant = shiny::markdown(self$value)
-          )
-        )
-      }
-
-      invisible(self)
-    },
-    parse_ndjson = function(ndjson, pagesize = 500, verbose = FALSE, simplifyDataFrame = FALSE) { # nolint
-      jsonlite::stream_in(
-        con = textConnection(ndjson),
-        pagesize = pagesize,
-        verbose = verbose,
-        simplifyDataFrame = simplifyDataFrame,
-        handler = function(x) lapply(x, self$append_parsed_line)
-      )
-
-      invisible(self)
-    },
-    initialize = function(session = NULL, user_prompt = NULL) {
-      self$lines <- list()
-      self$shinySession <- session
-      self$user_message <- shiny::markdown(user_prompt)
-    }
-  )
-)
