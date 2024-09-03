@@ -29,7 +29,7 @@ new_gptstudio_service <- function(service_name = character()) {
 #' @export
 list_available_models.openai <- function(service) {
   models <-
-    request_base("models") |>
+    request_base_openai("models") |>
     httr2::req_perform() |>
     httr2::resp_body_json() |>
     purrr::pluck("data") |>

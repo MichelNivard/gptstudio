@@ -11,7 +11,6 @@ create_completion_anthropic(
   key = Sys.getenv("ANTHROPIC_API_KEY"),
   stream = FALSE,
   system = NULL,
-  element_callback = anthropic_handler,
   shiny_session = NULL,
   user_prompt = NULL
 )
@@ -30,9 +29,6 @@ function will try to use the \code{ANTHROPIC_API_KEY} environment variable.}
 \item{stream}{Whether to stream the response, defaults to FALSE.}
 
 \item{system}{A system messages to instruct the model. Defaults to NULL.}
-
-\item{element_callback}{A callback function to handle each element
-of the streamed response (optional).}
 
 \item{shiny_session}{A Shiny session object to send messages to the client}
 

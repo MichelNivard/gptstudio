@@ -13,7 +13,7 @@ check_api_connection_openai <- function(service, api_key) {
   }
 
   response <-
-    request_base(task = "models") |>
+    request_base_openai(task = "models") |>
     req_error(is_error = function(resp) FALSE) |>
     req_perform()
   process_response(response, service)

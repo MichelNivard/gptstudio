@@ -29,7 +29,7 @@ test_that("OpenAI create edit fails with bad key", {
 
 test_that("OpenAI create chat completion fails with bad key", {
   expect_error(
-    openai_create_chat_completion(
+    create_chat_openai(
       prompt = "What is your name?",
       openai_api_key = sample_key
     )

@@ -8,8 +8,6 @@
 #' @param key The API key for accessing Anthropic's API. By default, the
 #'   function will try to use the `ANTHROPIC_API_KEY` environment variable.
 #' @param stream Whether to stream the response, defaults to FALSE.
-#' @param element_callback A callback function to handle each element
-#' of the streamed response (optional).
 #' @param shiny_session A Shiny session object to send messages to the client
 #' @param user_prompt A user prompt to send to the client
 #'
@@ -30,7 +28,6 @@ create_completion_anthropic <- function(prompt = list(list(role = "user", conten
                                         key = Sys.getenv("ANTHROPIC_API_KEY"),
                                         stream = FALSE,
                                         system = NULL,
-                                        element_callback = anthropic_handler,
                                         shiny_session = NULL,
                                         user_prompt = NULL) {
   request_body <- list(
@@ -45,7 +42,6 @@ create_completion_anthropic <- function(prompt = list(list(role = "user", conten
     request_body = request_body,
     key = key,
     stream = stream,
-    element_callback = element_callback,
     shiny_session = shiny_session,
     user_prompt = user_prompt
   )
@@ -63,7 +59,6 @@ request_base_anthropic <- function(key = Sys.getenv("ANTHROPIC_API_KEY")) {
 query_api_anthropic <- function(request_body,
                                  key = Sys.getenv("ANTHROPIC_API_KEY"),
                                  stream = FALSE,
-                                 element_callback = anthropic_handler,
                                  shiny_session = NULL,
                                  user_prompt = NULL) {
   req <- request_base_anthropic(key) |>

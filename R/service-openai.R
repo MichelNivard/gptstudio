@@ -54,7 +54,6 @@ request_base_openai <- function(task, api_key = Sys.getenv("OPENAI_API_KEY")) {
     req_auth_bearer_token(token = api_key)
 }
 
-
 query_api_openai <- function(task,
                              request_body,
                              api_key = Sys.getenv("OPENAI_API_KEY"),
@@ -123,10 +122,6 @@ get_available_endpoints <- function() {
   c("completions", "chat/completions", "edits", "embeddings", "models")
 }
 
-#' Encode an image file to base64
-#'
-#' @param image_path String containing the path to the image file
-#' @return A base64 encoded string of the image
 encode_image <- function(image_path) {
   image_file <- file(image_path, "rb")
   image_data <- readBin(image_file, "raw", file.info(image_path)$size)
@@ -163,6 +158,6 @@ create_image_chat_openai <- function(image_path,
   query_api_openai(
     task = task,
     request_body = body,
-    openai_api_key = openai_api_key
+    api_key = api_key
   )
 }

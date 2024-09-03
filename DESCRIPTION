@@ -32,7 +32,6 @@ Imports:
     ids,
     jsonlite,
     purrr,
-    R6 (>= 2.0),
     rlang,
     rstudioapi (>= 0.12),
     shiny (>= 1.9.0),
