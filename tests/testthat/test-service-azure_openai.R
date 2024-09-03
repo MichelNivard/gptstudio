@@ -17,7 +17,7 @@ test_that("create_completion_azure_openai formats request correctly", {
         query_api_azure_openai = mock_query_api
       )
 
-      result <- create_completion_azure_openai("Test prompt")
+      result <- create_chat_azure_openai("Test prompt")
 
       expect_type(result, "list")
       expect_equal(result$choices[[1]]$message$content, "Mocked response")
