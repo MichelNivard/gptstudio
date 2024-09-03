@@ -28,7 +28,7 @@ Imports:
     glue,
     htmltools,
     htmlwidgets,
-    httr2,
+    httr2 (>= 1.0.3.9000),
     ids,
     jsonlite,
     purrr,
@@ -56,6 +56,8 @@ Suggests:
     withr
 Config/testthat/edition: 3
 Config/testthat/parallel: true
+Remotes:
+    r-lib/httr2
 Encoding: UTF-8
 Language: en-US
 LazyData: true
