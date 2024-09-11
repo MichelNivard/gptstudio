@@ -11,7 +11,8 @@
 - New styling of chat app. #224
 - Add code syntax highlighting to chat app. #224
 - Replace curl calls with httr2. #224
-- Remove magrittr pipe in favor of base pipe, require R >= 4.1
+- Remove magrittr pipe in favor of base pipe, require R >= 4.1 #226
+- Tweak app sidebar and set min version of bsicons and httr2 #228
 
 ## gptstudio 0.4.0
 

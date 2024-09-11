@@ -28,7 +28,7 @@ Imports:
     glue,
     htmltools,
     htmlwidgets,
-    httr2,
+    httr2 (>= 1.0.3),
     ids,
     jsonlite,
     purrr,
