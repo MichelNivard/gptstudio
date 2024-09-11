@@ -21,7 +21,7 @@ BugReports: https://github.com/MichelNivard/gptstudio/issues
 Depends:
     R (>= 4.1)
 Imports: 
-    bsicons,
+    bsicons (>= 0.1.2),
     bslib (>= 0.8.0),
     cli,
     colorspace,
