@@ -25,6 +25,7 @@ mod_app_ui <- function(id,
           width = 300,
           class = "p-0",
           padding = "0.5rem",
+          tags$div(style = "height: 1px;"),
           mod_sidebar_ui(ns("sidebar"), translator)
         ),
         div(
