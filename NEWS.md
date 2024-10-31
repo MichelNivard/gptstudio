@@ -13,6 +13,7 @@
 - Replace curl calls with httr2. #224
 - Remove magrittr pipe in favor of base pipe, require R >= 4.1 #226
 - Tweak app sidebar and set min version of bsicons and httr2 #228
+- Added info tooltips to the API service settings to inform users to save after modifying this section #230
 
 ## gptstudio 0.4.0
 

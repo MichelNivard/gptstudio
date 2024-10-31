@@ -60,14 +60,20 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       icon = bsicons::bs_icon("server"),
       selectInput(
         inputId = ns("service"),
-        label = translator$t("Select API Service"),
+        label = tags$span(
+          translator$t("Select API Service"),
+          bsicons::bs_icon("info-circle") |> bslib::tooltip("Save after modifying!")
+        ),
         choices = api_services,
         selected = getOption("gptstudio.service"),
         width = "100%"
       ),
       selectInput(
         inputId = ns("model"),
-        label = translator$t("Chat Model"),
+        label = tags$span(
+          translator$t("Chat Model"),
+          bsicons::bs_icon("info-circle") |> bslib::tooltip("Save after modifying!")
+        ),
         choices = getOption("gptstudio.model"),
         width = "100%",
         selected = getOption("gptstudio.model")
