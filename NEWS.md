@@ -14,6 +14,7 @@
 - Remove magrittr pipe in favor of base pipe, require R >= 4.1 #226
 - Tweak app sidebar and set min version of bsicons and httr2 #228
 - Added info tooltips to the API service settings to inform users to save after modifying this section #230
+- Fixed a bug in `gptstudio_sitrep()` that prevented it to correctly report an active `ANTHROPIC_API_KEY`
 
 ## gptstudio 0.4.0
 
@@ -119,7 +120,7 @@ The ChatGPT addin can now speak German! Thanks to [Mark Colley](https://github.c
 
 ### Translations
 
-The ChatGPT addin can now receive translations. If anyone wants to contribute with a new translation only needs to edit the translation file ("inst/translations/translation.json"). Currently supported languages are English and Spanish. 
+The ChatGPT addin can now receive translations. If anyone wants to contribute with a new translation only needs to edit the translation file ("inst/translations/translation.json"). Currently supported languages are English and Spanish.
 
 ### `{httr2}`
 

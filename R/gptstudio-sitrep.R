@@ -43,9 +43,11 @@ check_api_connection_anthropic <- function(service, api_key) {
     request_base_anthropic(key = Sys.getenv("ANTHROPIC_API_KEY")) |>
     req_body_json(
       data = list(
-        prompt = "\n\nHuman: Hello, Claude\n\nAssistant:",
-        model = "claude-2.1",
-        max_tokens_to_sample = 1024
+        model = "claude-3-haiku-20240307",
+        max_tokens = 1024,
+        messages = list(
+          list(role = "user", content = "Hello, Claude")
+        )
       )
     ) |>
     req_error(is_error = function(resp) FALSE) |>
