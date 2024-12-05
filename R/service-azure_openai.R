@@ -108,30 +108,41 @@ query_api_azure_openai <-
   }
 
 retrieve_azure_token <- function() {
-  rlang::check_installed("AzureRMR")
 
-  token <- retrieve_azure_token_object() %>% suppressMessages()
+  token <- retrieve_azure_token_object() |> suppressMessages()
 
   invisible(token$credentials$access_token)
 }
 
 
 retrieve_azure_token_object <- function() {
-  ## Set this so that do_login properly caches
+  rlang::check_installed("AzureGraph")
+
+  ## Set this so that get_graph_login properly caches
   azure_data_env = Sys.getenv("R_AZURE_DATA_DIR")
   Sys.setenv("R_AZURE_DATA_DIR" = gptstudio_cache_directory())
 
-  client <- Microsoft365R:::do_login(tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
-                                     app = Sys.getenv("AZURE_OPENAI_CLIENT_ID"),
-                                     host = Sys.getenv("AZURE_OPENAI_SCOPE"),
-                                     scopes = NULL,
-                                     auth_type = "client_credentials",
-                                     password = Sys.getenv("AZURE_OPENAI_CLIENT_SECRET"),
-                                     token = NULL)
-  ## Set this so that do_login properly caches
+  login <- try(AzureGraph::get_graph_login(tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
+                                           app = Sys.getenv("AZURE_OPENAI_CLIENT_ID"),
+                                           scopes = NULL,
+                                           refresh = FALSE),
+               silent=TRUE) |>
+    suppressMessages()
+
+  if(inherits(login, "try-error")) {
+    login <- AzureGraph::create_graph_login(tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
+                                            app = Sys.getenv("AZURE_OPENAI_CLIENT_ID"),
+                                            host = Sys.getenv("AZURE_OPENAI_SCOPE"),
+                                            scopes = NULL,
+                                            auth_type = "client_credentials",
+                                            password = Sys.getenv("AZURE_OPENAI_CLIENT_SECRET")) |>
+      suppressMessages()
+  }
+
+  ## Set this so that get_graph_login properly caches
   Sys.setenv("R_AZURE_DATA_DIR" = azure_data_env)
 
-  invisible(client$token)
+  invisible(login$token)
 }
 
 
