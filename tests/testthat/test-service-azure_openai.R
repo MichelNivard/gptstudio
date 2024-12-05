@@ -154,11 +154,11 @@ test_that("query_api_azure_openai handles error response", {
 
 test_that("retrieve_azure_token successfully gets existing token", {
   local_mocked_bindings(
-    get_azure_login = function(...) {
-      list(token = list(credentials = list(access_token = "existing_token")))
+    get_graph_login = function(...) {
+      list(credentials = list(access_token = "existing_token"))
     },
-    create_azure_login = function(...) stop("Should not be called"),
-    .package = "AzureRMR"
+    create_graph_login = function(...) stop("Should not be called"),
+    .package = "AzureGraph"
   )
 
   token <- retrieve_azure_token()
@@ -166,13 +166,13 @@ test_that("retrieve_azure_token successfully gets existing token", {
   expect_equal(token, "existing_token")
 })
 
-test_that("retrieve_azure_token creates new token when get_azure_login fails", {
+test_that("retrieve_azure_token creates new token when get_graph_login fails", {
   local_mocked_bindings(
-    get_azure_login = function(...) stop("Error"),
-    create_azure_login = function(...) {
-      list(token = list(credentials = list(access_token = "new_token")))
+    get_graph_login = function(...) stop("Error"),
+    create_graph_login = function(...) {
+      list(credentials = list(access_token = "new_token"))
     },
-    .package = "AzureRMR"
+    .package = "AzureGraph"
   )
 
   token <- retrieve_azure_token()
@@ -180,41 +180,48 @@ test_that("retrieve_azure_token creates new token when get_azure_login fails", {
   expect_equal(token, "new_token")
 })
 
+
 test_that("retrieve_azure_token uses correct environment variables", {
-  mock_get_azure_login <- function(tenant, app, scopes) {
+  mock_get_graph_login <- function(tenant, app, scopes, refresh) {
     expect_equal(tenant, "test_tenant")
     expect_equal(app, "test_client")
-    expect_equal(scopes, ".default")
+    expect_equal(scopes, NULL)
+    expect_equal(refresh, FALSE)
     stop("Error")
   }
 
-  mock_create_azure_login <- function(tenant, app, password, host, scopes) {
+  mock_create_graph_login <- function(tenant, app, host, scopes, auth_type, password) {
     expect_equal(tenant, "test_tenant")
     expect_equal(app, "test_client")
+    expect_equal(host, "https://cognitiveservices.azure.com/.default")
+    expect_equal(scopes, NULL)
+    expect_equal(auth_type, "client_credentials")
     expect_equal(password, "test_secret")
-    expect_equal(host, "https://cognitiveservices.azure.com/")
-    expect_equal(scopes, ".default")
-    list(token = list(credentials = list(access_token = "new_token")))
+    list(credentials = list(access_token = "new_token"))
   }
 
   local_mocked_bindings(
-    get_azure_login = mock_get_azure_login,
-    create_azure_login = mock_create_azure_login,
-    .package = "AzureRMR"
+    get_graph_login = mock_get_graph_login,
+    create_graph_login = mock_create_graph_login,
+    .package = "AzureGraph"
   )
 
   withr::local_envvar(
     AZURE_OPENAI_TENANT_ID = "test_tenant",
     AZURE_OPENAI_CLIENT_ID = "test_client",
-    AZURE_OPENAI_CLIENT_SECRET = "test_secret"
+    AZURE_OPENAI_CLIENT_SECRET = "test_secret",
+    AZURE_OPENAI_SCOPE = "https://cognitiveservices.azure.com/.default"
   )
 
   expect_no_error(retrieve_azure_token())
 })
 
-test_that("retrieve_azure_token checks for AzureRMR installation", {
+
+
+
+test_that("retrieve_azure_token checks for AzureGraph installation", {
   mock_check_installed <- function(pkg) {
-    expect_equal(pkg, "AzureRMR")
+    expect_equal(pkg, "AzureGraph")
   }
 
   local_mocked_bindings(
