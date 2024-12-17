@@ -108,31 +108,52 @@ query_api_azure_openai <-
   }
 
 retrieve_azure_token <- function() {
-  rlang::check_installed("AzureRMR")
 
-  token <- tryCatch(
-    {
-      AzureRMR::get_azure_login(
-        tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
-        app = Sys.getenv("AZURE_OPENAI_CLIENT_ID"),
-        scopes = ".default"
-      )
-    },
-    error = function(e) NULL
-  )
+  token <- retrieve_azure_token_object() |> suppressMessages()
 
-  if (is.null(token)) {
-    token <- AzureRMR::create_azure_login(
-      tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
-      app = Sys.getenv("AZURE_OPENAI_CLIENT_ID"),
-      password = Sys.getenv("AZURE_OPENAI_CLIENT_SECRET"),
-      host = "https://cognitiveservices.azure.com/",
-      scopes = ".default"
-    )
+  invisible(token$credentials$access_token)
+}
+
+
+retrieve_azure_token_object <- function() {
+  rlang::check_installed("AzureGraph")
+
+  ## Set this so that get_graph_login properly caches
+  azure_data_env <- Sys.getenv("R_AZURE_DATA_DIR")
+
+  Sys.setenv("R_AZURE_DATA_DIR" = gptstudio_cache_directory())
+
+  login <- try(AzureGraph::get_graph_login(tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
+                                           app = Sys.getenv("AZURE_OPENAI_CLIENT_ID"),
+                                           scopes = NULL,
+                                           refresh = FALSE),
+               silent = TRUE) |>
+    suppressMessages()
+
+  if (inherits(login, "try-error")) {
+
+    if (!dir.exists(gptstudio_cache_directory())) {
+      dir.create(gptstudio_cache_directory()) |>
+        suppressWarnings()
+    }
+
+
+    login <- AzureGraph::create_graph_login(tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
+                                            app = Sys.getenv("AZURE_OPENAI_CLIENT_ID"),
+                                            host = Sys.getenv("AZURE_OPENAI_SCOPE"),
+                                            scopes = NULL,
+                                            auth_type = "client_credentials",
+                                            password = Sys.getenv("AZURE_OPENAI_CLIENT_SECRET")) |>
+      suppressMessages()
   }
 
-  invisible(token$token$credentials$access_token)
+  ## Set this so that get_graph_login properly caches
+  Sys.setenv("R_AZURE_DATA_DIR" = azure_data_env)
+
+  invisible(login$token)
 }
+
+
 
 
 stream_azure_openai <- function(messages = list(list(role = "user", content = "hi there")),
@@ -155,6 +176,5 @@ stream_azure_openai <- function(messages = list(list(role = "user", content = "h
       },
       round = "line"
     )
-
   invisible(response)
 }

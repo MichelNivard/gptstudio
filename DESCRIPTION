@@ -42,7 +42,7 @@ Imports:
     utils,
     yaml
 Suggests: 
-    AzureRMR,
+    AzureGraph,
     future,
     grDevices,
     knitr,
