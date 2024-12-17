@@ -120,6 +120,7 @@ retrieve_azure_token_object <- function() {
 
   ## Set this so that get_graph_login properly caches
   azure_data_env = Sys.getenv("R_AZURE_DATA_DIR")
+
   Sys.setenv("R_AZURE_DATA_DIR" = gptstudio_cache_directory())
 
   login <- try(AzureGraph::get_graph_login(tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
@@ -130,6 +131,10 @@ retrieve_azure_token_object <- function() {
     suppressMessages()
 
   if(inherits(login, "try-error")) {
+
+    if(!dir.exists(gptstudio_cache_directory())) dir.create(gptstudio_cache_directory()) |> suppressWarnings()
+
+
     login <- AzureGraph::create_graph_login(tenant = Sys.getenv("AZURE_OPENAI_TENANT_ID"),
                                             app = Sys.getenv("AZURE_OPENAI_CLIENT_ID"),
                                             host = Sys.getenv("AZURE_OPENAI_SCOPE"),

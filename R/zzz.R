@@ -10,8 +10,6 @@
     ))
   }
 
-  if(!dir.exists(gptstudio_cache_directory())) dir.create(gptstudio_cache_directory())
-
   op <- options()
 
   op_gptstudio <- list(

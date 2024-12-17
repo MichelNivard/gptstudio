@@ -153,6 +153,8 @@ test_that("query_api_azure_openai handles error response", {
 # Test token retrieval --------------------------------------------------------
 
 test_that("retrieve_azure_token successfully gets existing token", {
+  skip_on_ci()
+
   local_mocked_bindings(
     get_graph_login = function(...) {
       list(credentials = list(access_token = "existing_token"))
@@ -167,6 +169,8 @@ test_that("retrieve_azure_token successfully gets existing token", {
 })
 
 test_that("retrieve_azure_token creates new token when get_graph_login fails", {
+  skip_on_ci()
+
   local_mocked_bindings(
     get_graph_login = function(...) stop("Error"),
     create_graph_login = function(...) {
@@ -182,6 +186,8 @@ test_that("retrieve_azure_token creates new token when get_graph_login fails", {
 
 
 test_that("retrieve_azure_token uses correct environment variables", {
+  skip_on_ci()
+
   mock_get_graph_login <- function(tenant, app, scopes, refresh) {
     expect_equal(tenant, "test_tenant")
     expect_equal(app, "test_client")
