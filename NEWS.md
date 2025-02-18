@@ -1,5 +1,6 @@
 # gptstudio (development version)
 
+- Fixed a bug in read_docs.R that wasn't correctly referencing the help docs of packages that contain a period (".") in their name. 
 - Fixed a bug that showed the message "ChatGPT responded" even when other service was being used in "Chat in source" related addins. #213
 - Added claude-3.5-sonnet model from Anthropic.
 - Set gpt-4o-mini as default model for OpenAI. #219
