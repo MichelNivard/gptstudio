@@ -111,7 +111,7 @@ docs_get_sections <- function(children) {
 
 locate_double_colon_calls <- function(x) {
   all_matches <- x |>
-    stringr::str_extract_all("`?\\b\\w+::(\\w|\\.)+\\b`?")
+    stringr::str_extract_all("`?\\b[\\w\\.]+::(\\w|\\.)+\\b`?")
 
   all_matches[[1]] |>
     stringr::str_remove_all("`") |>
