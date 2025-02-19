@@ -78,42 +78,56 @@ test_that("read_docs() returns expected structure when no documentation found", 
     expect_null()
 })
 
+# Helper function to create expected value format for locate_double_colon_calls tests below
+get_expected_value_format <- function(...) {
+  # Convert pairs of arguments into list of pkg_ref and topic pairs
+  args <- list(...)
+  if (length(args) %% 2 != 0) stop("Arguments must be pairs of pkg_ref and topic")
+  
+  result <- vector("list", length(args) / 2)
+  for (i in seq_len(length(result))) {
+    idx <- (i - 1) * 2 + 1
+    result[[i]] <- list(
+      pkg_ref = args[[idx]],
+      topic = args[[idx + 1]]
+    )
+  }
+  result
+}
+
 # Comprehensive tests for valid R package names with user-like prompts
 test_that("Valid R package names are correctly matched", {
-    expect_equal(locate_double_colon_calls("Is A1::func correct?"), 
-                 list(list(pkg_ref = "A1", topic = "func")))                 
-    expect_equal(locate_double_colon_calls("Check this abc::f example"), 
-                 list(list(pkg_ref = "abc", topic = "f")))                     
-    expect_equal(locate_double_colon_calls("The long.package.name::another_function() is great"), 
-                 list(list(pkg_ref = "long.package.name", topic = "another_function")))
-    expect_equal(locate_double_colon_calls("Replace with ab.c::func call"), 
-                 list(list(pkg_ref = "ab.c", topic = "func")))               
-    expect_equal(locate_double_colon_calls("What about AB.C::func?"), 
-                 list(list(pkg_ref = "AB.C", topic = "func")))               
-    expect_equal(locate_double_colon_calls("Use Ab123::func instead"), 
-                 list(list(pkg_ref = "Ab123", topic = "func")))              
-    expect_equal(locate_double_colon_calls("Try package.name123::func"), 
-                 list(list(pkg_ref = "package.name123", topic = "func")))       
-    expect_equal(locate_double_colon_calls("pkg.name::function.subfunc() should work"), 
-                 list(list(pkg_ref = "pkg.name", topic = "function.subfunc")))  
-    expect_equal(locate_double_colon_calls("Use a.very.long.package.name.012::complex_fun.name"), 
-                 list(list(pkg_ref = "a.very.long.package.name.012", topic = "complex_fun.name")))         
-    expect_equal(locate_double_colon_calls("Look at x.y.z::a.b.c example"), 
-                 list(list(pkg_ref = "x.y.z", topic = "a.b.c"))) 
-    expect_equal(locate_double_colon_calls("Call SomeName::anotherFunction"), 
-                 list(list(pkg_ref = "SomeName", topic = "anotherFunction"))) 
+    expect_equal(locate_double_colon_calls("Is A1::func correct?"),
+                get_expected_value_format("A1", "func"))
+    expect_equal(locate_double_colon_calls("Check this abc::f example"),
+                get_expected_value_format("abc", "f"))
+    expect_equal(locate_double_colon_calls("The long.package.name::another_function() is great"),
+                get_expected_value_format("long.package.name", "another_function"))
+    expect_equal(locate_double_colon_calls("Replace with ab.c::func call"),
+                get_expected_value_format("ab.c", "func"))
+    expect_equal(locate_double_colon_calls("What about AB.C::func?"),
+                get_expected_value_format("AB.C", "func"))
+    expect_equal(locate_double_colon_calls("Use Ab123::func instead"),
+                get_expected_value_format("Ab123", "func"))
+    expect_equal(locate_double_colon_calls("Try package.name123::func"),
+                get_expected_value_format("package.name123", "func"))
+    expect_equal(locate_double_colon_calls("pkg.name::function.subfunc() should work"),
+                get_expected_value_format("pkg.name", "function.subfunc"))
+    expect_equal(locate_double_colon_calls("Use a.very.long.package.name.012::complex_fun.name"),
+                get_expected_value_format("a.very.long.package.name.012", "complex_fun.name"))
+    expect_equal(locate_double_colon_calls("Look at x.y.z::a.b.c example"),
+                get_expected_value_format("x.y.z", "a.b.c"))
+    expect_equal(locate_double_colon_calls("Call SomeName::anotherFunction"),
+                get_expected_value_format("SomeName", "anotherFunction"))
+    
     # Additional tests with multiple pkg::func combinations
-    expect_equal(locate_double_colon_calls("Use dv.loader::load_data and A1::func to achieve this"), 
-                 list(list(pkg_ref = "dv.loader", topic = "load_data"), 
-                      list(pkg_ref = "A1", topic = "func")))     
-    expect_equal(locate_double_colon_calls("abc::f and abc.def::function_name are both used here"), 
-                 list(list(pkg_ref = "abc", topic = "f"), 
-                      list(pkg_ref = "abc.def", topic = "function_name")))                   
-    expect_equal(locate_double_colon_calls("The long.package.name::another_function and AB.C::func are important"), 
-                 list(list(pkg_ref = "long.package.name", topic = "another_function"), 
-                      list(pkg_ref = "AB.C", topic = "func")))               
-    expect_equal(locate_double_colon_calls("Use Ab123::func with package.name123::func for this task"), 
-                 list(list(pkg_ref = "Ab123", topic = "func"), 
-                      list(pkg_ref = "package.name123", topic = "func")))              
+    expect_equal(locate_double_colon_calls("Use dv.loader::load_data and A1::func to achieve this"),
+                get_expected_value_format("dv.loader", "load_data", "A1", "func"))
+    expect_equal(locate_double_colon_calls("abc::f and abc.def::function_name are both used here"),
+                get_expected_value_format("abc", "f", "abc.def", "function_name"))
+    expect_equal(locate_double_colon_calls("The long.package.name::another_function and AB.C::func are important"),
+                get_expected_value_format("long.package.name", "another_function", "AB.C", "func"))
+    expect_equal(locate_double_colon_calls("Use Ab123::func with package.name123::func for this task"),
+                get_expected_value_format("Ab123", "func", "package.name123", "func"))
 })
 
