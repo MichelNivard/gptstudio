@@ -15,6 +15,7 @@
 - Tweak app sidebar and set min version of bsicons and httr2 #228
 - Added info tooltips to the API service settings to inform users to save after modifying this section #230
 - Fixed a bug in `gptstudio_sitrep()` that prevented it to correctly report an active `ANTHROPIC_API_KEY`
+- Users can now set `OPENAI_API_URL` to use OPENAI compatible services such as Deepseek. `OPENAI_API_KEY` should be updated accordingly.
 
 ## gptstudio 0.4.0
 
