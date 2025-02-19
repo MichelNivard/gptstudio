@@ -89,7 +89,7 @@
 <div class="section level4">
 <h4 id="internal-development-version">Internal<a class="anchor" aria-label="anchor" href="#internal-development-version"></a></h4>
 <ul><li>Reverted back to use an R6 class for OpenAI streaming (which now inherits from <code><a href="https://calderonsamuel.github.io/SSEparser/reference/SSEparser.html" class="external-link">SSEparser::SSEparser</a></code>). This doesn’t affect how the users interact with the addins, but avoids a wider range of server errors.</li>
-<li>We now make heavy use of <a href="https://github.com/r-lib/lintr" class="external-link">lintr</a> for keeping code consistency.</li>
+<li>We now make heavy use of <a href="https://lintr.r-lib.org" class="external-link">lintr</a> for keeping code consistency.</li>
 <li>Fixed a bug in retrieval of OpenAI models</li>
 <li>Fixed a bug in Azure OpenAI request formation.</li>
 <li>Fixed a bug in “in source” calls for addins.</li>
