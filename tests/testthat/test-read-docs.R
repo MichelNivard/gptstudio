@@ -83,15 +83,8 @@ get_expected_value_format <- function(...) {
   # Convert pairs of arguments into list of pkg_ref and topic pairs
   args <- list(...)
   if (length(args) %% 2 != 0) stop("Arguments must be pairs of pkg_ref and topic")
-  result <- vector("list", length(args) / 2)
-  for (i in seq_len(length(result))) {
-    idx <- (i - 1) * 2 + 1
-    result[[i]] <- list(
-      pkg_ref = args[[idx]],
-      topic = args[[idx + 1]]
-    )
-  }
-  result
+  even_indices <- seq(2, length(args), by = 2)
+  Map(list, pkg_ref = args[even_indices - 1], topic = args[even_indices])
 }
 
 # Comprehensive tests for valid R package names with user-like prompts
