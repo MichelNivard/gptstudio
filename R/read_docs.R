@@ -82,6 +82,12 @@ docs_get_inner_text <- function(x) {
 
 docs_get_sections <- function(children) {
   check_installed("rvest")
+
+  if (getRversion() >= "4.4") {
+    children <- children[[1]] |>
+      rvest::html_children()
+  }
+
   h3_locations <- children |>
     purrr::map_lgl(~ rvest::html_name(.x) == "h3") |>
     which()
