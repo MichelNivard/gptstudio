@@ -12,6 +12,32 @@ test_that("read_docs() matches all expected case types", {
   read_docs("stringr::str_view") |> expect_type("list")
 })
 
+test_that("read_docs() gets non null content when successful", {
+  # These expectations can fail when the tested documentations are changed by their authors
+  # when they fail, first try previous versions of the packages
+
+  str_view_docs <- read_docs("stringr::str_view")[[1]]
+  data.frame_docs <- read_docs("base::data.frame")[[1]] # nolint: object_name_linter
+
+  expect_false(is.null(str_view_docs$pkg_ref))
+  expect_false(is.null(str_view_docs$topic))
+  expect_false(is.null(str_view_docs$inner_text))
+  expect_false(is.null(str_view_docs$inner_text$title))
+  expect_false(is.null(str_view_docs$inner_text$description))
+  expect_false(is.null(str_view_docs$inner_text$usage))
+  expect_false(is.null(str_view_docs$inner_text$arguments))
+  expect_false(is.null(str_view_docs$inner_text$examples))
+
+  expect_false(is.null(data.frame_docs$pkg_ref))
+  expect_false(is.null(data.frame_docs$topic))
+  expect_false(is.null(data.frame_docs$inner_text))
+  expect_false(is.null(data.frame_docs$inner_text$title))
+  expect_false(is.null(data.frame_docs$inner_text$description))
+  expect_false(is.null(data.frame_docs$inner_text$usage))
+  expect_false(is.null(data.frame_docs$inner_text$arguments))
+  expect_false(is.null(data.frame_docs$inner_text$examples))
+})
+
 test_that("read_docs() works in operators", {
   skip("To be implemented: work in operators")
 
