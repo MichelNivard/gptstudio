@@ -25,7 +25,7 @@ gptstudio_skeleton_build <- function(skeleton, skill, style, task, custom_prompt
 
 #' @export
 gptstudio_skeleton_build.gptstudio_request_openai <-
-  function(skeleton = gptstudio_create_skeleton(),
+  function(skeleton = gptstudio_create_skeleton("openai"),
            skill = getOption("gptstudio.skill"),
            style = getOption("gptstudio.code_style"),
            task = "coding",

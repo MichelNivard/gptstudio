@@ -33,15 +33,14 @@ list_available_models.openai <- function(service) {
     httr2::req_perform() |>
     httr2::resp_body_json() |>
     purrr::pluck("data") |>
-    purrr::map_chr("id")
-
-  models <- models |>
-    stringr::str_subset("^gpt") |>
-    stringr::str_subset("instruct", negate = TRUE) |>
-    stringr::str_subset("vision", negate = TRUE) |>
+    purrr::map_chr("id") |>
     sort()
 
   idx <- which(models == "gpt-4o-mini")
+
+  # OpenAI compatible services might not have the model selected in idx
+  if (is_empty(idx)) return(models)
+
   models <- c(models[idx], models[-idx])
   return(models)
 }
