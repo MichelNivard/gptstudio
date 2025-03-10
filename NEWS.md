@@ -1,5 +1,6 @@
 # gptstudio (development version)
 
+- Fixed a bug in read_docs.R that wasn't correctly referencing the help docs of packages that contain a period (".") in their name. The code now deals with all valid R package names as defined by [CRAN](https://cran.r-project.org/doc/manuals/R-exts.html#The-DESCRIPTION-file)
 - Fixed a bug that showed the message "ChatGPT responded" even when other service was being used in "Chat in source" related addins. #213
 - Added claude-3.5-sonnet model from Anthropic.
 - Set gpt-4o-mini as default model for OpenAI. #219
@@ -15,7 +16,9 @@
 - Tweak app sidebar and set min version of bsicons and httr2 #228
 - Added info tooltips to the API service settings to inform users to save after modifying this section #230
 - Fixed a bug in `gptstudio_sitrep()` that prevented it to correctly report an active `ANTHROPIC_API_KEY`
-- Users can now set `OPENAI_API_URL` to use OPENAI compatible services such as Deepseek. `OPENAI_API_KEY` should be updated accordingly.
+- Fixed a bug that prevented the internal `read_docs()` function from picking up documentation for R versions greater than 4.4. [#243](https://github.com/MichelNivard/gptstudio/issues/243)
+- Users can now set `OPENAI_API_URL` to use OPENAI compatible services such as Deepseek. `OPENAI_API_KEY` should be updated accordingly. [#237](https://github.com/MichelNivard/gptstudio/issues/237)
+- 
 
 ## gptstudio 0.4.0
 
