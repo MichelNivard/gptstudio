@@ -67,6 +67,8 @@
 <li>Added info tooltips to the API service settings to inform users to save after modifying this section <a href="https://github.com/MichelNivard/gptstudio/issues/230" class="external-link">#230</a></li>
 <li>Fixed a bug in <code><a href="../reference/gptstudio_sitrep.html">gptstudio_sitrep()</a></code> that prevented it to correctly report an active <code>ANTHROPIC_API_KEY</code>
 </li>
+<li>Fixed a bug that prevented the internal <code>read_docs()</code> function from picking up documentation for R versions greater than 4.4. <a href="https://github.com/MichelNivard/gptstudio/issues/243" class="external-link">#243</a>
+</li>
 </ul><div class="section level3">
 <h3 id="gptstudio-development-version-1">gptstudio 0.4.0<a class="anchor" aria-label="anchor" href="#gptstudio-development-version-1"></a></h3>
 <p>This release introduces several exciting enhancements. The chat app now features a sidebar for conversation history, new chats, and settings, along with helpful tooltips. Additionally, local models are now supported using ollama, and the Perplexity Service offers various models like llama-3-sonar and mixtral-8x7b. Cohere Service, with models such as command and command-light, is also available. Internally, there are improvements, bug fixes, and quality-of-life enhancements.</p>
