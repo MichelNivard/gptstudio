@@ -10,8 +10,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     bslib::tooltip(
       bsicons::bs_icon("info-circle"),
       "Add help pages of 'package::object' matches for context.
-      Potentially expensive.
-      Save as default to effectively change"
+      Potentially expensive"
     )
   )
 
