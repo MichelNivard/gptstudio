@@ -112,24 +112,8 @@ mod_settings_ui <- function(id, translator = create_translator()) {
   ) |>
     bslib::tooltip("Back to history")
 
-  btn_save_as_default <- actionButton(
-    inputId = ns("save_default"),
-    label = bsicons::bs_icon("floppy"),
-    class = "mb-3"
-  ) |>
-    bslib::tooltip("Save as default")
-
-  btn_save_in_session <- actionButton(
-    inputId = ns("save_session"),
-    label = bsicons::bs_icon("bookmark"),
-    class = "mb-3"
-  ) |>
-    bslib::tooltip("Save for this session")
-
   tagList(
     btn_to_history,
-    btn_save_in_session,
-    btn_save_as_default,
     preferences
   )
 }
