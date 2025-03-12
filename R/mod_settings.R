@@ -202,67 +202,21 @@ mod_settings_server <- function(id) {
     }) |>
       bindEvent(input$to_history)
 
-
     observe({
-      showModal(modalDialog(
-        tags$p("These settings will persist for all your future chat sessions."),
-        tags$p("After changing the settings a new chat will be created."),
-        footer = tagList(
-          modalButton("Cancel"),
-          actionButton(ns("confirm_default"), "Ok")
-        )
-      ))
+      rv$modify_session_settings <- rv$modify_session_settings + 1L
     }) |>
-      bindEvent(input$save_default)
-
-
-    observe({
-      if (!isTruthy(input$confirm_default)) {
-        return()
-      }
-
-      save_user_config(
-        code_style = input$style,
-        skill = input$skill,
-        task = input$task,
-        language = input$language,
-        service = input$service,
-        model = input$model,
-        custom_prompt = input$custom_prompt,
-        stream = input$stream,
-        read_docs = input$read_docs,
-        audio_input = input$audio_input
+      bindEvent(
+        ignoreInit = TRUE,
+        input$to_history,
+        input$task,
+        input$skill,
+        input$custom_prompt,
+        input$read_docs,
+        input$model,
+        input$service,
+        input$stream,
+        input$audio_input
       )
-
-      rv$modify_session_settings <- rv$modify_session_settings + 1L
-
-      removeModal(session)
-
-      showNotification("Defaults updated", duration = 3, type = "message", session = session)
-    }) |> bindEvent(input$confirm_default)
-
-
-    observe({
-      showModal(modalDialog(
-
-        tags$p("After changing the settings a new chat will be created."),
-        footer = tagList(
-          modalButton("Cancel"),
-          actionButton(ns("confirm_session"), "Ok")
-        )
-      ))
-    }) |>
-      bindEvent(input$save_session)
-
-    observe({
-      if (!isTruthy(input$confirm_session)) {
-        return()
-      }
-
-      rv$modify_session_settings <- rv$modify_session_settings + 1L
-      removeModal(session)
-    }) |>
-      bindEvent(input$confirm_session)
 
 
     observe({
@@ -276,9 +230,21 @@ mod_settings_server <- function(id) {
       rv$audio_input <- input$audio_input %||% getOption("gptstudio.audio_input")
 
       rv$create_new_chat <- rv$create_new_chat + 1L
+
+      save_user_config(
+        code_style = rv$style,
+        skill = rv$skill,
+        task = rv$task,
+        language = input$language,
+        service = rv$service,
+        model = rv$model,
+        custom_prompt = rv$custom_prompt,
+        stream = rv$stream,
+        read_docs = input$read_docs,
+        audio_input = rv$audio_input
+      )
     }) |>
       bindEvent(rv$modify_session_settings)
-
 
     ## Module output ----
     rv
