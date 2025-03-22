@@ -126,8 +126,6 @@ mod_settings_ui <- function(id, translator = create_translator()) {
 
 mod_settings_server <- function(id) {
   moduleServer(id, function(input, output, session) {
-    ns <- session$ns
-
     rv <- reactiveValues()
     rv$selected_history <- 0L
     rv$modify_session_settings <- 0L
