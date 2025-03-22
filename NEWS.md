@@ -17,6 +17,7 @@
 - Added info tooltips to the API service settings to inform users to save after modifying this section #230
 - Fixed a bug in `gptstudio_sitrep()` that prevented it to correctly report an active `ANTHROPIC_API_KEY`
 - Fixed a bug that prevented the internal `read_docs()` function from picking up documentation for R versions greater than 4.4. [#243](https://github.com/MichelNivard/gptstudio/issues/243)
+- Settings are now automatically saved as permanent after a change. [#236](https://github.com/MichelNivard/gptstudio/issues/236)
 
 ## gptstudio 0.4.0
 
