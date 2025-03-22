@@ -25,6 +25,13 @@ gptstudio_request_perform <- function(skeleton, ...) {
 gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...,
                                                                shiny_session = NULL) {
 
+  if (getOption("gptstudio.read_docs")) {
+    skeleton$history <- add_docs_messages_to_history(
+      skeleton_history = skeleton$history,
+      last_user_message = skeleton$prompt
+    )
+  }
+
   # Translate request
   all_turns <- skeleton$history |>
     purrr::map(~ellmer::Turn(role = .x$role, contents = list(ellmer::ContentText(.x$content))))
@@ -42,10 +49,6 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...,
     name = "user_message",
     content = skeleton$prompt
   )
-
-  if (getOption("gptstudio.read_docs")) {
-    skeleton$history <- add_docs_messages_to_history(skeleton$history)
-  }
 
   # Perform request
   response <- NULL
