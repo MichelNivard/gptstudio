@@ -22,7 +22,7 @@ gptstudio_request_perform <- function(skeleton, ...) {
 }
 
 #' @export
-gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...,
+gptstudio_request_perform.default <- function(skeleton, ...,
                                                                shiny_session = NULL) {
 
   if (getOption("gptstudio.read_docs")) {
@@ -38,8 +38,7 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...,
 
   current_chat <- ellmer_chat(
     skeleton = skeleton,
-    all_turns = all_turns,
-    base_url = getOption("gptstudio.openai_url")
+    all_turns = all_turns
   )
 
   skeleton$history <- chat_history_append(
@@ -99,19 +98,6 @@ gptstudio_request_perform.gptstudio_request_huggingface <-
         response = response
       ),
       class = "gptstudio_response_huggingface"
-    )
-  }
-
-#' @export
-gptstudio_request_perform.gptstudio_request_google <-
-  function(skeleton, ...) {
-    response <- create_completion_google(prompt = skeleton$prompt)
-    structure(
-      list(
-        skeleton = skeleton,
-        response = response
-      ),
-      class = "gptstudio_response_google"
     )
   }
 
@@ -271,16 +257,6 @@ gptstudio_request_perform.gptstudio_request_cohere <- function(skeleton, ...) {
   )
 }
 
-#' @export
-gptstudio_request_perform.default <- function(skeleton, ...) {
-  cli_abort(
-    c(
-      "x" = "This API service is not implemented or is missing.",
-      "i" = "Class attribute for `prompt`: {class(prompt)}"
-    )
-  )
-}
-
 Buffer <- R6::R6Class(
   classname = "Buffer",
   public = list(
@@ -292,18 +268,38 @@ Buffer <- R6::R6Class(
 )
 
 #' @export
-ellmer_chat <- function(skeleton, all_turns, base_url) {
+ellmer_chat <- function(skeleton, all_turns) {
   if (!inherits(skeleton, "gptstudio_request_skeleton")) {
     cli::cli_abort("Skeleton must be a 'gptstudio_request_skeleton' or a child class")
   }
   UseMethod("ellmer_chat")
 }
 
+
 #' @export
-ellmer_chat.gptstudio_request_openai <- function(skeleton, all_turns, base_url) {
+ellmer_chat.default <- function(skeleton, ...) {
+  cli_abort(
+    c(
+      "x" = "This API service is not implemented or is missing.",
+      "i" = "Class attribute for `prompt`: {class(prompt)}"
+    )
+  )
+}
+
+#' @export
+ellmer_chat.gptstudio_request_openai <- function(skeleton, all_turns) {
   ellmer::chat_openai(
     turns = all_turns,
     base_url = getOption("gptstudio.openai_url"),
+    api_key = skeleton$api_key,
+    model = skeleton$model
+  )
+}
+
+#' @export
+ellmer_chat.gptstudio_request_google <- function(skeleton, all_turns) {
+  ellmer::chat_gemini(
+    turns = all_turns,
     api_key = skeleton$api_key,
     model = skeleton$model
   )

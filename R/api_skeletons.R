@@ -279,8 +279,7 @@ gptstudio_create_skeleton <- function(service = "openai",
       model = model,
       prompt = prompt,
       history = history,
-      # forcing false until streaming implemented for google
-      stream = FALSE
+      stream = stream
     ),
     "azure_openai" = new_gptstudio_request_skeleton_azure_openai(
       model = model,
