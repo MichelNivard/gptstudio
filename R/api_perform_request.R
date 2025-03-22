@@ -142,25 +142,6 @@ gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton,
 }
 
 #' @export
-gptstudio_request_perform.gptstudio_request_perplexity <-
-  function(skeleton, ...) {
-    model <- skeleton$model
-    prompt <- skeleton$prompt
-    cli_inform(c("i" = "Using Perplexity API with {model} model"))
-    response <- create_completion_perplexity(
-      prompt = prompt,
-      model = model
-    )
-    structure(
-      list(
-        skeleton = skeleton,
-        response = response$choices[[1]]$message$content
-      ),
-      class = "gptstudio_response_perplexity"
-    )
-  }
-
-#' @export
 gptstudio_request_perform.gptstudio_request_cohere <- function(skeleton, ...) {
   prompt <- skeleton$prompt
   model <- skeleton$model
@@ -250,6 +231,14 @@ ellmer_chat.gptstudio_request_ollama <- function(skeleton, all_turns) {
 #' @export
 ellmer_chat.gptstudio_request_anthropic <- function(skeleton, all_turns) {
   ellmer::chat_claude(
+    turns = all_turns,
+    model = skeleton$model
+  )
+}
+
+#' @export
+ellmer_chat.gptstudio_request_perplexity <- function(skeleton, all_turns) {
+  ellmer::chat_perplexity(
     turns = all_turns,
     model = skeleton$model
   )
