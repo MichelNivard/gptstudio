@@ -281,3 +281,13 @@ gptstudio_request_perform.default <- function(skeleton, ...) {
     )
   )
 }
+
+Buffer <- R6::R6Class(
+  classname = "Buffer",
+  public = list(
+    value = "",
+    add_chunk = function(chunk) {
+      self$value <- paste0(self$value, chunk)
+    }
+  )
+)
