@@ -102,39 +102,6 @@ gptstudio_request_perform.gptstudio_request_huggingface <-
   }
 
 #' @export
-gptstudio_request_perform.gptstudio_request_anthropic <-
-  function(skeleton, ...) {
-    model <- skeleton$model
-
-    skeleton$history <- chat_history_append(
-      history = skeleton$history,
-      role = "user",
-      content = skeleton$prompt
-    )
-
-    # Anthropic does not have a system message, so convert it to user
-    system <-
-      purrr::keep(skeleton$history, function(x) x$role == "system") |>
-      purrr::pluck("content")
-    history <-
-      purrr::keep(skeleton$history, function(x) x$role %in% c("user", "assistant"))
-
-    cli_inform(c("i" = "Using Anthropic API with {model} model"))
-    response <- create_completion_anthropic(
-      prompt = history,
-      system = system,
-      model = model
-    )
-    structure(
-      list(
-        skeleton = skeleton,
-        response = response
-      ),
-      class = "gptstudio_response_anthropic"
-    )
-  }
-
-#' @export
 gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton,
                                                                      shiny_session = NULL,
                                                                      ...) {
@@ -276,6 +243,14 @@ ellmer_chat.gptstudio_request_ollama <- function(skeleton, all_turns) {
   ellmer::chat_ollama(
     turns = all_turns,
     base_url = Sys.getenv("OLLAMA_HOST", unset = "http://localhost:11434"),
+    model = skeleton$model
+  )
+}
+
+#' @export
+ellmer_chat.gptstudio_request_anthropic <- function(skeleton, all_turns) {
+  ellmer::chat_claude(
+    turns = all_turns,
     model = skeleton$model
   )
 }
