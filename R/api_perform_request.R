@@ -24,7 +24,17 @@ gptstudio_request_perform <- function(skeleton, ...) {
 #' @export
 gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...,
                                                                shiny_session = NULL) {
+
   # Translate request
+  all_turns <- skeleton$history |>
+    purrr::map(~ellmer::Turn(role = .x$role, contents = list(ellmer::ContentText(.x$content))))
+
+  current_chat <- ellmer::chat_openai(
+    turns = all_turns,
+    base_url = getOption("gptstudio.openai_url"),
+    api_key = skeleton$api_key,
+    model = skeleton$model
+  )
 
   skeleton$history <- chat_history_append(
     history = skeleton$history,
@@ -37,44 +47,31 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...,
     skeleton$history <- add_docs_messages_to_history(skeleton$history)
   }
 
-  body <- list(
-    "model"      = skeleton$model,
-    "stream"     = skeleton$stream,
-    "messages"   = skeleton$history,
-    "max_tokens" = skeleton$extras$max_tokens,
-    "n"          = skeleton$extra$n
-  )
-
-  # Create request
-  request <- request(skeleton$url) |>
-    req_auth_bearer_token(skeleton$api_key) |>
-    req_body_json(body)
-
   # Perform request
   response <- NULL
 
   if (isTRUE(skeleton$stream)) {
     if (is.null(shiny_session)) stop("Stream requires a shiny session object")
 
-    stream_handler <- OpenaiStreamParser$new(
-      session = shiny_session,
-      user_prompt = skeleton$prompt
-    )
+    message_buffer <- Buffer$new()
+    stream <- current_chat$stream(skeleton$prompt)
 
-    stream_chat_completion(
-      messages = skeleton$history,
-      element_callback = stream_handler$parse_sse,
-      model = skeleton$model,
-      openai_api_key = skeleton$api_key
-    )
+    coro::loop(for (chunk in stream) {
+      message_buffer$add_chunk(chunk)
 
-    response <- stream_handler$value
+      shiny_session$sendCustomMessage(
+        type = "render-stream",
+        message = list(
+          user = skeleton$prompt,
+          assistant = shiny::markdown(message_buffer$value)
+        )
+      )
+    })
+
+    response <- message_buffer$value
+
   } else {
-    response_json <- request |>
-      req_perform() |>
-      resp_body_json()
-
-    response <- response_json$choices[[1]]$message$content
+    response <- current_chat$chat(skeleton$prompt)
   }
   # return value
   structure(
