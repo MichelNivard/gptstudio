@@ -33,12 +33,9 @@ gptstudio_request_perform.default <- function(skeleton, ...,
   }
 
   # Translate request
-  all_turns <- skeleton$history |>
-    purrr::map(~ellmer::Turn(role = .x$role, contents = list(ellmer::ContentText(.x$content))))
-
   current_chat <- ellmer_chat(
     skeleton = skeleton,
-    all_turns = all_turns
+    all_turns = history_to_turns_list(skeleton$history)
   )
 
   skeleton$history <- chat_history_append(
@@ -83,23 +80,6 @@ gptstudio_request_perform.default <- function(skeleton, ...,
     class = "gptstudio_response_openai"
   )
 }
-
-#' @export
-gptstudio_request_perform.gptstudio_request_huggingface <-
-  function(skeleton, ...) {
-    model <- skeleton$model
-    prompt <- skeleton$prompt
-    history <- skeleton$history
-    cli_inform(c("i" = "Using HuggingFace API with {model} model"))
-    response <- create_completion_huggingface(prompt, history, model)
-    structure(
-      list(
-        skeleton = skeleton,
-        response = response
-      ),
-      class = "gptstudio_response_huggingface"
-    )
-  }
 
 #' @export
 gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton,
@@ -181,6 +161,11 @@ Buffer <- R6::R6Class(
   )
 )
 
+history_to_turns_list <- function(skeleton_history) {
+  skeleton_history |>
+    purrr::map(~ellmer::Turn(role = .x$role, contents = list(ellmer::ContentText(.x$content))))
+}
+
 #' @export
 ellmer_chat <- function(skeleton, all_turns) {
   if (!inherits(skeleton, "gptstudio_request_skeleton")) {
@@ -240,6 +225,24 @@ ellmer_chat.gptstudio_request_anthropic <- function(skeleton, all_turns) {
 ellmer_chat.gptstudio_request_perplexity <- function(skeleton, all_turns) {
   ellmer::chat_perplexity(
     turns = all_turns,
+    model = skeleton$model
+  )
+}
+
+#' @export
+ellmer_chat.gptstudio_request_huggingface <- function(skeleton, all_turns) {
+  # huggingface API is not compatible with system prompts
+  skeleton$history <- skeleton$history |>
+    purrr::discard(~.x$role == "system")
+
+  cli::cli_alert_warning(
+    "Discarding system propmt because of incompatibility with Huggingface API"
+  )
+
+  ellmer::chat_openai(
+    turns = history_to_turns_list(skeleton$history),
+    base_url = "https://router.huggingface.co/hf-inference/v1",
+    api_key = skeleton$api_key,
     model = skeleton$model
   )
 }
