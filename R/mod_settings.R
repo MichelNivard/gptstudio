@@ -109,8 +109,17 @@ mod_settings_ui <- function(id, translator = create_translator()) {
   ) |>
     bslib::tooltip("Back to history")
 
+  warning_tag <- tags$div(
+    class = "px-2 mb-2",
+    tags$span(
+      shiny::icon("warning"),
+      "Changing settings will start a new chat"
+    )
+  )
+
   tagList(
     btn_to_history,
+    warning_tag,
     preferences
   )
 }
