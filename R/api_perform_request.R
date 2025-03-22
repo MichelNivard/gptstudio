@@ -36,11 +36,10 @@ gptstudio_request_perform.gptstudio_request_openai <- function(skeleton, ...,
   all_turns <- skeleton$history |>
     purrr::map(~ellmer::Turn(role = .x$role, contents = list(ellmer::ContentText(.x$content))))
 
-  current_chat <- ellmer::chat_openai(
-    turns = all_turns,
-    base_url = getOption("gptstudio.openai_url"),
-    api_key = skeleton$api_key,
-    model = skeleton$model
+  current_chat <- ellmer_chat(
+    skeleton = skeleton,
+    all_turns = all_turns,
+    base_url = getOption("gptstudio.openai_url")
   )
 
   skeleton$history <- chat_history_append(
@@ -291,3 +290,21 @@ Buffer <- R6::R6Class(
     }
   )
 )
+
+#' @export
+ellmer_chat <- function(skeleton, all_turns, base_url) {
+  if (!inherits(skeleton, "gptstudio_request_skeleton")) {
+    cli::cli_abort("Skeleton must be a 'gptstudio_request_skeleton' or a child class")
+  }
+  UseMethod("ellmer_chat")
+}
+
+#' @export
+ellmer_chat.gptstudio_request_openai <- function(skeleton, all_turns, base_url) {
+  ellmer::chat_openai(
+    turns = all_turns,
+    base_url = getOption("gptstudio.openai_url"),
+    api_key = skeleton$api_key,
+    model = skeleton$model
+  )
+}
