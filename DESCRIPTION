@@ -25,6 +25,8 @@ Imports:
     bslib (>= 0.8.0),
     cli,
     colorspace,
+    coro,
+    ellmer,
     glue,
     htmltools,
     htmlwidgets,
