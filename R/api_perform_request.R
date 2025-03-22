@@ -121,36 +121,6 @@ gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton,
   )
 }
 
-#' @export
-gptstudio_request_perform.gptstudio_request_cohere <- function(skeleton, ...) {
-  prompt <- skeleton$prompt
-  model <- skeleton$model
-
-  skeleton$history <- chat_history_append(
-    history = skeleton$history,
-    role = "user",
-    name = "user_message",
-    content = skeleton$prompt
-  )
-
-  cli_inform(c("i" = "Using Cohere API with {model} model"))
-  response <- create_chat_cohere(
-    prompt = prompt,
-    model = model,
-    api_key = skeleton$api_key
-  )
-
-  cli_alert_info("Response: {response}")
-
-  structure(
-    list(
-      skeleton = skeleton,
-      response = response
-    ),
-    class = "gptstudio_response_cohere"
-  )
-}
-
 Buffer <- R6::R6Class(
   classname = "Buffer",
   public = list(
@@ -244,5 +214,18 @@ ellmer_chat.gptstudio_request_huggingface <- function(skeleton, all_turns) {
     base_url = "https://router.huggingface.co/hf-inference/v1",
     api_key = skeleton$api_key,
     model = skeleton$model
+  )
+}
+
+#' @export
+ellmer_chat.gptstudio_request_cohere <- function(skeleton, all_turns) {
+  ellmer::chat_openai(
+    turns = all_turns,
+    base_url = "https://api.cohere.ai/compatibility/v1",
+    api_key = skeleton$api_key,
+    model = skeleton$model,
+    api_args = list(
+      stream_options = NULL # the Cohere API doesn't support this options
+    )
   )
 }

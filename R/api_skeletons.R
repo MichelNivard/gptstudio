@@ -301,8 +301,7 @@ gptstudio_create_skeleton <- function(service = "openai",
       model = model,
       prompt = prompt,
       history = history,
-      # forcing false until streaming implemented for cohere
-      stream = FALSE
+      stream = stream
     )
   )
 }
