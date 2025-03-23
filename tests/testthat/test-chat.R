@@ -185,3 +185,37 @@ describe("chat() google", {
     })
   })
 })
+
+describe("chat() cohere", {
+  it("fails without API KEY", {
+    skip_on_ci()
+    skip_on_cran()
+
+    expect_error({
+      withr::with_envvar(COHERE_API_KEY = "", {
+        chat(
+          prompt = "what is 1+1",
+          service = "cohere",
+          history = NULL,
+          stream = FALSE,
+          model = "command-a-03-2025"
+        )
+      })
+    })
+  })
+
+  it ("works", {
+    skip_on_ci()
+    skip_on_cran()
+
+    expect_no_error({
+      chat(
+        prompt = "what is 1+1",
+        service = "cohere",
+        history = NULL,
+        stream = FALSE,
+        model = "command-a-03-2025"
+      )
+    })
+  })
+})
