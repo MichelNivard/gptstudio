@@ -16,7 +16,7 @@ describe("chat() openai", {
     })
   })
 
-  it ("works", {
+  it("works", {
     skip_on_ci()
     skip_on_cran()
 
@@ -50,7 +50,7 @@ describe("chat() huggingface", {
     })
   })
 
-  it ("works", {
+  it("works", {
     skip_on_ci()
     skip_on_cran()
 
@@ -84,7 +84,7 @@ describe("chat() anthropic", {
     })
   })
 
-  it ("works", {
+  it("works", {
     skip_on_ci()
     skip_on_cran()
 
@@ -101,7 +101,7 @@ describe("chat() anthropic", {
 })
 
 describe("chat() ollama", {
-  it ("works", {
+  it("works", {
     skip_on_ci()
     skip_on_cran()
     skip_if_not(ollama_is_available())
@@ -136,7 +136,7 @@ describe("chat() perplexity", {
     })
   })
 
-  it ("works", {
+  it("works", {
     skip_on_ci()
     skip_on_cran()
 
@@ -170,7 +170,7 @@ describe("chat() google", {
     })
   })
 
-  it ("works", {
+  it("works", {
     skip_on_ci()
     skip_on_cran()
 
@@ -204,7 +204,7 @@ describe("chat() cohere", {
     })
   })
 
-  it ("works", {
+  it("works", {
     skip_on_ci()
     skip_on_cran()
 

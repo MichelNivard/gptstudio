@@ -22,8 +22,7 @@ gptstudio_request_perform <- function(skeleton, ...) {
 }
 
 #' @export
-gptstudio_request_perform.default <- function(skeleton, ...,
-                                                               shiny_session = NULL) {
+gptstudio_request_perform.default <- function(skeleton, ..., shiny_session = NULL) {
 
   if (getOption("gptstudio.read_docs")) {
     skeleton$history <- add_docs_messages_to_history(
@@ -121,7 +120,7 @@ gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton,
   )
 }
 
-Buffer <- R6::R6Class(
+Buffer <- R6::R6Class( # nolint: object_name_linter
   classname = "Buffer",
   public = list(
     value = "",
