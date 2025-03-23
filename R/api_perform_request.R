@@ -135,6 +135,18 @@ history_to_turns_list <- function(skeleton_history) {
     purrr::map(~ellmer::Turn(role = .x$role, contents = list(ellmer::ContentText(.x$content))))
 }
 
+#' Create Chat Client for Different API Providers
+#'
+#' This function provides a generic interface for creating chat clients
+#' for different API providers (e.g., OpenAI, HuggingFace, Google AI Studio).
+#' It dispatches the actual client creation to the relevant method based on
+#' the `class` of the `skeleton` argument.
+#'
+#' @param skeleton A `gptstudio_request_skeleton` object containing API configuration
+#' @param all_turns A list of conversation turns formatted for the ellmer package
+#'
+#' @return An ellmer chat client object for the specific API provider
+#'
 #' @export
 ellmer_chat <- function(skeleton, all_turns) {
   if (!inherits(skeleton, "gptstudio_request_skeleton")) {
