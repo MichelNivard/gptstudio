@@ -117,3 +117,37 @@ describe("chat() ollama", {
     })
   })
 })
+
+describe("chat() perplexity", {
+  it("fails without API KEY", {
+    skip_on_ci()
+    skip_on_cran()
+
+    expect_error({
+      withr::with_envvar(PERPLEXITY_API_KEY = "", {
+        chat(
+          prompt = "what is 1+1",
+          service = "perplexity",
+          history = NULL,
+          stream = FALSE,
+          model = "sonar"
+        )
+      })
+    })
+  })
+
+  it ("works", {
+    skip_on_ci()
+    skip_on_cran()
+
+    expect_no_error({
+      chat(
+        prompt = "what is 1+1",
+        service = "perplexity",
+        history = NULL,
+        stream = FALSE,
+        model = "sonar"
+      )
+    })
+  })
+})
