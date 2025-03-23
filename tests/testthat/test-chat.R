@@ -1,8 +1,8 @@
 describe("chat() openai", {
-  skip_on_ci()
-  skip_on_cran()
-
   it("fails without API KEY", {
+    skip_on_ci()
+    skip_on_cran()
+
     expect_error({
       withr::with_envvar(OPENAI_API_KEY = "", {
         chat(
@@ -17,6 +17,9 @@ describe("chat() openai", {
   })
 
   it ("works", {
+    skip_on_ci()
+    skip_on_cran()
+
     expect_no_error({
       chat(
         prompt = "what is 1+1",
@@ -30,10 +33,10 @@ describe("chat() openai", {
 })
 
 describe("chat() huggingface", {
-  skip_on_ci()
-  skip_on_cran()
-
   it("fails without API KEY", {
+    skip_on_ci()
+    skip_on_cran()
+
     expect_error({
       withr::with_envvar(HF_API_KEY = "", {
         chat(
@@ -48,6 +51,9 @@ describe("chat() huggingface", {
   })
 
   it ("works", {
+    skip_on_ci()
+    skip_on_cran()
+
     expect_no_error({
       chat(
         prompt = "what is 1+1",
@@ -61,10 +67,10 @@ describe("chat() huggingface", {
 })
 
 describe("chat() anthropic", {
-  skip_on_ci()
-  skip_on_cran()
-
   it("fails without API KEY", {
+    skip_on_ci()
+    skip_on_cran()
+
     expect_error({
       withr::with_envvar(ANTHROPIC_API_KEY = "", {
         chat(
@@ -79,6 +85,9 @@ describe("chat() anthropic", {
   })
 
   it ("works", {
+    skip_on_ci()
+    skip_on_cran()
+
     expect_no_error({
       chat(
         prompt = "what is 1+1",
@@ -92,11 +101,11 @@ describe("chat() anthropic", {
 })
 
 describe("chat() ollama", {
-  skip_on_ci()
-  skip_on_cran()
-
   it ("works", {
+    skip_on_ci()
+    skip_on_cran()
     skip_if_not(ollama_is_available())
+
     expect_no_error({
       chat(
         prompt = "what is 1+1",
