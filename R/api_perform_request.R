@@ -80,46 +80,6 @@ gptstudio_request_perform.default <- function(skeleton, ..., shiny_session = NUL
   )
 }
 
-#' @export
-gptstudio_request_perform.gptstudio_request_azure_openai <- function(skeleton,
-                                                                     shiny_session = NULL,
-                                                                     ...) {
-
-  skeleton$history <- chat_history_append(
-    history = skeleton$history,
-    role = "user",
-    name = "user_message",
-    content = skeleton$prompt
-  )
-
-  if (isTRUE(skeleton$stream)) {
-    if (is.null(shiny_session)) stop("Stream requires a shiny session object")
-
-    stream_handler <- OpenaiStreamParser$new(
-      session = shiny_session,
-      user_prompt = skeleton$prompt
-    )
-
-    stream_azure_openai(
-      messages = skeleton$history,
-      element_callback = stream_handler$parse_sse
-    )
-
-    response <- stream_handler$value
-  } else {
-    response <- query_api_azure_openai(request_body = skeleton$history)
-    response <- response$choices[[1]]$message$content
-  }
-
-  structure(
-    list(
-      skeleton = skeleton,
-      response = response
-    ),
-    class = "gptstudio_response_azure_openai"
-  )
-}
-
 Buffer <- R6::R6Class( # nolint: object_name_linter
   classname = "Buffer",
   public = list(
@@ -238,5 +198,22 @@ ellmer_chat.gptstudio_request_cohere <- function(skeleton, all_turns) {
     api_args = list(
       stream_options = NULL # the Cohere API doesn't support this options
     )
+  )
+}
+
+#' @export
+ellmer_chat.gptstudio_request_azure_openai <- function(skeleton, all_turns) {
+  # Extract Azure-specific configuration from skeleton
+  endpoint <- skeleton$endpoint
+  deployment_id <- skeleton$deployment_id
+  api_version <- skeleton$api_version %||% "2024-10-21"
+
+  ellmer::chat_azure(
+    endpoint = endpoint,
+    deployment_id = deployment_id,
+    api_version = api_version,
+    turns = all_turns,
+    api_key = skeleton$api_key,
+    credentials = skeleton$credentials
   )
 }
