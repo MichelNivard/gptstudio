@@ -59,3 +59,34 @@ describe("chat() huggingface", {
     })
   })
 })
+
+describe("chat() anthropic", {
+  skip_on_ci()
+  skip_on_cran()
+
+  it("fails without API KEY", {
+    expect_error({
+      withr::with_envvar(ANTHROPIC_API_KEY = "", {
+        chat(
+          prompt = "what is 1+1",
+          service = "anthropic",
+          history = NULL,
+          stream = FALSE,
+          model = "claude-3-5-sonnet-20240620"
+        )
+      })
+    })
+  })
+
+  it ("works", {
+    expect_no_error({
+      chat(
+        prompt = "what is 1+1",
+        service = "anthropic",
+        history = NULL,
+        stream = FALSE,
+        model = "claude-3-5-sonnet-20240620"
+      )
+    })
+  })
+})
