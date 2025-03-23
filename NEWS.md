@@ -18,7 +18,7 @@
 - Fixed a bug in `gptstudio_sitrep()` that prevented it to correctly report an active `ANTHROPIC_API_KEY`
 - Fixed a bug that prevented the internal `read_docs()` function from picking up documentation for R versions greater than 4.4. [#243](https://github.com/MichelNivard/gptstudio/issues/243)
 - Users can now set `OPENAI_API_URL` to use OPENAI compatible services such as Deepseek. `OPENAI_API_KEY` should be updated accordingly. [#237](https://github.com/MichelNivard/gptstudio/issues/237)
-- 
+- Settings are now automatically saved as permanent after a change. [#236](https://github.com/MichelNivard/gptstudio/issues/236)
 
 ## gptstudio 0.4.0
 
