@@ -90,3 +90,21 @@ describe("chat() anthropic", {
     })
   })
 })
+
+describe("chat() ollama", {
+  skip_on_ci()
+  skip_on_cran()
+
+  it ("works", {
+    skip_if_not(ollama_is_available())
+    expect_no_error({
+      chat(
+        prompt = "what is 1+1",
+        service = "ollama",
+        history = NULL,
+        stream = FALSE,
+        model = "gemma"
+      )
+    })
+  })
+})
