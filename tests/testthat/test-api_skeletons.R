@@ -46,7 +46,8 @@ test_that("gptstudio_create_skeleton creates correct skeleton for OpenAI", {
   skeleton <- gptstudio_create_skeleton(
     service = "openai",
     prompt = "What is R?",
-    model = "gpt-4-turbo-preview"
+    model = "gpt-4-turbo-preview",
+    stream = TRUE
   )
 
   expect_s3_class(skeleton, "gptstudio_request_openai")
@@ -59,39 +60,42 @@ test_that("gptstudio_create_skeleton creates correct skeleton for Hugging Face",
   skeleton <- gptstudio_create_skeleton(
     service = "huggingface",
     prompt = "What is R?",
-    model = "gpt2"
+    model = "gpt2",
+    stream = TRUE
   )
 
   expect_s3_class(skeleton, "gptstudio_request_huggingface")
   expect_equal(skeleton$model, "gpt2")
   expect_equal(skeleton$prompt, "What is R?")
-  expect_false(skeleton$stream)
+  expect_true(skeleton$stream)
 })
 
 test_that("gptstudio_create_skeleton creates correct skeleton for Anthropic", {
   skeleton <- gptstudio_create_skeleton(
     service = "anthropic",
     prompt = "What is R?",
-    model = "claude-3-5-sonnet-20240620"
+    model = "claude-3-5-sonnet-20240620",
+    stream = TRUE
   )
 
   expect_s3_class(skeleton, "gptstudio_request_anthropic")
   expect_equal(skeleton$model, "claude-3-5-sonnet-20240620")
   expect_equal(skeleton$prompt, "What is R?")
-  expect_false(skeleton$stream)
+  expect_true(skeleton$stream)
 })
 
 test_that("gptstudio_create_skeleton creates correct skeleton for Cohere", {
   skeleton <- gptstudio_create_skeleton(
     service = "cohere",
     prompt = "What is R?",
-    model = "command"
+    model = "command",
+    stream = TRUE
   )
 
   expect_s3_class(skeleton, "gptstudio_request_cohere")
   expect_equal(skeleton$model, "command")
   expect_equal(skeleton$prompt, "What is R?")
-  expect_false(skeleton$stream)
+  expect_true(skeleton$stream)
 })
 
 test_that("new_gptstudio_request_skeleton_openai creates correct structure", {
@@ -123,9 +127,6 @@ test_that("new_gptstudio_request_skeleton_huggingface creates correct structure"
   })
 })
 
-
-library(testthat)
-library(gptstudio)
 
 # Tests for new_gpstudio_request_skeleton
 test_that("new_gpstudio_request_skeleton creates correct structure with valid inputs", {
