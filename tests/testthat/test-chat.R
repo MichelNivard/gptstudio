@@ -151,3 +151,37 @@ describe("chat() perplexity", {
     })
   })
 })
+
+describe("chat() google", {
+  it("fails without API KEY", {
+    skip_on_ci()
+    skip_on_cran()
+
+    expect_error({
+      withr::with_envvar(GOOGLE_API_KEY = "", {
+        chat(
+          prompt = "what is 1+1",
+          service = "google",
+          history = NULL,
+          stream = FALSE,
+          model = "gemini-2.0-flash-lite"
+        )
+      })
+    })
+  })
+
+  it ("works", {
+    skip_on_ci()
+    skip_on_cran()
+
+    expect_no_error({
+      chat(
+        prompt = "what is 1+1",
+        service = "google",
+        history = NULL,
+        stream = FALSE,
+        model = "gemini-2.0-flash-lite"
+      )
+    })
+  })
+})
