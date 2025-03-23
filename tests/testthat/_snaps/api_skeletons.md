@@ -62,7 +62,7 @@
       
       
       $stream
-      [1] FALSE
+      [1] TRUE
       
       $extras
       list()
@@ -98,7 +98,7 @@
       
       
       $stream
-      [1] FALSE
+      [1] TRUE
       
       $extras
       list()
@@ -134,7 +134,7 @@
       
       
       $stream
-      [1] FALSE
+      [1] TRUE
       
       $extras
       list()
@@ -170,7 +170,7 @@
       
       
       $stream
-      [1] FALSE
+      [1] TRUE
       
       $extras
       list()
@@ -278,7 +278,7 @@
       
       
       $stream
-      [1] FALSE
+      [1] TRUE
       
       $extras
       list()
