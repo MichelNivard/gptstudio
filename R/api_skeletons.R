@@ -265,22 +265,19 @@ gptstudio_create_skeleton <- function(service = "openai",
       model = model,
       prompt = prompt,
       history = history,
-      # forcing false until streaming implemented for hf
-      stream = FALSE
+      stream = stream
     ),
     "anthropic" = new_gptstudio_request_skeleton_anthropic(
       model = model,
       prompt = prompt,
       history = history,
-      # forcing false until streaming implemented for anthropic
-      stream = FALSE
+      stream = stream
     ),
     "google" = new_gptstudio_request_skeleton_google(
       model = model,
       prompt = prompt,
       history = history,
-      # forcing false until streaming implemented for google
-      stream = FALSE
+      stream = stream
     ),
     "azure_openai" = new_gptstudio_request_skeleton_azure_openai(
       model = model,
@@ -298,15 +295,13 @@ gptstudio_create_skeleton <- function(service = "openai",
       model = model,
       prompt = prompt,
       history = history,
-      # forcing false until streaming implemented for perplexity
-      stream = FALSE
+      stream = stream
     ),
     "cohere" = new_gptstudio_request_skeleton_cohere(
       model = model,
       prompt = prompt,
       history = history,
-      # forcing false until streaming implemented for cohere
-      stream = FALSE
+      stream = stream
     )
   )
 }

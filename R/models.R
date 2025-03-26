@@ -47,7 +47,14 @@ list_available_models.openai <- function(service) {
 
 #' @export
 list_available_models.huggingface <- function(service) {
-  c("gpt2", "tiiuae/falcon-7b-instruct", "bigcode/starcoderplus")
+  c(
+    "google/gemma-2-2b-it",
+    "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+    "meta-llama/Meta-Llama-3.1-8B-Instruct",
+    "microsoft/phi-4",
+    "Qwen/Qwen2.5-Coder-32B-Instruct",
+    "deepseek-ai/DeepSeek-R1"
+  )
 }
 
 #' @export
@@ -66,9 +73,7 @@ list_available_models.azure_openai <- function(service) {
 #' @export
 list_available_models.perplexity <- function(service) {
   c(
-    "llama-3-sonar-small-32k-chat", "llama-3-sonar-small-32k-online",
-    "llama-3-sonar-large-32k-chat", "llama-3-sonar-large-32k-online",
-    "llama-3-8b-instruct", "llama-3-70b-instruct", "mixtral-8x7b-instruct"
+    "sonar", "sonar-pro", "sonar-deep-research", "sonar-reasoning", "sonar-reasoning-pro"
   )
 }
 

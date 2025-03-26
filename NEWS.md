@@ -19,6 +19,9 @@
 - Fixed a bug that prevented the internal `read_docs()` function from picking up documentation for R versions greater than 4.4. [#243](https://github.com/MichelNivard/gptstudio/issues/243)
 - Users can now set `OPENAI_API_URL` to use OPENAI compatible services such as Deepseek. `OPENAI_API_KEY` should be updated accordingly. [#237](https://github.com/MichelNivard/gptstudio/issues/237)
 - Settings are now automatically saved as permanent after a change. [#236](https://github.com/MichelNivard/gptstudio/issues/236)
+- Migrated the logic for performing API requests to use [`{ellmer}`](https://ellmer.tidyverse.org/) as backend. [#247](https://github.com/MichelNivard/gptstudio/issues/247)
+- Added streaming support for all the currently supported providers (previously only available for OpenAI and Ollama). [#221](https://github.com/MichelNivard/gptstudio/issues/221)
+- The "Read docs" functionality now works for every Provider. [#242](https://github.com/MichelNivard/gptstudio/issues/242)
 
 ## gptstudio 0.4.0
 
