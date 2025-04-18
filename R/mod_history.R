@@ -86,7 +86,7 @@ mod_history_server <- function(id, settings, translator = create_translator()) {
         tags$p(translator$t("Are you sure?")),
         footer = tagList(
           modalButton(translator$t("Cancel")),
-          actionButton(ns("confirm_delete_all"), "Ok")
+          actionButton(ns("confirm_delete_all"), translator$t("Ok"))
         )
       ))
     }) |>
