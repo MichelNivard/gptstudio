@@ -23,7 +23,7 @@ save_user_config <- function(code_style,
       audio_input
     )
 
-  yaml::write_yaml(config, user_config_file())
+  write_user_config_file(config)
   set_user_options(config)
 }
 
@@ -39,6 +39,14 @@ user_config_dir <- function() {
 
 user_config_file <- function() {
   file.path(user_config_dir(), "config.yml")
+}
+
+read_user_config_file <- function() {
+  yaml::read_yaml(user_config_file())
+}
+
+write_user_config_file <- function(config) {
+  yaml::write_yaml(config, user_config_file())
 }
 
 set_user_options <- function(config) {
