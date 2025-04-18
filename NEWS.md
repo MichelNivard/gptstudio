@@ -22,6 +22,8 @@
 - Migrated the logic for performing API requests to use [`{ellmer}`](https://ellmer.tidyverse.org/) as backend. [#247](https://github.com/MichelNivard/gptstudio/issues/247)
 - Added streaming support for all the currently supported providers (previously only available for OpenAI and Ollama). [#221](https://github.com/MichelNivard/gptstudio/issues/221)
 - The "Read docs" functionality now works for every Provider. [#242](https://github.com/MichelNivard/gptstudio/issues/242)
+- Added translation support for all the text elements of the UI. [#194](https://github.com/MichelNivard/gptstudio/issues/194)
+- Fixed broken Spanish translations
 
 ## gptstudio 0.4.0
 
