@@ -94,3 +94,65 @@ list_available_models.cohere <- function(service) {
 list_available_models.google <- function(service) {
   get_available_models_google()
 }
+
+get_all_available_services <- function() {
+  methods(list_available_models) |>
+    as.character() |>
+    stringr::str_remove("^list_available_models\\.")
+}
+
+set_allowed_models <- function(service, models = character()) {
+  stopifnot(rlang::is_scalar_character(service))
+
+  available_services <- get_all_available_services()
+  if (!service %in% available_services) {
+    cli::cli_abort("{.var service} must be one of {.str {available_services}}")
+  }
+
+  current_config <- read_user_config_file()
+
+  if (is.null(models)) {
+    cli::cli_alert_warning(
+      "This will allow all available models for {.str {service}}"
+    )
+
+    continue <- utils::menu(
+      choices = c("Yes", "No"),
+      title = "Do you want to continue?"
+    )
+
+    if (!identical(continue, 1L)) return(invisible())
+
+    current_config$allowed_models[[service]] <- NULL
+    write_user_config_file(config = current_config)
+    cli::cli_alert_info("You can use all available models for {.str {service}}")
+
+    return(invisible())
+  }
+
+  stopifnot(rlang::is_bare_character(models))
+  if (rlang::is_empty(models)) cli::cli_abort("{.var models} can't be empty")
+
+  cli::cli_alert_info("Checking available models for service {.str {service}}")
+  available_models <- get_available_models(service)
+
+  diff <- setdiff(models, available_models)
+
+  if (!rlang::is_empty(diff)) {
+    cli::cli_abort(
+      c(
+        "{.str {diff}} {?is/are} not on the list of available models for {.str {service}}",
+        "i" = "Run {.run gptstudio::get_available_models({.str {service}})} to see the full list"
+      )
+    )
+  }
+
+  allowed_models <- current_config$allowed_models %||% list()
+  allowed_models[[service]] <- models
+
+  current_config$allowed_models <- allowed_models
+
+  write_user_config_file(config = current_config)
+
+  cli::cli_alert_info("Saved models for {.str {service}} service: {.str {models}}")
+}
