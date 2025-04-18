@@ -28,7 +28,7 @@
       },
       {
         "en": "Custom Prompt",
-        "es": "Sugerencia personalizada",
+        "es": "Instrucción personalizada",
         "de": "Benutzerdefinierter Aufforderungstext"
       },
       {
@@ -170,16 +170,6 @@
         "en": "- Send me a prompt ({paperplane} or Enter key)\n",
         "es": "- Mandarme una instrucción ({paperplane}) o tecla Enter)\n",
         "de": "- Senden Sie mir eine Aufforderung ({paperplane} oder Eingabetaste)\n"
-      },
-      {
-        "en": "- Clear the current chat history ({eraser})\n",
-        "es": "- Limpiar el historial de chat actual ({eraser})\n",
-        "de": "- Den aktuellen Chatverlauf löschen ({eraser})\n"
-      },
-      {
-        "en": "- Change the settings ({gear})\n",
-        "es": "- Cambiar la configuración ({gear})\n",
-        "de": "- Ändern Sie die Einstellung ({gear})\n"
       },
       {
         "en": "Type anything to start our conversation.",
