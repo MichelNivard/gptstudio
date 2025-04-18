@@ -152,7 +152,12 @@ mod_settings_server <- function(id, translator = create_translator()) {
       )
 
       if (length(models) > 0) {
-        showNotification(ui = translator$t("Got models!"), duration = 1.5, type = "message", session = session)
+        showNotification(
+          ui = translator$t("Got models!"),
+          duration = 1.5,
+          type = "message",
+          session = session
+        )
         cli::cli_alert_success("Got models!")
 
         default_model <- getOption("gptstudio.model")
