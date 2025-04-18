@@ -1,7 +1,7 @@
 Type: Package
 Package: gptstudio
 Title: Use Large Language Models Directly in your Development Environment
-Version: 0.4.0.9013
+Version: 0.4.0.9014
 Authors@R: c(
     person("Michel", "Nivard", , "m.g.nivard@vu.nl", role = c("aut", "cph")),
     person("James", "Wade", , "github@jameshwade.com", role = c("aut", "cre", "cph"),
