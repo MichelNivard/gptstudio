@@ -54,7 +54,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       )
     ),
     bslib::accordion_panel(
-      title = "API service",
+      title = translator$t("API service"),
       icon = bsicons::bs_icon("server"),
       selectInput(
         inputId = ns("service"),
@@ -88,7 +88,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       )
     ),
     bslib::accordion_panel(
-      title = "UI options",
+      title = translator$t("UI options"),
       icon = bsicons::bs_icon("sliders"),
       selectInput(
         inputId = ns("language"),
@@ -111,7 +111,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     class = "px-2 mb-2",
     tags$span(
       shiny::icon("warning"),
-      "Changing settings will start a new chat"
+      translator$t("Changing settings will start a new chat")
     )
   )
 

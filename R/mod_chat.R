@@ -209,7 +209,8 @@ mod_chat_server <- function(
               label = bsicons::bs_icon("send"),
               label_busy = NULL,
               class = "btn-secondary p-2 chat-send-btn"
-            ) |> bslib::tooltip("Send (click or Enter)")
+            ) |>
+              bslib::tooltip(translator$t("Send (click or Enter)"))
           ),
           audio_recorder
         )

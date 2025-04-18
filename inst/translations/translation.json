@@ -247,6 +247,22 @@
       {
         "en": "New chat",
         "es": "Nuevo chat"
+      },
+      {
+        "en": "UI options",
+        "es": "Opciones de UI"
+      },
+      {
+        "en": "Changing settings will start a new chat",
+        "es": "Cambiar la configuración iniciará un nuevo chat"
+      },
+      {
+        "en": "Send (click or Enter)",
+        "es": "Enviar (click o Enter)"
+      },
+      {
+        "en": "API service",
+        "es": "Servicio API"
       }
     ]
 }
