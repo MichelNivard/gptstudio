@@ -51,7 +51,7 @@ mod_app_server <- function(id, ide_colors = get_ide_theme_info()) {
     mod_chat_server(
       id = "chat",
       ide_colors = ide_colors,
-      translator = NULL,
+      translator = create_translator(language = getOption("gptstudio.language")),
       settings = sidebar$settings,
       history = sidebar$history
     )

@@ -1,9 +1,9 @@
-mod_history_ui <- function(id) {
+mod_history_ui <- function(id, translator = create_translator()) {
   ns <- NS(id)
 
   btn_new_chat <- actionButton(
     inputId = ns("new_chat"),
-    label = "New chat",
+    label = translator$t("New chat"),
     icon = icon("plus"),
     class = "flex-grow-1 me-2"
   )
@@ -13,13 +13,13 @@ mod_history_ui <- function(id) {
     label = bsicons::bs_icon("trash"),
     class = "me-2"
   ) |>
-    bslib::tooltip("Delete all chats")
+    bslib::tooltip(translator$t("Delete all chats"))
 
   btn_settings <- actionButton(
     inputId = ns("settings"),
     label = bsicons::bs_icon("gear")
   ) |>
-    bslib::tooltip("Settings")
+    bslib::tooltip(translator$t("Settings"))
 
   tagList(
     tags$div(
@@ -32,7 +32,7 @@ mod_history_ui <- function(id) {
   )
 }
 
-mod_history_server <- function(id, settings) {
+mod_history_server <- function(id, settings, translator = create_translator()) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -47,7 +47,15 @@ mod_history_server <- function(id, settings) {
 
     output$conversation_history <- renderUI({
       conversation_history() |>
-        purrr::map(~ conversation(id = .x$id, title = .x$title, ns = ns))
+        purrr::map(~ {
+          conversation(
+            id = .x$id,
+            title = .x$title,
+            ns = ns,
+            label_edit_btn = translator$t("Edit title"),
+            label_delete_btn = translator$t("Delete this chat")
+          )
+        })
     })
 
     observe({
@@ -75,10 +83,10 @@ mod_history_server <- function(id, settings) {
 
     observe({
       showModal(modalDialog(
-        tags$p("Are you sure?"),
+        tags$p(translator$t("Are you sure?")),
         footer = tagList(
-          modalButton("Cancel"),
-          actionButton(ns("confirm_delete_all"), "Ok")
+          modalButton(translator$t("Cancel")),
+          actionButton(ns("confirm_delete_all"), translator$t("Ok"))
         )
       ))
     }) |>
@@ -90,7 +98,7 @@ mod_history_server <- function(id, settings) {
       removeModal(session)
 
       showNotification(
-        ui = "Deleted all conversations",
+        ui = translator$t("Deleted all conversations"),
         type = "warning",
         duration = 3,
         session = session
@@ -107,13 +115,13 @@ mod_history_server <- function(id, settings) {
       showModal(modalDialog(
         textAreaInput(
           inputId = ns("new_title"),
-          label = "New title",
+          label = translator$t("New title"),
           value = rv$selected_conversation$title,
           width = "100%"
         ),
         footer = tagList(
-          modalButton("Cancel"),
-          actionButton(ns("confirm_new_title"), "Ok")
+          modalButton(translator$t("Cancel")),
+          actionButton(ns("confirm_new_title"), translator$t("Ok"))
         )
       ))
     }) |>
@@ -148,8 +156,8 @@ mod_history_server <- function(id, settings) {
       showModal(modalDialog(
         tags$p(msg),
         footer = tagList(
-          modalButton("Cancel"),
-          actionButton(ns("confirm_single_delete"), "Ok")
+          modalButton(translator$t("Cancel")),
+          actionButton(ns("confirm_single_delete"), translator$t("Ok"))
         )
       ))
     }) |>
@@ -171,7 +179,7 @@ mod_history_server <- function(id, settings) {
       rv$reload_conversation_history <- rv$reload_conversation_history + 1L
 
       removeModal(session)
-      showNotification("Deleted!", duration = 3, type = "message", session = session)
+      showNotification(translator$t("Deleted!"), duration = 3, type = "message", session = session)
     }) |>
       bindEvent(input$confirm_single_delete)
 
@@ -232,6 +240,8 @@ ns_safe <- function(id, ns = NULL) if (is.null(ns)) id else ns(id)
 conversation <- function(
     id = ids::random_id(),
     title = "This is the title. Sometimes the title can be very  very long",
+    label_edit_btn = "Edit title",
+    label_delete_btn = "Delete this chat",
     ns = NULL) {
   conversation_title <- tags$div(
     class = "multi-click-input flex-grow-1 text-truncate",
@@ -248,7 +258,7 @@ conversation <- function(
     `shiny-input-id` = ns_safe("conversation_to_edit", ns),
     value = id
   ) |>
-    tooltip_on_hover("Edit title", placement = "left")
+    tooltip_on_hover(label_edit_btn, placement = "left")
 
   delete_btn <- tags$span(
     bsicons::bs_icon("trash"),
@@ -256,7 +266,7 @@ conversation <- function(
     `shiny-input-id` = ns_safe("conversation_to_delete", ns),
     value = id
   ) |>
-    tooltip_on_hover("Delete this chat", placement = "right")
+    tooltip_on_hover(label_delete_btn, placement = "right")
 
   tags$div(
     id = id,

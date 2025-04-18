@@ -6,11 +6,10 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     purrr::discard(~ .x == "gptstudio_skeleton_build.default")
 
   read_docs_label <- tags$span(
-    "Read R help pages",
+    translator$t("Read R help pages"),
     bslib::tooltip(
       bsicons::bs_icon("info-circle"),
-      "Add help pages of 'package::object' matches for context.
-      Potentially expensive"
+      translator$t("Add help pages of 'package::object' matches for context. Potentially expensive")
     )
   )
 
@@ -18,7 +17,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     open = FALSE,
     multiple = FALSE,
     bslib::accordion_panel(
-      title = "Assistant behavior",
+      title = translator$t("Assistant behavior"),
       icon = bsicons::bs_icon("robot"),
       selectInput(
         inputId = ns("task"),
@@ -36,7 +35,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       ),
       selectInput(
         inputId = ns("skill"),
-        label = "Programming Skill", # TODO: update translator
+        label = translator$t("Programming Skill"),
         choices = c("beginner", "intermediate", "advanced", "genius"),
         selected = getOption("gptstudio.skill"),
         width = "100%"
@@ -55,7 +54,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       )
     ),
     bslib::accordion_panel(
-      title = "API service",
+      title = translator$t("API service"),
       icon = bsicons::bs_icon("server"),
       selectInput(
         inputId = ns("service"),
@@ -77,24 +76,23 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       ),
       bslib::input_switch(
         id = ns("stream"),
-        label = "Stream Response",
+        label = translator$t("Stream Response"),
         value = as.logical(getOption("gptstudio.stream")),
         width = "100%"
       ),
       bslib::input_switch(
         id = ns("audio_input"),
-        label = "Audio as Input",
+        label = translator$t("Audio as Input"),
         value = as.logical(getOption("gptstudio.audio_input")),
         width = "100%"
       )
     ),
     bslib::accordion_panel(
-      title = "UI options",
+      title = translator$t("UI options"),
       icon = bsicons::bs_icon("sliders"),
       selectInput(
         inputId = ns("language"),
-        # label = translator$t("Language"), # TODO: update translator
-        label = "Language",
+        label = translator$t("Language"),
         choices = c("en", "es", "de"),
         width = "100%",
         selected = getOption("gptstudio.language")
@@ -113,7 +111,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
     class = "px-2 mb-2",
     tags$span(
       shiny::icon("warning"),
-      "Changing settings will start a new chat"
+      translator$t("Changing settings will start a new chat")
     )
   )
 
@@ -124,7 +122,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
   )
 }
 
-mod_settings_server <- function(id) {
+mod_settings_server <- function(id, translator = create_translator()) {
   moduleServer(id, function(input, output, session) {
     rv <- reactiveValues()
     rv$selected_history <- 0L
@@ -133,7 +131,7 @@ mod_settings_server <- function(id) {
     rv$record_input <- 0L
 
     observe({
-      msg <- glue::glue("Fetching models for {input$service} service...")
+      msg <- glue::glue(translator$t("Fetching models for {input$service} service..."))
       showNotification(ui = msg, type = "message", duration = 1, session = session)
       cli::cli_alert_info(msg)
       models <- tryCatch(
@@ -154,7 +152,12 @@ mod_settings_server <- function(id) {
       )
 
       if (length(models) > 0) {
-        showNotification(ui = "Got models!", duration = 1.5, type = "message", session = session)
+        showNotification(
+          ui = translator$t("Got models!"),
+          duration = 1.5,
+          type = "message",
+          session = session
+        )
         cli::cli_alert_success("Got models!")
 
         default_model <- getOption("gptstudio.model")
@@ -167,7 +170,7 @@ mod_settings_server <- function(id) {
         )
       } else {
         showNotification(
-          ui = "No models available",
+          ui = translator$t("No models available"),
           duration = 3,
           type = "error",
           session = session

@@ -28,7 +28,7 @@
       },
       {
         "en": "Custom Prompt",
-        "es": "Sugerencia personalizada",
+        "es": "Instrucción personalizada",
         "de": "Benutzerdefinierter Aufforderungstext"
       },
       {
@@ -172,19 +172,98 @@
         "de": "- Senden Sie mir eine Aufforderung ({paperplane} oder Eingabetaste)\n"
       },
       {
-        "en": "- Clear the current chat history ({eraser})\n",
-        "es": "- Limpiar el historial de chat actual ({eraser})\n",
-        "de": "- Den aktuellen Chatverlauf löschen ({eraser})\n"
-      },
-      {
-        "en": "- Change the settings ({gear})\n",
-        "es": "- Cambiar la configuración ({gear})\n",
-        "de": "- Ändern Sie die Einstellung ({gear})\n"
-      },
-      {
         "en": "Type anything to start our conversation.",
         "es": "Escribe algo para iniciar nuestra conversación.",
-        "de": "Geben Sie irgendetwas ein, um unser Gespräch zu beginnen." }
+        "de": "Geben Sie irgendetwas ein, um unser Gespräch zu beginnen."
+      },
+      {
+        "en": "Fetching models for {input$service} service...",
+        "es": "Buscando modelos del servicio {input$service}"
+      },
+      {
+        "en": "Got models!",
+        "es": "¡Modelos encontrados!"
+      },
+      {
+        "en": "Edit title",
+        "es": "Editar título"
+      },
+      {
+        "en": "Delete this chat",
+        "es": "Eliminar chat"
+      },
+      {
+        "en": "Delete all chats",
+        "es": "Eliminar todos los chats"
+      },
+      {
+        "en": "Settings",
+        "es": "Configuración"
+      },
+      {
+        "en": "Read R help pages",
+        "es": "Leer páginas de ayuda de R"
+      },
+      {
+        "en": "Add help pages of 'package::object' matches for context. Potentially expensive",
+        "es": "Añade documentación coincidente con 'paquete::objeto' como contexto. Potencialmente costoso."
+      },
+      {
+        "en": "Assistant behavior",
+        "es": "Ajustes del asistente"
+      },
+      {
+        "en": "Programming Skill",
+        "es": "Habilidad de programación"
+      },
+      {
+        "en": "Stream Response",
+        "es": "Respuesta en stream"
+      },
+      {
+        "en": "Audio as Input",
+        "es": "Audio como input"
+      },
+      {
+        "en": "Language",
+        "es": "Idioma"
+      },
+      {
+        "en": "New title",
+        "es": "Nuevo título"
+      },
+      {
+        "en": "Cancel",
+        "es": "Cancelar"
+      },
+      {
+        "en": "Ok",
+        "es": "Ok"
+      },
+      {
+        "en": "Deleted!",
+        "es": "¡Eliminado!"
+      },
+      {
+        "en": "New chat",
+        "es": "Nuevo chat"
+      },
+      {
+        "en": "UI options",
+        "es": "Opciones de UI"
+      },
+      {
+        "en": "Changing settings will start a new chat",
+        "es": "Cambiar la configuración iniciará un nuevo chat"
+      },
+      {
+        "en": "Send (click or Enter)",
+        "es": "Enviar (click o Enter)"
+      },
+      {
+        "en": "API service",
+        "es": "Servicio API"
+      }
     ]
 }
 
