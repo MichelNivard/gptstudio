@@ -7,7 +7,7 @@ mod_sidebar_ui <- function(id, translator = create_translator()) {
       bslib::nav_panel_hidden(
         value = "history",
         class = "px-0 py-2",
-        mod_history_ui(id = ns("history"))
+        mod_history_ui(id = ns("history"), translator = translator)
       ),
       bslib::nav_panel_hidden(
         value = "settings",
@@ -18,12 +18,12 @@ mod_sidebar_ui <- function(id, translator = create_translator()) {
   )
 }
 
-mod_sidebar_server <- function(id) {
+mod_sidebar_server <- function(id, translator = create_translator()) {
   moduleServer(
     id,
     function(input, output, session) {
-      settings <- mod_settings_server("settings")
-      history <- mod_history_server("history", settings)
+      settings <- mod_settings_server("settings", translator = translator)
+      history <- mod_history_server("history", settings, translator = translator)
 
       observe({
         bslib::nav_select("panel", selected = "settings", session = session)
