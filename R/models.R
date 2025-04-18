@@ -156,3 +156,13 @@ set_allowed_models <- function(service, models = character()) {
 
   cli::cli_alert_info("Saved models for {.str {service}} service: {.str {models}}")
 }
+
+get_allowed_models <- function(service) {
+  available_services <- get_all_available_services()
+  if (!service %in% available_services) {
+    cli::cli_abort("{.var service} must be one of {.str {available_services}}")
+  }
+
+  config <- read_user_config_file()
+  config$allowed_models[[service]]
+}
