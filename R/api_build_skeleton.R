@@ -31,17 +31,11 @@ gptstudio_skeleton_build.gptstudio_request_openai <-
            task = "coding",
            custom_prompt = NULL,
            ...) {
-    prompt <- skeleton$prompt
-    history <- skeleton$history
-    model <- skeleton$model
-    stream <- skeleton$stream
-    new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
-
     new_gptstudio_request_skeleton_openai(
-      model = model,
-      prompt = prompt,
-      history = new_history,
-      stream = stream
+      model = skeleton$model,
+      prompt = skeleton$prompt,
+      history = prepare_chat_history(skeleton$history, style, skill, task, custom_prompt),
+      stream = skeleton$stream
     )
   }
 
@@ -53,17 +47,12 @@ gptstudio_skeleton_build.gptstudio_request_huggingface <-
            task = "coding",
            custom_prompt = NULL,
            ...) {
-    prompt <- skeleton$prompt
-    history <- skeleton$history
-    model <- skeleton$model
-    stream <- skeleton$stream
-    new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
 
     new_gptstudio_request_skeleton_huggingface(
-      model = model,
-      prompt = prompt,
-      history = new_history,
-      stream = stream
+      model = skeleton$model,
+      prompt = skeleton$prompt,
+      history = prepare_chat_history(skeleton$history, style, skill, task, custom_prompt),
+      stream = skeleton$stream
     )
   }
 
@@ -75,17 +64,11 @@ gptstudio_skeleton_build.gptstudio_request_anthropic <-
            task = "coding",
            custom_prompt = NULL,
            ...) {
-    prompt <- skeleton$prompt
-    history <- skeleton$history
-    model <- skeleton$model
-    stream <- skeleton$stream
-    new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
-
     new_gptstudio_request_skeleton_anthropic(
-      model = model,
-      prompt = prompt,
-      history = new_history,
-      stream = stream
+      model = skeleton$model,
+      prompt = skeleton$prompt,
+      history = prepare_chat_history(skeleton$history, style, skill, task, custom_prompt),
+      stream = skeleton$stream
     )
   }
 
@@ -97,17 +80,11 @@ gptstudio_skeleton_build.gptstudio_request_google <-
            task = "coding",
            custom_prompt = NULL,
            ...) {
-    prompt <- skeleton$prompt
-    history <- skeleton$history
-    model <- skeleton$model
-    stream <- skeleton$stream
-    new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
-
     new_gptstudio_request_skeleton_google(
-      model = model,
-      prompt = prompt,
-      history = new_history,
-      stream = stream
+      model = skeleton$model,
+      prompt = skeleton$prompt,
+      history = prepare_chat_history(skeleton$history, style, skill, task, custom_prompt),
+      stream = skeleton$stream
     )
   }
 
@@ -119,17 +96,11 @@ gptstudio_skeleton_build.gptstudio_request_azure_openai <-
            task = "coding",
            custom_prompt = NULL,
            ...) {
-    prompt <- skeleton$prompt
-    history <- skeleton$history
-    model <- skeleton$model
-    stream <- skeleton$stream
-    new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
-
     new_gptstudio_request_skeleton_azure_openai(
-      model = model,
-      prompt = prompt,
-      history = new_history,
-      stream = stream
+      model = skeleton$model,
+      prompt = skeleton$prompt,
+      history = prepare_chat_history(skeleton$history, style, skill, task, custom_prompt),
+      stream = skeleton$stream
     )
   }
 
@@ -141,17 +112,11 @@ gptstudio_skeleton_build.gptstudio_request_ollama <-
            task = "coding",
            custom_prompt = NULL,
            ...) {
-    prompt <- skeleton$prompt
-    history <- skeleton$history
-    model <- skeleton$model
-    stream <- skeleton$stream
-    new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
-
     new_gptstudio_request_skeleton_ollama(
-      model = model,
-      prompt = prompt,
-      history = new_history,
-      stream = stream
+      model = skeleton$model,
+      prompt = skeleton$prompt,
+      history = prepare_chat_history(skeleton$history, style, skill, task, custom_prompt),
+      stream = skeleton$stream
     )
   }
 
@@ -163,17 +128,11 @@ gptstudio_skeleton_build.gptstudio_request_perplexity <-
            task = "coding",
            custom_prompt = NULL,
            ...) {
-    prompt <- skeleton$prompt
-    history <- skeleton$history
-    model <- skeleton$model
-    stream <- skeleton$stream
-    new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
-
     new_gptstudio_request_skeleton_perplexity(
-      model = model,
-      prompt = prompt,
-      history = new_history,
-      stream = stream
+      model = skeleton$model,
+      prompt = skeleton$prompt,
+      history = prepare_chat_history(skeleton$history, style, skill, task, custom_prompt),
+      stream = skeleton$stream
     )
   }
 
@@ -185,16 +144,10 @@ gptstudio_skeleton_build.gptstudio_request_cohere <-
            task = "coding",
            custom_prompt = NULL,
            ...) {
-    prompt <- skeleton$prompt
-    history <- skeleton$history
-    model <- skeleton$model
-    stream <- skeleton$stream
-    new_history <- prepare_chat_history(history, style, skill, task, custom_prompt)
-
     new_gptstudio_request_skeleton_cohere(
-      model = model,
-      prompt = prompt,
-      history = new_history,
-      stream = stream
+      model = skeleton$model,
+      prompt = skeleton$prompt,
+      history = prepare_chat_history(skeleton$history, style, skill, task, custom_prompt),
+      stream = skeleton$stream
     )
   }
