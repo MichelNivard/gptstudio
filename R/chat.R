@@ -36,6 +36,7 @@
 #'   `getOption("gptstudio.task")`.
 #' @param custom_prompt An optional parameter that provides a way to extend or
 #'   customize the initial prompt with additional instructions or context.
+#' @param process_response A logical indicating whether to process the model's response.
 #' @param session An optional parameter for a shiny session object.
 #' @param ... Reserved for future use.
 #'
@@ -78,6 +79,7 @@ chat <- function(prompt,
                  style = getOption("gptstudio.code_style", "no preference"),
                  task = getOption("gptstudio.task", "coding"),
                  custom_prompt = NULL,
+                 process_response = FALSE,
                  session = NULL,
                  ...) {
   response <-
@@ -97,5 +99,19 @@ chat <- function(prompt,
     ) |>
     gptstudio_request_perform(shiny_session = session)
 
-  response$response
+  if (!process_response) return(response$response)
+
+  skeleton <- response$skeleton
+
+  new_history <- chat_history_append(
+    history = skeleton$history,
+    role = "assistant",
+    name = "assistant",
+    content = response$response
+  )
+
+  skeleton$history <- new_history
+  skeleton$prompt <- NULL # remove the last prompt
+
+  skeleton
 }
