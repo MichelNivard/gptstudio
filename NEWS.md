@@ -24,7 +24,8 @@
 - The "Read docs" functionality now works for every Provider. [#242](https://github.com/MichelNivard/gptstudio/issues/242)
 - Added translation support for all the text elements of the UI. [#194](https://github.com/MichelNivard/gptstudio/issues/194)
 - Fixed broken Spanish translations
-- It is now possible to specify a subset of models to be shown in the model selector dropdown with `set_allowed_models()`
+- New exported function `set_allowed_models()`, to specify a subset of models to be shown in the model selector dropdown.
+- New exported function `get_all_available_services()`, which lists all the supported services/providers.
 
 ## gptstudio 0.4.0
 
