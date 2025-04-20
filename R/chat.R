@@ -69,7 +69,6 @@
 #' )
 #' }
 #'
-#' @export
 chat <- function(prompt,
                  service = getOption("gptstudio.service"),
                  history = list(list(role = "system", content = "You are an R chat assistant")),
@@ -82,9 +81,8 @@ chat <- function(prompt,
                  process_response = FALSE,
                  session = NULL,
                  ...) {
-  skeleton <-
+  skeleton <- service |>
     gptstudio_create_skeleton(
-      service = service,
       prompt = prompt,
       history = prepare_chat_history(history, style, skill, task, custom_prompt),
       stream = stream,
