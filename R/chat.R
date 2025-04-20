@@ -82,7 +82,7 @@ chat <- function(prompt,
                  process_response = FALSE,
                  session = NULL,
                  ...) {
-  response <-
+  skeleton <-
     gptstudio_create_skeleton(
       service = service,
       prompt = prompt,
@@ -96,22 +96,21 @@ chat <- function(prompt,
       style = style,
       task = task,
       custom_prompt = custom_prompt
-    ) |>
+    )
+
+  response <- skeleton |>
     gptstudio_request_perform(shiny_session = session)
 
   if (!process_response) return(response$response)
 
-  skeleton <- response$skeleton
-
-  new_history <- chat_history_append(
-    history = skeleton$history,
+  response$skeleton$history <- chat_history_append(
+    history = response$skeleton$history,
     role = "assistant",
     name = "assistant",
     content = response$response
   )
 
-  skeleton$history <- new_history
-  skeleton$prompt <- NULL # remove the last prompt
+  response$skeleton$prompt <- NULL # remove the last prompt
 
-  skeleton
+  response$skeleton
 }
