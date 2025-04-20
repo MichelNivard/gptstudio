@@ -71,12 +71,9 @@ gptstudio_request_perform.default <- function(skeleton, ..., shiny_session = NUL
     response <- current_chat$chat(skeleton$prompt)
   }
   # return value
-  structure(
-    list(
-      skeleton = skeleton,
-      response = response
-    ),
-    class = "gptstudio_response_openai"
+  list(
+    skeleton = skeleton,
+    response = response
   )
 }
 
@@ -128,46 +125,51 @@ ellmer_chat.default <- function(skeleton, ...) {
 
 #' @export
 ellmer_chat.gptstudio_request_openai <- function(skeleton, all_turns) {
-  ellmer::chat_openai(
-    turns = all_turns,
+  chat <- ellmer::chat_openai(
     base_url = getOption("gptstudio.openai_url"),
     api_key = skeleton$api_key,
     model = skeleton$model
   )
+
+  chat$set_turns(all_turns)
 }
 
 #' @export
 ellmer_chat.gptstudio_request_google <- function(skeleton, all_turns) {
-  ellmer::chat_gemini(
-    turns = all_turns,
+  chat <- ellmer::chat_gemini(
     api_key = skeleton$api_key,
     model = skeleton$model
   )
+
+  chat$set_turns(all_turns)
 }
 
 #' @export
 ellmer_chat.gptstudio_request_ollama <- function(skeleton, all_turns) {
-  ellmer::chat_ollama(
-    turns = all_turns,
+  chat <- ellmer::chat_ollama(
     base_url = Sys.getenv("OLLAMA_HOST", unset = "http://localhost:11434"),
     model = skeleton$model
   )
+
+  chat$set_turns(all_turns)
 }
 
 #' @export
 ellmer_chat.gptstudio_request_anthropic <- function(skeleton, all_turns) {
-  ellmer::chat_claude(
-    turns = all_turns,
+  chat <- ellmer::chat_claude(
     model = skeleton$model
   )
+
+  chat$set_turns(all_turns)
 }
 
 #' @export
 ellmer_chat.gptstudio_request_perplexity <- function(skeleton, all_turns) {
-  ellmer::chat_perplexity(
-    turns = all_turns,
+  chat <- ellmer::chat_perplexity(
     model = skeleton$model
   )
+
+  chat$set_turns(all_turns)
 }
 
 #' @export
@@ -180,18 +182,17 @@ ellmer_chat.gptstudio_request_huggingface <- function(skeleton, all_turns) {
     "Discarding system propmt because of incompatibility with Huggingface API"
   )
 
-  ellmer::chat_openai(
-    turns = history_to_turns_list(skeleton$history),
-    base_url = "https://router.huggingface.co/hf-inference/v1",
+  chat <- ellmer::chat_huggingface(
     api_key = skeleton$api_key,
     model = skeleton$model
   )
+
+  chat$set_turns(history_to_turns_list(skeleton$history))
 }
 
 #' @export
 ellmer_chat.gptstudio_request_cohere <- function(skeleton, all_turns) {
-  ellmer::chat_openai(
-    turns = all_turns,
+  chat <- ellmer::chat_openai(
     base_url = "https://api.cohere.ai/compatibility/v1",
     api_key = skeleton$api_key,
     model = skeleton$model,
@@ -199,6 +200,8 @@ ellmer_chat.gptstudio_request_cohere <- function(skeleton, all_turns) {
       stream_options = NULL # the Cohere API doesn't support this options
     )
   )
+
+  chat$set_turns(all_turns)
 }
 
 #' @export
@@ -208,12 +211,13 @@ ellmer_chat.gptstudio_request_azure_openai <- function(skeleton, all_turns) {
   deployment_id <- skeleton$deployment_id
   api_version <- skeleton$api_version %||% "2024-10-21"
 
-  ellmer::chat_azure(
+  chat <- ellmer::chat_azure(
     endpoint = endpoint,
     deployment_id = deployment_id,
     api_version = api_version,
-    turns = all_turns,
     api_key = skeleton$api_key,
     credentials = skeleton$credentials
   )
+
+  chat$set_turns(all_turns)
 }

@@ -36,10 +36,6 @@
 #'   `getOption("gptstudio.task")`.
 #' @param custom_prompt An optional parameter that provides a way to extend or
 #'   customize the initial prompt with additional instructions or context.
-#' @param process_response A logical indicating whether to process the model's
-#'   response. If `TRUE`, the response will be passed to
-#'   `gptstudio_response_process()` for further processing. Defaults to `FALSE`.
-#'   Refer to `gptstudio_response_process()` for more details.
 #' @param session An optional parameter for a shiny session object.
 #' @param ... Reserved for future use.
 #'
@@ -82,7 +78,6 @@ chat <- function(prompt,
                  style = getOption("gptstudio.code_style", "no preference"),
                  task = getOption("gptstudio.task", "coding"),
                  custom_prompt = NULL,
-                 process_response = FALSE,
                  session = NULL,
                  ...) {
   response <-
@@ -102,9 +97,5 @@ chat <- function(prompt,
     ) |>
     gptstudio_request_perform(shiny_session = session)
 
-  if (process_response) {
-    response |> gptstudio_response_process()
-  } else {
-    response$response
-  }
+  response$response
 }
