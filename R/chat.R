@@ -86,16 +86,10 @@ chat <- function(prompt,
     gptstudio_create_skeleton(
       service = service,
       prompt = prompt,
-      history = history,
+      history = prepare_chat_history(history, style, skill, task, custom_prompt),
       stream = stream,
       model = model,
       ...
-    ) |>
-    gptstudio_skeleton_build(
-      skill = skill,
-      style = style,
-      task = task,
-      custom_prompt = custom_prompt
     )
 
   response <- skeleton |>
