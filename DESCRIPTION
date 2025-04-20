@@ -26,7 +26,7 @@ Imports:
     cli,
     colorspace,
     coro,
-    ellmer,
+    ellmer (>= 0.1.1.9000),
     glue,
     htmltools,
     htmlwidgets,
@@ -65,3 +65,5 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
+Remotes:  
+    tidyverse/ellmer
