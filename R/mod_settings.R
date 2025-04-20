@@ -1,9 +1,9 @@
 mod_settings_ui <- function(id, translator = create_translator()) {
   ns <- NS(id)
 
-  api_services <- utils::methods("gptstudio_skeleton_build") |>
-    stringr::str_remove(pattern = "gptstudio_skeleton_build.gptstudio_request_") |>
-    purrr::discard(~ .x == "gptstudio_skeleton_build.default")
+  api_services <- utils::methods("ellmer_chat") |>
+    stringr::str_remove(pattern = "ellmer_chat.gptstudio_request_") |>
+    purrr::discard(~ .x == "ellmer_chat.default")
 
   read_docs_label <- tags$span(
     translator$t("Read R help pages"),
