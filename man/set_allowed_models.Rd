@@ -13,6 +13,8 @@ set_allowed_models(service, models = NULL)
 in the dropdown selector. If \code{NULL} (default), all models will be available.}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
 Sometimes it is useful to restrict the list of options in the model selection dropdown of the
 chat app. This function will check against \code{get_available_models()} to restrict the list to
 models that are actually available.

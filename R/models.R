@@ -116,6 +116,9 @@ get_all_available_services <- function() {
 
 #' Set allowed models by provider
 #'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
 #' Sometimes it is useful to restrict the list of options in the model selection dropdown of the
 #' chat app. This function will check against `get_available_models()` to restrict the list to
 #' models that are actually available.
