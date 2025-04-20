@@ -1,11 +1,13 @@
 #' List supported models
 #'
-#' Get a list of the models supported by the OpenAI API.
+#' Get a list of the models supported by the selected service.
 #'
 #' @param service The API service
 #'
 #' @return A character vector
 #' @export
+#'
+#' @seealso [get_all_available_services()]
 #'
 #' @examples
 #' \dontrun{
@@ -95,13 +97,37 @@ list_available_models.google <- function(service) {
   get_available_models_google()
 }
 
+#' List supported service providers
+#'
+#' List the names of all providers/vendors supported by the gptstudio chat app.
+#'
+#' @returns A character vector
+#'
+#' @examples
+#' get_all_available_services()
+#'
+#'
+#' @export
 get_all_available_services <- function() {
   methods(list_available_models) |>
     as.character() |>
     stringr::str_remove("^list_available_models\\.")
 }
 
-set_allowed_models <- function(service, models = character()) {
+#' Set allowed models by provider
+#'
+#' Sometimes it is useful to restrict the list of options in the model selection dropdown of the
+#' chat app. This function will check against `get_available_models()` to restrict the list to
+#' models that are actually available.
+#'
+#' @param service The API service
+#' @param models A character vector containing the list of allowed models that should be shown
+#' in the dropdown selector. If `NULL` (default), all models will be available.
+#'
+#' @returns NULL
+#'
+#' @export
+set_allowed_models <- function(service, models = NULL) {
   stopifnot(rlang::is_scalar_character(service))
 
   available_services <- get_all_available_services()
