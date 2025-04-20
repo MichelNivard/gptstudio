@@ -92,5 +92,27 @@ list_available_models.cohere <- function(service) {
 
 #' @export
 list_available_models.google <- function(service) {
-  get_available_models_google()
+  response <-
+    request("https://generativelanguage.googleapis.com/v1beta") |>
+    req_url_path_append("models") |>
+    req_url_query(key = Sys.getenv("GOOGLE_API_KEY")) |>
+    req_perform()
+
+  # error handling
+  if (resp_is_error(response)) {
+    status <- resp_status(response) # nolint
+    description <- resp_status_desc(response) # nolint
+
+    cli::cli_abort(message = c(
+      "x" = "Google AI Studio API request failed. Error {status} - {description}",
+      "i" = "Visit the Google AI Studio API documentation for more details"
+    ))
+  }
+
+  models <- response |>
+    resp_body_json(simplifyVector = TRUE) |>
+    purrr::pluck("models")
+
+  models$name |>
+    stringr::str_remove("models/")
 }
