@@ -1,28 +1,15 @@
 #' Perform API Request
 #'
-#' This function provides a generic interface for calling different APIs
+#' This function provides a wrapper for calling different APIs
 #' (e.g., OpenAI, HuggingFace, Google AI Studio). It dispatches the actual API
-#' calls to the relevant method based on the `class` of the `skeleton` argument.
+#' calls to the relevant {ellmer} method.
 #'
 #' @param skeleton A `gptstudio_request_skeleton` object
-#' @param ... Extra arguments (e.g., `stream_handler`)
+#' @param shiny_session Shiny session to send messages to. Only relevant when skeleton$stream is TRUE.
 #'
-#' @return A `gptstudio_response_skeleton` object
+#' @return A list with a skeleton and and the last response
 #'
-#' @examples
-#' \dontrun{
-#' gptstudio_request_perform(gptstudio_skeleton)
-#' }
-#' @export
-gptstudio_request_perform <- function(skeleton, ...) {
-  if (!inherits(skeleton, "gptstudio_request_skeleton")) {
-    cli::cli_abort("Skeleton must be a 'gptstudio_request_skeleton' or a child class")
-  }
-  UseMethod("gptstudio_request_perform")
-}
-
-#' @export
-gptstudio_request_perform.default <- function(skeleton, ..., shiny_session = NULL) {
+gptstudio_request_perform <- function(skeleton, shiny_session = NULL) {
 
   if (getOption("gptstudio.read_docs")) {
     skeleton$history <- add_docs_messages_to_history(
