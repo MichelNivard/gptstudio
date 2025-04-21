@@ -5,7 +5,7 @@
 #' calls to the relevant ellmer chat.
 #'
 #' @param skeleton A `gptstudio_request_skeleton` object
-#' @param shiny_session Shiny session to send messages to. Only relevant when skeleton$stream is TRUE.
+#' @param shiny_session Shiny session to send messages to. Only relevant if skeleton$stream is TRUE.
 #'
 #' @return A list with a skeleton and and the last response
 #'

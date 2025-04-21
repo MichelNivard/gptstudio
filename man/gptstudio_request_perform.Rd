@@ -9,7 +9,7 @@ gptstudio_request_perform(skeleton, shiny_session = NULL)
 \arguments{
 \item{skeleton}{A \code{gptstudio_request_skeleton} object}
 
-\item{shiny_session}{Shiny session to send messages to. Only relevant when skeleton$stream is TRUE.}
+\item{shiny_session}{Shiny session to send messages to. Only relevant if skeleton$stream is TRUE.}
 }
 \value{
 A list with a skeleton and and the last response
