@@ -39,7 +39,6 @@ Imports:
     rstudioapi (>= 0.12),
     shiny (>= 1.9.0),
     shiny.i18n,
-    SSEparser,
     stringr (>= 1.5.0),
     utils,
     yaml
