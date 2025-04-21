@@ -263,6 +263,10 @@
       {
         "en": "API service",
         "es": "Servicio API"
+      },
+      {
+        "en": "No models available",
+        "es": "Ningún modelo disponible"
       }
     ]
 }

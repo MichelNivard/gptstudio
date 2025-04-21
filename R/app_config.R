@@ -22,13 +22,31 @@ save_user_config <- function(code_style,
       read_docs,
       audio_input
     )
-  user_config_path <- tools::R_user_dir("gptstudio", which = "config")
-  user_config <- file.path(user_config_path, "config.yml")
-  if (!dir.exists(user_config_path)) {
-    dir.create(user_config_path, recursive = TRUE)
-  }
-  yaml::write_yaml(config, user_config)
+
+  write_user_config_file(config)
   set_user_options(config)
+}
+
+user_config_dir <- function() {
+  path <- tools::R_user_dir("gptstudio", which = "config")
+
+  if (!dir.exists(path)) {
+    dir.create(path, recursive = TRUE)
+  }
+
+  return(path)
+}
+
+user_config_file <- function() {
+  file.path(user_config_dir(), "config.yml")
+}
+
+read_user_config_file <- function() {
+  yaml::read_yaml(user_config_file())
+}
+
+write_user_config_file <- function(config) {
+  yaml::write_yaml(config, user_config_file())
 }
 
 set_user_options <- function(config) {
