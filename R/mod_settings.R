@@ -134,7 +134,8 @@ mod_settings_server <- function(id, translator = create_translator()) {
       msg <- glue::glue(translator$t("Fetching models for {input$service} service..."))
       showNotification(ui = msg, type = "message", duration = 1, session = session)
       cli::cli_alert_info(msg)
-      models <- tryCatch(
+
+      available_models <- tryCatch(
         {
           get_available_models(input$service)
         },
@@ -150,6 +151,10 @@ mod_settings_server <- function(id, translator = create_translator()) {
           return(NULL)
         }
       )
+
+      allowed_models <- get_allowed_models(input$service) %||% available_models
+      no_longer_allowed <- setdiff(allowed_models, available_models)
+      models <- intersect(allowed_models, available_models)
 
       if (length(models) > 0) {
         showNotification(
@@ -182,6 +187,12 @@ mod_settings_server <- function(id, translator = create_translator()) {
           inputId = "model",
           choices = character(),
           selected = NULL
+        )
+      }
+
+      if (!rlang::is_empty(no_longer_allowed)) {
+        cli::cli_alert_warning(
+          "Models no longer allowed for service {.str {input$service}}: {.str {no_longer_allowed}}"
         )
       }
     }) |>

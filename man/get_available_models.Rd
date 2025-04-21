@@ -13,10 +13,13 @@ get_available_models(service)
 A character vector
 }
 \description{
-Get a list of the models supported by the OpenAI API.
+Get a list of the models supported by the selected service.
 }
 \examples{
 \dontrun{
 get_available_models()
 }
+}
+\seealso{
+\code{\link[=get_all_available_services]{get_all_available_services()}}
 }

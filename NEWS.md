@@ -24,6 +24,8 @@
 - The "Read docs" functionality now works for every Provider. [#242](https://github.com/MichelNivard/gptstudio/issues/242)
 - Added translation support for all the text elements of the UI. [#194](https://github.com/MichelNivard/gptstudio/issues/194)
 - Fixed broken Spanish translations
+- New exported function `set_allowed_models()`, to specify a subset of models to be shown in the model selector dropdown.
+- New exported function `get_all_available_services()`, which lists all the supported services/providers.
 - Removed several internal generics and methods that are no longer necessary since the introduction of ellmer. [#253](https://github.com/MichelNivard/gptstudio/pull/253)
 - The SSEparser package is no longer imported. [#253](https://github.com/MichelNivard/gptstudio/pull/253) 
 

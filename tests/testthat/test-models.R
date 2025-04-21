@@ -76,3 +76,18 @@ test_that("get_available_models works for google", {
   models <- get_available_models(service)
   expect_type(models, "character")
 })
+
+test_that("set_allowed_models works", {
+  skip_on_cran()
+  skip_on_ci()
+
+  service <- "openai"
+  old_models <- get_allowed_models(service)
+  new_models <- c("gpt-4")
+
+  set_allowed_models(service, new_models)
+  expect_equal(get_allowed_models(service), new_models)
+
+  # Reset to old models
+  set_allowed_models(service, old_models)
+})
