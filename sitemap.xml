@@ -36,6 +36,7 @@
 <url><loc>/reference/create_translator.html</loc></url>
 <url><loc>/reference/ellmer_chat.html</loc></url>
 <url><loc>/reference/encode_image.html</loc></url>
+<url><loc>/reference/get_all_available_services.html</loc></url>
 <url><loc>/reference/get_available_endpoints.html</loc></url>
 <url><loc>/reference/get_available_models.html</loc></url>
 <url><loc>/reference/get_ide_theme_info.html</loc></url>
@@ -74,6 +75,7 @@
 <url><loc>/reference/request_base_huggingface.html</loc></url>
 <url><loc>/reference/request_base_perplexity.html</loc></url>
 <url><loc>/reference/rgb_str_to_hex.html</loc></url>
+<url><loc>/reference/set_allowed_models.html</loc></url>
 <url><loc>/reference/stream_chat_completion.html</loc></url>
 <url><loc>/reference/streamingMessage-shiny.html</loc></url>
 <url><loc>/reference/streamingMessage.html</loc></url>
