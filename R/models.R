@@ -87,7 +87,17 @@ list_available_models.ollama <- function(service) {
 
 #' @export
 list_available_models.cohere <- function(service) {
-  get_available_models_cohere()
+  request("https://api.cohere.ai/v1/models") |>
+    req_url_path_append("?endpoint=chat") |>
+    req_method("GET") |>
+    req_headers(
+      "accept" = "application/json",
+      "Authorization" = paste("Bearer", Sys.getenv("COHERE_API_KEY"))
+    ) |>
+    req_perform() |>
+    resp_body_json() |>
+    purrr::pluck("models") |>
+    purrr::map_chr(function(x) x$name)
 }
 
 #' @export
