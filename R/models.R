@@ -81,36 +81,44 @@ list_available_models.perplexity <- function(service) {
 
 #' @export
 list_available_models.ollama <- function(service) {
+  if (!ollama_is_available()) stop("Couldn't find ollama in your system")
+
   url <- Sys.getenv("OLLAMA_HOST", "http://localhost:11434")
-  base_request <- request(url)
 
-  ollama_is_available <- rlang::try_fetch(
-    {
-      req_perform(base_request) |>
-        resp_body_string()
-
-      TRUE
-    },
-    error = function(cnd) {
-      if (inherits(cnd, "httr2_failure")) {
-        cli::cli_alert_danger("Couldn't connect to Ollama in {.url {url}}. Is it running there?") # nolint
-      } else {
-        cli::cli_alert_danger(cnd)
-      }
-      FALSE # nolint
-    }
-  )
-
-  if (!ollama_is_available) stop("Couldn't find ollama in your system")
-
-
-  base_request |>
+  request(url) |>
     req_url_path_append("api") |>
     req_url_path_append("tags") |>
     req_perform() |>
     resp_body_json() |>
     purrr::pluck("models") |>
     purrr::map_chr("name")
+}
+
+ollama_is_available <- function(verbose = FALSE) {
+  url <- Sys.getenv("OLLAMA_HOST", "http://localhost:11434")
+  request <- request(url)
+
+  check_value <- logical(1)
+
+  rlang::try_fetch(
+    {
+      response <- req_perform(request) |>
+        resp_body_string()
+
+      if (verbose) cli::cli_alert_success(response)
+      check_value <- TRUE
+    },
+    error = function(cnd) {
+      if (inherits(cnd, "httr2_failure")) {
+        if (verbose) cli::cli_alert_danger("Couldn't connect to Ollama in {.url {url}}. Is it running there?") # nolint
+      } else {
+        if (verbose) cli::cli_alert_danger(cnd)
+      }
+      check_value <- FALSE # nolint
+    }
+  )
+
+  invisible(check_value)
 }
 
 #' @export
