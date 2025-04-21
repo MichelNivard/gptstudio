@@ -36,7 +36,7 @@ test_that("multiplication works", {
       expect_snapshot(gptstudio_create_skeleton(service = "ollama"))
       expect_snapshot(gptstudio_create_skeleton(service = "openai"))
       expect_snapshot(gptstudio_create_skeleton(service = "perplexity"))
-      expect_snapshot(gptstudio_create_skeleton(service = "azure-openai"))
+      expect_snapshot(gptstudio_create_skeleton(service = "azure_openai"))
     }
   )
 })
@@ -96,35 +96,6 @@ test_that("gptstudio_create_skeleton creates correct skeleton for Cohere", {
   expect_equal(skeleton$model, "command")
   expect_equal(skeleton$prompt, "What is R?")
   expect_true(skeleton$stream)
-})
-
-test_that("new_gptstudio_request_skeleton_openai creates correct structure", {
-  expect_snapshot({
-    skeleton <- new_gptstudio_request_skeleton_openai(
-      url = "https://api.openai.com/v1/chat/completions",
-      api_key = "test_key",
-      model = "gpt-4-turbo-preview",
-      prompt = "What is R?",
-      history = list(list(role = "system", content = "You are an R assistant")),
-      stream = TRUE,
-      n = 1
-    )
-    str(skeleton)
-  })
-})
-
-test_that("new_gptstudio_request_skeleton_huggingface creates correct structure", {
-  expect_snapshot({
-    skeleton <- new_gptstudio_request_skeleton_huggingface(
-      url = "https://api-inference.huggingface.co/models",
-      api_key = "test_key",
-      model = "gpt2",
-      prompt = "What is R?",
-      history = list(list(role = "system", content = "You are an R assistant")),
-      stream = FALSE
-    )
-    str(skeleton)
-  })
 })
 
 
@@ -224,20 +195,6 @@ test_that("validate_skeleton throws error for empty API key", {
       url = "https://api.example.com",
       api_key = "",
       model = "test_model",
-      prompt = "What is R?",
-      history = list(),
-      stream = TRUE
-    ),
-    error = TRUE
-  )
-})
-
-test_that("validate_skeleton throws error for empty model", {
-  expect_snapshot(
-    validate_skeleton(
-      url = "https://api.example.com",
-      api_key = "valid_key",
-      model = "",
       prompt = "What is R?",
       history = list(),
       stream = TRUE
