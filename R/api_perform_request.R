@@ -123,7 +123,7 @@ ellmer_chat.gptstudio_request_openai <- function(skeleton, all_turns) {
 
 #' @export
 ellmer_chat.gptstudio_request_google <- function(skeleton, all_turns) {
-  chat <- ellmer::chat_gemini(
+  chat <- ellmer::chat_google_gemini(
     api_key = skeleton$api_key,
     model = skeleton$model
   )
@@ -143,7 +143,7 @@ ellmer_chat.gptstudio_request_ollama <- function(skeleton, all_turns) {
 
 #' @export
 ellmer_chat.gptstudio_request_anthropic <- function(skeleton, all_turns) {
-  chat <- ellmer::chat_claude(
+  chat <- ellmer::chat_anthropic(
     model = skeleton$model
   )
 
@@ -198,7 +198,7 @@ ellmer_chat.gptstudio_request_azure_openai <- function(skeleton, all_turns) {
   deployment_id <- skeleton$deployment_id
   api_version <- skeleton$api_version %||% "2024-10-21"
 
-  chat <- ellmer::chat_azure(
+  chat <- ellmer::chat_azure_openai(
     endpoint = endpoint,
     deployment_id = deployment_id,
     api_version = api_version,
