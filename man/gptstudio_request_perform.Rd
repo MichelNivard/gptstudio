@@ -17,5 +17,5 @@ A list with a skeleton and and the last response
 \description{
 This function provides a wrapper for calling different APIs
 (e.g., OpenAI, HuggingFace, Google AI Studio). It dispatches the actual API
-calls to the relevant {ellmer} method.
+calls to the relevant ellmer chat.
 }

@@ -49,6 +49,7 @@ gptstudio_request_skeleton <- function(service, ...) {
 #' @export
 gptstudio_request_skeleton.openai <- function(
     service = new_gptstudio_service("openai"),
+    ...,
     url = glue("{getOption(\"gptstudio.openai_url\")}/chat/completions"),
     api_key = Sys.getenv("OPENAI_API_KEY"),
     model = "gpt-4-turbo-preview",
@@ -73,6 +74,7 @@ gptstudio_request_skeleton.openai <- function(
 #' @export
 gptstudio_request_skeleton.huggingface <- function(
     service = new_gptstudio_service("huggingface"),
+    ...,
     url = "https://api-inference.huggingface.co/models",
     api_key = Sys.getenv("HF_API_KEY"),
     model = "gpt2",
@@ -97,6 +99,7 @@ gptstudio_request_skeleton.huggingface <- function(
 #' @export
 gptstudio_request_skeleton.anthropic <- function(
     service = new_gptstudio_service("anthropic"),
+    ...,
     url = "https://api.anthropic.com/v1/complete",
     api_key = Sys.getenv("ANTHROPIC_API_KEY"),
     model = "claude-3-5-sonnet-20240620",
@@ -121,6 +124,7 @@ gptstudio_request_skeleton.anthropic <- function(
 #' @export
 gptstudio_request_skeleton.google <- function(
     service = new_gptstudio_service("google"),
+    ...,
     url = "https://generativelanguage.googleapis.com/v1beta2/models/",
     api_key = Sys.getenv("GOOGLE_API_KEY"),
     model = ":generateText?key=",
@@ -145,6 +149,7 @@ gptstudio_request_skeleton.google <- function(
 #' @export
 gptstudio_request_skeleton.azure_openai <- function(
     service = new_gptstudio_service("azure_openai"),
+    ...,
     url = "user provided with environmental variables",
     api_key = Sys.getenv("AZURE_OPENAI_API_KEY"),
     model = "gpt-4o",
@@ -168,6 +173,7 @@ gptstudio_request_skeleton.azure_openai <- function(
 
 #' @export
 gptstudio_request_skeleton.ollama <- function(service = new_gptstudio_service("ollama"),
+                                              ...,
                                               model, prompt, history, stream) {
   new_gpstudio_request_skeleton(
     url = Sys.getenv("OLLAMA_HOST"),
@@ -183,6 +189,7 @@ gptstudio_request_skeleton.ollama <- function(service = new_gptstudio_service("o
 #' @export
 gptstudio_request_skeleton.perplexity <- function(
     service = new_gptstudio_service("perplexity"),
+    ...,
     url = "https://api.perplexity.ai/chat/completions",
     api_key = Sys.getenv("PERPLEXITY_API_KEY"),
     model = "mistral-7b-instruct",
@@ -206,6 +213,7 @@ gptstudio_request_skeleton.perplexity <- function(
 
 #' @export
 gptstudio_request_skeleton.cohere <- function(service = new_gptstudio_service("cohere"),
+                                              ...,
                                               model = "command", prompt = "What is R?",
                                               history = NULL, stream = FALSE) {
   new_gpstudio_request_skeleton(

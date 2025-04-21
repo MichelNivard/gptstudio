@@ -10,6 +10,8 @@ check_api_connection(service, api_key = "", model = NULL)
 \item{service}{The name of the API service for which the connection is being checked.}
 
 \item{api_key}{The API key used for authentication.}
+
+\item{model}{The service's model to check}
 }
 \value{
 A logical value indicating whether the connection was successful.

@@ -5,6 +5,7 @@
 #'
 #' @param service The name of the API service for which the connection is being checked.
 #' @param api_key The API key used for authentication.
+#' @param model The service's model to check
 #' @return A logical value indicating whether the connection was successful.
 check_api_connection <- function(service, api_key = "", model = NULL) {
   if (service != "ollama" && (is.null(api_key) || api_key == "")) {

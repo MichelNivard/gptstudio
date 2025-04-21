@@ -2,7 +2,7 @@
 #'
 #' This function provides a wrapper for calling different APIs
 #' (e.g., OpenAI, HuggingFace, Google AI Studio). It dispatches the actual API
-#' calls to the relevant {ellmer} method.
+#' calls to the relevant ellmer chat.
 #'
 #' @param skeleton A `gptstudio_request_skeleton` object
 #' @param shiny_session Shiny session to send messages to. Only relevant when skeleton$stream is TRUE.
@@ -64,10 +64,24 @@ gptstudio_request_perform <- function(skeleton, shiny_session = NULL) {
   )
 }
 
-Buffer <- R6::R6Class( # nolint: object_name_linter
+#' Message Buffer
+#'
+#' @description
+#' A message buffer
+#'
+#' @importFrom R6 R6Class
+#'
+Buffer <- R6Class( # nolint: object_name_linter
   classname = "Buffer",
   public = list(
+    #' @field value Placeholder for the message
     value = "",
+
+    #' @description
+    #' Add a message chunk
+    #'
+    #' @param chunk A message chunk
+    #'
     add_chunk = function(chunk) {
       self$value <- paste0(self$value, chunk)
     }
