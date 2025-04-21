@@ -24,6 +24,8 @@
 - The "Read docs" functionality now works for every Provider. [#242](https://github.com/MichelNivard/gptstudio/issues/242)
 - Added translation support for all the text elements of the UI. [#194](https://github.com/MichelNivard/gptstudio/issues/194)
 - Fixed broken Spanish translations
+- Removed several internal generics and methods that are no longer necessary since the introduction of ellmer. [#253](https://github.com/MichelNivard/gptstudio/pull/253)
+- The SSEparser package is no longer imported. [#253](https://github.com/MichelNivard/gptstudio/pull/253) 
 
 ## gptstudio 0.4.0
 
