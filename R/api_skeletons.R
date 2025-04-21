@@ -26,11 +26,6 @@ validate_skeleton <- function(url, api_key, model, prompt, history, stream) {
               It is a {.cls {class(api_key)}}.")
   }
 
-  if (!is_scalar_character(model) || model == "") {
-    cli_abort("{.arg model} is not a valid character scalar.
-              It is a {.cls {class(model)}}.")
-  }
-
   if (!is_scalar_character(prompt)) {
     cli_abort("{.arg prompt} is not a valid character scalar.
               It is a {.cls {class(prompt)}}.")
@@ -41,7 +36,7 @@ validate_skeleton <- function(url, api_key, model, prompt, history, stream) {
               It is a {.cls {class(history)}}.")
   }
 
-  if (!is_scalar_logical(stream)) {
+  if (!is_bool(stream)) {
     cli_abort("{.arg stream} is not a valid boolean.
               It is a {.cls {class(stream)}}.")
   }
