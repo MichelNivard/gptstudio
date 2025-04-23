@@ -5,10 +5,10 @@
 \title{Prepare chat completion prompt}
 \usage{
 prepare_chat_history(
-  history = NULL,
+  history = list(list(role = "system", content = "You are an R chat assistant")),
   style = getOption("gptstudio.code_style"),
   skill = getOption("gptstudio.skill"),
-  task = "coding",
+  task = getOption("gptstudio.task", "coding"),
   custom_prompt = NULL
 )
 }

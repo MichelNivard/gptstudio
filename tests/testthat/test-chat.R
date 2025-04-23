@@ -146,7 +146,6 @@ describe("chat() perplexity", {
         service = "perplexity",
         history = NULL,
         stream = FALSE,
-        model = "sonar"
       )
     })
   })

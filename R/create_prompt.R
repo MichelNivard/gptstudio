@@ -139,10 +139,10 @@ chat_create_system_prompt <-
 #' @return A list where the first entry is an initial system message followed by any
 #'   non-system entries from the chat history.
 #'
-prepare_chat_history <- function(history = NULL,
+prepare_chat_history <- function(history = list(list(role = "system", content = "You are an R chat assistant")), # nolint: line_length_linter
                                  style = getOption("gptstudio.code_style"),
                                  skill = getOption("gptstudio.skill"),
-                                 task = "coding",
+                                 task = getOption("gptstudio.task", "coding"),
                                  custom_prompt = NULL) {
   instructions <- list(
     list(

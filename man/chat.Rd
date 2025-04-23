@@ -58,10 +58,7 @@ If not explicitly provided, this defaults to the value set in
 \item{custom_prompt}{An optional parameter that provides a way to extend or
 customize the initial prompt with additional instructions or context.}
 
-\item{process_response}{A logical indicating whether to process the model's
-response. If \code{TRUE}, the response will be passed to
-\code{gptstudio_response_process()} for further processing. Defaults to \code{FALSE}.
-Refer to \code{gptstudio_response_process()} for more details.}
+\item{process_response}{A logical indicating whether to process the model's response.}
 
 \item{session}{An optional parameter for a shiny session object.}
 

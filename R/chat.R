@@ -36,10 +36,7 @@
 #'   `getOption("gptstudio.task")`.
 #' @param custom_prompt An optional parameter that provides a way to extend or
 #'   customize the initial prompt with additional instructions or context.
-#' @param process_response A logical indicating whether to process the model's
-#'   response. If `TRUE`, the response will be passed to
-#'   `gptstudio_response_process()` for further processing. Defaults to `FALSE`.
-#'   Refer to `gptstudio_response_process()` for more details.
+#' @param process_response A logical indicating whether to process the model's response.
 #' @param session An optional parameter for a shiny session object.
 #' @param ... Reserved for future use.
 #'
@@ -72,7 +69,6 @@
 #' )
 #' }
 #'
-#' @export
 chat <- function(prompt,
                  service = getOption("gptstudio.service"),
                  history = list(list(role = "system", content = "You are an R chat assistant")),
@@ -85,26 +81,28 @@ chat <- function(prompt,
                  process_response = FALSE,
                  session = NULL,
                  ...) {
-  response <-
+  skeleton <- service |>
     gptstudio_create_skeleton(
-      service = service,
       prompt = prompt,
-      history = history,
+      history = prepare_chat_history(history, style, skill, task, custom_prompt),
       stream = stream,
       model = model,
       ...
-    ) |>
-    gptstudio_skeleton_build(
-      skill = skill,
-      style = style,
-      task = task,
-      custom_prompt = custom_prompt
-    ) |>
+    )
+
+  response <- skeleton |>
     gptstudio_request_perform(shiny_session = session)
 
-  if (process_response) {
-    response |> gptstudio_response_process()
-  } else {
-    response$response
-  }
+  if (!process_response) return(response$response)
+
+  response$skeleton$history <- chat_history_append(
+    history = response$skeleton$history,
+    role = "assistant",
+    name = "assistant",
+    content = response$response
+  )
+
+  response$skeleton$prompt <- NULL # remove the last prompt
+
+  response$skeleton
 }

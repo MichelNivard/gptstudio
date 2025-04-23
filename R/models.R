@@ -31,7 +31,9 @@ new_gptstudio_service <- function(service_name = character()) {
 #' @export
 list_available_models.openai <- function(service) {
   models <-
-    request_base("models") |>
+    request(getOption("gptstudio.openai_url")) |>
+    req_url_path_append("models") |>
+    req_auth_bearer_token(token = Sys.getenv("OPENAI_API_KEY")) |>
     httr2::req_perform() |>
     httr2::resp_body_json() |>
     purrr::pluck("data") |>
@@ -82,19 +84,85 @@ list_available_models.perplexity <- function(service) {
 #' @export
 list_available_models.ollama <- function(service) {
   if (!ollama_is_available()) stop("Couldn't find ollama in your system")
-  ollama_list() |>
+
+  url <- Sys.getenv("OLLAMA_HOST", "http://localhost:11434")
+
+  request(url) |>
+    req_url_path_append("api") |>
+    req_url_path_append("tags") |>
+    req_perform() |>
+    resp_body_json() |>
     purrr::pluck("models") |>
     purrr::map_chr("name")
 }
 
+ollama_is_available <- function(verbose = FALSE) {
+  url <- Sys.getenv("OLLAMA_HOST", "http://localhost:11434")
+  request <- request(url)
+
+  check_value <- logical(1)
+
+  rlang::try_fetch(
+    {
+      response <- req_perform(request) |>
+        resp_body_string()
+
+      if (verbose) cli::cli_alert_success(response)
+      check_value <- TRUE
+    },
+    error = function(cnd) {
+      if (inherits(cnd, "httr2_failure")) {
+        if (verbose) cli::cli_alert_danger("Couldn't connect to Ollama in {.url {url}}. Is it running there?") # nolint
+      } else {
+        if (verbose) cli::cli_alert_danger(cnd)
+      }
+      check_value <- FALSE # nolint
+    }
+  )
+
+  invisible(check_value)
+}
+
 #' @export
 list_available_models.cohere <- function(service) {
-  get_available_models_cohere()
+  request("https://api.cohere.ai/v1/models") |>
+    req_url_path_append("?endpoint=chat") |>
+    req_method("GET") |>
+    req_headers(
+      "accept" = "application/json",
+      "Authorization" = paste("Bearer", Sys.getenv("COHERE_API_KEY"))
+    ) |>
+    req_perform() |>
+    resp_body_json() |>
+    purrr::pluck("models") |>
+    purrr::map_chr(function(x) x$name)
 }
 
 #' @export
 list_available_models.google <- function(service) {
-  get_available_models_google()
+  response <-
+    request("https://generativelanguage.googleapis.com/v1beta") |>
+    req_url_path_append("models") |>
+    req_url_query(key = Sys.getenv("GOOGLE_API_KEY")) |>
+    req_perform()
+
+  # error handling
+  if (resp_is_error(response)) {
+    status <- resp_status(response) # nolint
+    description <- resp_status_desc(response) # nolint
+
+    cli::cli_abort(message = c(
+      "x" = "Google AI Studio API request failed. Error {status} - {description}",
+      "i" = "Visit the Google AI Studio API documentation for more details"
+    ))
+  }
+
+  models <- response |>
+    resp_body_json(simplifyVector = TRUE) |>
+    purrr::pluck("models")
+
+  models$name |>
+    stringr::str_remove("models/")
 }
 
 #' List supported service providers

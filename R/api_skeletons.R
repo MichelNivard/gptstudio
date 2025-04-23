@@ -26,11 +26,6 @@ validate_skeleton <- function(url, api_key, model, prompt, history, stream) {
               It is a {.cls {class(api_key)}}.")
   }
 
-  if (!is_scalar_character(model) || model == "") {
-    cli_abort("{.arg model} is not a valid character scalar.
-              It is a {.cls {class(model)}}.")
-  }
-
   if (!is_scalar_character(prompt)) {
     cli_abort("{.arg prompt} is not a valid character scalar.
               It is a {.cls {class(prompt)}}.")
@@ -41,13 +36,20 @@ validate_skeleton <- function(url, api_key, model, prompt, history, stream) {
               It is a {.cls {class(history)}}.")
   }
 
-  if (!is_scalar_logical(stream)) {
+  if (!is_bool(stream)) {
     cli_abort("{.arg stream} is not a valid boolean.
               It is a {.cls {class(stream)}}.")
   }
 }
 
-new_gptstudio_request_skeleton_openai <- function(
+gptstudio_request_skeleton <- function(service, ...) {
+  UseMethod("gptstudio_request_skeleton")
+}
+
+#' @export
+gptstudio_request_skeleton.openai <- function(
+    service = new_gptstudio_service("openai"),
+    ...,
     url = glue("{getOption(\"gptstudio.openai_url\")}/chat/completions"),
     api_key = Sys.getenv("OPENAI_API_KEY"),
     model = "gpt-4-turbo-preview",
@@ -58,8 +60,7 @@ new_gptstudio_request_skeleton_openai <- function(
         content = "You are an R chat assistant"
       )
     ),
-    stream = TRUE,
-    n = 1) {
+    stream = TRUE) {
   new_gpstudio_request_skeleton(url,
     api_key,
     model,
@@ -70,8 +71,10 @@ new_gptstudio_request_skeleton_openai <- function(
   )
 }
 
-
-new_gptstudio_request_skeleton_huggingface <- function(
+#' @export
+gptstudio_request_skeleton.huggingface <- function(
+    service = new_gptstudio_service("huggingface"),
+    ...,
     url = "https://api-inference.huggingface.co/models",
     api_key = Sys.getenv("HF_API_KEY"),
     model = "gpt2",
@@ -93,7 +96,10 @@ new_gptstudio_request_skeleton_huggingface <- function(
   )
 }
 
-new_gptstudio_request_skeleton_anthropic <- function(
+#' @export
+gptstudio_request_skeleton.anthropic <- function(
+    service = new_gptstudio_service("anthropic"),
+    ...,
     url = "https://api.anthropic.com/v1/complete",
     api_key = Sys.getenv("ANTHROPIC_API_KEY"),
     model = "claude-3-5-sonnet-20240620",
@@ -115,7 +121,10 @@ new_gptstudio_request_skeleton_anthropic <- function(
   )
 }
 
-new_gptstudio_request_skeleton_google <- function(
+#' @export
+gptstudio_request_skeleton.google <- function(
+    service = new_gptstudio_service("google"),
+    ...,
     url = "https://generativelanguage.googleapis.com/v1beta2/models/",
     api_key = Sys.getenv("GOOGLE_API_KEY"),
     model = ":generateText?key=",
@@ -137,7 +146,10 @@ new_gptstudio_request_skeleton_google <- function(
   )
 }
 
-new_gptstudio_request_skeleton_azure_openai <- function(
+#' @export
+gptstudio_request_skeleton.azure_openai <- function(
+    service = new_gptstudio_service("azure_openai"),
+    ...,
     url = "user provided with environmental variables",
     api_key = Sys.getenv("AZURE_OPENAI_API_KEY"),
     model = "gpt-4o",
@@ -148,8 +160,7 @@ new_gptstudio_request_skeleton_azure_openai <- function(
         content = "You are an R chat assistant"
       )
     ),
-    stream = FALSE,
-    n = 1) {
+    stream = FALSE) {
   new_gpstudio_request_skeleton(url,
     api_key,
     model,
@@ -160,7 +171,10 @@ new_gptstudio_request_skeleton_azure_openai <- function(
   )
 }
 
-new_gptstudio_request_skeleton_ollama <- function(model, prompt, history, stream) {
+#' @export
+gptstudio_request_skeleton.ollama <- function(service = new_gptstudio_service("ollama"),
+                                              ...,
+                                              model, prompt, history, stream) {
   new_gpstudio_request_skeleton(
     url = Sys.getenv("OLLAMA_HOST"),
     api_key = "JUST A PLACEHOLDER",
@@ -172,7 +186,10 @@ new_gptstudio_request_skeleton_ollama <- function(model, prompt, history, stream
   )
 }
 
-new_gptstudio_request_skeleton_perplexity <- function(
+#' @export
+gptstudio_request_skeleton.perplexity <- function(
+    service = new_gptstudio_service("perplexity"),
+    ...,
     url = "https://api.perplexity.ai/chat/completions",
     api_key = Sys.getenv("PERPLEXITY_API_KEY"),
     model = "mistral-7b-instruct",
@@ -194,9 +211,11 @@ new_gptstudio_request_skeleton_perplexity <- function(
   )
 }
 
-# Cohere Skeleton Creation Function
-new_gptstudio_request_skeleton_cohere <- function(model = "command", prompt = "What is R?",
-                                                  history = NULL, stream = FALSE) {
+#' @export
+gptstudio_request_skeleton.cohere <- function(service = new_gptstudio_service("cohere"),
+                                              ...,
+                                              model = "command", prompt = "What is R?",
+                                              history = NULL, stream = FALSE) {
   new_gpstudio_request_skeleton(
     url = "https://api.cohere.ai/v1/chat",
     api_key = Sys.getenv("COHERE_API_KEY"),
@@ -242,7 +261,6 @@ new_gptstudio_request_skeleton_cohere <- function(model = "command", prompt = "W
 #' )
 #' }
 #'
-#' @export
 gptstudio_create_skeleton <- function(service = "openai",
                                       prompt = "Name the top 5 packages in R.",
                                       history = list(
@@ -254,54 +272,11 @@ gptstudio_create_skeleton <- function(service = "openai",
                                       stream = TRUE,
                                       model = "gpt-4o-mini",
                                       ...) {
-  switch(service,
-    "openai" = new_gptstudio_request_skeleton_openai(
-      model = model,
-      prompt = prompt,
-      history = history,
-      stream = stream
-    ),
-    "huggingface" = new_gptstudio_request_skeleton_huggingface(
-      model = model,
-      prompt = prompt,
-      history = history,
-      stream = stream
-    ),
-    "anthropic" = new_gptstudio_request_skeleton_anthropic(
-      model = model,
-      prompt = prompt,
-      history = history,
-      stream = stream
-    ),
-    "google" = new_gptstudio_request_skeleton_google(
-      model = model,
-      prompt = prompt,
-      history = history,
-      stream = stream
-    ),
-    "azure_openai" = new_gptstudio_request_skeleton_azure_openai(
-      model = model,
-      prompt = prompt,
-      history = history,
-      stream = stream
-    ),
-    "ollama" = new_gptstudio_request_skeleton_ollama(
-      model = model,
-      prompt = prompt,
-      history = history,
-      stream = stream
-    ),
-    "perplexity" = new_gptstudio_request_skeleton_perplexity(
-      model = model,
-      prompt = prompt,
-      history = history,
-      stream = stream
-    ),
-    "cohere" = new_gptstudio_request_skeleton_cohere(
-      model = model,
-      prompt = prompt,
-      history = history,
-      stream = stream
-    )
+  gptstudio_request_skeleton(
+    service = new_gptstudio_service(service),
+    model = model,
+    prompt = prompt,
+    history = history,
+    stream = stream
   )
 }

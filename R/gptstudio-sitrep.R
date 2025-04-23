@@ -5,125 +5,21 @@
 #'
 #' @param service The name of the API service for which the connection is being checked.
 #' @param api_key The API key used for authentication.
+#' @param model The service's model to check
 #' @return A logical value indicating whether the connection was successful.
-check_api_connection_openai <- function(service, api_key) {
-  api_check <- check_api_key(service, api_key)
-  if (rlang::is_false(api_check)) {
+check_api_connection <- function(service, api_key = "", model = NULL) {
+  if (service != "ollama" && (is.null(api_key) || api_key == "")) {
+    cli::cli_alert_danger("API key is not set or invalid for {service} service.")
     return(invisible(NULL))
   }
 
-  response <-
-    request_base(task = "models") |>
-    req_error(is_error = function(resp) FALSE) |>
-    req_perform()
-  process_response(response, service)
-}
-
-#' @inheritParams check_api_connection_openai
-check_api_connection_huggingface <- function(service, api_key) {
-  api_check <- check_api_key(service, api_key)
-  if (rlang::is_false(api_check)) {
-    return(invisible(NULL))
-  }
-  response <- request_base_huggingface(task = "gpt2") |>
-    req_error(is_error = function(resp) FALSE) |>
-    req_perform()
-
-  process_response(response, service)
-}
-
-#' @inheritParams check_api_connection_openai
-check_api_connection_anthropic <- function(service, api_key) {
-  api_check <- check_api_key(service, api_key)
-  if (rlang::is_false(api_check)) {
-    return(invisible(NULL))
-  }
-
-  response <-
-    request_base_anthropic(key = Sys.getenv("ANTHROPIC_API_KEY")) |>
-    req_body_json(
-      data = list(
-        model = "claude-3-haiku-20240307",
-        max_tokens = 1024,
-        messages = list(
-          list(role = "user", content = "Hello, Claude")
-        )
-      )
-    ) |>
-    req_error(is_error = function(resp) FALSE) |>
-    req_perform()
-
-  process_response(response, service)
-}
-
-#' @inheritParams check_api_connection_openai
-check_api_connection_google <- function(service, api_key) {
-  api_check <- check_api_key(service, api_key)
-  if (rlang::is_false(api_check)) {
-    return(invisible(NULL))
-  }
-
-  request_body <-
-    list(contents = list(list(parts = list(list(text = "Hello there")))))
-
-  response <- request_base_google(model = "gemini-pro", key = api_key) |>
-    req_body_json(data = request_body) |>
-    req_error(is_error = function(resp) FALSE) |>
-    req_perform()
-
-  process_response(response, service)
-}
-
-#' @inheritParams check_api_connection_openai
-check_api_connection_azure_openai <- function(service, api_key) {
-  ""
-  api_check <- check_api_key(service, api_key)
-  if (rlang::is_false(api_check)) {
-    return(invisible(NULL))
-  }
-
-  response <- request_base_azure_openai() |>
-    req_body_json(list(messages = list(list(
-      role = "user",
-      content = "Hello world!"
-    )))) |>
-    req_error(is_error = function(resp) FALSE) |>
-    req_perform()
-
-  process_response(response, service)
-}
-
-#' @inheritParams check_api_connection_openai
-check_api_connection_perplexity <- function(service, api_key) {
-  api_check <- check_api_key(service, api_key)
-  if (rlang::is_false(api_check)) {
-    return(invisible(NULL))
-  }
-
-  response <- request_base_perplexity() |>
-    req_body_json(data = list(
-      model = "sonar-small-chat",
-      messages = list(list(role = "user", content = "Hello world!"))
-    )) |>
-    req_error(is_error = function(resp) FALSE) |>
-    req_perform()
-
-  process_response(response, service)
-}
-
-#' @inheritParams check_api_connection_openai
-check_api_connection_cohere <- function(service, api_key) {
-  api_check <- check_api_key(service, api_key)
-  if (rlang::is_false(api_check)) {
-    return(invisible(NULL))
-  }
-
-  response <- request_base_cohere(api_key = api_key) |>
-    req_body_json(data = list(message = "Hello world!")) |>
-    req_error(is_error = function(resp) FALSE) |>
-    req_perform()
-
-  process_response(response, service)
+  rlang::try_fetch({
+    chat("what is 1+1", service = service, history = NULL, model = model)
+    cli::cli_alert_success("Successfully connected to the {service} API service.")
+  }, error = function(cnd) {
+    cli::cli_alert_danger("Failed to connect to the {service} API service.")
+  })
+  invisible()
 }
 
 #' Current Configuration for gptstudio
@@ -173,39 +69,40 @@ gptstudio_sitrep <- function(verbose = TRUE) {
   if (verbose) {
     cli::cli_h2("Checking API connections")
     cli::cli_h3("Checking OpenAI API connection")
-    check_api_connection_openai(
-      service = "OpenAI",
+    check_api_connection(
+      service = "openai",
       api_key = Sys.getenv("OPENAI_API_KEY")
     )
     cli::cli_h3("Checking HuggingFace API connection")
-    check_api_connection_huggingface(
-      "HuggingFace",
+    check_api_connection(
+      "huggingface",
       Sys.getenv("HF_API_KEY")
     )
     cli::cli_h3("Checking Anthropic API connection")
-    check_api_connection_anthropic(
-      service = "Anthropic",
+    check_api_connection(
+      service = "anthropic",
       api_key = Sys.getenv("ANTHROPIC_API_KEY")
     )
     cli::cli_h3("Checking Google AI Studio API connection")
-    check_api_connection_google(
-      service = "Google AI Studio",
+    check_api_connection(
+      service = "google",
       api_key = Sys.getenv("GOOGLE_API_KEY")
     )
     cli::cli_h3("Checking Azure OpenAI API connection")
-    check_api_connection_azure_openai(
-      service = "Azure OpenAI",
+    check_api_connection(
+      service = "azure_openai",
       api_key = Sys.getenv("AZURE_OPENAI_API_KEY")
     )
     cli::cli_h3("Checking Perplexity API connection")
-    check_api_connection_perplexity(
-      service = "Perplexity",
+    check_api_connection(
+      service = "perplexity",
       api_key = Sys.getenv("PERPLEXITY_API_KEY")
     )
     cli::cli_h3("Checking Cohere API connection")
-    check_api_connection_cohere(
-      service = "Cohere",
-      api_key = Sys.getenv("COHERE_API_KEY")
+    check_api_connection(
+      service = "cohere",
+      api_key = Sys.getenv("COHERE_API_KEY"),
+      model = "command-r"
     )
     cli::cli_h3("Check Ollama for Local API connection")
     ollama_is_available(verbose = TRUE)
@@ -215,23 +112,4 @@ gptstudio_sitrep <- function(verbose = TRUE) {
     cli::cli_text("Run {.run [gptstudio_sitrep(verbose = TRUE)](gptstudio::gptstudio_sitrep(verbose = TRUE))} to check API connections.") # nolint
   }
   cli::cli_rule(left = "End of gptstudio configuration")
-}
-
-# helper functions --------------------------------------------------------
-
-check_api_key <- function(service, api_key) {
-  if (is.null(api_key) || api_key == "") {
-    cli::cli_alert_danger("API key is not set or invalid for {service} service.")
-    return(invisible(FALSE))
-  } else {
-    return(invisible(TRUE))
-  }
-}
-
-process_response <- function(response, service) {
-  if (resp_is_error(response)) {
-    cli::cli_alert_danger("Failed to connect to the {service} API service.")
-  } else {
-    cli::cli_alert_success("Successfully connected to the {service} API service.")
-  }
 }

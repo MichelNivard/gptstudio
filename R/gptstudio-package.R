@@ -8,7 +8,3 @@
 #' @importFrom glue glue
 ## gptstudio namespace: end
 NULL
-
-dummy <- function() {
-  SSEparser::SSEparser
-}

@@ -54,15 +54,11 @@ test_that("get_available_models works for perplexity", {
 test_that("get_available_models works for ollama", {
   skip_on_cran()
   skip_on_ci()
-  with_mocked_bindings(
-    `ollama_is_available` = mock_ollama_is_available,
-    `ollama_list` = mock_ollama_list,
-    {
-      service <- "ollama"
-      models <- get_available_models(service)
-      expect_type(models, "character")
-    }
-  )
+  skip_if_not(ollama_is_available())
+
+  service <- "ollama"
+  models <- get_available_models(service)
+  expect_type(models, "character")
 })
 
 test_that("get_available_models works for cohere", {

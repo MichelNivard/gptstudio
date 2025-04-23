@@ -4,23 +4,18 @@
 \alias{gptstudio_request_perform}
 \title{Perform API Request}
 \usage{
-gptstudio_request_perform(skeleton, ...)
+gptstudio_request_perform(skeleton, shiny_session = NULL)
 }
 \arguments{
 \item{skeleton}{A \code{gptstudio_request_skeleton} object}
 
-\item{...}{Extra arguments (e.g., \code{stream_handler})}
+\item{shiny_session}{Shiny session to send messages to. Only relevant if skeleton$stream is TRUE.}
 }
 \value{
-A \code{gptstudio_response_skeleton} object
+A list with a skeleton and and the last response
 }
 \description{
-This function provides a generic interface for calling different APIs
+This function provides a wrapper for calling different APIs
 (e.g., OpenAI, HuggingFace, Google AI Studio). It dispatches the actual API
-calls to the relevant method based on the \code{class} of the \code{skeleton} argument.
-}
-\examples{
-\dontrun{
-gptstudio_request_perform(gptstudio_skeleton)
-}
+calls to the relevant ellmer chat.
 }

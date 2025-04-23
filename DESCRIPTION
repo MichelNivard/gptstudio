@@ -1,7 +1,7 @@
 Type: Package
 Package: gptstudio
 Title: Use Large Language Models Directly in your Development Environment
-Version: 0.4.0.9015
+Version: 0.4.0.9016
 Authors@R: c(
     person("Michel", "Nivard", , "m.g.nivard@vu.nl", role = c("aut", "cph")),
     person("James", "Wade", , "github@jameshwade.com", role = c("aut", "cre", "cph"),
@@ -26,7 +26,7 @@ Imports:
     cli,
     colorspace,
     coro,
-    ellmer,
+    ellmer (>= 0.1.1.9000),
     glue,
     htmltools,
     htmlwidgets,
@@ -39,7 +39,6 @@ Imports:
     rstudioapi (>= 0.12),
     shiny (>= 1.9.0),
     shiny.i18n,
-    SSEparser,
     stringr (>= 1.5.0),
     utils,
     yaml
@@ -65,3 +64,5 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
+Remotes: 
+    tidyverse/ellmer
