@@ -1,5 +1,6 @@
 # gptstudio (development version)
 
+- Added Chinese translation for all the text elements of the UI.
 - Fixed a bug in read_docs.R that wasn't correctly referencing the help docs of packages that contain a period (".") in their name. The code now deals with all valid R package names as defined by [CRAN](https://cran.r-project.org/doc/manuals/R-exts.html#The-DESCRIPTION-file)
 - Fixed a bug that showed the message "ChatGPT responded" even when other service was being used in "Chat in source" related addins. #213
 - Added claude-3.5-sonnet model from Anthropic.
