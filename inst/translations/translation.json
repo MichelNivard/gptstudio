@@ -5,7 +5,7 @@
         "en": "Write your prompt here",
         "es": "Escribe tu instrucción aquí",
         "de": "Schreiben Sie hier Ihre Aufforderung",
-        "cn": "在此处写下您的提示"
+        "cn": "请在此处写下您的提示"
       },
       {
         "en": "Programming Style",
@@ -71,7 +71,7 @@
         "en": "Welcome aboard! As your virtual assistant for R, I'm here to make your coding journey easier and more enjoyable.",
         "es": "¡Bienvenido/a a bordo! Como tu asistente virtual de R, estoy aquí para hacer tu viaje de programación más fácil y placentero.",
         "de": "Willkommen an Bord! Als Ihr virtueller Assistent für R bin ich hier, um Ihre Reise in die Programmierung einfacher und angenehmer zu gestalten.",
-        "cn": "欢迎登船！作为您的 R 虚拟助手，我会让您的编码之旅更轻松、更愉快。"
+        "cn": "欢迎！作为您的 R 虚拟助手，我会让您的编码之旅更轻松、更愉快。"
       },
       {
         "en": "Nice to meet you! I'm your personal R virtual assistant, ready to answer your questions and provide support.",
@@ -107,7 +107,7 @@
         "en": "Greetings and welcome! I'm here to assist you on your R journey, no matter where you're starting from.",
         "es": "¡Saludos y bienvenido/a! Estoy aquí para ayudarte en tu viaje con R, sin importar desde dónde comiences.",
         "de": "Grüße und willkommen! Ich bin hier, um Sie auf Ihrer R-Reise zu unterstützen, ganz gleich, von wo aus Sie starten.",
-        "cn": "问候并欢迎！无论您从哪里开始，我都会在您的 R 之旅中为您提供帮助。"
+        "cn": "你好，欢迎使用！ 无论您从哪里开始，我都会在您的 R 之旅中为您提供帮助。"
       },
       {
         "en": "Hi, I'm your R virtual assistant! My goal is to help you achieve success in your coding endeavors, whatever they may be.",
@@ -149,7 +149,7 @@
         "en": "Greetings and salutations! As your R virtual assistant, I'm here to provide the guidance and support you need to succeed.",
         "es": "¡Saludos y bienvenidas! Como tu asistente virtual de R, estoy aquí para brindarte la orientación y el apoyo que necesitas para tener éxito.",
         "de": "Hallo und herzlichen Glückwunsch! Als Ihr virtueller R-Assistent bin ich hier, um Ihnen die Anleitung und Unterstützung zu geben, die Sie für Ihren Erfolg benötigen.",
-        "cn": "问候与致意！作为您的 R 虚拟助手，我会为您提供成功所需的指导和支持。"
+        "cn": "你好！作为您的 R 虚拟助手，我会为您提供成功所需的指导和支持。"
       },
       {
         "en": "Welcome to the wonderful world of R! I'm your personal virtual assistant, ready to assist you in your coding journey.",
