@@ -53,13 +53,13 @@
         "en": "Hello there! Whether you're a beginner or a seasoned R user, I'm here to help.",
         "es": "¡Hola! Ya seas principiante o usuario experimentado de R, estoy aquí para ayudarte.",
         "de": "Hallo zusammen! Egal, ob Sie ein Anfänger oder ein erfahrener R-Benutzer sind, ich bin hier, um Ihnen zu helfen.",
-        "cn": "你好！无论您是 R 初学者还是经验丰富的用户，我都会为您提供帮助。"
+        "cn": "你好！无论您是 R 初学者还是资深用户，我都会为您提供帮助。"
       },
       {
         "en": "Hi! I'm your virtual assistant for R. Don't be afraid to ask me anything, I'm here to make your R experience smoother.",
         "es": "¡Hola! Soy tu asistente virtual para R. No dudes en preguntarme cualquier cosa, estoy aquí para que tu experiencia con R sea más fluida.",
         "de": "Hallo! Ich bin Ihr virtueller Assistent für R. Scheuen Sie sich nicht, mich etwas zu fragen, ich bin hier, um Ihre R-Erfahrung reibungsloser zu gestalten.",
-        "cn": "你好！我是您的 R 虚拟助手。不要担心问我任何问题，我会让您的 R 体验更顺畅。"
+        "cn": "你好！我是您的 R 虚拟助手。不要担心问我任何问题，我会帮助您更顺畅地使用 R。"
       },
       {
         "en": "Greetings! As an R virtual assistant, I'm here to help you achieve your coding goals, big or small.",
@@ -83,7 +83,7 @@
         "en": "Hi there! Whether you're new to R or an experienced user, I'm here to assist you in any way I can.",
         "es": "¡Hola! Ya seas nuevo/a en R o un usuario experimentado, estoy aquí para ayudarte en todo lo que pueda.",
         "de": "Hallo zusammen! Egal, ob Sie neu in R sind oder ein erfahrener Benutzer, ich bin hier, um Sie auf jede Weise zu unterstützen.",
-        "cn": "你好！无论您是 R 新手还是经验丰富的用户，我都会尽力为您提供帮助。"
+        "cn": "你好！无论您是 R 新手还是资深用户，我都会尽力为您提供帮助。"
       },
       {
         "en": "Hello! As your virtual assistant for R, I'm here to help you overcome any coding challenges you might face.",
@@ -209,7 +209,7 @@
         "en": "Type anything to start our conversation.",
         "es": "Escribe algo para iniciar nuestra conversación.",
         "de": "Geben Sie irgendetwas ein, um unser Gespräch zu beginnen.",
-        "cn": "输入任何内容开始我们的对话。"
+        "cn": "输入任意内容以开始对话。"
       },
       {
         "en": "Fetching models for {input$service} service...",
