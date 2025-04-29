@@ -93,7 +93,7 @@ mod_settings_ui <- function(id, translator = create_translator()) {
       selectInput(
         inputId = ns("language"),
         label = translator$t("Language"),
-        choices = c("en", "es", "de"),
+        choices = c("en", "es", "de", "cn"),
         width = "100%",
         selected = getOption("gptstudio.language")
       )
