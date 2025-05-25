@@ -49,6 +49,7 @@ Suggests:
     knitr,
     miniUI,
     mockr,
+    plumber2 (>= 0.0.0.9000),
     promises,
     rmarkdown,
     rvest,
@@ -64,5 +65,6 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
-Remotes: 
-    tidyverse/ellmer
+Remotes:  
+    tidyverse/ellmer,
+    posit-dev/plumber2
