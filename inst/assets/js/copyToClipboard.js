@@ -26,8 +26,33 @@ $(document).on('click', '.btn-clipboard', function(event) {
   }, 1000);
 });
 
+$(document).on('click', '.btn-send-to-cursor-position', function(event) {
+
+  // get the parent div of the parent div and next pre tag
+  const parentDiv = $(this).closest('div').parent();
+  const preTag = parentDiv.next('pre');
+
+  // find code inside pre tag
+  const codeTag = preTag.find('code');
+  const code = codeTag.text();
+
+  // send to mod_app.R
+  Shiny.setInputValue('app-send_to_cursor_position', code, {priority: 'event'});
+  console.log("Sent to IDE")
+
+  // update clipboard button text
+  const Button = $(this);
+  const originalContent = Button.html();
+  Button.html('Sent!');
+
+  // reset clipboard button text after 1 second
+  setTimeout(function() {
+    Button.html(originalContent);
+  }, 1000);
+});
+
 // gpt-created
-function addCopyBtn() {
+function addCodeBlockButtons() {
   // Get all the pre tags in the document that don't already have a copy button
   var preTags = $('pre:not(".hasCopyButton")');
 
@@ -52,6 +77,9 @@ function addCopyBtn() {
         <button type="button" class="btn action-button btn-secondary btn-sm btn-clipboard shiny-bound-input ml-auto">
             <i class="bi bi-copy"></i> Copy
         </button>
+        <button type="button" class="btn action-button btn-secondary btn-sm btn-send-to-cursor-position shiny-bound-input">
+            To IDE
+        </button>
     </div>
     </div>
     `);
@@ -63,5 +91,5 @@ function addCopyBtn() {
 
 
 $(document).on('shiny:inputchanged', function(event) {
-  addCopyBtn();
+  addCodeBlockButtons();
 });

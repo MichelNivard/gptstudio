@@ -55,6 +55,11 @@ mod_app_server <- function(id, ide_colors = get_ide_theme_info()) {
       settings = sidebar$settings,
       history = sidebar$history
     )
+
+    observe({
+      print(input$send_to_cursor_position)
+    }) |>
+      bindEvent(input$send_to_cursor_position)
   })
 }
 
