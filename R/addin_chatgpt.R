@@ -29,24 +29,19 @@ gptstudio_chat <- function(host = getOption("shiny.host", "127.0.0.1")) {
   check_installed(c("miniUI", "future"))
   rstudioapi::verifyAvailable()
 
-  port <- find_available_port()
+  app_port <- httpuv::randomPort()
   app_dir <- create_temp_app_dir()
 
-  run_app_background(app_dir, "gptstudio", host, port)
+  run_app_background(app_dir, "gptstudio", host, app_port)
 
   if (rstudioapi::versionInfo()$mode == "server") {
     Sys.sleep(3)
   }
 
-  open_app_in_viewer(host, port)
+  open_app_in_viewer(host, app_port)
 }
 
 # Helper functions
-
-find_available_port <- function() {
-  safe_ports <- setdiff(3000:8000, c(3659, 4045, 5060, 5061, 6000, 6566, 6665:6669, 6697))
-  sample(safe_ports, 1)
-}
 
 create_temp_app_dir <- function() {
   dir <- normalizePath(tempdir(), winslash = "/")
@@ -60,10 +55,23 @@ create_temp_app_file <- function() {
   ide_colors <- dput(get_ide_theme_info())
   code_theme_url <- get_highlightjs_theme()
 
+  internal_api_port <- NULL
+
+  if (check_feature_flag("GPTSTUDIO_ENABLE_IDE_COMMUNICATION")) {
+    internal_api_port <- httpuv::randomPort()
+    cli::cli_alert_info("Port for internal API: {internal_api_port}")
+    start_internal_api(internal_api_port)
+  }
+
+  line_options <- glue::glue(
+    "options('gptstudio.internal_api_port' = {internal_api_port})"
+  )
+
   writeLines(
     # nolint start
     glue::glue(
-      "ide_colors <- {{paste(deparse(ide_colors), collapse = '\n')}}
+      "{{line_options}}
+      ide_colors <- {{paste(deparse(ide_colors), collapse = '\n')}}
       ui <- gptstudio:::mod_app_ui('app', ide_colors, '{{code_theme_url}}')
       server <- function(input, output, session) {
           gptstudio:::mod_app_server('app', ide_colors)
@@ -76,11 +84,14 @@ create_temp_app_file <- function() {
   temp_file
 }
 
-run_app_background <- function(app_dir, job_name, host, port) {
+run_app_background <- function(app_dir, job_name, host, port, internal_api_port = NULL) {
   job_script <- tempfile(fileext = ".R")
-  writeLines(glue::glue(
+
+  line_run_app <- glue::glue(
     "shiny::runApp(appDir = '{app_dir}', port = {port}, host = '{host}')"
-  ), job_script)
+  )
+
+  writeLines(c(line_run_app), job_script)
 
   rstudioapi::jobRunScript(job_script, name = job_name)
   cli::cli_alert_success("{job_name} initialized as background job in RStudio")
@@ -112,4 +123,9 @@ wait_for_bg_app <- function(url, max_seconds = 10) {
       backoff = function(n) 0.2
     ) |>
     req_perform()
+}
+
+check_feature_flag <- function(flag, expected = "TRUE", default = "FALSE") {
+  existent <- Sys.getenv(flag, unset = default)
+  identical(existent, expected)
 }
