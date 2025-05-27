@@ -57,7 +57,15 @@ mod_app_server <- function(id, ide_colors = get_ide_theme_info()) {
     )
 
     observe({
-      print(input$send_to_cursor_position)
+      internal_api_port <- getOption("gptstudio.internal_api_port")
+      request_url <- paste0("http://127.0.0.1:", internal_api_port)
+      request_body <- list(text = input$send_to_cursor_position)
+      cli::cli_alert_info("Got {request_url} as internal API url")
+
+      httr2::request(request_url) |>
+        httr2::req_url_path_append("insert") |>
+        httr2::req_body_json(data = request_body) |>
+        httr2::req_perform()
     }) |>
       bindEvent(input$send_to_cursor_position)
   })
