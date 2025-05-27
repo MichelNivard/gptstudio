@@ -2,10 +2,12 @@
 #'
 #' Start a non blocking API for gptstudio's functionality
 #'
-run_text_inserter <- function() {
+run_text_inserter <- function(port = NULL) {
   rlang::check_installed(c("plumber2", "httpuv"))
 
-  plumber2::api(port = httpuv::randomPort()) |>
+  if (is.null(port)) cli::cli_alert_warning("Using random port for internal API")
+
+  plumber2::api(port = port %||% httpuv::randomPort()) |>
     plumber2::api_doc_add(
       doc = list(
         info = list(
@@ -45,7 +47,10 @@ run_text_inserter <- function() {
     plumber2::api_on("end", function() {
       cli::cli_alert_info("gptstudio is no longer sharing your session")
     }) |>
-    plumber2::api_run(silent = TRUE)
+    plumber2::api_run(
+      showcase = check_feature_flag("GPTSTUDIO_ENABLE_VERBOSE_MODE"),
+      silent = TRUE
+    )
 }
 
 .internal_api_state <- new.env(parent = emptyenv())
@@ -63,13 +68,13 @@ is_internal_api_running <- function() {
   !is.null(api) && inherits(api, "Fire") && api$is_running()
 }
 
-start_internal_api <- function() {
+start_internal_api <- function(port = NULL) {
   if (is_internal_api_running()) {
     message("Internal api is already running.")
     return(invisible(get_internal_api()))
   }
 
-  api <- run_text_inserter()
+  api <- run_text_inserter(port)
 
   set_internal_api(api)
   invisible(api)
