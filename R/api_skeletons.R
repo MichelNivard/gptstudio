@@ -160,14 +160,22 @@ gptstudio_request_skeleton.azure_openai <- function(
         content = "You are an R chat assistant"
       )
     ),
-    stream = FALSE) {
+    stream = FALSE,
+    deployment_name = Sys.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
+    api_version = Sys.getenv("AZURE_OPENAI_API_VERSION"),
+    endpoint = Sys.getenv("AZURE_OPENAI_ENDPOINT")) {
   new_gpstudio_request_skeleton(url,
     api_key,
     model,
     prompt,
     history,
     stream,
-    class = "gptstudio_request_azure_openai"
+    class = "gptstudio_request_azure_openai",
+    extras = list(
+      deployment_name = deployment_name,
+      api_version = api_version,
+      endpoint = endpoint
+    )
   )
 }
 
