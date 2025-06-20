@@ -317,7 +317,17 @@
       [1] TRUE
       
       $extras
-      list()
+      $extras$extras
+      $extras$extras$deployment_name
+      [1] ""
+      
+      $extras$extras$api_version
+      [1] ""
+      
+      $extras$extras$endpoint
+      [1] ""
+      
+      
       
       attr(,"class")
       [1] "gptstudio_request_azure_openai" "gptstudio_request_skeleton"    
