@@ -208,9 +208,9 @@ ellmer_chat.gptstudio_request_cohere <- function(skeleton, all_turns) {
 #' @export
 ellmer_chat.gptstudio_request_azure_openai <- function(skeleton, all_turns) {
   # Extract Azure-specific configuration from skeleton
-  endpoint <- skeleton$endpoint
-  deployment_id <- skeleton$deployment_id
-  api_version <- skeleton$api_version %||% "2024-10-21"
+  endpoint <- skeleton$extras$extras$endpoint
+  deployment_id <- skeleton$extras$extras$deployment_name
+  api_version <- skeleton$extras$extras$api_version %||% "2024-10-21"
 
   chat <- ellmer::chat_azure_openai(
     endpoint = endpoint,
