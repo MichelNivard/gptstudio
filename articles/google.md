@@ -1,0 +1,34 @@
+# Google's AI Studio API Service
+
+### Creating an Account in Google’s AI Studio
+
+- Visit [Google’s AI Studio website](https://makersuite.google.com) and
+  sign up.
+- Complete the verification process.
+
+### Accessing Google AI Studio (Gemini and PALM) API
+
+- In your Google Cloud Console, enable the Google AI Studio API.
+- Create an API key as per the instructions in [Google’s API
+  documentation](https://ai.google.dev/docs).
+
+### Setting the Google AI Studio API Key in .Renviron
+
+To modify the `.Renviron` file:
+
+``` r
+require(usethis)
+edit_r_environ()
+```
+
+For a persistent setting, add the following line to `.Renviron`,
+replacing `"<APIKEY>"` with your actual Google AI Studio API key:
+
+``` bash
+GOOGLE_API_KEY="<APIKEY>"
+```
+
+Save the file and restart your R session for the changes to take effect.
+
+**Caution:** Be careful not to expose `.Renviron` in public repositories
+or version control systems to protect your API key.

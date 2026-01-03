@@ -1,0 +1,34 @@
+# Perplexity
+
+### Creating an Perplexity Account
+
+- Go to the [Perplexity website](https://perplexity.ai/) and sign up.
+- Verify your account as instructed.
+
+### Creating an Perplexity API Key
+
+- Log into your Perplexity account and navigate to the [API
+  documentation](https://docs.perplexity.ai/).
+- Create an API key following their guidelines. Check Perplexity’s API
+  documentation for more details.
+
+### Setting the Perplexity API Key in .Renviron
+
+To modify the `.Renviron` file:
+
+``` r
+require(usethis)
+edit_r_environ()
+```
+
+For a persistent setting, add the following line to `.Renviron`,
+replacing `"<APIKEY>"` with your actual Perplexity API key:
+
+``` bash
+PERPLEXITY_API_KEY="<APIKEY>"
+```
+
+Save the file and restart your R session for the changes to take effect.
+
+**Caution:** Ensure `.Renviron` is not exposed if using version control
+systems.

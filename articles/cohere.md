@@ -1,0 +1,32 @@
+# Cohere
+
+### Creating a Cohere Account
+
+- Go to the [Cohere website](https://cohere.com/) and sign up.
+- Verify your account as instructed.
+
+### Creating a Cohere API Key
+
+- Log into your Cohere account and navigate to the API documentation.
+- Create an API key following their guidelines. Check [Cohere’s API
+  documentation](https://docs.cohere.com/) for more details.
+
+### Setting the Cohere API Key in .Renviron
+
+To modify the `.Renviron` file:
+
+``` r
+`#| eval: false require(usethis) edit_r_environ()`
+```
+
+For a persistent setting, add the following line to `.Renviron`,
+replacing `"<APIKEY>"` with your actual Cohere API key:
+
+``` bash
+COHERE_API_KEY="<APIKEY>"
+```
+
+Save the file and restart your R session for the changes to take effect.
+
+**Caution:** Ensure `.Renviron` is not exposed if using version control
+systems.

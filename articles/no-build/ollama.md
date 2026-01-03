@@ -1,0 +1,51 @@
+# Local Models with Ollama
+
+The [ollama](https://github.com/jmorganca/ollama) service allows you to
+run open source LLMs locally, providing a command line interface and an
+API. By wrapping the later, we can use it within our chat app.
+
+You can run ollama in any platform as a docker container. The following
+code runs the CPU-only version:
+
+``` bash
+docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+```
+
+This code:
+
+1.  pulls the latest ollama image from the ollama hub (`ollama/ollama`)
+2.  exposes the ollama API in `http://localhost:11434`
+    (`-p 11434:11434`)
+3.  sets up the ollama volume, to be used in the “/root/.ollama” path
+    inside the container. this will allow you to update the container
+    later without losing your already downloaded models.
+    (`-v ollama:/root/.ollama`)
+4.  assigns the name “ollama” to the container (`--name ollama`)
+5.  runs the container in detached mode (`docker run -d`)
+
+You can see more docker options in the [official blog
+post](https://ollama.ai/blog/ollama-is-now-available-as-an-official-docker-image).
+
+Before using the service, you need to pull a model. Run the following
+code inside your container to pull llama2:
+
+``` bash
+ollama pull llama2
+```
+
+Check the [ollama library](https://ollama.ai/library) to see more
+models. For more advanced install options, check the [official
+documentation](https://github.com/jmorganca/ollama).
+
+By default, the chat addin will use `http://localhost:11434` to locate
+the ollama API. You can customize this by setting up the `OLLAMA_HOST`
+environmental variable with `usethis::edit_r_environ()`.
+
+## An Example with Ollama
+
+Here is a short video showing you how to get started with ollama. It
+assumes that you have already installed docker. See the docker
+[installation guide](https://docs.docker.com/get-docker/) for more
+information.
+
+![](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/gptstudio-ollama-example.gif)

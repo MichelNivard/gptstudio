@@ -1,0 +1,82 @@
+# Chat in Source
+
+## Quick Start
+
+The Chat in Source addin can be accessed from the RStudio Addins menu.
+The addin allows you to send selected code to the OpenAI API and insert
+the response into your .Rmd file.
+
+**Usage:**
+
+1.  Select the R code in your .Rmd file that you want to send to OpenAI.
+2.  Go to the RStudio Addins menu and choose “Chat in Source”.
+3.  The response from OpenAI will be inserted at the location of your
+    selected code.
+
+**Optional:**
+
+To set a keyboard shortcut for the “Chat in Source” addin, follow these
+steps:
+
+- Go to Tools \> Modify Keyboard Shortcuts in RStudio.
+- Search for “Chat in Source” in the list of addins.
+- Assign a custom keyboard shortcut to the addin for quick access.
+
+## What is Chat in Source?
+
+The `Chat in Source` addin will modify your files directly. You can
+access it from the RStudio Addins menu. To use the addin, you first need
+to select the code you want to modify. Then, you can call the addin. The
+addin will send the selected code to the OpenAI API and insert the
+response in your file.
+
+For convenience, you may want to map the addin to a keyboard shortcut.
+You can do this by going to Tools \> Modify Keyboard Shortcuts and
+searching for “Chat in Source”. You can then assign a custom keyboard
+shortcut to the addin.
+
+## Changing the Service & Model
+
+The `Chat in Source` addin allows you to customize the model and API
+service used by the app. Like the `Chat` addin, the default service is
+OpenAI. To change this, you need to change the settings in the `Chat`
+app. This will change the model for both the `Chat` and `Chat in Source`
+addins.
+
+![](https://raw.githubusercontent.com/MichelNivard/gptstudio/main/media/gptstudio-change-model.gif)
+
+## Examples and Use Cases
+
+The “Chat in Source” addin can augment your R workflow in many creative
+ways. Below are some practical examples:
+
+**Documentation Assistance**
+
+- Generate insightful comments explaining complex code
+- Summarize plots and statistical output
+- Clarify ambiguous variable names or logic flow
+
+**Code Improvement**
+
+- Suggest optimizations for slow functions
+- Identify potential bugs and edge cases
+- Propose simplifications and refactoring ideas
+
+**Code Generation**
+
+- Provide code snippets for common data tasks like joins, visualizations
+  etc.
+- Translate pseudo-code outlines into runnable R scripts
+- Convert code from Python/SQL into equivalent R code
+
+**Education and Learning**
+
+- Explain unfamiliar R concepts and packages
+- Provide examples demonstrating R techniques
+- Generate mini-tutorials tailored to knowledge gaps
+
+**Collaboration**
+
+- Review code before sharing, suggest improvements
+- Clarify code logic for smoother peer review
+- Standardize style to align with project conventions
